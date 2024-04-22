@@ -1,0 +1,21 @@
+.Header {
+  display: flex;
+  padding: 2dvh;
+  align-items: center;
+
+  svg {
+    font-size: 3dvh;
+    cursor: pointer;
+  }
+
+  .center {
+    flex: 1;
+    font-size: 2dvh;
+    text-align: center;
+  }
+
+  .blank {
+    width: 3dvh;
+    height: 3dvh;
+  }
+}
