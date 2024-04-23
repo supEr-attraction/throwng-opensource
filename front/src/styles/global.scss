@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 450px;
+  // -ms-overflow-style: none;
+  // ::-webkit-scrollbar {
+  //   display: none;
+  // }
+}
+
+html {
+  background: #eeeeee;
+  position: relative;
+  margin: auto;
+}
+
+body {
+  background-color: #0f1114;
+  // background-color: red;
+  color: white;
+  min-height: 100dvh;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+
+  &:visited {
+    color: white;
+  }
+}
+
+// .none-scroll::-webkit-scrollbar {
+//   display: none;
+// }

@@ -1,0 +1,51 @@
+.MapHeader {
+  background: linear-gradient(180deg, #0f1114 10%, rgba(23, 25, 31, 0) 100%);
+  position: absolute;
+  z-index: 1;
+  width: 100dvw;
+  height: 20dvh;
+
+  .header {
+    display: flex;
+    align-items: center;
+    padding: 2vh;
+
+    .blank {
+      width: 5vh;
+      height: 5vh;
+    }
+
+    .title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1vh;
+      flex: 1;
+
+      img {
+        width: 2dvh;
+        height: 2.5dvh;
+      }
+
+      div {
+        font-size: 2.2dvh;
+        // font-weight: bold;
+      }
+    }
+
+    .gps {
+      background-color: #0f1114;
+      width: 5vh;
+      height: 5vh;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      svg {
+        color: #7b66ff;
+        font-size: 3vh;
+      }
+    }
+  }
+}
