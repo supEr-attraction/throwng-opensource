@@ -20,12 +20,14 @@
       background-color: white;
       width: 20dvh;
       height: 20dvh;
-      border-radius: 100dvh;
+      // border-radius: 100dvh;
+      border-radius: 1dvh;
 
       .upload-image {
         width: inherit;
         height: inherit;
-        border-radius: 100dvh;
+        // border-radius: 100dvh;
+        border-radius: 1dvh;
       }
     }
 
