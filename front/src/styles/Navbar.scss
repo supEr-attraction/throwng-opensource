@@ -9,7 +9,11 @@
     justify-content: center;
     position: relative;
     background-color: #0f1114;
+<<<<<<< HEAD
+    padding-block: 2dvh;
+=======
     padding-block: 1.5dvh;
+>>>>>>> c13e54384eab79740065da3a018bf899568d7e96
     gap: 1dvh;
 
     .menu__item {
@@ -29,6 +33,14 @@
       }
 
       svg {
+<<<<<<< HEAD
+        width: 3dvh;
+        height: 3dvh;
+      }
+
+      div {
+        font-size: 1.5vh;
+=======
         // width: 3dvh;
         // height: 3dvh;
         font-size: 2.5dvh;
@@ -36,6 +48,7 @@
 
       div {
         font-size: 1.3vh;
+>>>>>>> c13e54384eab79740065da3a018bf899568d7e96
       }
 
       &.disable {
@@ -43,6 +56,17 @@
           position: absolute;
           bottom: 20%;
 
+<<<<<<< HEAD
+          img {
+            width: 9vh;
+            height: 9vh;
+          }
+
+          svg {
+            position: absolute;
+            top: 49%;
+            left: 51%;
+=======
           .circle {
             width: 8vh;
             height: 8vh;
@@ -55,6 +79,7 @@
             width: 3vh;
             height: 4vh;
             // border-radius: 50%;
+>>>>>>> c13e54384eab79740065da3a018bf899568d7e96
             transform: translate(-50%, -50%);
           }
         }
