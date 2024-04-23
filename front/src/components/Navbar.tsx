@@ -2,8 +2,9 @@ import { NavLink } from "react-router-dom";
 import { FaRegUser, FaRegBell } from "react-icons/fa";
 import { LuHome } from "react-icons/lu";
 import { FaRegCirclePlay } from "react-icons/fa6";
-import { BsMusicPlayer } from "react-icons/bs";
+// import { BsMusicPlayer } from "react-icons/bs";
 import circle from "@assets/images/Cone.webp";
+import logo from "@assets/images/logo.png";
 import "@styles/Navbar.scss";
 
 const Navbar = () => {
@@ -16,12 +17,13 @@ const Navbar = () => {
         </NavLink>
         <NavLink to={"/user/playlist"} className="menu__item">
           <FaRegCirclePlay />
-          <div>음악서랍</div>
+          <div>플레이리스트</div>
         </NavLink>
         <div className="menu__item disable">
           <NavLink to={"/music/search"} className="center">
-            <img src={circle} alt="" />
-            <BsMusicPlayer />
+            <img className="circle" src={circle} alt="" />
+            {/* <BsMusicPlayer /> */}
+            <img className="logo" src={logo} alt="" />
           </NavLink>
         </div>
         <NavLink to={"/user/notification"} className="menu__item">
