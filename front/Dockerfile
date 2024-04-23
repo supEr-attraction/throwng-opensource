@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install --force
 
-# 앱 소스 코드 복사
+# 앱 소스 코드복사
 COPY . .
 
 # # 앱 빌드
