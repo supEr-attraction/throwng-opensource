@@ -1,0 +1,62 @@
+.MusicList {
+  padding: 3dvh;
+
+  .searchResults {
+
+    .result-item {
+      display: flex;
+      flex-direction: row;
+      padding: 1dvh 0px 1dvh 0px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      img {
+        width: 8dvh;
+        height: 8dvh;
+        border-radius: 1dvh;
+      }
+
+      .item-wide {
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+
+        .item-detail {
+          padding-left: 2dvh;
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+          text-align: start;
+          justify-content: center;
+
+          .item-title {
+            width: 25dvh;
+            font-size: 2dvh;
+            font-weight: 600;
+            padding-bottom: 0.5dvh;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+  
+          .item-artist {
+            padding-top: 0.5dvh;
+            font-size: 1.7dvh;
+            font-weight: 500;
+            color: var(--subtitle-color);
+          }
+        }
+        
+        .item-length {
+          display: flex;
+          font-size: 1.7dvh;
+          color: var(--subtitle-color);
+          align-items: center;
+        }
+      }
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+} 
