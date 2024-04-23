@@ -1,0 +1,82 @@
+
+pipeline {
+    agent any
+    environment {
+        REPO = "s10-final/S10P31C101"
+        DOCKERHUB_REGISTRY = "alswjd00/front"
+        DOCKERHUB_CREDENTIALS = credentials('dockerHub')
+
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage("Build") {
+            steps {
+                script {
+                    sh "ls -al"
+
+                    sh "docker build -t ${DOCKERHUB_REGISTRY} FrontEnd"
+                }
+            }
+        }
+
+        stage("Login") {
+            steps {
+                sh "echo \${DOCKERHUB_CREDENTIALS_PSW} | docker login -u \${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                
+            }
+        }
+        stage("Tag and Push") {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
+                        sh "docker push ${DOCKERHUB_REGISTRY}"
+                    }
+                }
+            }
+        }
+
+        stage('Prune old images') {
+            steps {
+                script {
+                    sh "docker ps"
+                    // sh "docker system prune --filter until=1h"
+                }
+            }
+        }
+        stage('Pull') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
+                        sh "docker stop front || true"
+                        sh "docker rm front || true"
+                        sh "docker rmi ${DOCKERHUB_REGISTRY}|| true"     //images 날리기
+                        sh "docker pull ${DOCKERHUB_REGISTRY}"                                               
+                    }
+                }
+            }
+        }
+
+        stage('Up') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
+                        try{
+                            sh "docker run -d --name front -p 9003:5173 \
+                            ${DOCKERHUB_REGISTRY}"
+
+                            // sh "docker-compose -f ${env.WORKSPACE}/docker-compose.yml up -d"
+
+                        } catch (Exception e){
+                            sh "docker restart front || true"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
