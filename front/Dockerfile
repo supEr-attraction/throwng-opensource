@@ -1,27 +1,27 @@
-# 1단계: 빌드 단계
+# Stage 1: Build stage
 FROM node:latest as build
 
-# 작업 디렉토리 설정
+# Set the working directory
 WORKDIR /app
 
-# 의존성 설치
+# Install dependencies
 COPY package*.json ./
 RUN npm install --force
 
-# 앱 소스 코드복사
+# Copy the application source code
 COPY . .
 
-# # 앱 빌드
+# # Build the app
 # RUN npm run build
 
-# # 2단계: 실행 단계
+# # Stage 2: Runtime stage
 # FROM nginx:alpine
 
-# # Nginx 구성 파일 복사
+# # Copy Nginx configuration file
 # COPY --from=build /app/dist /usr/share/nginx/html
 
-# 포트 노출
+# Expose port
 EXPOSE 5173
 
-# 컨테이너 시작 시 실행할 명령
+# Command to run on container start
 CMD ["npm", "run", "dev"]
