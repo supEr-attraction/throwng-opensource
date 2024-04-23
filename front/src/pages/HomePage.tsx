@@ -1,9 +1,10 @@
 import Navbar from "@components/Navbar";
+import Map from "@components/map/Map";
 
 const HomePage = () => {
   return (
     <div className="HomePage">
-      <div>홈페이지 입니다.</div>
+      <Map />
       <Navbar />
     </div>
   );

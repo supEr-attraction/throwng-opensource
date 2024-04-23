@@ -1,0 +1,31 @@
+.Map {
+  position: relative;
+
+  // .header {
+  //   background: linear-gradient(180deg, #0f1114 10%, rgba(23, 25, 31, 0) 100%);
+  //   position: absolute;
+  //   z-index: 1;
+  //   width: 100dvw;
+  //   height: 20dvh;
+
+  //   .title {
+  //     padding: 2dvh;
+  //     display: flex;
+  //     justify-content: center;
+  //     align-items: center;
+  //     gap: 1vh;
+
+  //     img {
+  //       width: 2vh;
+  //       height: 2.5vh;
+  //     }
+
+  //     div {
+  //       font-size: 2vh;
+  //     }
+  //   }
+  // }
+  div {
+    border: none !important;
+  }
+}

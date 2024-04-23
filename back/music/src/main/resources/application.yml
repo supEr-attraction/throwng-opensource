@@ -1,0 +1,11 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: music
+
+  eureka:
+    client:
+      service-url:
+        default-zone: http://localhost:8761/eureka
