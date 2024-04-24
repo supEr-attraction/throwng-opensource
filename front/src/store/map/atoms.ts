@@ -78,11 +78,83 @@ export const markersState = atom({
     },
     {
       id: 8,
-      position: { lat: 35.20247745303855, lng: 126.807209937287 },
+      position: { lat: 35.21239434960787, lng: 126.87592760473652 },
       music: {
         img: "https://www.akbobada.com/home/akbobada/archive/akbo/img/202402211005009.jpg",
         title: "홀씨",
         singer: "아이유",
+      },
+    },
+    {
+      id: 9,
+      position: { lat: 35.203117334571935, lng: 126.80858111342218 },
+      music: {
+        img: "https://image.bugsm.co.kr/album/images/500/40832/4083248.jpg",
+        title: "그대가 내 안에 박혔다(그내박)",
+        singer: "순순희(기태)",
+      },
+    },
+    {
+      id: 10,
+      position: { lat: 35.203910921628214, lng: 126.81463012075089 },
+      music: {
+        img: "https://i.namu.wiki/i/gQq7yL2gbO3_EWZJvfmoFynKLj6fPk76XkIXuyyy8B2HKvK4U_O9db0j8oMUUFy3yrGCZFBazNVK9iSYwjNyEw.webp",
+        title: "I Don't Think That I Like Her",
+        singer: "Charlie Puth",
+      },
+    },
+    {
+      id: 11,
+      position: { lat: 35.217299078189626, lng: 126.87728208677949 },
+      music: {
+        img: "https://image.bugsm.co.kr/album/images/500/40850/4085086.jpg",
+        title: "사랑하지 않아서 그랬어",
+        singer: "임한별",
+      },
+    },
+    {
+      id: 12,
+      position: { lat: 35.20458055575659, lng: 126.87248025018455 },
+      music: {
+        img: "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/085/017/795/85017795_1713318076675_1_600x600.JPG",
+        title: "By Your Side",
+        singer: "Crush",
+      },
+    },
+    {
+      id: 13,
+      position: { lat: 35.207737757465566, lng: 126.8120955340353 },
+      music: {
+        img: "https://image.bugsm.co.kr/album/images/500/40452/4045282.jpg",
+        title: "다정히 내 이름을 부르면",
+        singer: "경서예지, 전건호",
+      },
+    },
+    {
+      id: 14,
+      position: { lat: 35.211289031658005, lng: 126.87479807659642 },
+      music: {
+        img: "https://image.genie.co.kr/Y/IMAGE/IMG_ALBUM/085/034/097/85034097_1713765075406_1_600x600.JPG",
+        title: "새봄의 노래 (Beginning)",
+        singer: "도영 (DOYOUNG)",
+      },
+    },
+    {
+      id: 15,
+      position: { lat: 35.20581024748837, lng: 126.88068179327126 },
+      music: {
+        img: "https://i1.sndcdn.com/artworks-eO0iYJWUBqNon8N3-2CqcGQ-t500x500.jpg",
+        title: "파이팅 해야지 (Feat. 이영지)",
+        singer: "부석순 (SEVENTEEN)",
+      },
+    },
+    {
+      id: 16,
+      position: { lat: 35.20673614550716, lng: 126.87817654137028 },
+      music: {
+        img: "https://www.akbobada.com/home/akbobada/archive/akbo/img/202311051932016.jpg",
+        title: "Standing Next to You",
+        singer: "정국",
       },
     },
   ],
