@@ -1,3 +1,4 @@
+import QuizSolvePage from "@pages/quiz/QuizSolvePage";
 import { lazy } from "react";
 const PrivateRoute = lazy(() => import("@components/PrivateRoute"));
 const HomePage = lazy(() => import("@pages/HomePage"));
@@ -7,6 +8,7 @@ const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 // const Error404 = loadable(() => import("./Error404"));
 const MusicDrop = lazy(() => import("@components/musicDrop/MusicDrop"))
+const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"))
 
 export default {
   path: "/",
@@ -47,6 +49,19 @@ export default {
           ],
         },
       ],
+    },
+    {
+      path: "quiz",
+      children: [
+        {
+          path: "main",
+          element: <QuizMain />
+        },
+        {
+          path: "solve",
+          element: <QuizSolvePage />
+        }
+      ]
     },
   ],
 };
