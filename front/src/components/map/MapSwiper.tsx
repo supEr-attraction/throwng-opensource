@@ -7,10 +7,13 @@ import { markerRadiusState } from "@store/map/selectors";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "@styles/map/MapSwiper.scss";
+import { useNavigate } from "react-router-dom";
 
 const MapSwiper = () => {
   const markerRadius = useRecoilValue(markerRadiusState);
   const [activeMarkerId, setActiveMarkerId] = useRecoilState(activeMarkerState);
+
+  const navigate = useNavigate();
 
   return (
     <div className="MapSwiper">
@@ -40,7 +43,10 @@ const MapSwiper = () => {
       >
         {markerRadius.map((marker) => {
           return (
-            <SwiperSlide key={marker.id}>
+            <SwiperSlide
+              key={marker.id}
+              onClick={() => navigate(`/music/pick/${marker.id}`)}
+            >
               <img src={marker.music.img} />
               <div className="content">
                 <div className="title">{marker.music.title}</div>
