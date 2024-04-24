@@ -1,0 +1,27 @@
+.QuizMainPage {
+  padding: 2dvh;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .quiz-header {
+    img {
+      width: 40dvh;
+    }
+    p {
+      word-break: keep-all;
+      text-align: center;
+      margin-top: 3dvh;
+      font-size: 2.5dvh;
+    }
+  }
+
+  .quiz-info {
+    margin-top: 3dvh;
+  }
+
+  .quiz-button {
+    margin-top: 1dvh;
+  }
+}
