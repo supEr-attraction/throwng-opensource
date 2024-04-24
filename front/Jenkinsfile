@@ -19,7 +19,7 @@ pipeline {
                 script {
                     sh "ls -al"
 
-                    sh "docker build -t ${DOCKERHUB_REGISTRY} FrontEnd"
+                    sh "docker build -t ${DOCKERHUB_REGISTRY} front"
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
         stage("Tag and Push") {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
                         sh "docker push ${DOCKERHUB_REGISTRY}"
                     }
                 }
@@ -51,10 +51,10 @@ pipeline {
         stage('Pull') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
                         sh "docker stop front || true"
                         sh "docker rm front || true"
-                        sh "docker rmi ${DOCKERHUB_REGISTRY}|| true"     // delete image
+                        sh "docker rmi ${DOCKERHUB_REGISTRY}|| true"     //delete images
                         sh "docker pull ${DOCKERHUB_REGISTRY}"                                               
                     }
                 }
@@ -64,7 +64,7 @@ pipeline {
         stage('Up') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'Docker-hub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerHub', usernameVariable: 'DOCKER_USER_ID', passwordVariable: 'DOCKER_USER_PASSWORD')]) {
                         try{
                             sh "docker run -d --name front -p 9003:5173 \
                             ${DOCKERHUB_REGISTRY}"
