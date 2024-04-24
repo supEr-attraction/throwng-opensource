@@ -9,8 +9,8 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import MapHeader from "./MapHeader";
 import marker from "@assets/images/usermarker.webp";
-import pin from "@assets/images/pin.webp";
-import pin1 from "@assets/images/pin1.webp";
+import whitePin from "@assets/images/whitePin.webp";
+import purplePin from "@assets/images/purplePin.webp";
 import "@styles/map/Map.scss";
 import { toastMsg } from "@/utils/toastMsg";
 import { ToasterMsg } from "@components/ToasterMsg";
@@ -163,7 +163,7 @@ const Map = () => {
               }}
             >
               <img
-                src={marker.id === activeMarkerId ? pin1 : pin}
+                src={marker.id === activeMarkerId ? purplePin : whitePin}
                 alt="Custom Overlay"
                 style={{ width: "30px", height: "35px" }}
               />
