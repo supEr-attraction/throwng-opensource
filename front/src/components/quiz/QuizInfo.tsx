@@ -1,7 +1,7 @@
 import "@styles/quiz/QuizInfo.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QuizButton from "./QuizButton";
+import QuizButton from "@/components/quiz/QuizButton";
 
 interface QuizItem {
   id: number;
