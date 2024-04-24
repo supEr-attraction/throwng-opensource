@@ -1,6 +1,7 @@
 import "@styles/quiz/QuizInfo.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import QuizButton from "./QuizButton";
 
 interface QuizItem {
   id: number;
@@ -75,11 +76,8 @@ const QuizInfo = () => {
   };
 
   useEffect(() => {
-    const allChecked = areAllChecked();
-    if (allChecked && !buttonVisible) {
-      setButtonVisible(true);
-    }
-  }, [items, buttonVisible]);
+    setButtonVisible(areAllChecked());
+  }, [items]);
 
   const handleQuizStart = () => {
     navigate("/quiz/solve");
@@ -103,8 +101,8 @@ const QuizInfo = () => {
           ))}
         </div>
       </div>
-      <div className={`quiz-button ${buttonVisible ? 'visible' : ''}`}>
-        <button onClick={handleQuizStart}>퀴즈풀기</button>
+      <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>
+        <QuizButton onClick={handleQuizStart} label="퀴즈 풀기" visible={buttonVisible}/>
       </div>
     </div>
   );
