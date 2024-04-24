@@ -28,4 +28,23 @@
   div {
     border: none !important;
   }
+
+  .cover-img {
+    position: absolute;
+    inset: 0;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      border-radius: 50%;
+      width: 27px;
+      height: 27px;
+    }
+  }
+}
+
+.aaaaaaaaaaa {
+  z-index: 100;
 }

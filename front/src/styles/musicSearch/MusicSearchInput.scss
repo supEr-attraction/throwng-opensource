@@ -1,0 +1,37 @@
+.MusicSearchInput {
+  width: 100%;
+  padding: 1dvh 2dvh 1dvh 0px;
+
+  .input {
+    padding: 2dvh;
+    background-color: var(--input-box-color);
+    border: none;
+    border-radius: 1.5dvh;
+    color: white;
+    font-size: 2vh;
+    width: inherit;
+  }
+
+  .clear-button {
+    position: absolute;
+    top: 3dvh;
+    right: 4dvh;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--placeholder-color);
+
+    &:active {
+      background: none;
+      border: none;
+    }
+  }
+
+  input::placeholder {
+    color: var(--placeholder-color);
+  }
+  
+  :focus{
+    outline:none;
+  }
+}

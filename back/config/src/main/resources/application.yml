@@ -1,0 +1,15 @@
+server:
+  port: 8088
+
+spring:
+  application:
+    name: configs
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://lab.ssafy.com/hhe98hsk/throwng-config.git
+          username: throwng-token
+          password: FY3Rpc4DWc5qQRfhESCP
+          search-paths: /..
+          default-label: master

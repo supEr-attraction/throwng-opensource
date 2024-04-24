@@ -22,7 +22,23 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+<<<<<<< HEAD
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+=======
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+	runtimeOnly 'com.mysql:mysql-connector-j'
+>>>>>>> ba89da3ff349afec5bb62d148d7a6e24d4604ae2
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
