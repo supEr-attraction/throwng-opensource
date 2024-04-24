@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 server:
   port: 8084
 
@@ -9,3 +10,12 @@ spring:
     client:
       service-url:
         default-zone: http://localhost:8761/eureka
+=======
+spring:
+  config:
+    import: optional:configserver:http://throwng:458859@localhost:8088
+  application:
+    name: music
+  profiles:
+    active: dev
+>>>>>>> ba89da3ff349afec5bb62d148d7a6e24d4604ae2

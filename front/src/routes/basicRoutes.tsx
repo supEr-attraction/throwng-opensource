@@ -6,6 +6,7 @@ const PlayListPage = lazy(() => import("@pages/PlayListPage"));
 const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 // const Error404 = loadable(() => import("./Error404"));
+const MusicDrop = lazy(() => import("@components/musicDrop/MusicDrop"))
 
 export default {
   path: "/",
@@ -35,6 +36,15 @@ export default {
         {
           path: "search",
           element: <MusicSearchPage />,
+        },
+        {
+          path: "drop",
+          children: [
+            {
+              path: ":id",
+              element: <MusicDrop />,
+            }
+          ],
         },
       ],
     },
