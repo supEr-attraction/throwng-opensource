@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import "@styles/Header.scss";
 
@@ -8,8 +8,14 @@ interface Props {
 
 const Header = ({ centerText }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleBackNavigation = () => {
+    if (location.pathname === '/music/search') {
+      if (localStorage.getItem('searchKeyWord')) {
+        localStorage.removeItem('searchKeyWord')
+      }
+    }
     navigate(-1);
   };
 

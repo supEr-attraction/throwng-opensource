@@ -7,9 +7,11 @@ import { useLocation } from "react-router-dom";
 const MusicDrop = () => {
   const [count, setCount] = useState(0);
   const [text, setText] = useState('')
+  
   const [imagePreview, setImagePreview] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
   const inputEl = useRef<HTMLTextAreaElement>(null);
+  
   const location = useLocation();
   const backgroundImage = location.state!.image
 
@@ -37,6 +39,10 @@ const MusicDrop = () => {
       setImagePreview(URL.createObjectURL(file));
     }
   };
+
+  const postThrownSong = () => {
+
+  }
 
   return (
     <>
@@ -68,7 +74,7 @@ const MusicDrop = () => {
 
         <div className="body">
           <div className="header">
-            <p><span>광산구 하남동</span>에</p>
+            <p><span>어드레스</span>에</p>
             음악을 두고 갈까요?
           </div>
 
@@ -89,7 +95,7 @@ const MusicDrop = () => {
           </div>
 
           <div className="put-btn-div">
-            <button className="put-btn">나.. 너.. 쓰롱한다..❤</button>
+            <button className="put-btn" onClick={postThrownSong}>나.. 너.. 쓰롱한다..❤</button>
           </div>
         </div>
       </div>

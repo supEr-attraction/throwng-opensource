@@ -21,13 +21,17 @@ const MusicList = ({searchResults, onWordClick}:Props) => {
         <div className="searchResults">
           {searchResults.map((song) => (
             <div key={song.id} className="result-item" onClick={() => handleGoNavigation(song)}>
-              <img src={song.image}/>
+              
+              <div className="image-container">
+                <img src={song.image}/>
+              </div>
+
               <div className="item-wide">
                 <div className="item-detail">
                   <div className="item-title">{song.title}</div>
                   <div className="item-artist">{song.artist}</div>
                 </div>
-                <div className="item-length">{song.length}</div>
+                <div className="item-length">{song.playtime}</div>
               </div>
             </div>
           ))}
