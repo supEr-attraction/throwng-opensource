@@ -1,0 +1,50 @@
+.QuizMultipleChoice {
+  h2 {
+    margin-top: 5dvh;
+    margin-bottom: 1dvh;
+  }
+  .mc-question {
+    display: flex;
+    padding: 2dvh;
+    border-radius: 2dvh;
+    background-color: rgba(123, 102, 255, 0.1);
+    word-break: keep-all;
+    font-size: 2.5dvh;
+    font-weight: bold;
+    p {
+      margin-top: 1dvh;
+      margin-bottom: 1dvh;
+    }
+  }
+
+  .mc-choice {
+    display: flex;
+    flex-direction: column;
+    height: 47dvh;
+    padding: 2dvh;
+    margin-top: 3dvh;
+    margin-bottom: 3dvh;
+    border-radius: 2dvh;
+    background-color: rgba(123, 102, 255, 0.1);
+    word-break: keep-all;
+    font-size: 2.5dvh;
+    font-weight: bold;
+  }
+
+  .choice {
+    display: flex;
+    align-items: center;
+    padding: 3dvh;
+    height: 7dvh;
+    margin-top: 3dvh;
+    border: 1px solid var(--main-color);
+    border-radius: 2dvh;
+    
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &.selected {
+      background-color: var(--main-color);
+    }
+  }
+}

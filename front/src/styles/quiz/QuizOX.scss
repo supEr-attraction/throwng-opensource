@@ -1,0 +1,62 @@
+.QuizOX {
+  h2 {
+    margin-top: 5vh;
+    margin-bottom: 1vh;
+  }
+  .ox-question {
+    display: flex;
+    padding: 2vh;
+    height: 40vh;
+    border-radius: 2vh;
+    background-color: rgba(123, 102, 255, 0.1);
+    word-break: keep-all;
+    font-size: 2.5vh;
+    font-weight: bold;
+  }
+
+  .ox-answers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2vh;
+    width: 100%;
+    height: 20vh;
+    border-radius: 2vh;
+    margin-top: 5vh;
+    margin-bottom: 3vh;
+    background-color: rgba(123, 102, 255, 0.1);
+
+    .o-answer {
+      border: 1px solid var(--main-color);
+      border-radius: 3dvh;
+      width: 40%;
+      height: 16dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &.selected {
+        background-color: var(--main-color);
+      }
+      img {
+        width: 50%;
+        cursor: pointer;
+      }
+    }
+    .x-answer {
+      border: 1px solid var(--main-color);
+      border-radius: 3dvh;
+      width: 40%;
+      height: 16dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &.selected {
+        background-color: var(--main-color);
+      }
+      img {
+        width: 50%;
+        cursor: pointer;
+      }
+    }
+  }
+}

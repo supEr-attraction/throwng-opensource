@@ -44,7 +44,7 @@ const QuizInfo = () => {
       id: 4,
       text: (
         <>
-          3문제 <span className="highlight">모두 맞춰야</span> 정답으로
+          한 문제라도 틀리면 <span className="highlight-red">끝!</span> <br/>3문제 <span className="highlight">모두 맞춰야</span> 정답으로
           인정됩니다.
         </>
       ),
