@@ -1,0 +1,31 @@
+.MyThrowngHistoryMenu {
+
+  .menu-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+    .header-btn-div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .btn-item {
+        padding: 0 1dvh;
+        font-size: 2.5dvh;
+        font-weight: bold;
+
+        &.active {
+          color: var(--placeholder-color);
+        }
+      }
+    }
+
+    .song-cnt {
+      display: flex;
+      align-items: end;
+      font-size: 1.5dvh;
+      color: var(--placeholder-color);
+    }
+  }
+}

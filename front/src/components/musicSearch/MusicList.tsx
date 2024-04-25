@@ -12,7 +12,7 @@ const MusicList = ({searchResults, onWordClick}:Props) => {
   const navigate = useNavigate();
 
   const handleGoNavigation = (song : Song) => {
-    navigate(`/music/drop/${song.id}`, {state: {image:song.image}})
+    navigate(`/music/drop/${song.id}`, {state: {song:song}})
   }
 
   return (
@@ -21,13 +21,17 @@ const MusicList = ({searchResults, onWordClick}:Props) => {
         <div className="searchResults">
           {searchResults.map((song) => (
             <div key={song.id} className="result-item" onClick={() => handleGoNavigation(song)}>
-              <img src={song.image}/>
+              
+              <div className="image-container">
+                <img src={song.image}/>
+              </div>
+
               <div className="item-wide">
                 <div className="item-detail">
                   <div className="item-title">{song.title}</div>
                   <div className="item-artist">{song.artist}</div>
                 </div>
-                <div className="item-length">{song.length}</div>
+                <div className="item-length">{song.playtime}</div>
               </div>
             </div>
           ))}

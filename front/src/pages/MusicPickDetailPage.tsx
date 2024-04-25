@@ -1,8 +1,14 @@
 import MusicPickDetailBottom from "@components/music/pick/MusicPickDetailBottom";
 import MusicPickDetailTop from "@components/music/pick/MusicPickDetailTop";
+import { optionModalState, reportModalState } from "@store/music/pick/atoms";
 import "@styles/music/pick/MusicPickDetailPage.scss";
+import { useEffect } from "react";
+import { useResetRecoilState } from "recoil";
 
 const MusicPickDetailPage = () => {
+  const resetOptionModal = useResetRecoilState(optionModalState);
+  const resetReportModal = useResetRecoilState(reportModalState);
+
   const marker = {
     throwId: 1,
     title: "I Don't Think That I Like Her Her",
@@ -13,6 +19,11 @@ const MusicPickDetailPage = () => {
     content: "봄에 비가 오면 생각나는 노래 ☔ ",
     thrownDate: "2024-04-24T19:49:30",
   };
+
+  useEffect(() => {
+    resetOptionModal();
+    resetReportModal();
+  }, []);
 
   return (
     <div className="MusicPickDetailPage">

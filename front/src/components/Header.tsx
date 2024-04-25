@@ -1,6 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import "@styles/Header.scss";
+import { useRecoilState } from "recoil";
+import { inputSearchKeyWord } from "@store/musicSearch/atoms";
 
 interface Props {
   centerText?: string;
@@ -8,8 +10,15 @@ interface Props {
 
 const Header = ({ centerText }: Props) => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchKeyWord, setSearchKeyWord] = useRecoilState(inputSearchKeyWord);
 
   const handleBackNavigation = () => {
+    if (location.pathname === '/music/search') {
+      if (searchKeyWord !== '') {
+        setSearchKeyWord('')
+      }
+    }
     navigate(-1);
   };
 

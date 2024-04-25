@@ -4,15 +4,21 @@
   .searchResults {
 
     .result-item {
+      cursor: pointer;
       display: flex;
       flex-direction: row;
-      padding: 1dvh 0px 1dvh 0px;
+      align-items: center;
+      padding: 1dvh 0;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
-      img {
-        width: 8dvh;
-        height: 8dvh;
-        border-radius: 1dvh;
+      .image-container {
+        padding-right: 1dvh;
+
+        img {
+          width: 5dvh;
+          height: 5dvh;
+          border-radius: 1dvh;
+        }
       }
 
       .item-wide {
@@ -21,7 +27,6 @@
         justify-content: space-between;
 
         .item-detail {
-          padding-left: 2dvh;
           display: flex;
           flex-direction: column;
           align-items: start;
@@ -30,7 +35,7 @@
 
           .item-title {
             width: 25dvh;
-            font-size: 2dvh;
+            font-size: 1.8dvh;
             font-weight: 600;
             padding-bottom: 0.5dvh;
             text-overflow: ellipsis;
@@ -39,10 +44,14 @@
           }
   
           .item-artist {
+            width: 25dvh;
             padding-top: 0.5dvh;
-            font-size: 1.7dvh;
+            font-size: 1.5dvh;
             font-weight: 500;
             color: var(--subtitle-color);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
           }
         }
         

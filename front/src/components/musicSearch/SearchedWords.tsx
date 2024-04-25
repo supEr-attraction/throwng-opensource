@@ -1,45 +1,26 @@
-import { useState, useEffect } from "react"
 import { MdOutlineClear } from "react-icons/md";
 import NoSearchWords from "./NoSearchWords";
 import "@styles/musicSearch/SearchedWords.scss"
-
-interface SearchedWordsList {
-  id: number,
-  title: string
-}
+import { useRecoilState } from "recoil";
+import { searchedWords } from "@store/musicSearch/atoms";
+import { SearchedWordsList } from "../../types/songType.ts"
 
 interface Props {
   onWordClick: (title: string) => void,
 }
 
 const SearchedWords = ({onWordClick}:Props) => {
-  const [searchedWords, setSearchedWords] = useState<SearchedWordsList[]>([])
-
-  // useEffect(() => {
-  //   // api 호출
-  // },[searchedWords])
-
-  useEffect(() => {
-    const dummyList: SearchedWordsList[] = [
-      { id: 1, title: "에스파" },
-      { id: 2, title: "아이브" },
-      { id: 3, title: "아이즈원" },
-      { id: 4, title: "아일릿" },
-    ];
-    setSearchedWords(dummyList);
-  }, [])
+  const [words, setWords] = useRecoilState<SearchedWordsList[]>(searchedWords)
 
   const deleteWord = (id: number) => {
-    setSearchedWords((words) => words.filter((word) => word.id !== id));
-    // api 호출
+    setWords((words) => words.filter((word) => word.id !== id));
   };
 
   const deleteAll = () => {
-    setSearchedWords([]);
-    // api 호출
+    setWords([]);
   };
 
-  if (searchedWords.length === 0) {
+  if (words.length === 0) {
     return (
       <NoSearchWords/>
     )
@@ -52,7 +33,7 @@ const SearchedWords = ({onWordClick}:Props) => {
         <div className="all-delete" onClick={deleteAll}>전체 삭제</div>
       </div>
       <div className="word-list">
-        {searchedWords.map((word) => (
+        {words.map((word) => (
           <div key={word.id} className="word-item">
             <div onClick={() => onWordClick(word.title)}>{word.title}</div>
             <MdOutlineClear className="word-delete" onClick={() => deleteWord(word.id)}/>
