@@ -20,13 +20,11 @@
       background-color: white;
       width: 20dvh;
       height: 20dvh;
-      // border-radius: 100dvh;
       border-radius: 1dvh;
 
       .upload-image {
         width: inherit;
         height: inherit;
-        // border-radius: 100dvh;
         border-radius: 1dvh;
       }
     }
@@ -68,10 +66,13 @@
     }
 
     .input-div {
-      position: relative;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      background-color: var(--input-box-color);
+      border: none;
+      border-radius: 1vh;
 
       textarea::placeholder {
         color: var(--placeholder-color);
@@ -84,25 +85,24 @@
       }
       
       .input-area {
-        padding: 2dvh;
-        width: 40dvh;
+        padding: 3dvh;
+        width: 100%;
         height: 15dvh;
-        background-color: var(--input-box-color);
-        border: none;
-        border-radius: 1vh;
+        background-color: transparent;
         caret-color: white;
+        border: none;
+        font-size: 1.7dvh;
         color: #ffffff;
         resize: none;
         overflow: auto;
       }
 
       .input-count {
-        z-index: 1;
+        padding: 1dvh;
+        width: 100%;
+        text-align: right;
         color: var(--placeholder-color);
         font-size: 1.5vh;
-        position: absolute;
-        right: 2vh;
-        bottom: 2dvh;
       }
     }
 
