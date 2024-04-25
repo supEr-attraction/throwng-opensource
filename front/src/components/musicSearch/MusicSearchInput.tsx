@@ -1,6 +1,8 @@
 import { useRef, useEffect } from "react"
 import { MdOutlineClear } from "react-icons/md";
 import "@/styles/musicSearch/MusicSearchInput.scss"
+import { useRecoilState } from "recoil";
+import { inputSearchKeyWord } from "@store/musicSearch/atoms";
 
 interface Props {
   onSearch: (songInfo: string) => void;
@@ -10,6 +12,7 @@ interface Props {
 
 const MusicSearchInput = ({ onSearch, title, setTitle }: Props) => {
   const inputEl = useRef<HTMLInputElement>(null);
+  const [text, setText] = useRecoilState(inputSearchKeyWord)
 
   useEffect(() => {
     inputEl.current!.focus();
@@ -18,35 +21,31 @@ const MusicSearchInput = ({ onSearch, title, setTitle }: Props) => {
   const titleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     if (e.target.value === '') {
-      if (localStorage.getItem('searchKeyWord')) {
-        localStorage.removeItem('searchKeyWord')
-      }
+      setText('');
       onSearch('');
     }
   };
 
   const titleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (localStorage.getItem('searchKeyWord')) {
-      localStorage.removeItem('searchKeyWord')
-    }
-    localStorage.setItem('searchKeyWord', JSON.stringify(title));
+    setText(title);
     onSearch(title);
+    inputEl.current!.blur()
   };
 
   const clearTitle = () => {
     setTitle('');
     inputEl.current!.focus();
-    if (localStorage.getItem('searchKeyWord')) {
-      localStorage.removeItem('searchKeyWord')
-    }
+    setText('');
     onSearch('');
   };
 
   return (
     <form className="MusicSearchInput" onSubmit={titleOnSubmit}>
-      <input className="input" ref={inputEl} type="text" placeholder="검색어를 입력하세요." value={title} onChange={titleOnChange} />
-      {title && <MdOutlineClear className="clear-button" onClick={clearTitle} />}
+      <div className="input-div">
+        <input className="input" ref={inputEl} type="text" placeholder="검색어를 입력하세요." value={title} onChange={titleOnChange} maxLength={10} />
+        {text && <MdOutlineClear className="clear-button" onClick={clearTitle} />}
+      </div>
     </form>
   );
 };

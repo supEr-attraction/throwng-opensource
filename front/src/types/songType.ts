@@ -14,3 +14,8 @@ export interface SongHistory extends SongInfo {
   date: string;
   location: string
 }
+
+export interface SearchedWordsList {
+  id: number,
+  title: string
+}

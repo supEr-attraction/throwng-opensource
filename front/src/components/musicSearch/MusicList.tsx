@@ -12,7 +12,7 @@ const MusicList = ({searchResults, onWordClick}:Props) => {
   const navigate = useNavigate();
 
   const handleGoNavigation = (song : Song) => {
-    navigate(`/music/drop/${song.id}`, {state: {image:song.image}})
+    navigate(`/music/drop/${song.id}`, {state: {song:song}})
   }
 
   return (

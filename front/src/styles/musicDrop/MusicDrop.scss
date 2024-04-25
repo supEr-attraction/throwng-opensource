@@ -1,57 +1,9 @@
 .MusicDrop {
-
-  .drop-bg {
-    width: 100dvw;
-    height: 35dvh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .flex-div {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .upload-image-div{
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: white;
-      width: 20dvh;
-      height: 20dvh;
-      border-radius: 1dvh;
-
-      .upload-image {
-        width: inherit;
-        height: inherit;
-        border-radius: 1dvh;
-      }
-    }
-
-    svg {
-      width: 4dvh;
-      height: 4dvh;
-      color: #5D6470;
-    }
-  }
-
-  .reselect-image {
-    font-size: 1.4vh;
-    color: #000000;
-    text-decoration: underline;
-    text-align: center;
-    
-    &:active {
-      color: var(--placeholder-color);
-    }
-  }
-
   .body {
     padding: 3dvh;
     display: flex;
     flex-direction: column;
-    gap: 4dvh;
+    gap: 3dvh;
 
     .header {
       font-weight: bold;
@@ -132,6 +84,7 @@
         border-radius: 2dvh;
         font-size: 2dvh;
         width: 40dvh;
+        cursor: pointer;
       }
     }
   }

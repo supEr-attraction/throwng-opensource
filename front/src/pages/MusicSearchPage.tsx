@@ -3,6 +3,9 @@ import MusicSearchInput from "@components/musicSearch/MusicSearchInput"
 import MusicList from './../components/musicSearch/MusicList';
 import { useEffect, useState } from "react";
 import {Song} from "../types/songType.ts" 
+import { useRecoilState } from "recoil";
+import { inputSearchKeyWord, searchedWords } from "@store/musicSearch/atoms.ts";
+import { SearchedWordsList } from "../types/songType.ts"
 import "@/styles/musicSearch/MusicSearchPage.scss"
 
 import 피카1 from "@assets/images/피카1.png"
@@ -11,18 +14,23 @@ import 피카3 from "@assets/images/피카3.png"
 
 const MusicSearchPage = () => {
   const [searchResults, setSearchResults] = useState<Song[]>([]);
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useRecoilState(inputSearchKeyWord);
+  const [words, setWords] = useRecoilState<SearchedWordsList[]>(searchedWords)
 
   useEffect(() => {
-    const searchKeyWord = localStorage.getItem('searchKeyWord')
-    if (searchKeyWord) {
-      setTitle(JSON.parse(searchKeyWord))
-      onSearch(JSON.parse(searchKeyWord))
+    if (title !== '') {
+      onSearch(title)
     }
   }, [])
 
   const onSearch = (searchKeyWord: string) => {
     setTitle(searchKeyWord);
+    if (searchKeyWord !== ''){
+      setWords((prevWords) => {
+        const lastId = prevWords.length ? prevWords[prevWords.length - 1].id : 0;
+        return [...prevWords, { id: lastId + 1, title: searchKeyWord }];
+      });
+    }
     // api 호출하여 setSearchResults에 값 넣기
     const results = searchKeyWord ? [
       { id: 1, image: 피카1, artist: "aespa", title: "Spicy", playtime: "3:45" },
@@ -41,10 +49,7 @@ const MusicSearchPage = () => {
   const onWordClick = (searchKeyWord: string) => {
     setTitle(searchKeyWord);
     onSearch(searchKeyWord);
-    if (localStorage.getItem('searchKeyWord')) {
-      localStorage.removeItem('searchKeyWord')
-    }
-    localStorage.setItem('searchKeyWord', JSON.stringify(searchKeyWord));
+    console.log(words)
   };
 
   return (
