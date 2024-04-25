@@ -5,8 +5,8 @@ const  MyLevel = () => {
   const [level, setLevel] = useState(1);
   const [drop, setDrop] = useState(7);
   const [pick, setPick] = useState(8);
-  // const [isBlock, setIsBlock] = useState(false);
-  const [isBlock, setIsBlock] = useState('7일 정지');
+  const [isBlock, setIsBlock] = useState(false);
+  // const [isBlock, setIsBlock] = useState('7일 정지');
 
   useEffect(() => {
     // API 호출 후 setStat에 내 능력치 할당하기

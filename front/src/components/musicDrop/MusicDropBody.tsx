@@ -3,14 +3,12 @@ import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { locationState } from "@store/map/atoms";
 import "@styles/musicDrop/MusicDrop.scss"
-import { useNavigate } from "react-router-dom";
 
 const MusicDropBody = () => {
   const [count, setCount] = useState(0);
   const [text, setText] = useState('')
   const inputEl = useRef<HTMLTextAreaElement>(null);
   const myLocation = useRecoilValue(locationState);
-  const navigate = useNavigate();
 
   const textOnChange = (e:React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 50) {
