@@ -79,5 +79,12 @@
     &:last-child {
       border-bottom: none;
     }
+
+    .no-result {
+      display: flex;
+      height: 40dvh;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }

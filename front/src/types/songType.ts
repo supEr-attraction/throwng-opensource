@@ -1,12 +1,12 @@
-interface SongInfo {
-  id: number;
-  image: string;
+export interface SongInfo {
+  youtubeId: string;
+  albumImage: string;
   artist: string;
   title: string;
 }
 
 export interface Song extends SongInfo {
-  playtime: string;
+  playTime: string;
 }
 
 export interface SongHistory extends SongInfo {

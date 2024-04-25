@@ -2,7 +2,7 @@ import Header from "@components/Header";
 import whiteBox from "@assets/images/whiteBox.webp";
 import "@styles/musicDrop/MusicDropHeader.scss";
 import { Song } from "../../types/songType";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 
 interface Props {
@@ -12,6 +12,21 @@ interface Props {
 const MusicDropHeader = ({ songInfo }: Props) => {
   const [imagePreview, setImagePreview] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const [isScrollNeeded, setIsScrollNeeded] = useState(false);
+
+  useEffect(() => {
+    if (textRef.current) {
+      const textWidth = textRef.current.scrollWidth;
+      const containerWidth = textRef.current.clientWidth;
+
+      if (textWidth > containerWidth) {
+        setIsScrollNeeded(true);
+      } else {
+        setIsScrollNeeded(false);
+      }
+    }
+  }, []);
 
   const handleFileButtonClick = () => {
     fileRef.current!.click();
@@ -27,7 +42,7 @@ const MusicDropHeader = ({ songInfo }: Props) => {
   return (
     <div className="MusicDropHeader">
       <div className="album-image-container">
-        <img className="album-image" src={songInfo.image} alt="" />
+        <img className="album-image" src={songInfo.albumImage} alt="" />
       </div>
       <div className="cover">
         <div className="black-cover" />
@@ -36,7 +51,16 @@ const MusicDropHeader = ({ songInfo }: Props) => {
           <Header />
           <div className="content-bottom">
             <div>
-              <div className={`title`}>{songInfo.title}</div>
+              <div className={`title`}>
+                <div
+                  ref={textRef}
+                  className={`scrolling-text ${
+                    isScrollNeeded ? "animated" : ""
+                  }`}
+                >
+                  {songInfo.title}
+                </div>
+              </div>
               <div className="artist">{songInfo.artist}</div>
             </div>
             <div className="upload-image-div" onClick={handleFileButtonClick}>
@@ -51,7 +75,7 @@ const MusicDropHeader = ({ songInfo }: Props) => {
               {!imagePreview && <IoCloudUploadOutline />}
             </div>
             {imagePreview && (
-              <div className="reselect-image">이미지 다시 선택하기</div>
+              <div className="reselect-image" onClick={handleFileButtonClick}>이미지 다시 선택하기</div>
             )}
             <input
               type="file"
