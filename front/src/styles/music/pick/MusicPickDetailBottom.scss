@@ -1,6 +1,6 @@
 .MusicPickDetailBottom {
   padding: 3dvh;
-  flex: 1;
+  height: 50dvh;
   display: flex;
   flex-direction: column;
   gap: 2dvh;
@@ -19,6 +19,7 @@
       justify-content: end;
       svg {
         color: #7b66ff;
+        cursor: pointer;
       }
     }
 
@@ -45,6 +46,7 @@
       font-size: 2.2dvh;
       padding-block: 2dvh;
       border-radius: 1dvh;
+      cursor: pointer;
 
       &.listen {
         flex: 3;
