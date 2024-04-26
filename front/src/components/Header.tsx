@@ -6,19 +6,25 @@ import { inputSearchKeyWord } from "@store/musicSearch/atoms";
 
 interface Props {
   centerText?: string;
+  func?: () => void;
 }
 
-const Header = ({ centerText }: Props) => {
+const Header = ({ centerText, func }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchKeyWord, setSearchKeyWord] = useRecoilState(inputSearchKeyWord);
 
   const handleBackNavigation = () => {
-    if (location.pathname === '/music/search') {
-      if (searchKeyWord !== '') {
-        setSearchKeyWord('')
+    if (location.pathname === "/music/search") {
+      if (searchKeyWord !== "") {
+        setSearchKeyWord("");
       }
     }
+
+    if (func) {
+      func();
+    }
+
     navigate(-1);
   };
 

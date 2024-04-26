@@ -1,59 +1,54 @@
-import { CIRCLE_OPTIONS, CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
-import {
-  GoogleMap,
-  useJsApiLoader,
-  MarkerF,
-  CircleF,
-  OverlayViewF,
-} from "@react-google-maps/api";
-import { useCallback, useEffect, useState } from "react";
+import { CENTER, CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { memo, useCallback, useEffect, useState } from "react";
 import MapHeader from "./MapHeader";
-import marker from "@assets/images/usermarker.webp";
-import whitePin from "@assets/images/whitePin.webp";
-import purplePin from "@assets/images/purplePin.webp";
-import "@styles/map/Map.scss";
-import { toastMsg } from "@/utils/toastMsg";
 import { ToasterMsg } from "@components/ToasterMsg";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  activeMarkerState,
+  addressState,
   locationState,
   markersState,
+  prevLocationState,
 } from "@store/map/atoms";
+import { Location } from "../../types/mapType";
+import "@styles/map/Map.scss";
+import getDistance from "@/utils/map/getDistance";
+import MyLocation from "@components/map/MyLocation";
+import MusicMarkerItem from "@components/map/MusicMarkerItem";
 
-interface Location {
-  lat: number;
-  lng: number;
-}
-
-interface Marker {
-  id: number;
-  position: Location;
-}
-
-const googleMapsLibraries: ("places" | "geometry")[] = ["places", "geometry"];
+const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
 
 const Map = () => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: "AIzaSyB6-Xpzz_O5OWj5KOavve7YKqn2ii_4uoQ",
     language: "ko",
-    libraries: googleMapsLibraries,
+    libraries: GOOGLE_MAPS_LIBRARIES,
   });
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [address, setAddress] = useState("");
-  const markers = useRecoilValue(markersState);
   const [location, setLocation] = useRecoilState(locationState);
-  const [activeMarkerId, setActiveMarkerId] = useRecoilState(activeMarkerState);
+  const [prevLocation, setPrevLocation] = useRecoilState(prevLocationState);
+  const setAddress = useSetRecoilState(addressState);
+  const markers = useRecoilValue(markersState);
 
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
   const onUnmount = useCallback(() => setMap(null), []);
 
-  const a = (currentLocation: Location) => {
-    setLocation(currentLocation);
-    map?.panTo(currentLocation);
+  const updateMyLocation = () => {
+    map?.panTo(location);
     map?.setZoom(15);
+  };
+
+  const updateLocation = (position: GeolocationPosition) => {
+    const currentLocation = {
+      lat: position.coords.latitude,
+      lng: position.coords.longitude,
+    };
+
+    getOnClickFunction(currentLocation);
+    setLocation(currentLocation);
+    // map?.panTo(currentLocation);
     fetchAddress(currentLocation);
   };
 
@@ -91,21 +86,18 @@ const Map = () => {
     }
   };
 
-  const outsideCircleClick = () => {
-    toastMsg("반경 밖 음악을 듣고 싶다면 위치를 이동해 보세요!");
-    setActiveMarkerId(null);
-  };
-
-  const getOnClickFunction = (marker: Marker) => {
+  const getOnClickFunction = (current: Location) => {
     // console.log(marker);
-    const distance = google.maps.geometry.spherical.computeDistanceBetween(
-      new google.maps.LatLng(location.lat, location.lng),
-      new google.maps.LatLng(marker.position.lat, marker.position.lng)
-    );
+    if (isLoaded) {
+      const distance = getDistance(prevLocation, location);
 
-    return distance <= 600
-      ? setActiveMarkerId(marker.id) // handleMarkerClick(marker.id)
-      : outsideCircleClick();
+      if (distance >= 50) {
+        setPrevLocation(current);
+        return true;
+      } else {
+        return false;
+      }
+    }
   };
 
   useEffect(() => {
@@ -117,66 +109,50 @@ const Map = () => {
             lng: position.coords.longitude,
           };
           setLocation(currentLocation);
-          map?.panTo(currentLocation);
+          setPrevLocation(currentLocation);
           fetchAddress(currentLocation);
+          map?.panTo(currentLocation);
         },
         () => {
           console.error("Error fetching location");
         }
       );
+
+      const watchId = navigator.geolocation.watchPosition(
+        updateLocation,
+        () => {
+          console.error("Error fetching location");
+        }
+      );
+
+      // Clean up watcher on unmount
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
     }
   }, [map]);
 
   return isLoaded ? (
     <div className="Map">
-      <MapHeader address={address} a={a} />
+      <MapHeader updateMyLocation={updateMyLocation} />
       <GoogleMap
         mapContainerStyle={CONTAINER_STYLE}
-        center={location}
+        center={CENTER}
         zoom={15}
         options={MAP_OPTIONS}
         onLoad={onLoad}
         onUnmount={onUnmount}
       >
-        <CircleF center={location} options={CIRCLE_OPTIONS} />
-        <MarkerF
-          position={location}
-          icon={{
-            url: marker,
-            scaledSize: new window.google.maps.Size(60, 60),
-            anchor: new window.google.maps.Point(30, 30),
-          }}
-        />
+        <MyLocation />
         {markers.map((marker) => (
-          <OverlayViewF
-            key={marker.id}
-            position={marker.position}
-            mapPaneName="overlayMouseTarget"
-            getPixelPositionOffset={(width, height) => ({
-              x: -width / 2,
-              y: -height / 1.2,
-            })}
-          >
-            <div
-              onClick={() => {
-                getOnClickFunction(marker);
-              }}
-            >
-              <img
-                src={marker.id === activeMarkerId ? purplePin : whitePin}
-                alt="Custom Overlay"
-                style={{ width: "30px", height: "35px" }}
-              />
-              <div className="cover-img">
-                <img src={marker.music.img} alt="Custom Overlay" />
-              </div>
-            </div>
-          </OverlayViewF>
+          <MusicMarkerItem key={marker.itemId} marker={marker} />
         ))}
       </GoogleMap>
       <ToasterMsg />
     </div>
-  ) : null;
+  ) : (
+    <></>
+  );
 };
 
-export default Map;
+export default memo(Map);
