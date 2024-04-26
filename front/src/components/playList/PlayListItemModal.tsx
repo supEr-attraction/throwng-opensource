@@ -3,7 +3,7 @@ import { SongInfo } from "../../types/songType"
 import { IoSearch } from "react-icons/io5";
 import { GiMicrophone } from "react-icons/gi";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useSetRecoilState } from "recoil";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { detailModal, speedListenModal } from "@store/playList/atoms";
 import { useEffect } from "react";
 import { inputSearchKeyWord } from "@store/musicSearch/atoms";
@@ -15,13 +15,13 @@ interface Props {
 
 const PlayListItemModal = ({song}:Props) => {
   const setModalSongIndex = useSetRecoilState(detailModal);
-  const setSpeedModal = useSetRecoilState(speedListenModal);
+  const setSpeedModal = useResetRecoilState(speedListenModal);
   const setInputSearchKeyWord = useSetRecoilState(inputSearchKeyWord);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setSpeedModal(null)
-  })
+    setSpeedModal()
+  }, [])
 
   const deleteSong = (e:React.MouseEvent<HTMLLIElement>) => {
     // 지우는 api 호출 params = {song.youtubeId}
