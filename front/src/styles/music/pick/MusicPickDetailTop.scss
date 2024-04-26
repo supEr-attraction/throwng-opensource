@@ -11,7 +11,7 @@
   .cover {
     .black-cover {
       background-color: #0f1114;
-      opacity: 0.5;
+      opacity: 0.3;
       position: absolute;
       inset: 0;
     }
@@ -20,8 +20,9 @@
       background: linear-gradient(180deg, rgba(23, 25, 31, 0) 0%, #0f1114 100%);
       position: absolute;
       bottom: 0;
-      height: 50dvh;
-      inset-inline: 0;
+      inset: 0;
+      // height: 50dvh;
+      // inset-inline: 0;
     }
 
     .content {
@@ -32,7 +33,7 @@
 
       .content-bottom {
         flex: 1;
-        padding-bottom: 5dvh;
+        padding-bottom: 3dvh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -44,10 +45,9 @@
           align-items: center;
 
           .title {
-            font-size: 3dvh;
+            font-size: 2.8dvh;
             font-weight: bold;
             width: calc(100vw - 6vh);
-
             overflow: hidden;
 
             > div {
@@ -56,7 +56,7 @@
               text-align: center;
 
               &.animated {
-                animation: scroll 5s linear infinite; /* 애니메이션 적용 */
+                animation: scroll 7s linear infinite; /* 애니메이션 적용 */
               }
             }
           }
@@ -83,7 +83,7 @@
     transform: translateX(100%);
   }
   100% {
-    transform: translateX(-150%);
+    transform: translateX(-120%);
   }
 }
 // @keyframes scroll {

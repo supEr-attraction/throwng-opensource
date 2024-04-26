@@ -41,7 +41,8 @@ export const markersState = atom<Marker[]>({
       latitude: 35.203117334571935,
       longitude: 126.80858111342218,
       albumImage:
-        "https://www.akbobada.com/home/akbobada/archive/akbo/img/202404011417025.jpg",
+        // "https://www.akbobada.com/home/akbobada/archive/akbo/img/202404011417025.jpg",
+        "https://i.ytimg.com/vi/Zj9-RiEf4Og/hqdefault.jpg",
       songTitle: "Magnetic",
       artistName: "아일릿(ILLIT)",
     },

@@ -22,6 +22,8 @@
         border-radius: 4dvh;
         filter: blur(2px);
         padding: 2dvh;
+        object-fit: cover;
+        aspect-ratio: 1;
       }
 
       .content {
@@ -67,6 +69,7 @@
   }
 
   .black-bottom-gradient {
+    margin: 0 auto;
     background: linear-gradient(180deg, rgba(23, 25, 31, 0) 10%, #0f1114 100%);
     position: fixed;
     bottom: 0;
