@@ -1,3 +1,8 @@
+export const CENTER = {
+  lat: 35.20532120647508,
+  lng: 126.81149710166211,
+};
+
 export const CONTAINER_STYLE = {
   width: "100dvw",
   height: "100dvh",
@@ -132,7 +137,7 @@ export const CIRCLE_OPTIONS = {
   strokeOpacity: 0.5,
   strokeWeight: 1,
   fillColor: "#7B66FF",
-  fillOpacity: 0.03,
+  fillOpacity: 0.05,
   clickable: false,
   draggable: false,
   editable: false,
