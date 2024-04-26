@@ -8,7 +8,7 @@ import 피카1 from "@assets/images/피카1.png"
 
 import PlayListItemModal from "./PlayListItemModal";
 import PlayListDirectListenModal from "./PlayListDirectListenModal";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useResetRecoilState } from "recoil";
 import { detailModal } from "@store/playList/atoms";
 import { speedListenModal } from "@store/playList/atoms";
 
@@ -16,6 +16,8 @@ const PlayListBody = () => {
   const [playList, setPlayList] = useState<SongInfo[]>([]);
   const [modalSongIndex, setModalSongIndex] = useRecoilState(detailModal);
   const [speedModal, setSpeedModal] = useRecoilState(speedListenModal);
+  const resetPlayModal = useResetRecoilState(speedListenModal);
+  const resetDetailModal = useResetRecoilState(detailModal);
 
   // const [page, setPage] = useState(0);
   // const [hasMore, setHasMore] = useState(true);
@@ -60,6 +62,8 @@ const PlayListBody = () => {
       { youtubeId: 'zxcv', albumImage: 피카1, artist: "정태윤", title: "내일 결혼식",},
     ]
     setPlayList(data)
+    resetPlayModal();
+    resetDetailModal();
   }, [])
 
   const modalStateHandler = (index: number) => {
