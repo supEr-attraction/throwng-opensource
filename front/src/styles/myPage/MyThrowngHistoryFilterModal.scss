@@ -40,11 +40,18 @@
       .filter-list {
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
-        .filter-item {
+        justify-content: space-evenly;
+        align-items: center;
 
-          &:active {
-            
+        .filter-item {
+          font-size: 1.8dvh;
+          padding: 1dvh;
+          border-radius: 1dvh;
+          border: transparent 2px solid;
+
+
+          &.selected {
+            border: var(--main-color) 2px solid;
           }
         }
       }

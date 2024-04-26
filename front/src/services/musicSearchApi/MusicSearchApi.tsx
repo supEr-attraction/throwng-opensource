@@ -1,10 +1,12 @@
-import { axiosApi } from "@/utils/common";
+// import { axiosApi } from "@/utils/common";
 
-const api = axiosApi()
+import axios from "axios"
+
+// const api = axiosApi()
 
 const getSearchMusic = async(data:string) => {
   try {
-    const res = await api.get(`/music/search/${data}`)
+    const res = await axios.get(`http://throwng.store:8084/music/search/${data}`)
     console.log(res.data)
     return res
   } catch (e) {
