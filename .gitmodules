@@ -1,0 +1,3 @@
+[submodule "front/throwng_front_submodule"]
+	path = front/throwng_front_submodule
+	url = https://lab.ssafy.com/wjdxodbs52/throwng_front_submodule.git
