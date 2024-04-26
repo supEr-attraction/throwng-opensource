@@ -5,8 +5,8 @@ import OptionModal from "./OptionModal";
 import ReportModal from "@components/music/pick/ReportModal";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { optionModalState, reportModalState } from "@store/music/pick/atoms";
-import "@styles/music/pick/MusicPickDetailBottom.scss";
 import { ToasterMsg } from "@components/ToasterMsg";
+import "@styles/music/pick/MusicPickDetailBottom.scss";
 
 interface Props {
   marker: {

@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   max-width: 450px;
+  -webkit-tap-highlight-color: transparent;
   // -ms-overflow-style: none;
   // ::-webkit-scrollbar {
   //   display: none;
@@ -12,7 +13,7 @@
 html {
   background: #eeeeee;
   position: relative;
-  margin: auto;
+  margin: 0 auto;
 }
 
 body {
