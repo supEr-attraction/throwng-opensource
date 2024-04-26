@@ -49,7 +49,7 @@ const MusicSearchInput = ({ onSearch, title, setTitle }: Props) => {
     <form className="MusicSearchInput" onSubmit={titleOnSubmit}>
       <div className="container">
         <div className="input-div">
-          <input className="input" ref={inputEl} type="text" placeholder="검색어를 입력하세요." value={title} onChange={titleOnChange} maxLength={10} />
+          <input className="input" ref={inputEl} type="text" placeholder="검색어를 입력하세요." value={title} onChange={titleOnChange} maxLength={30} />
           {title && <MdOutlineClear className="clear-button" onClick={clearTitle} />}
         </div>
       </div>

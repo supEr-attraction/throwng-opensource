@@ -2,14 +2,23 @@ import { useNavigate } from "react-router-dom"
 import {Song} from "../../types/songType.ts"
 import SearchedWords from "./SearchedWords.tsx"
 import "@styles/musicSearch/MusicList.scss"
+import { useRecoilValue, useResetRecoilState } from "recoil"
+import { inputSearchKeyWord, searchResultsState } from "@store/musicSearch/atoms.ts"
+import { useEffect } from "react"
 
 interface Props {
-  searchResults?: Song[],
   onWordClick: (title: string) => void,
 }
 
-const MusicList = ({searchResults, onWordClick}:Props) => {
+const MusicList = ({onWordClick}: Props) => {
+  const searchResults = useRecoilValue(searchResultsState);
   const navigate = useNavigate();
+  const title = useRecoilValue(inputSearchKeyWord);
+  const resetSearchResults = useResetRecoilState(searchResultsState);
+
+  useEffect(() => {
+    resetSearchResults();
+  }, [title]);
 
   const handleGoNavigation = (song : Song) => {
     navigate(`/music/drop/${song.youtubeId}`, {state: {song:song}})
@@ -31,7 +40,6 @@ const MusicList = ({searchResults, onWordClick}:Props) => {
                   <div className="item-title">{song.title}</div>
                   <div className="item-artist">{song.artist}</div>
                 </div>
-                <div className="item-length">{song.playTime}</div>
               </div>
             </div>
           ))}

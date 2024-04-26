@@ -3,6 +3,8 @@ import { SongHistory } from "../../types/songType.ts";
 import "@styles/myPage/MyThrowngHistroyList.scss";
 import { TiLocation } from "react-icons/ti";
 import { getMyDropHistory, getMyPickHistory } from "@services/myPageHistoryApi/MyPageHistoryApi.tsx";
+import { useRecoilValue } from "recoil";
+import { throwngFilter } from "@store/myPage/atoms.ts";
 
 interface Props {
   pageIdx: boolean;
@@ -12,6 +14,7 @@ interface Props {
 const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   const [songHistoryList, setSongHistoryList] = useState<SongHistory[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const filter = useRecoilValue(throwngFilter);
 
   const fetchHistory = useCallback(async () => {
     if (isLoading) return;
@@ -23,23 +26,23 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
 
     if (res && res.data) {
       setSongHistoryList((prevList) => [...prevList, ...res.data]);
-      setHistoryCnt((prevCnt) => prevCnt + res.data.length);
+      setHistoryCnt((prevCnt) => prevCnt + 1);
     }
     setIsLoading(false);
-  }, [pageIdx, isLoading]);
+  }, [pageIdx, isLoading, filter]);
 
   useEffect(() => {
     // fetchHistory();
-    const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop !==
-        document.documentElement.offsetHeight
-      )
-        return;
-    };
+    // const handleScroll = () => {
+    //   if (
+    //     window.innerHeight + document.documentElement.scrollTop !==
+    //     document.documentElement.offsetHeight
+    //   )
+    //     return;
+    // };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    // window.addEventListener("scroll", handleScroll);
+    // return () => window.removeEventListener("scroll", handleScroll);
   }, [fetchHistory]);
 
   const handleGoNavigation = (song: SongHistory) => {

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { locationState } from "@store/map/atoms";
+import { addressState, locationState } from "@store/map/atoms";
 import "@styles/musicDrop/MusicDrop.scss";
 
 const MusicDropBody = () => {
@@ -8,6 +8,7 @@ const MusicDropBody = () => {
   const [text, setText] = useState("");
   const inputEl = useRef<HTMLTextAreaElement>(null);
   const myLocation = useRecoilValue(locationState);
+  const myAddress = useRecoilValue(addressState);
 
   const textOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 50) {
@@ -20,9 +21,7 @@ const MusicDropBody = () => {
 
   const postThrownSong = () => {
     console.log(`Latitude: ${myLocation.lat}, Longitude: ${myLocation.lng}`);
-    const youtubeMusicUrl = "youtubemusic://watch?list=gwuCZYJdnT8";
-    // const youtubeMusicUrl = 'https://www.youtube.com/watch?v=gwuCZYJdnT8';
-    window.location.href = youtubeMusicUrl;
+    console.log(myAddress)
   };
 
   return (
@@ -30,7 +29,7 @@ const MusicDropBody = () => {
       <div className="body">
         <div className="header">
           <p>
-            <span>어드레스</span>에
+            <span>{myAddress}</span>에
           </p>
           음악을 두고 갈까요?
         </div>
