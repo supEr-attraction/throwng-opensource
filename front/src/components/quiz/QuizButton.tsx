@@ -8,16 +8,6 @@ interface QuizButtonProps {
 
 const QuizButton = ({ onClick, label, visible = true }: QuizButtonProps) => {
   if (!visible) return null;
-  // button visible reuse logic (another page)
-  // const [buttonVisible, setButtonVisible] = useState(false);
-
-  // useEffect(() => {
-  //   setButtonVisible(areAllChecked());
-  // }, [items]);
-
-  // const handleQuizStart = () => {
-  //   navigate("/quiz/solve");
-  // };
 
   return (
     <div className="QuizButton">
