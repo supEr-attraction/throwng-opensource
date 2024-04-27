@@ -2,6 +2,8 @@ import Header from "@components/Header";
 import whiteBox from "@assets/images/whiteBox.webp";
 import "@styles/music/pick/MusicPickDetailTop.scss";
 import { useEffect, useRef, useState } from "react";
+import { useRecoilValue, useResetRecoilState } from "recoil";
+import { addressState, swiperState } from "@store/map/atoms";
 
 interface Props {
   marker: {
@@ -18,6 +20,8 @@ interface Props {
 const MusicPickDetailTop = ({ marker }: Props) => {
   const textRef = useRef<HTMLDivElement>(null);
   const [isScrollNeeded, setIsScrollNeeded] = useState(false);
+  const resetSwiper = useResetRecoilState(swiperState);
+  const address = useRecoilValue(addressState);
 
   useEffect(() => {
     if (textRef.current) {
@@ -43,7 +47,7 @@ const MusicPickDetailTop = ({ marker }: Props) => {
         <div className="black-cover" />
         <div className="black-gradient" />
         <div className="content">
-          <Header />
+          <Header func={resetSwiper} centerText={address} />
           <div className="content-bottom">
             <div>
               {/* <div

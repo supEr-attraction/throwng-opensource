@@ -1,20 +1,9 @@
-interface Marker {
-  id: number;
-  position: { lat: number; lng: number };
-  music: {
-    img: string;
-    title: string;
-    singer: string;
-  };
-}
+import { Location } from "../../types/mapType";
 
-const getDistance = (
-  marker: Marker,
-  location: { lat: number; lng: number }
-) => {
+const getDistance = (marker: Location, location: Location) => {
   const distance = google.maps.geometry.spherical.computeDistanceBetween(
     new google.maps.LatLng(location.lat, location.lng),
-    new google.maps.LatLng(marker.position.lat, marker.position.lng)
+    new google.maps.LatLng(marker.lat, marker.lng)
   );
 
   return distance;

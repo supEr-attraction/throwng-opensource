@@ -1,4 +1,6 @@
+import QuizFail from "@pages/quiz/QuizFail";
 import QuizSolvePage from "@pages/quiz/QuizSolvePage";
+import QuizSuccess from "@pages/quiz/QuizSuccess";
 import { lazy } from "react";
 const PrivateRoute = lazy(() => import("@components/PrivateRoute"));
 const HomePage = lazy(() => import("@pages/HomePage"));
@@ -73,6 +75,14 @@ export default {
           path: "solve",
           element: <QuizSolvePage />,
         },
+        {
+          path: "success",
+          element: <QuizSuccess />
+        },
+        {
+          path: "fail",
+          element: <QuizFail />
+        }
       ],
     },
   ],

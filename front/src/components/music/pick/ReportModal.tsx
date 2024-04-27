@@ -27,7 +27,7 @@ const ReportModal = () => {
           </div>
           <ul className="reson">
             {REPORT_RESONS.map((reson) => (
-              <ReportResonItem content={reson} />
+              <ReportResonItem key={reson} content={reson} />
             ))}
           </ul>
         </div>

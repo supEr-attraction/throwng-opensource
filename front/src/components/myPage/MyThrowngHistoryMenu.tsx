@@ -1,10 +1,25 @@
-import { useState } from "react";
-import "@styles/myPage/MyThrowngHistoryMenu.scss"
+import { useEffect, useState } from "react";
+import "@styles/myPage/MyThrowngHistoryMenu.scss";
 import MyThrowngHistroyList from "./MyThrowngHistroyList";
+import { LuListFilter } from "react-icons/lu";
+import MyThrowngHistoryFilterModal from "./MyThrowngHistoryFilterModal";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { throwngFilterModal } from "@store/myPage/atoms";
 
 const MyThrowngHistoryMenu = () => {
-  const [pageIdx, setPageIdx] = useState(false)
-  const [histoyCnt, setHistoryCnt] = useState(0)
+  const [pageIdx, setPageIdx] = useState(false);
+  const [histoyCnt, setHistoryCnt] = useState(0);
+  const [filterModal, setFilterModal] = useRecoilState(throwngFilterModal)
+  const resetThrowngFilterState = useResetRecoilState(throwngFilterModal)
+
+  useEffect(() => {
+    resetThrowngFilterState()
+
+  }, [])
+
+  const filterModalHandler = () => {
+    setFilterModal(!filterModal);
+  }  
 
   return (
     <div className="MyThrowngHistoryMenu">
@@ -14,10 +29,14 @@ const MyThrowngHistoryMenu = () => {
           <div className={`btn-item ${pageIdx ? "" : "active"}`} onClick={() => setPageIdx(true)}>줍기</div>
         </div>
         <div className="song-cnt">전체 {histoyCnt}개</div>
+        <div className="filter-div" onClick={filterModalHandler}>
+          <div className="filter"><div>필터</div><LuListFilter/></div>
+        </div>
       </div>
       <MyThrowngHistroyList pageIdx={pageIdx} setHistoryCnt={setHistoryCnt}/>
+      {filterModal && <MyThrowngHistoryFilterModal />}
     </div>
-  )
-}
+  );
+};
 
-export default MyThrowngHistoryMenu
+export default MyThrowngHistoryMenu;

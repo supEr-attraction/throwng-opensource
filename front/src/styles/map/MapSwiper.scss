@@ -22,6 +22,8 @@
         border-radius: 4dvh;
         filter: blur(2px);
         padding: 2dvh;
+        object-fit: cover;
+        aspect-ratio: 1;
       }
 
       .content {
@@ -31,13 +33,23 @@
         gap: 0.5dvh;
 
         .title {
-          font-size: 2.5dvh;
+          font-size: 2.3dvh;
           font-weight: bold;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+          text-align: center;
         }
 
         .singer {
-          font-size: 1.5dvh;
+          font-size: 1.7dvh;
           color: #a5b2c5;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 100%;
+          text-align: center;
         }
       }
 
@@ -56,11 +68,12 @@
     }
   }
 
-  .ggg {
+  .black-bottom-gradient {
+    margin: 0 auto;
     background: linear-gradient(180deg, rgba(23, 25, 31, 0) 10%, #0f1114 100%);
     position: fixed;
     bottom: 0;
-    width: 100dvw;
+    inset-inline: 0;
     height: 20dvh;
   }
 }

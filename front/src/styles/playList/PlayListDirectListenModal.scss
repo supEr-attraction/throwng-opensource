@@ -1,0 +1,39 @@
+.PlayListDirectListenModal {
+  .modal-body {
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 5px;
+    animation: slideDown 0.5s ease forwards;
+    font-size: 1.8dvh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .img-container {
+      display: flex;
+      padding-right: 5px;
+      
+      img {
+        width: 3dvh;
+      }
+    }
+
+    &:active {
+      background-color: var(--input-box-color);
+      border-radius: 2dvh;
+    }
+  }
+  
+  @keyframes slideDown {
+    from {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+}

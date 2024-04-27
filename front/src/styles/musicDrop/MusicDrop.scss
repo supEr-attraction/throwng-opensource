@@ -1,9 +1,9 @@
 .MusicDrop {
   .body {
-    padding: 3dvh;
+    padding: 0 3dvh;
     display: flex;
     flex-direction: column;
-    gap: 3dvh;
+    gap: 2.5dvh;
 
     .header {
       font-weight: bold;
@@ -85,6 +85,10 @@
         font-size: 2dvh;
         width: 40dvh;
         cursor: pointer;
+
+         &:active {
+          background-color: rgba($color: #728af3, $alpha: 1.0);
+         }
       }
     }
   }

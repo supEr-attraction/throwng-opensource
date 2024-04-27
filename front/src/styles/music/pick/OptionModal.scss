@@ -18,7 +18,8 @@
     border-radius: 2dvh 2dvh 0 0;
     display: flex;
     flex-direction: column;
-    gap: 5dvh;
+    align-items: center;
+    gap: 4dvh;
     margin: 0 auto;
 
     .report {
@@ -29,11 +30,11 @@
       cursor: pointer;
 
       svg {
-        font-size: 3dvh;
+        font-size: 2.5dvh;
       }
 
       div {
-        font-size: 2.5dvh;
+        font-size: 2dvh;
       }
     }
 
@@ -41,9 +42,8 @@
       background-color: transparent;
       border: none;
       color: white;
-      font-size: 2.5dvh;
+      font-size: 2dvh;
       cursor: pointer;
-      // font-weight: bold;
     }
   }
 }

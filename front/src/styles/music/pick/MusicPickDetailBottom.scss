@@ -20,18 +20,19 @@
       svg {
         color: #7b66ff;
         cursor: pointer;
+        font-size: 2dvh;
       }
     }
 
     .content {
       flex: 1;
-      font-size: 2.2dvh;
+      font-size: 2dvh;
     }
 
     .date {
       text-align: end;
       color: #7b8696;
-      font-size: 2dvh;
+      font-size: 1.7dvh;
     }
   }
 
@@ -43,7 +44,7 @@
       border: none;
       color: white;
       background-color: #17191f;
-      font-size: 2.2dvh;
+      font-size: 2dvh;
       padding-block: 2dvh;
       border-radius: 1dvh;
       cursor: pointer;
@@ -56,8 +57,8 @@
         justify-content: center;
 
         img {
-          width: 3.5dvh;
-          height: 3.5dvh;
+          width: 3dvh;
+          height: 3dvh;
         }
       }
 

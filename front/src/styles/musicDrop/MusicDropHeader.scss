@@ -1,11 +1,15 @@
 .MusicDropHeader {
-  flex: 1;
+  height: 50dvh;
   position: relative;
 
-  .album-image {
-    width: 100dvw;
-    height: 100%;
-    object-fit: cover;
+  .album-image-container {
+    height: 50dvh;
+
+    .album-image {
+      width: 100dvw;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   .cover {
@@ -78,17 +82,17 @@
           position: absolute;
         }
 
-      .reselect-image {
-        font-size: 1.4vh;
-        color: #000000;
-        text-decoration: underline;
-        text-align: center;
-        cursor: pointer;
-        
-        &:active {
-          color: var(--placeholder-color);
+        .reselect-image {
+          font-size: 1.4vh;
+          color: #fff;
+          text-decoration: underline;
+          text-align: center;
+          cursor: pointer;
+          
+          &:active {
+            color: var(--placeholder-color);
+          }
         }
-      }
    
 
         > div {
@@ -97,14 +101,21 @@
           align-items: center;
 
           .title {
-            text-align: center;
             font-size: 3dvh;
             font-weight: bold;
-            width: 100dvw;
-            padding-inline: 3dvh;
+            width: calc(100vw - 6vh);
+
             overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
+            
+            > div {
+              width: 100%;
+              white-space: nowrap;
+              text-align: center;
+
+              &.animated {
+                animation: scroll 5s linear infinite; /* 애니메이션 적용 */
+              }
+            }
           }
 
           .artist {
@@ -129,6 +140,6 @@
     transform: translateX(100%);
   }
   100% {
-    transform: translateX(-100%);
+    transform: translateX(-250%);
   }
 }
