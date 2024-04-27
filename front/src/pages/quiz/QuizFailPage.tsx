@@ -20,13 +20,11 @@ const QuizFailPage = () => {
         <QuizCryLottie />
       </div>
       <div className="quiz-fail-footer">
-        <p>매일 퀴즈가 깜짝 등장 합니다. </p>
+        <p>매일 퀴즈가 <br />깜짝 등장 합니다.</p>
         <p>또 도전 해 주실거죠??</p>
       </div>
       <div className="quiz-fail-button">
-        <button onClick={handleGoHome} >
-          메인으로 이동
-        </button>
+        <button onClick={handleGoHome}>메인으로 이동</button>
       </div>
     </div>
   );
