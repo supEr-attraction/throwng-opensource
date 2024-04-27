@@ -6,9 +6,10 @@ import xImage from "@assets/images/x.webp";
 
 interface QuizOXProps {
   setIsCorrect: (value: boolean | null) => void;
+  setCanSubmit: (canSubmit: boolean) => void;
 }
 
-const QuizOX = ({ setIsCorrect }: QuizOXProps) => {
+const QuizOX = ({ setIsCorrect, setCanSubmit }: QuizOXProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
   // API
@@ -18,6 +19,7 @@ const QuizOX = ({ setIsCorrect }: QuizOXProps) => {
   const handleAnswerClick = (answer: string) => {
     setSelectedAnswer(answer);
     setIsCorrect(answer === correctAnswer);
+    setCanSubmit(true)
   };
 
   return (

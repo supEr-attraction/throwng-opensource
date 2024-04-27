@@ -3,21 +3,28 @@ import "@styles/quiz/QuizSubjective.scss";
 
 interface QuizSubjectiveProps {
   setIsCorrect: (value: boolean | null) => void;
+  setCanSubmit: (canSubmit: boolean) => void;
 }
 
-const QuizSubjective = ({ setIsCorrect }: QuizSubjectiveProps) => {
+const QuizSubjective = ({
+  setIsCorrect,
+  setCanSubmit,
+}: QuizSubjectiveProps) => {
   const [userAnswer, setUserAnswer] = useState<string>("");
 
   //API
-  const question = "여기에 주관식 문제 뿌려뿌려~"
+  const question = "여기에 주관식 문제 뿌려뿌려~";
   const correctAnswer = "정답";
 
   const handleAnswerChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUserAnswer(event.target.value);
+    const answer = event.target.value;
+    setUserAnswer(answer);
+    setCanSubmit(answer.trim() !== "");
   };
 
   const checkAnswer = () => {
-    setIsCorrect(userAnswer.trim() === correctAnswer);
+    const isValid = userAnswer.trim() === correctAnswer;
+    setIsCorrect(isValid);
   };
 
   return (

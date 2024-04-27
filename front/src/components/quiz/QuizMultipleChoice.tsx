@@ -8,9 +8,11 @@ interface Choice {
 
 interface QuizMultipleChoiceProps {
   setIsCorrect: (isCorrect: boolean) => void;
+  setCanSubmit: (canSubmit: boolean) => void;
+  
 }
 
-const QuizMultipleChoice = ({ setIsCorrect }: QuizMultipleChoiceProps) => {
+const QuizMultipleChoice = ({ setIsCorrect, setCanSubmit }: QuizMultipleChoiceProps) => {
   const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
 
   // API
@@ -26,14 +28,11 @@ const QuizMultipleChoice = ({ setIsCorrect }: QuizMultipleChoiceProps) => {
   const handleChoiceClick = (id: number) => {
     setSelectedChoice(id);
     setIsCorrect(id === correctAnswer);
+    setCanSubmit(true)
   };
 
   return (
     <div className="QuizMultipleChoice">
-      <p>테스트 문제 정답</p>
-      <p>Q1. 3번</p>
-      <p>Q2. 정답</p>
-      <p>Q3. O</p>
       <h2>Q1.</h2>
       <div className="mc-question">
         <p>{question}</p>

@@ -1,21 +1,26 @@
 import quizlogo from "@assets/images/quizlogo.webp";
-import QuizInfo from "@components/quiz/QuizInfo";
+import QuizMainLottie from "@components/lottie/QuizMainLottie";
 import "@styles/quiz/QuizMainPage.scss";
+import { useNavigate } from "react-router-dom";
 
 const QuizMainPage = () => {
+  const navigate = useNavigate()
+
+  const handleGoInfo = () => {
+    navigate('/quiz/info')
+  }
+
   return (
     <div className="QuizMainPage">
-      <div className="quiz-header">
+      <div className="quiz-lottie">
+        <QuizMainLottie />
         <img src={quizlogo} alt="QuizLogo" />
-        <p>
-          하루 한 번 현재 페이지에서만 <br />풀 수 있는 특별한 기회!
-        </p>
-        <p>
-          정답을 맞추면 푸짐한 쿠폰을 드려요
-        </p>
       </div>
-      <div className="quiz-info">
-        <QuizInfo />
+      <div className="quiz-main-border">
+        <p>오늘의 깜짝 퀴즈에 <br />도전하세요!</p>
+      </div>
+      <div className="quiz-button">
+        <button onClick={handleGoInfo}>도전</button>
       </div>
     </div>
   );

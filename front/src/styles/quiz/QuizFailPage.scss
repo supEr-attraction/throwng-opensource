@@ -1,0 +1,44 @@
+.QuizFailPage {
+  height: 100vh;
+  padding: 2dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  .quiz-fail-header {
+    word-break: keep-all;
+    text-align: center;
+  }
+
+  .quiz-fail-lottie {
+    
+  }
+
+  .quiz-fail-footer {
+    border-radius: 2dvh;
+    background-color: rgba(123, 102, 255, 0.1);
+    padding: 2dvh;
+    height: 21dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p {
+      font-size: 2.5dvh;
+    }
+  }
+
+  .quiz-fail-button {
+    button {
+      border: none;
+      width: 100%;
+      height: 8dvh;
+      margin-top: 2dvh;
+      border-radius: 2dvh;
+      background-color: var(--main-color);
+      color: #ffffff;
+      font-size: 2.5dvh;
+      cursor: pointer;
+    }
+  }
+}

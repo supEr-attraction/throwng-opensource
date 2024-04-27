@@ -10,6 +10,7 @@ const QuizSolvePage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [questionType, setQuestionType] = useState<string>("");
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+  const [canSubmit, setCanSubmit] = useState<boolean>(false);
   const [timeLeft, setTimeLeft] = useState<any>(20);
   const navigate = useNavigate();
 
@@ -26,7 +27,7 @@ const QuizSolvePage = () => {
 
   useEffect(() => {
     if (timeLeft === 0) {
-      navigate("/quiz/fail");
+      // navigate("/quiz/fail");
     }
   }, [timeLeft, navigate]);
 
@@ -45,11 +46,12 @@ const QuizSolvePage = () => {
 
   const goToNextQuestion = () => {
     setTimeLeft(20);
+    setCanSubmit(false);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
 
   const renderQuestionComponent = () => {
-    const props = { setIsCorrect, setTimeLeft };
+    const props = { setIsCorrect, setTimeLeft, setCanSubmit };
     switch (questionType) {
       case "객관식":
         return <QuizMultipleChoice {...props} />;
@@ -70,7 +72,11 @@ const QuizSolvePage = () => {
         setTimeLeft={setTimeLeft}
       />
       {renderQuestionComponent()}
-      <button onClick={handleSubmission} className="submission-button">제출</button>
+      {canSubmit && (
+        <button onClick={handleSubmission} className="submission-button">
+          제출
+        </button>
+      )}
     </div>
   );
 };
