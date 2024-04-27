@@ -4,6 +4,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   .quiz-fail-header {
     word-break: keep-all;
@@ -11,24 +12,29 @@
   }
 
   .quiz-fail-lottie {
-    
+    width: 80%;
   }
 
   .quiz-fail-footer {
     border-radius: 2dvh;
     background-color: rgba(123, 102, 255, 0.1);
     padding: 2dvh;
+    margin-top: 3dvh;
+    width: 90%;
     height: 21dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
     p {
       font-size: 2.5dvh;
     }
   }
 
   .quiz-fail-button {
+    margin-top: 3dvh;
+    width: 90%;
     button {
       border: none;
       width: 100%;
