@@ -120,6 +120,24 @@
   }
   .quiz-button {
     margin-top: 10dvh;
+    display: flex;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    &.visible {
+      opacity: 1;
+    }
+    button {
+      width: 100%;
+      height: 8dvh;
+      padding: 2dvh;
+      border-radius: 2dvh;
+      border: none;
+      background-color: var(--main-color);
+      color: #ffffff;
+      font-size: 2dvh;
+      cursor: pointer;
+    }
     button {
       font-size: 2.5dvh;
     }

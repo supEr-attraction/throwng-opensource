@@ -1,7 +1,7 @@
 import "@styles/quiz/QuizInfo.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QuizButton from "@/components/quiz/QuizButton";
+
 
 interface QuizItem {
   id: number;
@@ -26,7 +26,8 @@ const QuizInfo = () => {
       text: (
         <>
           <span className="highlight">객관식, 주관식, OX</span> 문제가
-          <br />주어집니다.
+          <br />
+          주어집니다.
         </>
       ),
       checked: false,
@@ -111,16 +112,17 @@ const QuizInfo = () => {
         </div>
       </div>
       <div className="all-check">
-        <input type="checkbox" id="checkbox-all" onClick={handleCheckkAll} />
+        <input
+          type="checkbox"
+          id="checkbox-all"
+          checked={areAllChecked()}
+          onClick={handleCheckkAll}
+        />
         <label htmlFor="checkbox-all">다 알아요 ㅋ</label>
       </div>
 
       <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>
-        <QuizButton
-          onClick={handleQuizStart}
-          label="퀴즈 풀기"
-          visible={buttonVisible}
-        />
+        <button onClick={handleQuizStart}>퀴즈 풀기</button>
       </div>
     </div>
   );
