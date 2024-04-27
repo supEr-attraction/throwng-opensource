@@ -11,3 +11,13 @@ export interface Marker {
   songTitle: string;
   artistName: string;
 }
+
+export interface MusicInfo {
+  throwId: number;
+  title: string;
+  artist: string;
+  albumImage: string;
+  itemImage: string;
+  content: string;
+  thrownDate: string;
+}

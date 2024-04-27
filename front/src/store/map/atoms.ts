@@ -1,4 +1,4 @@
-import { Location, Marker } from "../../types/mapType";
+import { Location, Marker, MusicInfo } from "../../types/mapType";
 import { atom } from "recoil";
 
 // markers: {
@@ -182,6 +182,19 @@ export const markersState = atom<Marker[]>({
       artistName: "정국",
     },
   ],
+});
+
+export const musicInfoState = atom<MusicInfo>({
+  key: "musicInfoState", // atom을 식별하는데 필요한 고유한 문자열
+  default: {
+    throwId: 0,
+    title: "",
+    artist: "",
+    albumImage: "",
+    itemImage: "",
+    content: "",
+    thrownDate: "",
+  }, // 초기값을 설정해준다.
 });
 
 export const activeMarkerState = atom<number | null>({

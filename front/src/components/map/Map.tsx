@@ -21,7 +21,7 @@ const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
 const Map = () => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyB6-Xpzz_O5OWj5KOavve7YKqn2ii_4uoQ",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
     language: "ko",
     libraries: GOOGLE_MAPS_LIBRARIES,
   });
