@@ -1,91 +1,77 @@
 .PlayListBody {
-  .playlist-list {
 
-    .result-item {
+  .result-item {
+    padding: 1dvh 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .content-container {
       display: flex;
-      flex-direction: column;
-      padding: 1dvh 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      align-items: center;
+      
+      .image-container {
+        padding-right: 1dvh;
 
-      .items {
+        .item-wide {
+          width: 100%;
+        }
+
+        img {
+          width: 6dvh;
+          height: 6dvh;
+          border-radius: 1dvh;
+        }
+      }
+
+      .item-wide {
         display: flex;
-        flex-direction: row;
+        align-items: center;
+        overflow: hidden;
+        width: 90%;
 
-        .image-container {
-          padding-right: 1dvh;
-  
-          .item-wide {
-            width: 100%;
+        .item-detail {
+          overflow: hidden;
+          width: 90%;
+
+          .item-title {
+            font-size: 2dvh;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
           }
-  
-          img {
+
+          .item-artist {
+            font-size: 1.7dvh;
+            font-weight: 500;
+            color: var(--placeholder-color);
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+        }
+        
+        .item-detail-btn {
+          display: flex;
+          font-size: 1.7dvh;
+          color: var(--main-color);
+          align-items: center;
+          justify-content: center;
+          width: 3dvh;
+          height: 3dvh;
+
+          svg {
             width: 6dvh;
             height: 6dvh;
-            border-radius: 1dvh;
           }
-        }
-  
-        .item-wide {
-          display: flex;
-          flex: 1;
-          flex-direction: row;
-          justify-content: space-between;
-          align-items: center;
-  
-          .item-detail {
-            display: flex;
-            flex-direction: column;
-            align-items: start;
-            text-align: start;
-            justify-content: center;
-  
-            .item-title {
-              width: 25dvh;
-              font-size: 1.9dvh;
-              font-weight: 600;
-              text-overflow: ellipsis;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-    
-            .item-artist {
-              width: 25dvh;
-              font-size: 1.7dvh;
-              font-weight: 500;
-              color: var(--placeholder-color);
-              text-overflow: ellipsis;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-          }
-          
-          .item-detail-btn {
-            display: flex;
-            font-size: 1.7dvh;
-            color: var(--main-color);
-            align-items: center;
-            justify-content: center;
-            width: 3dvh;
-            height: 3dvh;
-  
-            svg {
-              width: 6dvh;
-              height: 6dvh;
-            }
-        
-            &:active {
-              background-color: var(--input-box-color);
-              border-radius: 50%;
-            }
-          }
-        }
-      }
-
-
       
-      &:last-child {
-        border-bottom: none;
+          &:active {
+            background-color: var(--input-box-color);
+            border-radius: 50%;
+          }
+        }
       }
+    }
+    &:last-child {
+      border-bottom: none;
     }
   }
 }

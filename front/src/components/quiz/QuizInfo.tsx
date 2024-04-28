@@ -1,7 +1,7 @@
 import "@styles/quiz/QuizInfo.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import QuizButton from "@/components/quiz/QuizButton";
+
 
 interface QuizItem {
   id: number;
@@ -25,8 +25,9 @@ const QuizInfo = () => {
       id: 2,
       text: (
         <>
-          <span className="highlight">객관식, 주관식, OX</span> 문제로 주관식은
-          공백, 영어, 한글 모두 정답으로 인정됩니다.
+          <span className="highlight">객관식, 주관식, OX</span> 문제가
+          <br />
+          주어집니다.
         </>
       ),
       checked: false,
@@ -35,7 +36,7 @@ const QuizInfo = () => {
       id: 3,
       text: (
         <>
-          문제당 제한 시간은 <span className="highlight">10초</span>입니다.
+          문제당 제한 시간은 <span className="highlight">20초</span>입니다.
         </>
       ),
       checked: false,
@@ -44,7 +45,8 @@ const QuizInfo = () => {
       id: 4,
       text: (
         <>
-          한 문제라도 틀리면 <span className="highlight-red">끝!</span> <br/>3문제 <span className="highlight">모두 맞춰야</span> 정답으로
+          한 문제라도 틀리면 <span className="highlight-red">끝!</span> <br />
+          3문제 <span className="highlight">모두 맞춰야</span> 정답으로
           인정됩니다.
         </>
       ),
@@ -54,8 +56,7 @@ const QuizInfo = () => {
       id: 5,
       text: (
         <>
-          매일 <span className="highlight">기회는 한 번</span>뿐이니 신중하게
-          풀어주세요.
+          매일 <span className="highlight">기회는 한 번</span>입니다.
         </>
       ),
       checked: false,
@@ -75,6 +76,16 @@ const QuizInfo = () => {
     );
   };
 
+  const handleCheckkAll = () => {
+    const allChecked = areAllChecked();
+
+    const updatedItems = items.map((item) => ({
+      ...item,
+      checked: !allChecked,
+    }));
+    setItems(updatedItems);
+  };
+
   useEffect(() => {
     setButtonVisible(areAllChecked());
   }, [items]);
@@ -86,7 +97,6 @@ const QuizInfo = () => {
   return (
     <div className="QuizInfo">
       <div className="quiz-group">
-        <p className="heading">다음 안내 사항을 확인해주세요.</p>
         <div className="quiz-check">
           {items.map((item) => (
             <div key={item.id} className="check-item">
@@ -101,8 +111,18 @@ const QuizInfo = () => {
           ))}
         </div>
       </div>
+      <div className="all-check">
+        <input
+          type="checkbox"
+          id="checkbox-all"
+          checked={areAllChecked()}
+          onClick={handleCheckkAll}
+        />
+        <label htmlFor="checkbox-all">다 알아요 ㅋ</label>
+      </div>
+
       <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>
-        <QuizButton onClick={handleQuizStart} label="퀴즈 풀기" visible={buttonVisible}/>
+        <button onClick={handleQuizStart}>퀴즈 풀기</button>
       </div>
     </div>
   );

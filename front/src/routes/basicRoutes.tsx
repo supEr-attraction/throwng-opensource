@@ -1,6 +1,8 @@
-import QuizFail from "@pages/quiz/QuizFail";
+import QuizCouponPage from "@pages/quiz/QuizCouponPage";
+import QuizFailPage from "@pages/quiz/QuizFailPage";
+import QuizInfoPage from "@pages/quiz/QuizInfoPage";
 import QuizSolvePage from "@pages/quiz/QuizSolvePage";
-import QuizSuccess from "@pages/quiz/QuizSuccess";
+import QuizSuccessPage from "@pages/quiz/QuizSuccessPage";
 import { lazy } from "react";
 const PrivateRoute = lazy(() => import("@components/PrivateRoute"));
 const HomePage = lazy(() => import("@pages/HomePage"));
@@ -10,10 +12,10 @@ const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 // const Error404 = loadable(() => import("./Error404"));
 
-const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"))
+const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
 const MusicPickDetailPage = lazy(() => import("@pages/MusicPickDetailPage"));
-
+const MusicList = lazy(() => import("@components/musicSearch/MusicList"))
 
 export default {
   path: "/",
@@ -42,7 +44,13 @@ export default {
       children: [
         {
           path: "search",
-          element: <MusicSearchPage />,
+          children: [
+            { index: true, element: <MusicSearchPage /> },
+            {
+              path: ":id",
+              element: <MusicList />,
+            },
+          ],
         },
         {
           path: "drop",
@@ -72,17 +80,25 @@ export default {
           element: <QuizMain />,
         },
         {
+          path: "info",
+          element: <QuizInfoPage />,
+        },
+        {
           path: "solve",
           element: <QuizSolvePage />,
         },
         {
           path: "success",
-          element: <QuizSuccess />
+          element: <QuizSuccessPage />,
+        },
+        {
+          path: "coupon",
+          element: <QuizCouponPage />,
         },
         {
           path: "fail",
-          element: <QuizFail />
-        }
+          element: <QuizFailPage />,
+        },
       ],
     },
   ],
