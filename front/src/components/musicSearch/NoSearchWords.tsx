@@ -5,7 +5,7 @@ const NoSearchWords = () => {
         <div className="title">앗!</div>
         <div className="subtitle">최근 검색어 내역이 없어요.</div>
       </div>
-  </div>
+    </div>
   )
 }
 

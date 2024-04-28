@@ -19,13 +19,13 @@ const Header = ({ centerText, func }: Props) => {
       if (searchKeyWord !== "") {
         setSearchKeyWord("");
       }
+      navigate("/");
+    } else {
+      if (func) {
+        func();
+      }
+      navigate(-1);
     }
-
-    if (func) {
-      func();
-    }
-
-    navigate(-1);
   };
 
   return (

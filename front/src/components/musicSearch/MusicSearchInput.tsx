@@ -1,23 +1,24 @@
-import { useRef, useEffect } from "react"
+import { useRef } from "react"
 import { MdOutlineClear } from "react-icons/md";
 import "@/styles/musicSearch/MusicSearchInput.scss"
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { SearchedWordsList } from "../../types/songType";
-import { searchedWords } from "@store/musicSearch/atoms";
+import { inputSearchKeyWord, searchedWords } from "@store/musicSearch/atoms";
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  onSearch: (songInfo: string) => void;
-  title: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const MusicSearchInput = ({ onSearch, title, setTitle }: Props) => {
+const MusicSearchInput = () => {
   const inputEl = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
   const setWords = useSetRecoilState<SearchedWordsList[]>(searchedWords)
+  const [title, setTitle] = useRecoilState(inputSearchKeyWord);
 
-  useEffect(() => {
-    inputEl.current!.focus();
-  }, []);
+  const onSearch = async (searchKeyWord: string) => {
+    if (searchKeyWord !== '') {
+      navigate(`/music/search/${searchKeyWord}`)
+    } else {
+      navigate('/music/search', { replace: true });
+    }
+  };
 
   const titleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -31,29 +32,35 @@ const MusicSearchInput = ({ onSearch, title, setTitle }: Props) => {
     onSearch(title);
     if (title !== ''){
       setWords((prevWords) => {
-        const lastId = prevWords.length ? prevWords[prevWords.length - 1].id : 0;
-        return [...prevWords, { id: lastId + 1, title: title }];
+        const newId = prevWords.length ? prevWords[prevWords.length - 1].id + 1 : 1;
+        const updatedWords = prevWords.filter((word) => word.title !== title);
+        return [{ id: newId, title: title }, ...updatedWords];
       });
     }
-    inputEl.current!.blur()
   };
-
+  
   const clearTitle = () => {
     setTitle('');
-    inputEl.current!.focus();
     onSearch('');
   };
 
   return (
-
-    <form className="MusicSearchInput" onSubmit={titleOnSubmit}>
-      <div className="container">
+    <div className="MusicSearchInput">
+      <form onSubmit={titleOnSubmit}>
         <div className="input-div">
-          <input className="input" ref={inputEl} type="text" placeholder="검색어를 입력하세요." value={title} onChange={titleOnChange} maxLength={30} />
+          <input 
+            className="input"
+            ref={inputEl} 
+            type="text" 
+            placeholder="검색어를 입력하세요." 
+            value={title} 
+            onChange={titleOnChange} 
+            maxLength={30} 
+          />
           {title && <MdOutlineClear className="clear-button" onClick={clearTitle} />}
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 };
 

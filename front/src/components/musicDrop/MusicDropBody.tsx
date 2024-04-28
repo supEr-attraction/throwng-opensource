@@ -2,13 +2,21 @@ import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { addressState, locationState } from "@store/map/atoms";
 import "@styles/musicDrop/MusicDrop.scss";
+import { Song } from "../../types/songType";
+import { postThrowngMusic } from "@services/musicSearchApi/MusicSearchApi";
+import { musicDropImage } from "@store/musicSearch/atoms";
 
-const MusicDropBody = () => {
+interface Props {
+  songInfo: Song;
+}
+
+const MusicDropBody = ({ songInfo }: Props) => {
   const [count, setCount] = useState(0);
   const [text, setText] = useState("");
   const inputEl = useRef<HTMLTextAreaElement>(null);
   const myLocation = useRecoilValue(locationState);
   const myAddress = useRecoilValue(addressState);
+  const imageUrl = useRecoilValue(musicDropImage);
 
   const textOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 50) {
@@ -20,8 +28,17 @@ const MusicDropBody = () => {
   };
 
   const postThrownSong = () => {
-    console.log(`Latitude: ${myLocation.lat}, Longitude: ${myLocation.lng}`);
-    console.log(myAddress)
+    const requestBody = {
+      longitude: myLocation.lng,
+      latitude: myLocation.lat,
+      location: myAddress,
+      imageUrl: imageUrl,
+      comment: text,
+      title: songInfo.title,
+      artist: songInfo.artist,
+      albumImageUrl: songInfo.albumImage,
+    };
+    postThrowngMusic(songInfo.youtubeId, requestBody)
   };
 
   return (
@@ -42,6 +59,7 @@ const MusicDropBody = () => {
             maxLength={50}
             className="input-area"
             ref={inputEl}
+            required
           />
           <div className="input-count">{count}/50</div>
         </div>
@@ -55,7 +73,7 @@ const MusicDropBody = () => {
 
         <div className="put-btn-div">
           <button className="put-btn" onClick={postThrownSong}>
-            나.. 너.. 쓰롱한다..❤
+            쓰롱하기
           </button>
         </div>
       </div>

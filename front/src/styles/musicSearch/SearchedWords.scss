@@ -25,6 +25,13 @@
       justify-content: space-between;
       align-items: center;
 
+      .word-title {
+        width: 90%;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
       cursor: pointer;
 
       .word-delete {
