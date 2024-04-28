@@ -10,7 +10,7 @@ import { getMyPlayList } from "@services/myPlayListApi/MyPlayListApi";
 
 const PlayListBody = () => {
   const [playList, setPlayList] = useState<Content[]>([]);
-  const [lastModifiedAt, setLastModifiedAt] = useState('');
+  const [lastModifiedAt, setLastModifiedAt] = useState("");
   const [isLastPage, setIsLastPage] = useState(false);
   const [modalSongIndex, setModalSongIndex] = useRecoilState(detailModal);
   const [speedModal, setSpeedModal] = useRecoilState(speedListenModal);
@@ -21,10 +21,10 @@ const PlayListBody = () => {
     const data = await getMyPlayList(lastModifiedAt);
     if (data.content.length > 0) {
       setLastModifiedAt(data.content[data.content.length - 1].modifiedAt);
-      setPlayList(prev => [...prev, ...data.content]);
+      setPlayList((prev) => [...prev, ...data.content]);
     }
     setIsLastPage(data.last);
-  }
+  };
 
   useEffect(() => {
     fetchData();
@@ -32,12 +32,17 @@ const PlayListBody = () => {
     resetDetailModal();
 
     const onScroll = async () => {
-      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || isLastPage) return;
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+        isLastPage
+      )
+        return;
       await fetchData();
     };
 
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [lastModifiedAt, isLastPage]);
 
   const modalStateHandler = (index: number) => {
@@ -47,16 +52,16 @@ const PlayListBody = () => {
     } else {
       setModalSongIndex(index);
     }
-  }
+  };
 
   const speedListenModalHandler = (index: number) => {
     if (speedModal === index) {
       setSpeedModal(null);
       setModalSongIndex(null);
     } else {
-      setSpeedModal(index)
+      setSpeedModal(index);
     }
-  }
+  };
 
   return (
     <div className="PlayListBody">
@@ -65,19 +70,32 @@ const PlayListBody = () => {
           {playList.map((song, index) => (
             <div key={index} className="result-item">
               <div className="content-container">
-                <div className="image-container" onClick={() => speedListenModalHandler(index)}>
-                  <img src={song.albumImage}/>
+                <div
+                  className="image-container"
+                  onClick={() => speedListenModalHandler(index)}
+                >
+                  <img src={song.albumImage} />
                 </div>
                 <div className="item-wide">
-                  <div className="item-detail" onClick={() => speedListenModalHandler(index)}>
+                  <div
+                    className="item-detail"
+                    onClick={() => speedListenModalHandler(index)}
+                  >
                     <div className="item-title">{song.title}</div>
                     <div className="item-artist">{song.artist}</div>
                   </div>
-                  <div className="item-detail-btn" onClick={() => modalStateHandler(index)}><IoMdMore /></div>
+                  <div
+                    className="item-detail-btn"
+                    onClick={() => modalStateHandler(index)}
+                  >
+                    <IoMdMore />
+                  </div>
                 </div>
               </div>
-              {modalSongIndex === index && <PlayListItemModal song={song}/>}
-              {speedModal === index && <PlayListDirectListenModal song={song}/> }
+              {modalSongIndex === index && <PlayListItemModal song={song} />}
+              {speedModal === index && (
+                <PlayListDirectListenModal song={song} />
+              )}
             </div>
           ))}
           {isLastPage && <div>마지막 플레이리스트입니다.</div>}
@@ -86,7 +104,7 @@ const PlayListBody = () => {
         <div>플레이리스트가 비어있습니다.</div>
       )}
     </div>
-  )  
-}
+  );
+};
 
-export default PlayListBody
+export default PlayListBody;
