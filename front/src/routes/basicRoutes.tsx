@@ -81,7 +81,7 @@ export default {
         },
         {
           path: "info",
-          element: <QuizInfoPage />
+          element: <QuizInfoPage />,
         },
         {
           path: "solve",

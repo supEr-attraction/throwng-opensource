@@ -1,9 +1,8 @@
+import { getIsLogin } from "@/utils/getIsLogin";
 import { Navigate, Outlet } from "react-router-dom";
-// import getIsLogin from './getIsLogin'
 
 function PublicRoute() {
-  // const isLogined = getIsLogin()
-  const isLogin = false;
+  const isLogin = getIsLogin();
 
   return isLogin ? <Navigate to="/" replace /> : <Outlet />;
 }
