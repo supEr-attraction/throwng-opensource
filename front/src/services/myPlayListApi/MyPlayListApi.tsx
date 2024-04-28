@@ -5,19 +5,20 @@ const api = axiosApi()
 
 const getMyPlayList = async (lastModifiedAt: string|null):Promise<ResponseData> => {
   try {
-    const res = await api.get<ResponseData>(`/playlists?time=${lastModifiedAt}`)
-    console.log(res.data)
-    return res.data
+    const {data} = await api.get<ResponseData>(`/music/playlists?time=${lastModifiedAt}`)
+    console.log(data)
+    return data
   } catch (e) {
     console.log(e)
     throw e
   }
 }
 
-const deleteMyPlayList = async(data:number) => {
+const deleteMyPlayList = async(idx:number) => {
   try {
-    const res = await api.delete(`/playlists/${data}`)
-    console.log(res.data)
+    const {data} = await api.delete(`/music/playlists/${idx}`)
+    console.log(data)
+    return data
   } catch (e) {
     console.log(e)
   }

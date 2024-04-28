@@ -17,15 +17,6 @@ const PlayListBody = () => {
   const resetPlayModal = useResetRecoilState(speedListenModal);
   const resetDetailModal = useResetRecoilState(detailModal);
 
-  const fetchData = async () => {
-    const data = await getMyPlayList(lastModifiedAt);
-    if (data.content.length > 0) {
-      setLastModifiedAt(data.content[data.content.length - 1].modifiedAt);
-      setPlayList((prev) => [...prev, ...data.content]);
-    }
-    setIsLastPage(data.last);
-  };
-
   useEffect(() => {
     fetchData();
     resetPlayModal();
@@ -44,6 +35,15 @@ const PlayListBody = () => {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, [lastModifiedAt, isLastPage]);
+
+  const fetchData = async () => {
+    const data = await getMyPlayList(lastModifiedAt);
+    if (data.content.length > 0) {
+      setLastModifiedAt(data.content[data.content.length - 1].modifiedAt);
+      setPlayList((prev) => [...prev, ...data.content]);
+    }
+    setIsLastPage(data.last);
+  };
 
   const modalStateHandler = (index: number) => {
     if (modalSongIndex === index) {
