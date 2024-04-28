@@ -1,24 +1,34 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import {Song} from "../../types/songType.ts"
-import SearchedWords from "./SearchedWords.tsx"
 import "@styles/musicSearch/MusicList.scss"
-import { useRecoilValue, useResetRecoilState } from "recoil"
-import { inputSearchKeyWord, searchResultsState } from "@store/musicSearch/atoms.ts"
-import { useEffect } from "react"
+import { useSetRecoilState } from "recoil"
+import { inputSearchKeyWord } from "@store/musicSearch/atoms.ts"
+import Header from "@components/Header.tsx"
+import MusicSearchInput from "./MusicSearchInput.tsx"
+import { useEffect, useState } from "react"
+import { getSearchMusic } from "@services/musicSearchApi/MusicSearchApi.tsx"
 
-interface Props {
-  onWordClick: (title: string) => void,
-}
-
-const MusicList = ({onWordClick}: Props) => {
-  const searchResults = useRecoilValue(searchResultsState);
+const MusicList = () => {
   const navigate = useNavigate();
-  const title = useRecoilValue(inputSearchKeyWord);
-  const resetSearchResults = useResetRecoilState(searchResultsState);
+  const setTitle = useSetRecoilState(inputSearchKeyWord);
+  const [searchResults, setSearchResults] = useState<Song[]>([]);
+  const params = useParams();
+  const searchKeyword = params.id;
 
   useEffect(() => {
-    resetSearchResults();
-  }, [title]);
+    if(searchKeyword) {
+      onSearch(searchKeyword);
+    }
+  }, [searchKeyword])
+
+  const onSearch = async (searchKeyWord: string) => {
+    setTitle(searchKeyWord);
+    const res = await getSearchMusic(searchKeyWord);
+    if (res && res.data) {
+      console.log(res.data)
+      setSearchResults(res.data);
+    }
+  };
 
   const handleGoNavigation = (song : Song) => {
     navigate(`/music/drop/${song.youtubeId}`, {state: {song:song}})
@@ -26,6 +36,10 @@ const MusicList = ({onWordClick}: Props) => {
 
   return (
     <div className="MusicList">
+      <div className="MusicList-header">
+        <Header/>
+        <MusicSearchInput/>
+      </div>
       {searchResults && searchResults.length > 0 ? (
         <div className="searchResults">
           {searchResults.map((song, index:number) => (
@@ -45,7 +59,12 @@ const MusicList = ({onWordClick}: Props) => {
           ))}
         </div>
       ) : (
-        <SearchedWords onWordClick={onWordClick} />
+      <div className="SearchedWords">
+        <div className="no-word-container">
+          <div className="title">앗!</div>
+          <div className="subtitle">검색결과가 없어요.</div>
+        </div>
+      </div>
       )}
     </div>
   )

@@ -15,3 +15,8 @@ export const searchResultsState = atom<Song[]>({
   key: 'searchResultsState',
   default: [],
 });
+
+export const musicDropImage = atom<string>({
+  key: 'musicDropImage',
+  default: '',
+})

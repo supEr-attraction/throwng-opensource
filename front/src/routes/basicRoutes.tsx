@@ -15,6 +15,7 @@ const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
 const MusicPickDetailPage = lazy(() => import("@pages/MusicPickDetailPage"));
+const MusicList = lazy(() => import("@components/musicSearch/MusicList"))
 
 export default {
   path: "/",
@@ -43,7 +44,13 @@ export default {
       children: [
         {
           path: "search",
-          element: <MusicSearchPage />,
+          children: [
+            { index: true, element: <MusicSearchPage /> },
+            {
+              path: ":id",
+              element: <MusicList />,
+            },
+          ],
         },
         {
           path: "drop",

@@ -1,3 +1,40 @@
+export interface Content {
+  playlistId: number;
+  title: string;
+  artist: string;
+  albumImage: string;
+  modifiedAt: string;
+}
+
+export interface Pageable {
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  offset: number;
+  pageSize: number;
+  pageNumber: number;
+  paged: boolean;
+  unpaged: boolean;
+}
+
+export interface ResponseData {
+  content: Content[];
+  pageable: Pageable;
+  size: number;
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  first: boolean;
+  last: boolean;
+  numberOfElements: number;
+  empty: boolean;
+}
+
 export interface SongInfo {
   youtubeId: string;
   albumImage: string;
@@ -11,11 +48,19 @@ export interface Song extends SongInfo {
 
 export interface SongHistory extends SongInfo {
   comment?: string;
-  date: string;
-  location: string
+  dropDate: string;
+  location: string;
 }
 
 export interface SearchedWordsList {
-  id: number,
-  title: string
+  id: number;
+  title: string;
+}
+
+export interface MyThrowHistory extends Omit<SongHistory, 'youtubeId'> {
+  myThrowId: number;
+}
+
+export interface MyPickHistory extends Omit<SongHistory, 'youtubeId'> {
+  myPickId: number;
 }

@@ -1,11 +1,11 @@
 import "@styles/playList/PlayListDirectListenModal.scss"
-import { SongInfo } from "../../types/songType"
+import { Content } from "../../types/songType"
 import youtubeMusic from "@assets/images/youtubeMusic.webp"
 import { useSetRecoilState } from "recoil"
 import { speedListenModal } from "@store/playList/atoms"
 
 interface Props {
-  song:SongInfo
+  song:Content
 }
 
 const PlayListDirectListenModal = ({song}:Props) => {
@@ -19,7 +19,7 @@ const PlayListDirectListenModal = ({song}:Props) => {
   //   window.location.href = youtubeMusicUrl;
   // }
 
-  const listenSong = (song: SongInfo) => {
+  const listenSong = (song: Content) => {
     const musicName = encodeURIComponent(song.title);
     const artistName = encodeURIComponent(song.artist);
     const youtubeMusicAppURL = `youtubemusic://search?q=${musicName}-${artistName}`;

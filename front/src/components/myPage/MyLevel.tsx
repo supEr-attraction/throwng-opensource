@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
 import "@styles/myPage/MyLevel.scss";
+import { getMyLevel } from "@services/myPageHistoryApi/MyPageHistoryApi";
 
 const  MyLevel = () => {
-  const [level, setLevel] = useState(1);
-  const [drop, setDrop] = useState(7);
-  const [pick, setPick] = useState(8);
-  const [isBlock, setIsBlock] = useState(false);
-  // const [isBlock, setIsBlock] = useState('7일 정지');
+  const [level, setLevel] = useState(0);
+  const [drop, setDrop] = useState(0);
+  const [pick, setPick] = useState(0);
+  const [isBlock, setIsBlock] = useState('NONE');
 
   useEffect(() => {
-    // API 호출 후 setStat에 내 능력치 할당하기
+    apiGetMyLevel();
   },[]);
 
+  const apiGetMyLevel = async () => {
+    const data = await getMyLevel();
+    setLevel(data.level)
+    setDrop(data.thrownCount)
+    setPick(data.pickCount)
+    setIsBlock(data.isBlock)
+  }
+  
   const getLevelBarColor = (level:number) => {
     switch (level) {
       case 2:
@@ -64,7 +72,7 @@ const  MyLevel = () => {
   
   return (
     <div className="MyLevel">
-      {isBlock ? (
+      {isBlock !== 'NONE' ? (
         <div className="block-message">
           <p>7일 동안 음악 두기 기능이 정지됩니다.</p>
         </div>

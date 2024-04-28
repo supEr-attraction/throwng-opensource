@@ -4,16 +4,18 @@ import "@styles/musicDrop/MusicDropHeader.scss";
 import { Song } from "../../types/songType";
 import { useState, useRef, useEffect } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
+import { useRecoilState } from 'recoil';
+import { musicDropImage } from "@store/musicSearch/atoms";
 
 interface Props {
   songInfo: Song;
 }
 
 const MusicDropHeader = ({ songInfo }: Props) => {
-  const [imagePreview, setImagePreview] = useState('');
   const fileRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const [isScrollNeeded, setIsScrollNeeded] = useState(false);
+  const [imagePreview, setImagePreview] = useRecoilState(musicDropImage);
 
   useEffect(() => {
     if (textRef.current) {

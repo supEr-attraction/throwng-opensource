@@ -21,6 +21,9 @@
         .item-location {
           color: var(--main-color);
           font-size: 1.7dvh;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
 
           svg {
             font-size: 2dvh;
@@ -30,6 +33,9 @@
         .item-date {
           color: var(--placeholder-color);
           font-size: 1.7dvh;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
       }
       

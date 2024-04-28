@@ -10,7 +10,7 @@ const MusicDrop = () => {
   return (
     <>
       <MusicDropHeader songInfo={songInfo.song}/>
-      <MusicDropBody />
+      <MusicDropBody songInfo={songInfo.song}/>
     </>
   )
 };

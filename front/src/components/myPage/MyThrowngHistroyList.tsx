@@ -1,51 +1,51 @@
-import { useEffect, useState, useCallback } from "react";
-import { SongHistory } from "../../types/songType.ts";
+import { useEffect, useState } from "react";
+import { MyPickHistory, MyThrowHistory } from "../../types/songType.ts";
 import "@styles/myPage/MyThrowngHistroyList.scss";
 import { TiLocation } from "react-icons/ti";
-import { getMyDropHistory, getMyPickHistory } from "@services/myPageHistoryApi/MyPageHistoryApi.tsx";
 import { useRecoilValue } from "recoil";
-import { throwngFilter } from "@store/myPage/atoms.ts";
+import { myPickHistoryList, myThrowHistoryList, throwngFilter } from "@store/myPage/atoms.ts";
+import moment from "moment";
 
 interface Props {
-  pageIdx: boolean;
+  pageIdx:boolean
   setHistoryCnt: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
-  const [songHistoryList, setSongHistoryList] = useState<SongHistory[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [songHistoryList, setSongHistoryList] = useState<Array<MyThrowHistory | MyPickHistory>>([]);
   const filter = useRecoilValue(throwngFilter);
+  const filterThrownList = useRecoilValue(myThrowHistoryList);
+  const filterPickList = useRecoilValue(myPickHistoryList);
+  const now = moment();
+  const sevenDaysAgo = moment().subtract(7, 'days');
 
-  const fetchHistory = useCallback(async () => {
-    if (isLoading) return;
-    setIsLoading(true);
+  const fetchAndFilterHistory = () => {
+    const dataList = !pageIdx ? filterThrownList : filterPickList;
+    const filteredData = dataList.filter((item: MyThrowHistory | MyPickHistory) => {
+      const itemDate = moment(item.dropDate, "YY.MM.DD");
+      switch (filter) {
+        case "오늘":
+          return now.isSame(itemDate, 'day');
+        case "이번 주":
+          return itemDate.isBetween(sevenDaysAgo, now, 'days', '[]');
+        case "이번 달":
+          return now.isSame(itemDate, 'month');
+        case "전체":
+          return true;
+        default:
+          return false;
+      }
+    });
 
-    const res = pageIdx
-      ? await getMyPickHistory()
-      : await getMyDropHistory();
-
-    if (res && res.data) {
-      setSongHistoryList((prevList) => [...prevList, ...res.data]);
-      setHistoryCnt((prevCnt) => prevCnt + 1);
-    }
-    setIsLoading(false);
-  }, [pageIdx, isLoading, filter]);
+    setSongHistoryList(filteredData);
+    setHistoryCnt(filteredData.length);
+  };
 
   useEffect(() => {
-    // fetchHistory();
-    // const handleScroll = () => {
-    //   if (
-    //     window.innerHeight + document.documentElement.scrollTop !==
-    //     document.documentElement.offsetHeight
-    //   )
-    //     return;
-    // };
+    fetchAndFilterHistory();
+  }, [filter, pageIdx]); 
 
-    // window.addEventListener("scroll", handleScroll);
-    // return () => window.removeEventListener("scroll", handleScroll);
-  }, [fetchHistory]);
-
-  const handleGoNavigation = (song: SongHistory) => {
+  const handleGoNavigation = (song: MyThrowHistory | MyPickHistory) => {
     console.log(song);
   };
 
@@ -56,7 +56,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
           songHistoryList.map((song, index) => (
             <div key={index} className="result-item" onClick={() => handleGoNavigation(song)}>
               <div className="item-header">
-                <div className="item-date">{song.date}</div>
+                <div className="item-date">{song.dropDate}</div>
                 <div className="item-location">
                   <TiLocation /> {song.location}
                 </div>

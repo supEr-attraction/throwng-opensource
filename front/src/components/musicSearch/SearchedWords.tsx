@@ -1,16 +1,20 @@
 import { MdOutlineClear } from "react-icons/md";
 import NoSearchWords from "./NoSearchWords";
 import "@styles/musicSearch/SearchedWords.scss"
-import { useRecoilState } from "recoil";
-import { searchedWords } from "@store/musicSearch/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { inputSearchKeyWord, searchedWords } from "@store/musicSearch/atoms";
 import { SearchedWordsList } from "../../types/songType.ts"
+import { useNavigate } from "react-router-dom";
 
-interface Props {
-  onWordClick: (title: string) => void,
-}
-
-const SearchedWords = ({onWordClick}:Props) => {
+const SearchedWords = () => {
+  const navigate = useNavigate();
   const [words, setWords] = useRecoilState<SearchedWordsList[]>(searchedWords)
+  const setTitle = useSetRecoilState(inputSearchKeyWord);
+
+  const onWordClick = (searchKeyWord: string) => {
+    setTitle(searchKeyWord);
+    navigate(`/music/search/${searchKeyWord}`)
+  };
 
   const deleteWord = (id: number) => {
     setWords((words) => words.filter((word) => word.id !== id));
@@ -35,7 +39,7 @@ const SearchedWords = ({onWordClick}:Props) => {
       <div className="word-list">
         {words.map((word) => (
           <div key={word.id} className="word-item">
-            <div onClick={() => onWordClick(word.title)}>{word.title}</div>
+            <div onClick={() => onWordClick(word.title)} className="word-title">{word.title}</div>
             <MdOutlineClear className="word-delete" onClick={() => deleteWord(word.id)}/>
           </div>
         ))}
