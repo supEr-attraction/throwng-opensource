@@ -5,6 +5,7 @@ import { TiLocation } from "react-icons/ti";
 import { useRecoilValue } from "recoil";
 import { myPickHistoryList, myThrowHistoryList, throwngFilter } from "@store/myPage/atoms.ts";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   pageIdx:boolean
@@ -18,6 +19,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   const filterPickList = useRecoilValue(myPickHistoryList);
   const now = moment();
   const sevenDaysAgo = moment().subtract(7, 'days');
+  const navigate = useNavigate()
 
   const fetchAndFilterHistory = () => {
     const dataList = !pageIdx ? filterThrownList : filterPickList;
@@ -42,14 +44,18 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
     setSongHistoryList(filteredData);
     setHistoryCnt(filteredData.length);
   };
-  
 
   useEffect(() => {
     fetchAndFilterHistory();
-  }, [filter, pageIdx, filterThrownList, filterPickList]);   
+  }, [filter, pageIdx, filterThrownList, filterPickList]);
 
   const handleGoNavigation = (song: MyThrowHistory | MyPickHistory) => {
-    console.log(song);
+    if ('myThrowId' in song) {
+      navigate(`/music/pick/${song.myThrowId}`);
+    }
+    else if ('myPickId' in song) {
+      navigate(`/music/pick/${song.myPickId}`);
+    }
   };
 
   return (
@@ -59,7 +65,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
           songHistoryList.map((song, index) => (
             <div key={index} className="result-item" onClick={() => handleGoNavigation(song)}>
               <div className="item-header">
-                <div className="item-date">{song.dropDate}</div>
+              <div className="item-date">{moment(song.dropDate).format("YYYY-MM-DD")}</div>
                 <div className="item-location">
                   <TiLocation /> {song.location}
                 </div>
