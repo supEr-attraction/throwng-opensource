@@ -80,6 +80,10 @@
           }
         }
       }
+      &:active {
+        background-color: var(--input-box-color);
+        border-radius: 1dvh;
+      }
     }
 
     &:last-child {

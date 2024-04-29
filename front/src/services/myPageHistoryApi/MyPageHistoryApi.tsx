@@ -28,7 +28,7 @@ const getMyPickHistory = async():Promise<MyPickHistory[]> => {
 
 const getMyLevel = async():Promise<MyLevel> => {
   try {
-    const {data} = await api.get<MyLevel>(`/users/user/level`)
+    const {data} = await api.get<MyLevel>(`/users/user/profile`)
     return data
   } catch (e) {
     console.log(e)
