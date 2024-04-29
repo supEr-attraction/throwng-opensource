@@ -11,11 +11,12 @@ const PlayListPage = lazy(() => import("@pages/PlayListPage"));
 const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 // const Error404 = loadable(() => import("./Error404"));
-
 const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
 const MusicPickDetailPage = lazy(() => import("@pages/MusicPickDetailPage"));
 const MusicList = lazy(() => import("@components/musicSearch/MusicList"))
+
+const QuizClosePage = lazy(() => import("@pages/quiz/QuizClosePage"))
 
 export default {
   path: "/",
@@ -98,6 +99,10 @@ export default {
         {
           path: "fail",
           element: <QuizFailPage />,
+        },
+        {
+          path: "*",
+          element: <QuizClosePage />,
         },
       ],
     },

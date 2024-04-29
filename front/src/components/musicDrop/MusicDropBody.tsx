@@ -6,6 +6,7 @@ import { postThrowngMusic } from "@services/musicSearchApi/MusicSearchApi";
 import { musicDropImage } from "@store/musicSearch/atoms";
 import { useNavigate } from "react-router-dom";
 import { selectMusic } from "@store/music/drop/atoms";
+import MusicDropBtn from "./MusicDropBtn";
 
 const MusicDropBody = () => {
   const [count, setCount] = useState(0);
@@ -26,11 +27,11 @@ const MusicDropBody = () => {
     }
   };
 
-  const postThrownSong = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const postThrownSong = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
   
     if (text.trim().length === 0) {
-      alert("노래에 대한 감정이나 상황을 적어주세요. 텍스트가 비어있을 수 없습니다.");
+      alert("노래에 대한 감정이나 상황을 적어주세요.");
       return;
     }
   
@@ -59,7 +60,6 @@ const MusicDropBody = () => {
           </p>
           음악을 두고 갈까요?
         </div>
-
         <form className="form-div">
           <div className="input-div">
             <textarea
@@ -73,19 +73,16 @@ const MusicDropBody = () => {
             />
             <div className="input-count">{count}/50</div>
           </div>
-
           <div className="waring-div">
             <div className="warning-msg">
               텍스트 및 사진은 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은
               삭제됩니다.
             </div>
           </div>
-
-          <div className="put-btn-div">
-            <button className="put-btn" onClick={postThrownSong} type="button">
-              쓰롱하기
-            </button>
-          </div>
+          <MusicDropBtn 
+            onClick={postThrownSong} 
+            btnText="쓰롱하기" 
+          />
         </form>
       </div>
     </div>
