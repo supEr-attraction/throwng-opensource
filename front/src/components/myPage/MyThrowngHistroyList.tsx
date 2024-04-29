@@ -46,7 +46,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
 
   useEffect(() => {
     fetchAndFilterHistory();
-  }, [filter, pageIdx]); 
+  }, [filter, pageIdx, filterThrownList, filterPickList]);   
 
   const handleGoNavigation = (song: MyThrowHistory | MyPickHistory) => {
     console.log(song);

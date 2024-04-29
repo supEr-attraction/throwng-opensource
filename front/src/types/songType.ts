@@ -1,5 +1,6 @@
 export interface Content {
   playlistId: number;
+  youtubeId: string;
   title: string;
   artist: string;
   albumImage: string;
@@ -50,7 +51,7 @@ export interface DropSong extends Omit<SongInfo, 'youtubeId' | 'albumImage'> {
   longitude: number;
   latitude: number;
   location: string;
-  imageUrl?: string;
+  imageUrl: File | null;
   comment: string;
   albumImageUrl: string;
 }
