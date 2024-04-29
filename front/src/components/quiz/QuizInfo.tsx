@@ -2,7 +2,6 @@ import "@styles/quiz/QuizInfo.scss";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 interface QuizItem {
   id: number;
   text: JSX.Element;
@@ -91,7 +90,7 @@ const QuizInfo = () => {
   }, [items]);
 
   const handleQuizStart = () => {
-    navigate("/quiz/solve");
+    navigate("/quiz/count");
   };
 
   return (

@@ -1,3 +1,4 @@
+import QuizCountDown from "@pages/quiz/QuizCountDown";
 import QuizCouponPage from "@pages/quiz/QuizCouponPage";
 import QuizFailPage from "@pages/quiz/QuizFailPage";
 import QuizInfoPage from "@pages/quiz/QuizInfoPage";
@@ -83,6 +84,10 @@ export default {
         {
           path: "info",
           element: <QuizInfoPage />,
+        },
+        {
+          path: "count",
+          element: <QuizCountDown />
         },
         {
           path: "solve",
