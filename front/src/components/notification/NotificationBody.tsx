@@ -26,7 +26,7 @@ const NotificationBody = () => {
       },
     ]
     setNoticeList(data)
-  })
+  },[])
 
   const formatDistanceToNow = (dateString:string) => {
     return dayjs(dateString).fromNow();

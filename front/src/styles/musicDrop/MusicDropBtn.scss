@@ -2,8 +2,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
   
   .put-btn {
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,7 +15,6 @@
     border: none;
     border-radius: 2dvh;
     font-size: 2dvh;
-    width: 40dvh;
     transition: background-color 0.1s ease;
 
     &:active {
