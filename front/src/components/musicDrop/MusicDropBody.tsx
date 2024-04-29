@@ -2,21 +2,21 @@ import { useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { addressState, locationState } from "@store/map/atoms";
 import "@styles/musicDrop/MusicDrop.scss";
-import { Song } from "../../types/songType";
 import { postThrowngMusic } from "@services/musicSearchApi/MusicSearchApi";
 import { musicDropImage } from "@store/musicSearch/atoms";
+import { useNavigate } from "react-router-dom";
+import { selectMusic } from "@store/music/drop/atoms";
+import MusicDropBtn from "./MusicDropBtn";
 
-interface Props {
-  songInfo: Song;
-}
-
-const MusicDropBody = ({ songInfo }: Props) => {
+const MusicDropBody = () => {
   const [count, setCount] = useState(0);
   const [text, setText] = useState("");
   const inputEl = useRef<HTMLTextAreaElement>(null);
   const myLocation = useRecoilValue(locationState);
   const myAddress = useRecoilValue(addressState);
   const imageUrl = useRecoilValue(musicDropImage);
+  const navigate = useNavigate()
+  const songInfo = useRecoilValue(selectMusic);
 
   const textOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 50) {
@@ -27,19 +27,29 @@ const MusicDropBody = ({ songInfo }: Props) => {
     }
   };
 
-  const postThrownSong = () => {
+  const postThrownSong = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+  
+    if (text.trim().length === 0) {
+      alert("노래에 대한 감정이나 상황을 적어주세요.");
+      return;
+    }
+  
     const requestBody = {
       longitude: myLocation.lng,
       latitude: myLocation.lat,
       location: myAddress,
       imageUrl: imageUrl,
-      comment: text,
+      comment: text.trim(),
       title: songInfo.title,
       artist: songInfo.artist,
       albumImageUrl: songInfo.albumImage,
     };
-    postThrowngMusic(songInfo.youtubeId, requestBody)
+  
+    postThrowngMusic(songInfo.youtubeId, requestBody);
+    navigate('/', {replace: true});
   };
+  
 
   return (
     <div className="MusicDrop">
@@ -50,32 +60,30 @@ const MusicDropBody = ({ songInfo }: Props) => {
           </p>
           음악을 두고 갈까요?
         </div>
-
-        <div className="input-div">
-          <textarea
-            onChange={textOnChange}
-            placeholder="노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
-            value={text}
-            maxLength={50}
-            className="input-area"
-            ref={inputEl}
-            required
-          />
-          <div className="input-count">{count}/50</div>
-        </div>
-
-        <div className="waring-div">
-          <div className="warning-msg">
-            텍스트 및 사진은 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은
-            삭제됩니다.
+        <form className="form-div">
+          <div className="input-div">
+            <textarea
+              onChange={textOnChange}
+              placeholder="노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
+              value={text}
+              maxLength={50}
+              className="input-area"
+              ref={inputEl}
+              required
+            />
+            <div className="input-count">{count}/50</div>
           </div>
-        </div>
-
-        <div className="put-btn-div">
-          <button className="put-btn" onClick={postThrownSong}>
-            쓰롱하기
-          </button>
-        </div>
+          <div className="waring-div">
+            <div className="warning-msg">
+              텍스트 및 사진은 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은
+              삭제됩니다.
+            </div>
+          </div>
+          <MusicDropBtn 
+            onClick={postThrownSong} 
+            btnText="쓰롱하기" 
+          />
+        </form>
       </div>
     </div>
   );

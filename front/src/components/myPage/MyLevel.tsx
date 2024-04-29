@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import "@styles/myPage/MyLevel.scss";
 import { getMyLevel } from "@services/myPageHistoryApi/MyPageHistoryApi";
+import { useSetRecoilState } from "recoil";
+import { myNickName } from "@store/myPage/atoms";
 
 const  MyLevel = () => {
   const [level, setLevel] = useState(0);
   const [drop, setDrop] = useState(0);
   const [pick, setPick] = useState(0);
   const [isBlock, setIsBlock] = useState('NONE');
+  const setMyNickName = useSetRecoilState(myNickName)
 
   useEffect(() => {
     apiGetMyLevel();
@@ -18,6 +21,7 @@ const  MyLevel = () => {
     setDrop(data.thrownCount)
     setPick(data.pickCount)
     setIsBlock(data.isBlock)
+    setMyNickName(data.nickName)
   }
   
   const getLevelBarColor = (level:number) => {

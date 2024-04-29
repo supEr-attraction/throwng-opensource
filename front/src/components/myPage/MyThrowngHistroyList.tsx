@@ -22,7 +22,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   const fetchAndFilterHistory = () => {
     const dataList = !pageIdx ? filterThrownList : filterPickList;
     const filteredData = dataList.filter((item: MyThrowHistory | MyPickHistory) => {
-      const itemDate = moment(item.dropDate, "YY.MM.DD");
+      const itemDate = moment(item.dropDate, "YYYY-MM-DDTHH:mm:ss");
       switch (filter) {
         case "오늘":
           return now.isSame(itemDate, 'day');
@@ -35,11 +35,14 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
         default:
           return false;
       }
+    }).sort((a, b) => {
+      return moment(b.dropDate, "YYYY-MM-DDTHH:mm:ss").diff(moment(a.dropDate, "YYYY-MM-DDTHH:mm:ss"));
     });
-
+  
     setSongHistoryList(filteredData);
     setHistoryCnt(filteredData.length);
   };
+  
 
   useEffect(() => {
     fetchAndFilterHistory();

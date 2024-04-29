@@ -17,78 +17,63 @@
       }
     }
 
-    .input-div {
+    .form-div {
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: var(--input-box-color);
-      border: none;
-      border-radius: 1vh;
+      gap: 2.5dvh;
 
-      textarea::placeholder {
-        color: var(--placeholder-color);
-        font-size: 1.5dvh;
-        white-space: pre-line;
-      }
-      
-      :focus {
-        outline: none;
-      }
-      
-      .input-area {
-        padding: 3dvh;
-        width: 100%;
-        height: 15dvh;
-        background-color: transparent;
-        caret-color: white;
+      .input-div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: var(--input-box-color);
         border: none;
-        font-size: 1.7dvh;
-        color: #ffffff;
-        resize: none;
-        overflow: auto;
+        border-radius: 1vh;
+  
+        textarea::placeholder {
+          color: var(--placeholder-color);
+          font-size: 1.5dvh;
+          white-space: pre-line;
+        }
+        
+        :focus {
+          outline: none;
+        }
+        
+        .input-area {
+          padding: 3dvh;
+          width: 100%;
+          height: 15dvh;
+          background-color: transparent;
+          caret-color: white;
+          border: none;
+          font-size: 1.7dvh;
+          color: #ffffff;
+          resize: none;
+          overflow: auto;
+        }
+  
+        .input-count {
+          padding: 1dvh;
+          width: 100%;
+          text-align: right;
+          color: var(--placeholder-color);
+          font-size: 1.5vh;
+        }
       }
-
-      .input-count {
-        padding: 1dvh;
-        width: 100%;
-        text-align: right;
-        color: var(--placeholder-color);
-        font-size: 1.5vh;
-      }
-    }
-
-    .waring-div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      .warning-msg {
-        color: #F6F5FF;
-        font-size: 1.5vh;
-        opacity: 0.4;
-        width: 40dvh;
-      }
-    }
-
-    .put-btn-div {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      
-      .put-btn {
-        background-color: var(--main-color);
-        color: white;
-        height: 8dvh;
-        border: none;
-        border-radius: 2dvh;
-        font-size: 2dvh;
-        width: 40dvh;
-        cursor: pointer;
-
-         &:active {
-          background-color: rgba($color: #728af3, $alpha: 1.0);
-         }
+  
+      .waring-div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+  
+        .warning-msg {
+          width: 100%;
+          color: #F6F5FF;
+          font-size: 1.5vh;
+          opacity: 0.4;
+        }
       }
     }
   }

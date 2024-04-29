@@ -1,21 +1,25 @@
 import { useNavigate, useParams } from "react-router-dom"
 import {Song} from "../../types/songType.ts"
 import "@styles/musicSearch/MusicList.scss"
-import { useSetRecoilState } from "recoil"
+import { useResetRecoilState, useSetRecoilState } from "recoil"
 import { inputSearchKeyWord } from "@store/musicSearch/atoms.ts"
 import Header from "@components/Header.tsx"
 import MusicSearchInput from "./MusicSearchInput.tsx"
 import { useEffect, useState } from "react"
 import { getSearchMusic } from "@services/musicSearchApi/MusicSearchApi.tsx"
+import { selectMusic } from "@store/music/drop/atoms.ts"
 
 const MusicList = () => {
   const navigate = useNavigate();
   const setTitle = useSetRecoilState(inputSearchKeyWord);
   const [searchResults, setSearchResults] = useState<Song[]>([]);
+  const setSelectMusic = useSetRecoilState(selectMusic)
+  const resetSelectMusic = useResetRecoilState(selectMusic)
   const params = useParams();
   const searchKeyword = params.id;
 
   useEffect(() => {
+    resetSelectMusic()
     if(searchKeyword) {
       onSearch(searchKeyword);
     }
@@ -24,14 +28,15 @@ const MusicList = () => {
   const onSearch = async (searchKeyWord: string) => {
     setTitle(searchKeyWord);
     const res = await getSearchMusic(searchKeyWord);
-    if (res && res.data) {
-      console.log(res.data)
-      setSearchResults(res.data);
+    if (res) {
+      console.log(res)
+      setSearchResults(res);
     }
   };
 
   const handleGoNavigation = (song : Song) => {
-    navigate(`/music/drop/${song.youtubeId}`, {state: {song:song}})
+    setSelectMusic(song)
+    navigate(`/music/drop/${song.youtubeId}`)
   }
 
   return (

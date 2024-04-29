@@ -6,16 +6,16 @@ import { useState, useRef, useEffect } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { useRecoilState } from 'recoil';
 import { musicDropImage } from "@store/musicSearch/atoms";
+import { useRecoilValue } from 'recoil';
+import { selectMusic } from "@store/music/drop/atoms";
 
-interface Props {
-  songInfo: Song;
-}
 
-const MusicDropHeader = ({ songInfo }: Props) => {
+const MusicDropHeader = () => {
   const fileRef = useRef<HTMLInputElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const [isScrollNeeded, setIsScrollNeeded] = useState(false);
   const [imagePreview, setImagePreview] = useRecoilState(musicDropImage);
+  const songInfo = useRecoilValue(selectMusic);
 
   useEffect(() => {
     if (textRef.current) {
@@ -37,6 +37,7 @@ const MusicDropHeader = ({ songInfo }: Props) => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      // 사진 변경 할 때 마다 s3 보내기
       setImagePreview(URL.createObjectURL(file));
     }
   };
