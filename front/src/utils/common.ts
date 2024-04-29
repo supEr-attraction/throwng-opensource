@@ -25,6 +25,11 @@ const axiosFileApi = () => {
     },
   });
 
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    instanceFile.defaults.headers.common["Authorization"] = token;
+  }
+
   return instanceFile;
 };
 

@@ -1,9 +1,9 @@
 import { useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import { addressState, locationState } from "@store/map/atoms";
 import "@styles/musicDrop/MusicDrop.scss";
 import { postThrowngMusic } from "@services/musicSearchApi/MusicSearchApi";
-import { musicDropImage } from "@store/musicSearch/atoms";
+import { musicDropImage, userImage } from "@store/musicSearch/atoms";
 import { useNavigate } from "react-router-dom";
 import { selectMusic } from "@store/music/drop/atoms";
 import MusicDropBtn from "./MusicDropBtn";
@@ -14,9 +14,11 @@ const MusicDropBody = () => {
   const inputEl = useRef<HTMLTextAreaElement>(null);
   const myLocation = useRecoilValue(locationState);
   const myAddress = useRecoilValue(addressState);
-  const imageUrl = useRecoilValue(musicDropImage);
+  const imageUrl = useRecoilValue(userImage);
   const navigate = useNavigate()
   const songInfo = useRecoilValue(selectMusic);
+  const resetUserImage = useResetRecoilState(userImage)
+  const resetImagePreview = useResetRecoilState(musicDropImage)
 
   const textOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 50) {
@@ -27,11 +29,18 @@ const MusicDropBody = () => {
     }
   };
 
-  const postThrownSong = (e: React.MouseEvent<HTMLDivElement>) => {
+  const postThrownSong = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
   
     if (text.trim().length === 0) {
       alert("노래에 대한 감정이나 상황을 적어주세요.");
+      return;
+    }
+
+    if (imageUrl && imageUrl.size > 9500000) {
+      alert("사진의 용량이 너무 큽니다. 다른 사진을 사용해 주세요.");
+      resetUserImage()
+      resetImagePreview()
       return;
     }
   
@@ -45,11 +54,10 @@ const MusicDropBody = () => {
       artist: songInfo.artist,
       albumImageUrl: songInfo.albumImage,
     };
-  
-    postThrowngMusic(songInfo.youtubeId, requestBody);
-    navigate('/', {replace: true});
+    console.log(requestBody.imageUrl)
+    await postThrowngMusic(songInfo.youtubeId, requestBody);
+    // navigate('/', {replace: true});
   };
-  
 
   return (
     <div className="MusicDrop">

@@ -1,5 +1,5 @@
 import "@styles/playList/PlayListItemModal.scss"
-import { Content, SearchedWordsList, SongInfo } from "../../types/songType"
+import { Content, SearchedWordsList, Song } from "../../types/songType"
 import { IoSearch } from "react-icons/io5";
 import { GiMicrophone } from "react-icons/gi";
 import { AiOutlineDelete } from "react-icons/ai";
@@ -9,14 +9,19 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchedWords } from "@store/musicSearch/atoms";
 import { deleteMyPlayList } from "@services/myPlayListApi/MyPlayListApi";
+import { selectMusic } from "@store/music/drop/atoms";
+import logo from "@assets/images/logo.png"
 
 interface Props {
-  song:Content
+  song: Content;
+  deleteSongFromPlayList: (playlistId: number) => void;
 }
 
-const PlayListItemModal = ({song}:Props) => {
+
+const PlayListItemModal = ({song, deleteSongFromPlayList}:Props) => {
   const setModalSongIndex = useSetRecoilState(detailModal);
   const setSpeedModal = useResetRecoilState(speedListenModal);
+  const setSelectMusic = useSetRecoilState(selectMusic)
   const setWords = useSetRecoilState<SearchedWordsList[]>(searchedWords)
   const navigate = useNavigate();
 
@@ -33,11 +38,24 @@ const PlayListItemModal = ({song}:Props) => {
     });
   }
 
-  const deleteSong = async (e:React.MouseEvent<HTMLLIElement>) => {
-    await deleteMyPlayList(song.playlistId)
+  const deleteSong = async (e: React.MouseEvent<HTMLLIElement>) => {
     e.preventDefault();
-    setModalSongIndex(null)
-  }
+    await deleteMyPlayList(song.playlistId);
+    deleteSongFromPlayList(song.playlistId);
+    setModalSongIndex(null);
+  };
+  
+  const directDrop = (song: Content) => {
+    const songForSelectMusic: Song = {
+      youtubeId: song.youtubeId,
+      albumImage: song.albumImage,
+      artist: song.artist,
+      title: song.title,
+      playTime: "",
+    };
+    setSelectMusic(songForSelectMusic);
+    navigate(`/music/drop/${song.youtubeId}`);
+  };
   
   const searchSong = (song:Content) => {
     goSearch(song.title)
@@ -64,6 +82,7 @@ const PlayListItemModal = ({song}:Props) => {
         </div>
         <hr />
         <div className="modal-menu">
+          <li onClick={() => directDrop(song)}><img src={logo} alt="" /><div>노래 쓰롱 하기</div></li>
           <li onClick={() => searchSong(song)}><GiMicrophone /><div>관련 노래 검색</div></li>
           <li onClick={() => searchSinger(song)}><IoSearch /><div>아티스트 검색</div></li>
           <li onClick={deleteSong}><AiOutlineDelete /><div>삭제</div></li>

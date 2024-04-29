@@ -20,3 +20,8 @@ export const musicDropImage = atom<string>({
   key: 'musicDropImage',
   default: '',
 })
+
+export const userImage = atom<File|null>({
+  key: 'userImage',
+  default: null,
+})
