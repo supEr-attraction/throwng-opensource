@@ -6,6 +6,11 @@ export const throwngFilterModal = atom<boolean>({
   default: false,
 });
 
+export const myNickName = atom<string>({
+  key: "myNickName",
+  default: '',
+});
+
 export const throwngFilter = atom<string>({
   key: "throwngFilter",
   default: '오늘',

@@ -16,9 +16,7 @@ const getSearchMusic = async(title:string):Promise<Song[]>=> {
 
 const postThrowngMusic = async(youtubeId:string, params:DropSong)=> {
   try {
-    console.log(youtubeId)
-    console.log(params)
-    const {data} = await api.post(`/music/thrown/${youtubeId}`, params);
+    const {data} = await api.post(`/music/thrown-song/${youtubeId}`, params);
     console.log(data)
     return data
   } catch (e) {

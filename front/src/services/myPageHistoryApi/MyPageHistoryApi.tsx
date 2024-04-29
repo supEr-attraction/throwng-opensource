@@ -6,7 +6,7 @@ const api = axiosApi()
 
 const getMyDropHistory = async():Promise<MyThrowHistory[]> => {
   try {
-    const {data} = await api.get<MyThrowHistory[]>(`/users/user/thrown-music`)
+    const {data} = await api.get<MyThrowHistory[]>(`/users/user/thrown-song`)
     console.log(data)
     return data
   } catch (e) {
@@ -17,7 +17,7 @@ const getMyDropHistory = async():Promise<MyThrowHistory[]> => {
 
 const getMyPickHistory = async():Promise<MyPickHistory[]> => {
   try {
-    const {data} = await api.get<MyPickHistory[]>(`/users/user/picked-music`)
+    const {data} = await api.get<MyPickHistory[]>(`/users/user/picked-song`)
     console.log(data)
     return data
   } catch (e) {
@@ -29,7 +29,6 @@ const getMyPickHistory = async():Promise<MyPickHistory[]> => {
 const getMyLevel = async():Promise<MyLevel> => {
   try {
     const {data} = await api.get<MyLevel>(`/users/user/profile`)
-    console.log(data)
     return data
   } catch (e) {
     console.log(e)
