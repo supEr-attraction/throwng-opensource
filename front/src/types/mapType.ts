@@ -10,6 +10,7 @@ export interface Marker {
   albumImage: string;
   songTitle: string;
   artistName: string;
+  innerDistance: boolean;
 }
 
 export interface MusicInfo {

@@ -43,8 +43,15 @@
       justify-content: center;
 
       svg {
-        color: #7b66ff;
         font-size: 3vh;
+
+        &.true {
+          color: #7b66ff;
+        }
+
+        &.false {
+          color: #7b8696;
+        }
       }
     }
   }
