@@ -1,11 +1,12 @@
-import { CENTER, CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
+import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { memo, useCallback, useEffect, useState } from "react";
 import MapHeader from "./MapHeader";
 import { ToasterMsg } from "@components/ToasterMsg";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   addressState,
+  centerState,
   locationState,
   markersState,
   prevLocationState,
@@ -15,6 +16,7 @@ import "@styles/map/Map.scss";
 import getDistance from "@/utils/map/getDistance";
 import MyLocation from "@components/map/MyLocation";
 import MusicMarkerItem from "@components/map/MusicMarkerItem";
+import { getMusicRadius } from "@services/mapAPi";
 
 const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
 
@@ -29,27 +31,34 @@ const Map = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [location, setLocation] = useRecoilState(locationState);
   const [prevLocation, setPrevLocation] = useRecoilState(prevLocationState);
+  const [markers, setMarkers] = useRecoilState(markersState);
+  const [center, setCenter] = useRecoilState(centerState);
   const setAddress = useSetRecoilState(addressState);
-  const markers = useRecoilValue(markersState);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
   const onUnmount = useCallback(() => setMap(null), []);
 
-  const updateMyLocation = () => {
-    map?.panTo(location);
-    map?.setZoom(15);
+  const returnMyLocation = () => {
+    if (map) {
+      const zoom = map.getZoom();
+      if (zoom !== undefined && zoom < 15) {
+        map.setZoom(15);
+      }
+      map.panTo(location);
+      setCenter(true);
+      getMusic(true, location);
+      fetchAddress(location);
+    }
   };
 
-  const updateLocation = (position: GeolocationPosition) => {
-    const currentLocation = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    };
-
-    getOnClickFunction(currentLocation);
-    setLocation(currentLocation);
-    // map?.panTo(currentLocation);
-    fetchAddress(currentLocation);
+  const changeCenter = () => {
+    if (map && !center) {
+      const mapCenter = map.getCenter()!;
+      const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
+      getMusic(false, mapPosition);
+      fetchAddress(mapPosition);
+    }
   };
 
   const fetchAddress = (location: Location): void => {
@@ -86,62 +95,104 @@ const Map = () => {
     }
   };
 
-  const getOnClickFunction = (current: Location) => {
-    // console.log(marker);
-    if (isLoaded) {
-      const distance = getDistance(prevLocation, location);
+  const getMusic = async (
+    isUserLocation: boolean,
+    position: {
+      lat: number;
+      lng: number;
+    }
+  ) => {
+    const data = await getMusicRadius(isUserLocation, position);
+    setMarkers(data);
+  };
 
-      if (distance >= 50) {
-        setPrevLocation(current);
-        return true;
-      } else {
-        return false;
-      }
+  const onDragEnd = () => {
+    if (center) {
+      setCenter(false);
+      console.log("drag");
+    }
+  };
+
+  const onZoomChanged = () => {
+    if (!initialLoad && center) {
+      setCenter(false);
+      console.log("zoom");
     }
   };
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (map && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        ({ coords }) => {
           const currentLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lat: coords.latitude,
+            lng: coords.longitude,
           };
+          map.setCenter(currentLocation);
+          map.setZoom(15);
           setLocation(currentLocation);
           setPrevLocation(currentLocation);
+          getMusic(true, currentLocation);
           fetchAddress(currentLocation);
-          map?.panTo(currentLocation);
+          setCenter(true);
+          setInitialLoad(false);
+        },
+        () => {
+          console.error("Error fetching location");
+        }
+      );
+    }
+  }, [map]);
+
+  useEffect(() => {
+    if (map && navigator.geolocation) {
+      const watchId = navigator.geolocation.watchPosition(
+        ({ coords }) => {
+          const currentLocation = {
+            lat: coords.latitude,
+            lng: coords.longitude,
+          };
+
+          const distance = getDistance(prevLocation, currentLocation);
+          console.log(distance);
+          if (distance >= 50) {
+            setPrevLocation(currentLocation);
+            if (center) {
+              getMusic(true, currentLocation);
+            }
+          }
+
+          if (center) {
+            map.panTo(currentLocation);
+            fetchAddress(currentLocation);
+          }
+
+          setLocation(currentLocation);
         },
         () => {
           console.error("Error fetching location");
         }
       );
 
-      const watchId = navigator.geolocation.watchPosition(
-        updateLocation,
-        () => {
-          console.error("Error fetching location");
-        }
-      );
-
-      // Clean up watcher on unmount
       return () => {
         navigator.geolocation.clearWatch(watchId);
       };
     }
-  }, [map]);
+  }, [center]);
 
   return isLoaded ? (
     <div className="Map">
-      <MapHeader updateMyLocation={updateMyLocation} />
+      <MapHeader returnMyLocation={returnMyLocation} />
       <GoogleMap
         mapContainerStyle={CONTAINER_STYLE}
-        center={CENTER}
-        zoom={15}
+        // center={location}
+        // zoom={15}
         options={MAP_OPTIONS}
         onLoad={onLoad}
         onUnmount={onUnmount}
+        onDragStart={onDragEnd}
+        onZoomChanged={onZoomChanged}
+        onIdle={changeCenter}
       >
         <MyLocation />
         {markers.map((marker) => (

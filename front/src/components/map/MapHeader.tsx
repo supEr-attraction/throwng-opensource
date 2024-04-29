@@ -1,15 +1,16 @@
 import { MdMyLocation } from "react-icons/md";
 import { useRecoilValue } from "recoil";
-import { addressState } from "@store/map/atoms";
+import { addressState, centerState } from "@store/map/atoms";
 import ping from "@assets/images/ping.webp";
 import "@styles/map/MapHeader.scss";
 
 interface Props {
-  updateMyLocation: () => void;
+  returnMyLocation: () => void;
 }
 
-const MapHeader = ({ updateMyLocation }: Props) => {
+const MapHeader = ({ returnMyLocation }: Props) => {
   const address = useRecoilValue(addressState);
+  const center = useRecoilValue(centerState);
 
   return (
     <div className="MapHeader">
@@ -20,7 +21,10 @@ const MapHeader = ({ updateMyLocation }: Props) => {
           <div>{address}</div>
         </div>
         <div className="gps">
-          <MdMyLocation onClick={updateMyLocation} />
+          <MdMyLocation
+            className={`${center ? "true" : "false"}`}
+            onClick={returnMyLocation}
+          />
         </div>
       </div>
     </div>
