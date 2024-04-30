@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "@styles/playList/PlayListBody.scss";
 import { Content } from "../../types/songType";
 import { IoMdMore } from "react-icons/io";
@@ -10,39 +10,38 @@ import { getMyPlayList } from "@services/myPlayListApi/MyPlayListApi";
 
 const PlayListBody = () => {
   const [playList, setPlayList] = useState<Content[]>([]);
-  const [lastModifiedAt, setLastModifiedAt] = useState("");
-  const [isLastPage, setIsLastPage] = useState(false);
-  const [modalSongIndex, setModalSongIndex] = useRecoilState(detailModal);
-  const [speedModal, setSpeedModal] = useRecoilState(speedListenModal);
+  const [, setLastModifiedAt] = useState<string>("");
+  const [isLastPage, setIsLastPage] = useState<boolean>(false);
+  const [modalSongIndex, setModalSongIndex] = useRecoilState<number | null>(detailModal);
+  const [speedModal, setSpeedModal] = useRecoilState<number | null>(speedListenModal);
   const resetPlayModal = useResetRecoilState(speedListenModal);
   const resetDetailModal = useResetRecoilState(detailModal);
+  const observer = useRef<IntersectionObserver | null>(null);
+  
+  const lastElementRef = useCallback((node: Element | null) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !isLastPage) {
+        const lastItem = playList[playList.length - 1];
+        fetchData(lastItem.modifiedAt);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [isLastPage, playList]);
 
   useEffect(() => {
     fetchData();
     resetPlayModal();
     resetDetailModal();
-
-    const onScroll = async () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        isLastPage
-      )
-        return;
-      await fetchData();
-    };
-
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [lastModifiedAt, isLastPage]);
-
-  const fetchData = async () => {
+  }, []);
+  
+  const fetchData = async (lastModifiedAt: string = "") => {
     const data = await getMyPlayList(lastModifiedAt);
-    if (data.content.length > 0) {
-      setLastModifiedAt(data.content[data.content.length - 1].modifiedAt);
-      setPlayList((prev) => [...prev, ...data.content]);
+    if (data.last) {
+      setIsLastPage(true);
     }
-    setIsLastPage(data.last);
+    setPlayList(prev => [...prev, ...data.content]);
+    setLastModifiedAt(data.content[data.content.length - 1].modifiedAt);
   };
 
   const modalStateHandler = (index: number) => {
@@ -61,6 +60,10 @@ const PlayListBody = () => {
     } else {
       setSpeedModal(index);
     }
+  };
+
+  const deleteSongFromPlayList = (playlistId: number) => {
+    setPlayList(prevPlayList => prevPlayList.filter(song => song.playlistId !== playlistId));
   };
 
   return (
@@ -92,13 +95,13 @@ const PlayListBody = () => {
                   </div>
                 </div>
               </div>
-              {modalSongIndex === index && <PlayListItemModal song={song} />}
+              {modalSongIndex === index && <PlayListItemModal song={song} deleteSongFromPlayList={deleteSongFromPlayList} />}
               {speedModal === index && (
                 <PlayListDirectListenModal song={song} />
               )}
+              {index === playList.length - 1 ? <div ref={lastElementRef} /> : null}
             </div>
           ))}
-          {isLastPage && <div>마지막 플레이리스트입니다.</div>}
         </div>
       ) : (
         <div>플레이리스트가 비어있습니다.</div>

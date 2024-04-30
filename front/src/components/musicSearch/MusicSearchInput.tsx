@@ -5,6 +5,8 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { SearchedWordsList } from "../../types/songType";
 import { inputSearchKeyWord, searchedWords } from "@store/musicSearch/atoms";
 import { useNavigate } from "react-router-dom";
+import { ToasterMsg } from "@components/ToasterMsg";
+import { toastMsg } from "@/utils/toastMsg";
 
 const MusicSearchInput = () => {
   const inputEl = useRef<HTMLInputElement>(null);
@@ -13,7 +15,7 @@ const MusicSearchInput = () => {
   const [title, setTitle] = useRecoilState(inputSearchKeyWord);
 
   const onSearch = async (searchKeyWord: string) => {
-    if (searchKeyWord !== '') {
+    if (searchKeyWord.trim() !== '') {
       navigate(`/music/search/${searchKeyWord}`)
     } else {
       navigate('/music/search', { replace: true });
@@ -29,13 +31,18 @@ const MusicSearchInput = () => {
 
   const titleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onSearch(title);
-    if (title !== ''){
+    if (title !== '') {
+      onSearch(title);
+      if (title.trim() !== '') {
       setWords((prevWords) => {
-        const newId = prevWords.length ? prevWords[prevWords.length - 1].id + 1 : 1;
-        const updatedWords = prevWords.filter((word) => word.title !== title);
-        return [{ id: newId, title: title }, ...updatedWords];
-      });
+          const newId = prevWords.length ? prevWords[prevWords.length - 1].id + 1 : 1;
+          const updatedWords = prevWords.filter((word) => word.title !== title);
+          return [{ id: newId, title: title }, ...updatedWords];
+        });
+      } else {
+        toastMsg("검색어를 입력하세요")
+        setTitle('')
+      }
     }
   };
   
@@ -60,6 +67,7 @@ const MusicSearchInput = () => {
           {title && <MdOutlineClear className="clear-button" onClick={clearTitle} />}
         </div>
       </form>
+      <ToasterMsg />
     </div>
   );
 };

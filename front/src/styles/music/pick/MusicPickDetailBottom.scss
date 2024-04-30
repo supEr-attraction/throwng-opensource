@@ -7,7 +7,7 @@
 
   .top {
     flex: 1;
-    background-color: #17191f;
+    background-color: var(--input-box-color);
     border-radius: 1dvh;
     padding: 3dvh;
     display: flex;
@@ -18,7 +18,7 @@
       display: flex;
       justify-content: end;
       svg {
-        color: #7b66ff;
+        color: var(--main-color);
         cursor: pointer;
         font-size: 2dvh;
       }
@@ -31,7 +31,7 @@
 
     .date {
       text-align: end;
-      color: #7b8696;
+      color: var(--placeholder-color);
       font-size: 1.7dvh;
     }
   }
@@ -43,7 +43,7 @@
     button {
       border: none;
       color: white;
-      background-color: #17191f;
+      background-color: var(--input-box-color);
       font-size: 2dvh;
       padding-block: 2dvh;
       border-radius: 1dvh;
@@ -64,6 +64,12 @@
 
       &.pick {
         flex: 2;
+
+        &.disable {
+          color: #7b8696;
+          background-color: #17191f;
+          cursor: not-allowed;
+        }
       }
     }
   }

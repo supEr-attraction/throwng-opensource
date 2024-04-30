@@ -1,35 +1,57 @@
-// import { axiosApi } from "@/utils/common";
 import MusicPickDetailBottom from "@components/music/pick/MusicPickDetailBottom";
 import MusicPickDetailTop from "@components/music/pick/MusicPickDetailTop";
 import { optionModalState, reportModalState } from "@store/music/pick/atoms";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useResetRecoilState } from "recoil";
+import { getMusicDetails } from "@services/musicPickApi";
+import { MusicInfo } from "../types/mapType";
 import "@styles/music/pick/MusicPickDetailPage.scss";
-// import { musicInfoState } from "@store/map/atoms";
+import Loading from "@components/Loading";
 
 const MusicPickDetailPage = () => {
   const resetOptionModal = useResetRecoilState(optionModalState);
   const resetReportModal = useResetRecoilState(reportModalState);
-  // const setMusicInfo = useSetRecoilState(musicInfoState);
+  const [musicInfo, setMusicInfo] = useState<MusicInfo>({
+    address: "",
+    albumImage: "",
+    artist: "",
+    content: "",
+    itemImage: "",
+    pickupStatus: false,
+    throwId: 0,
+    thrownDate: "",
+    title: "",
+  });
 
   const { id } = useParams();
 
-  // const musicDetail = async () => {
-  //   const { data } = await axiosApi().get(`/music/thrown/${id}`);
-  //   setMusicInfo(data);
-  // };
+  const musicDetail = async () => {
+    try {
+      const data = await getMusicDetails(id!);
+      console.log(data);
+      setMusicInfo(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     resetOptionModal();
     resetReportModal();
-    // musicDetail();
+    musicDetail();
   }, []);
 
   return (
     <div className="MusicPickDetailPage">
-      <MusicPickDetailTop />
-      <MusicPickDetailBottom id={id!} />
+      {musicInfo.artist ? (
+        <>
+          <MusicPickDetailTop musicInfo={musicInfo} />
+          <MusicPickDetailBottom musicInfo={musicInfo} />
+        </>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 };

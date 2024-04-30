@@ -1,13 +1,13 @@
 import Header from "@components/Header";
 import whiteBox from "@assets/images/whiteBox.webp";
 import "@styles/musicDrop/MusicDropHeader.scss";
-import { Song } from "../../types/songType";
 import { useState, useRef, useEffect } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { useRecoilState } from 'recoil';
-import { musicDropImage } from "@store/musicSearch/atoms";
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { musicDropImage, userImage } from "@store/musicSearch/atoms";
 import { useRecoilValue } from 'recoil';
 import { selectMusic } from "@store/music/drop/atoms";
+import { useResetRecoilState } from 'recoil';
 
 
 const MusicDropHeader = () => {
@@ -15,7 +15,9 @@ const MusicDropHeader = () => {
   const textRef = useRef<HTMLDivElement>(null);
   const [isScrollNeeded, setIsScrollNeeded] = useState(false);
   const [imagePreview, setImagePreview] = useRecoilState(musicDropImage);
+  const setUserImage = useSetRecoilState(userImage);
   const songInfo = useRecoilValue(selectMusic);
+  const resetUserImage = useResetRecoilState(userImage)
 
   useEffect(() => {
     if (textRef.current) {
@@ -28,6 +30,8 @@ const MusicDropHeader = () => {
         setIsScrollNeeded(false);
       }
     }
+    setImagePreview('')
+    resetUserImage()
   }, []);
 
   const handleFileButtonClick = () => {
@@ -37,7 +41,7 @@ const MusicDropHeader = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      // 사진 변경 할 때 마다 s3 보내기
+      setUserImage(file)
       setImagePreview(URL.createObjectURL(file));
     }
   };

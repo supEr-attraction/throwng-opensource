@@ -29,7 +29,6 @@ const MusicList = () => {
     setTitle(searchKeyWord);
     const res = await getSearchMusic(searchKeyWord);
     if (res) {
-      console.log(res)
       setSearchResults(res);
     }
   };

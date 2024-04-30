@@ -20,10 +20,12 @@ const axiosApi = () => {
 const axiosFileApi = () => {
   const instanceFile = axios.create({
     baseURL: `${BASE_URL}/api`,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
   });
+
+  const token = localStorage.getItem("jwt");
+  if (token) {
+    instanceFile.defaults.headers.common["Authorization"] = token;
+  }
 
   return instanceFile;
 };

@@ -27,7 +27,7 @@ const QuizSolvePage = () => {
 
   useEffect(() => {
     if (timeLeft === 0) {
-      // navigate("/quiz/fail");
+      navigate("/quiz/fail");
     }
   }, [timeLeft, navigate]);
 
