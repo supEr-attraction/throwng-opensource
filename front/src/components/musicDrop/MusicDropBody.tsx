@@ -48,15 +48,14 @@ const MusicDropBody = () => {
       longitude: myLocation.lng,
       latitude: myLocation.lat,
       location: myAddress,
-      imageUrl: imageUrl,
       comment: text.trim(),
       title: songInfo.title,
       artist: songInfo.artist,
       albumImageUrl: songInfo.albumImage,
     };
-    console.log(requestBody.imageUrl)
-    await postThrowngMusic(songInfo.youtubeId, requestBody);
-    // navigate('/', {replace: true});
+
+    await postThrowngMusic(songInfo.youtubeId, requestBody, imageUrl);
+    navigate('/', {replace: true});
   };
 
   return (
