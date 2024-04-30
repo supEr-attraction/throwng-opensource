@@ -3,23 +3,20 @@ import dayjs from "dayjs";
 import OptionModal from "./OptionModal";
 import ReportModal from "@components/music/pick/ReportModal";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import {
-  optionModalState,
-  reportModalState,
-  musicInfoState,
-} from "@store/music/pick/atoms";
+import { optionModalState, reportModalState } from "@store/music/pick/atoms";
 import { ToasterMsg } from "@components/ToasterMsg";
 import { useNavigate } from "react-router-dom";
 import youtubeMusic from "@assets/images/youtubeMusic.webp";
 import { postMusicPick } from "@services/musicPickApi";
 import "@styles/music/pick/MusicPickDetailBottom.scss";
 import { activeMarkerState } from "@store/map/atoms";
+import { MusicInfo } from "../../../types/mapType";
 
-const MusicPickDetailBottom = () => {
+const MusicPickDetailBottom = ({ musicInfo }: { musicInfo: MusicInfo }) => {
   const reportModal = useRecoilValue(reportModalState);
   const [optionModal, setOptionModal] = useRecoilState(optionModalState);
   const resetActiveMarkerId = useResetRecoilState(activeMarkerState);
-  const musicInfo = useRecoilValue(musicInfoState);
+
   const navigate = useNavigate();
 
   const date = dayjs(musicInfo.thrownDate);
