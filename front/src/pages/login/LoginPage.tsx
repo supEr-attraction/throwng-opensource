@@ -1,5 +1,5 @@
 import logo from "@assets/images/logo.png";
-import SocialKakao from "@components/SocialKakao";
+import SocialKakao from "@components/auth/SocialKakao";
 import "@styles/LoginPage.scss";
 
 const LoginPage = () => {
