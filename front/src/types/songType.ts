@@ -51,14 +51,12 @@ export interface DropSong extends Omit<SongInfo, 'youtubeId' | 'albumImage'> {
   longitude: number;
   latitude: number;
   location: string;
-  imageUrl: File | null;
   comment: string;
   albumImageUrl: string;
 }
 
 export interface SongHistory extends SongInfo {
   comment: string;
-  dropDate: string;
   location: string;
 }
 
@@ -68,9 +66,15 @@ export interface SearchedWordsList {
 }
 
 export interface MyThrowHistory extends Omit<SongHistory, 'youtubeId'> {
-  myThrowId: number;
+  myThrowId?: number;
+  myPickId: number;
+  dropDate?: string;
+  pickDate?: string; 
 }
 
 export interface MyPickHistory extends Omit<SongHistory, 'youtubeId'> {
-  myPickId: number;
+  myThrowId?: number;
+  myPickId?: number;
+  dropDate?: string;
+  pickDate?: string; 
 }

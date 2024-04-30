@@ -16,6 +16,11 @@ export const throwngFilter = atom<string>({
   default: '오늘',
 });
 
+export const pageIdx = atom<boolean>({
+  key: "pageIdx",
+  default: false,
+});
+
 export const myThrowHistoryList = atom<MyThrowHistory[]>({
   key: "myThrowHistoryList",
   default: [],
