@@ -16,6 +16,7 @@ const MapSwiper = () => {
 
   return (
     <div className="MapSwiper">
+      <div className="black-bottom-gradient"></div>
       <div
         className="close"
         onClick={() => {
@@ -53,7 +54,6 @@ const MapSwiper = () => {
           );
         })}
       </Swiper>
-      <div className="black-bottom-gradient"></div>
     </div>
   );
 };

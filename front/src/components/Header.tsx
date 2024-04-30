@@ -3,13 +3,14 @@ import { IoIosArrowBack } from "react-icons/io";
 import "@styles/Header.scss";
 import { useRecoilState } from "recoil";
 import { inputSearchKeyWord } from "@store/musicSearch/atoms";
+import ping from "@assets/images/ping.webp";
 
 interface Props {
   centerText?: string;
-  func?: () => void;
+  type?: string;
 }
 
-const Header = ({ centerText, func }: Props) => {
+const Header = ({ centerText, type }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchKeyWord, setSearchKeyWord] = useRecoilState(inputSearchKeyWord);
@@ -21,9 +22,6 @@ const Header = ({ centerText, func }: Props) => {
       }
       navigate("/");
     } else {
-      if (func) {
-        func();
-      }
       navigate(-1);
     }
   };
@@ -31,7 +29,10 @@ const Header = ({ centerText, func }: Props) => {
   return (
     <header className="Header">
       <IoIosArrowBack onClick={handleBackNavigation} />
-      <div className="center">{centerText}</div>
+      <div className="center">
+        {type === "address" && <img src={ping} />}
+        <div>{centerText}</div>
+      </div>
       <div className="blank" />
     </header>
   );

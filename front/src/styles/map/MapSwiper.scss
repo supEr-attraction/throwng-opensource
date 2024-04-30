@@ -3,10 +3,11 @@
   inset: 0;
   display: flex;
   flex-direction: column;
-  // z-index: 1;
+  z-index: 1;
 
   .close {
     flex: 1;
+    z-index: 1;
   }
 
   .swiper {
@@ -70,10 +71,10 @@
 
   .black-bottom-gradient {
     margin: 0 auto;
-    background: linear-gradient(180deg, rgba(23, 25, 31, 0) 10%, #0f1114 100%);
+    background: linear-gradient(180deg, rgba(23, 25, 31, 0) 50%, #0f1114 100%);
     position: fixed;
-    bottom: 0;
-    inset-inline: 0;
-    height: 20dvh;
+    // bottom: 0;
+    inset: 0;
+    // height: 20dvh;
   }
 }
