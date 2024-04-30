@@ -1,17 +1,28 @@
 import MusicPickDetailBottom from "@components/music/pick/MusicPickDetailBottom";
 import MusicPickDetailTop from "@components/music/pick/MusicPickDetailTop";
 import { optionModalState, reportModalState } from "@store/music/pick/atoms";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { useResetRecoilState } from "recoil";
 import { getMusicDetails } from "@services/musicPickApi";
-import { musicInfoState } from "@store/music/pick/atoms";
+import { MusicInfo } from "../types/mapType";
 import "@styles/music/pick/MusicPickDetailPage.scss";
+import Loading from "@components/Loading";
 
 const MusicPickDetailPage = () => {
   const resetOptionModal = useResetRecoilState(optionModalState);
   const resetReportModal = useResetRecoilState(reportModalState);
-  const setMusicInfo = useSetRecoilState(musicInfoState);
+  const [musicInfo, setMusicInfo] = useState<MusicInfo>({
+    address: "",
+    albumImage: "",
+    artist: "",
+    content: "",
+    itemImage: "",
+    pickupStatus: false,
+    throwId: 0,
+    thrownDate: "",
+    title: "",
+  });
 
   const { id } = useParams();
 
@@ -33,8 +44,14 @@ const MusicPickDetailPage = () => {
 
   return (
     <div className="MusicPickDetailPage">
-      <MusicPickDetailTop />
-      <MusicPickDetailBottom />
+      {musicInfo.artist ? (
+        <>
+          <MusicPickDetailTop musicInfo={musicInfo} />
+          <MusicPickDetailBottom musicInfo={musicInfo} />
+        </>
+      ) : (
+        <Loading />
+      )}
     </div>
   );
 };

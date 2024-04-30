@@ -1,0 +1,41 @@
+.Loading {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  letter-spacing: 2dvh;
+  background-color: rgba(15, 17, 20, 0.3);
+
+  .spinner {
+    font-size: 3dvh;
+    font-weight: bold;
+    color: #878c91;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 10px);
+
+    span {
+      animation: loading6454 1s ease infinite;
+    }
+
+    @for $i from 2 through 7 {
+      span:nth-child(#{$i}) {
+        animation-delay: 0.15s * ($i - 1);
+      }
+    }
+  }
+
+  @keyframes loading6454 {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-30px);
+    }
+  }
+}

@@ -1,15 +1,11 @@
 import Header from "@components/Header";
 import { useEffect, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
-import { musicInfoState } from "@store/music/pick/atoms";
-import whiteBox from "@assets/images/whiteBox.webp";
 import "@styles/music/pick/MusicPickDetailTop.scss";
+import { MusicInfo } from "../../../types/mapType";
 
-const MusicPickDetailTop = () => {
+const MusicPickDetailTop = ({ musicInfo }: { musicInfo: MusicInfo }) => {
   const textRef = useRef<HTMLDivElement>(null);
   const [isScrollNeeded, setIsScrollNeeded] = useState(false);
-  const { title, artist, albumImage, itemImage, address } =
-    useRecoilValue(musicInfoState);
 
   useEffect(() => {
     if (textRef.current) {
@@ -26,12 +22,12 @@ const MusicPickDetailTop = () => {
 
   return (
     <div className="MusicPickDetailTop">
-      <img className="album-image" src={albumImage} alt="" />
+      <img className="album-image" src={musicInfo.albumImage} alt="" />
       <div className="cover">
         {/* <div className="black-cover" /> */}
         <div className="black-gradient" />
         <div className="content">
-          <Header centerText={address} type="address" />
+          <Header centerText={musicInfo.address} type="address" />
           <div className="content-bottom">
             <div>
               <div className={`title`}>
@@ -41,17 +37,16 @@ const MusicPickDetailTop = () => {
                     isScrollNeeded ? "animated" : ""
                   }`}
                 >
-                  {title}
+                  {musicInfo.title}
                 </div>
               </div>
-              <div className="artist">{artist}</div>
+              <div className="artist">{musicInfo.artist}</div>
             </div>
             <img
-              // src="////s"
-              src={itemImage}
+              src={musicInfo.itemImage || musicInfo.albumImage}
               alt=""
               onError={(e) => {
-                e.currentTarget.src = whiteBox;
+                e.currentTarget.src = musicInfo.albumImage;
               }}
             />
           </div>
