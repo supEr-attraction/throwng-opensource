@@ -14,11 +14,13 @@ export interface Marker {
 }
 
 export interface MusicInfo {
-  throwId: number;
-  title: string;
-  artist: string;
+  address: string;
   albumImage: string;
-  itemImage: string;
+  artist: string;
   content: string;
+  itemImage: string;
+  pickupStatus: boolean;
+  throwId: number;
   thrownDate: string;
+  title: string;
 }
