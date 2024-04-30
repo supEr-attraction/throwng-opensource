@@ -19,7 +19,8 @@ async function getCode(provider: string, code: string): Promise<UserToken> {
 
 async function logout() {
   try {
-    await axiosApi().delete(`/users/user/logout`);
+    const res = await axiosApi().delete(`/users/user/logout`);
+    console.log(res);
   } catch (error) {
     console.error(error);
   }
