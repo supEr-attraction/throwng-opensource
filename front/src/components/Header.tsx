@@ -1,9 +1,11 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
 import "@styles/Header.scss";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { inputSearchKeyWord } from "@store/musicSearch/atoms";
 import ping from "@assets/images/ping.webp";
+import { FiLogOut } from "react-icons/fi";
+import { logoutModalState } from "@store/auth/atom";
 
 interface Props {
   centerText?: string;
@@ -14,6 +16,7 @@ const Header = ({ centerText, type }: Props) => {
   const navigate = useNavigate();
   const location = useLocation();
   const [searchKeyWord, setSearchKeyWord] = useRecoilState(inputSearchKeyWord);
+  const setLogoutModal = useSetRecoilState(logoutModalState);
 
   const handleBackNavigation = () => {
     if (location.pathname === "/music/search") {
@@ -26,6 +29,11 @@ const Header = ({ centerText, type }: Props) => {
     }
   };
 
+  const handleOpenModal = () => {
+    document.body.style.overflow = "hidden";
+    setLogoutModal(true);
+  };
+
   return (
     <header className="Header">
       <IoIosArrowBack onClick={handleBackNavigation} />
@@ -33,7 +41,11 @@ const Header = ({ centerText, type }: Props) => {
         {type === "address" && <img src={ping} />}
         <div>{centerText}</div>
       </div>
-      <div className="blank" />
+      {type === "logout" ? (
+        <FiLogOut className="logout" onClick={handleOpenModal} />
+      ) : (
+        <div className="blank" />
+      )}
     </header>
   );
 };
