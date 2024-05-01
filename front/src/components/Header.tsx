@@ -19,7 +19,7 @@ const Header = ({ centerText, type }: Props) => {
   const setLogoutModal = useSetRecoilState(logoutModalState);
 
   const handleBackNavigation = () => {
-    if (location.pathname === "/music/search") {
+    if (location.pathname.startsWith("/music/search")) {
       if (searchKeyWord !== "") {
         setSearchKeyWord("");
       }
