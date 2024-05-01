@@ -1,11 +1,11 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
-import "@styles/Header.scss";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { inputSearchKeyWord } from "@store/musicSearch/atoms";
-import ping from "@assets/images/ping.webp";
 import { FiLogOut } from "react-icons/fi";
 import { logoutModalState } from "@store/auth/atom";
+import ping from "@assets/images/ping.webp";
+import "@styles/Header.scss";
 
 interface Props {
   centerText?: string;
@@ -30,7 +30,7 @@ const Header = ({ centerText, type }: Props) => {
   };
 
   const handleOpenModal = () => {
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setLogoutModal(true);
   };
 

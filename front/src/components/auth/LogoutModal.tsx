@@ -3,13 +3,14 @@ import { useSetRecoilState } from "recoil";
 import "@styles/myPage/LogoutModal.scss";
 import { logout } from "@services/login";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const LogoutModal = () => {
   const setLogoutModal = useSetRecoilState(logoutModalState);
   const navigate = useNavigate();
 
   const handleCloseModal = () => {
-    document.body.style.overflow = "auto";
+    // document.body.style.overflow = "auto";
     setLogoutModal(false);
   };
 
@@ -23,6 +24,14 @@ const LogoutModal = () => {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <div className="LogoutModal">
