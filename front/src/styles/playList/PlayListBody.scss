@@ -1,5 +1,4 @@
 .PlayListBody {
-
   .ref-div {
     background-color: red;
     width: 100dvw;
@@ -11,10 +10,9 @@
     .content-container {
       display: flex;
       align-items: center;
-      
-      .image-container {
-        padding-right: 1dvh;
+      gap: 1dvh;
 
+      .image-container {
         .item-wide {
           width: 100%;
         }
@@ -52,21 +50,17 @@
             white-space: nowrap;
           }
         }
-        
+
         .item-detail-btn {
-          display: flex;
-          font-size: 1.7dvh;
           color: var(--main-color);
+          display: flex;
           align-items: center;
           justify-content: center;
-          width: 3dvh;
-          height: 3dvh;
 
           svg {
-            width: 6dvh;
-            height: 6dvh;
+            font-size: 3dvh;
           }
-      
+
           &:active {
             background-color: var(--input-box-color);
             border-radius: 50%;

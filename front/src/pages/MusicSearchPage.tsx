@@ -11,10 +11,10 @@ import SearchedWords from "@components/musicSearch/SearchedWords";
 const MusicSearchPage = () => {
   const title = useRecoilValue(inputSearchKeyWord);
   const resetDetailModal = useResetRecoilState(detailModal);
-  const resetTitle = useResetRecoilState(inputSearchKeyWord)
+  const resetTitle = useResetRecoilState(inputSearchKeyWord);
 
   useEffect(() => {
-    if (title !== '') {
+    if (title !== "") {
       resetDetailModal();
     }
     resetTitle();
@@ -24,7 +24,7 @@ const MusicSearchPage = () => {
     <div className="MusicSearchPage">
       <div>
         <div className="MusicSearchPage-header">
-          <Header/>
+          <Header />
           <MusicSearchInput />
         </div>
         <div className="searched-word">

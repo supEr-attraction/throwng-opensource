@@ -9,7 +9,7 @@
     flex: 1;
     background-color: var(--input-box-color);
     border-radius: 1dvh;
-    padding: 3dvh;
+    padding: 2.5dvh;
     display: flex;
     flex-direction: column;
     gap: 2dvh;
@@ -26,13 +26,13 @@
 
     .content {
       flex: 1;
-      font-size: 2dvh;
+      font-size: 1.6dvh;
     }
 
     .date {
       text-align: end;
       color: var(--placeholder-color);
-      font-size: 1.7dvh;
+      font-size: 1.5dvh;
     }
   }
 

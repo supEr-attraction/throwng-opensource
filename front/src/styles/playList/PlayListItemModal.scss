@@ -16,54 +16,43 @@
     inset-inline: 0;
     border-radius: 2dvh 2dvh 0 0;
     margin: 0 auto;
-    padding: 2dvh;
+    // padding: 2dvh;
 
     .item {
       display: flex;
-      flex-direction: row;
+      padding: 2dvh;
+      gap: 1dvh;
       align-items: center;
-      justify-content: flex-start;
-      padding: 1dvh 0;
 
       .image-container {
-        padding-right: 1dvh;
-
         img {
           width: 7dvh;
           height: 7dvh;
           border-radius: 1dvh;
+          object-fit: cover;
         }
       }
 
-      .item-wide {
-        display: flex;
-        align-items: center;
+      .item-detail {
+        width: 10dvh;
+        flex-grow: 1;
 
-        .item-detail {
-          display: flex;
-          flex-direction: column;
-          align-items: start;
-          text-align: start;
-          justify-content: center;
+        .item-title {
+          width: 100%;
+          font-size: 2dvh;
+          font-weight: bold;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
 
-          .item-title {
-            width: 25dvh;
-            font-size: 2dvh;
-            font-weight: 600;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-          }
-  
-          .item-artist {
-            width: 25dvh;
-            font-size: 1.5dvh;
-            font-weight: 500;
-            color: var(--placeholder-color);
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-          }
+        .item-artist {
+          width: 100%;
+          font-size: 1.5dvh;
+          color: var(--placeholder-color);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
         }
       }
     }
@@ -74,9 +63,9 @@
     }
 
     .modal-menu {
-      padding: 2dvh;
+      padding: 3dvh;
       font-size: 1.8dvh;
-      gap: 2dvh;
+      gap: 2.5dvh;
       display: flex;
       flex-direction: column;
       list-style-type: none;
@@ -84,7 +73,8 @@
       li {
         display: flex;
         align-items: center;
-        padding: 1dvh;
+        gap: 1dvh;
+        // padding: 1dvh;
 
         &:active {
           background-color: var(--input-box-color);
@@ -92,15 +82,11 @@
         }
 
         svg {
-          font-size: 3dvh;
-        }
-  
-        img {
-          width: 3dvh;
+          font-size: 2.5dvh;
         }
 
-        div {
-          margin-left: 1dvh;
+        img {
+          height: 2.5dvh;
         }
       }
     }
