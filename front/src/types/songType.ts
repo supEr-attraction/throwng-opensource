@@ -47,13 +47,13 @@ export interface Song extends SongInfo {
   playTime: string;
 }
 
-export interface DropSong extends Omit<SongInfo, 'youtubeId' | 'albumImage'> {
+export interface DropSong extends Omit<SongInfo, "youtubeId" | "albumImage"> {
   longitude: number;
   latitude: number;
   location: string;
   comment: string;
   albumImageUrl: string;
-  imageUrl: string|null;
+  imageUrl: string | null;
 }
 
 export interface SongHistory extends SongInfo {
@@ -66,9 +66,10 @@ export interface SearchedWordsList {
   title: string;
 }
 
-export interface MyHistory extends Omit<SongHistory, 'youtubeId'> {
+export interface MyHistory extends Omit<SongHistory, "youtubeId"> {
   myThrowId?: number;
   myPickId: number;
   dropDate?: string;
-  pickDate?: string; 
+  pickDate?: string;
+  throwId?: string;
 }
