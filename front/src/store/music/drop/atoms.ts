@@ -1,5 +1,11 @@
 import { atom } from "recoil";
-import { Song } from './../../../types/songType';
+import { Song } from "./../../../types/songType";
+import { recoilPersist } from "recoil-persist";
+
+const { persistAtom } = recoilPersist({
+  key: "musicDropInfoStorage", // 고유한 key 값
+  storage: sessionStorage,
+});
 
 export const selectMusic = atom<Song>({
   key: "selectMusic",
@@ -8,6 +14,7 @@ export const selectMusic = atom<Song>({
     albumImage: "",
     artist: "",
     title: "",
-    playTime: ""
+    playTime: "",
   },
+  effects_UNSTABLE: [persistAtom],
 });

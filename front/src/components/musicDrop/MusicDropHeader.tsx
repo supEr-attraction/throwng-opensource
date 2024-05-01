@@ -3,9 +3,9 @@ import whiteBox from "@assets/images/whiteBox.webp";
 import "@styles/musicDrop/MusicDropHeader.scss";
 import { useState, useRef, useEffect } from "react";
 import { IoCloudUploadOutline } from "react-icons/io5";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { musicDropImage, userImageURL } from "@store/musicSearch/atoms";
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue } from "recoil";
 import { selectMusic } from "@store/music/drop/atoms";
 import { postImageUpload } from "@services/musicSearchApi/MusicSearchApi";
 
@@ -15,9 +15,11 @@ const MusicDropHeader = () => {
   const [isScrollNeeded, setIsScrollNeeded] = useState(false);
   const [imagePreview, setImagePreview] = useRecoilState(musicDropImage);
   const songInfo = useRecoilValue(selectMusic);
-  const setUserImageUrl = useSetRecoilState(userImageURL)
-  const resetSetImagePreview = useResetRecoilState(musicDropImage)
-  const resetSetUserImageUrl = useResetRecoilState(userImageURL)
+  const setUserImageUrl = useSetRecoilState(userImageURL);
+  const resetSetImagePreview = useResetRecoilState(musicDropImage);
+  const resetSetUserImageUrl = useResetRecoilState(userImageURL);
+
+  console.log(songInfo);
 
   useEffect(() => {
     if (textRef.current) {
@@ -30,8 +32,8 @@ const MusicDropHeader = () => {
         setIsScrollNeeded(false);
       }
     }
-    resetSetImagePreview()
-    resetSetUserImageUrl()
+    resetSetImagePreview();
+    resetSetUserImageUrl();
   }, []);
 
   const handleFileButtonClick = () => {
@@ -43,29 +45,27 @@ const MusicDropHeader = () => {
       const file = e.target.files[0];
       if (file.size > 5000000) {
         alert("사진의 용량이 너무 커요. 다른 사진을 사용해 주세요.");
-        resetSetImagePreview()
-        resetSetUserImageUrl()
+        resetSetImagePreview();
+        resetSetUserImageUrl();
         return;
       } else {
         setImagePreview(URL.createObjectURL(file));
-        const data = await postImageUpload(file)
-        setUserImageUrl(data)
+        const data = await postImageUpload(file);
+        setUserImageUrl(data);
       }
     }
   };
-  
+
   return (
     <div className="MusicDropHeader">
-      <div className="album-image-container">
-        <img className="album-image" src={songInfo.albumImage} alt="" />
-      </div>
+      <img className="album-image" src={songInfo.albumImage} alt="" />
       <div className="cover">
         <div className="black-cover" />
         <div className="black-gradient" />
         <div className="content">
           <Header />
           <div className="content-bottom">
-            <div>
+            <div className="info">
               <div className={`title`}>
                 <div
                   ref={textRef}
@@ -89,11 +89,11 @@ const MusicDropHeader = () => {
               />
               {!imagePreview && <IoCloudUploadOutline />}
             </div>
-            {imagePreview && (
+            {/* {imagePreview && (
               <div className="reselect-image">
                 <div onClick={handleFileButtonClick}>다시 선택하기</div>
               </div>
-            )}
+            )} */}
             <input
               type="file"
               ref={fileRef}
@@ -107,6 +107,5 @@ const MusicDropHeader = () => {
     </div>
   );
 };
-
 
 export default MusicDropHeader;
