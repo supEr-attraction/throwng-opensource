@@ -21,7 +21,7 @@ export const musicDropImage = atom<string>({
   default: '',
 })
 
-export const userImage = atom<File|null>({
-  key: 'userImage',
+export const userImageURL = atom<string|null>({
+  key: 'userImageURL',
   default: null,
 })

@@ -1,13 +1,12 @@
 import { axiosApi } from "@/utils/common";
-import { MyPickHistory, MyThrowHistory } from "../../types/songType";
+import { MyHistory } from "../../types/songType";
 import { MyLevel } from "../../types/myPage";
 
 const api = axiosApi()
 
-const getMyDropHistory = async():Promise<MyThrowHistory[]> => {
+const getMyDropHistory = async():Promise<MyHistory[]> => {
   try {
-    const {data} = await api.get<MyThrowHistory[]>(`/users/user/thrown-song`)
-    console.log(data)
+    const {data} = await api.get<MyHistory[]>(`/users/user/thrown-song`)
     return data
   } catch (e) {
     console.log(e)
@@ -15,10 +14,9 @@ const getMyDropHistory = async():Promise<MyThrowHistory[]> => {
   }
 }
 
-const getMyPickHistory = async():Promise<MyPickHistory[]> => {
+const getMyPickHistory = async():Promise<MyHistory[]> => {
   try {
-    const {data} = await api.get<MyPickHistory[]>(`/users/user/picked-song`)
-    console.log(data)
+    const {data} = await api.get<MyHistory[]>(`/users/user/picked-song`)
     return data
   } catch (e) {
     console.log(e)

@@ -6,6 +6,7 @@ import MyThrowngHistoryFilterModal from "./MyThrowngHistoryFilterModal";
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
 import { myPickHistoryList, myThrowHistoryList, pageIdx, throwngFilterModal } from "@store/myPage/atoms";
 import { getMyDropHistory, getMyPickHistory } from "@services/myPageHistoryApi/MyPageHistoryApi";
+import Loading from "@components/Loading";
 
 const MyThrowngHistoryMenu = () => {
   const [page, setPageIdx] = useRecoilState(pageIdx);
@@ -14,21 +15,23 @@ const MyThrowngHistoryMenu = () => {
   const resetThrowngFilterState = useResetRecoilState(throwngFilterModal)
   const setThrownHistoryList = useSetRecoilState(myThrowHistoryList);
   const setPickHistoryList = useSetRecoilState(myPickHistoryList);
-  const resetPageIdx = useResetRecoilState(pageIdx)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     resetThrowngFilterState()
     fetchData();
-    
   }, [page])
 
   const fetchData = async () => {
+    setIsLoading(true)
     if (page) {
       const pickData = await getMyPickHistory();
       setPickHistoryList(pickData);
+      setIsLoading(false)
     } else {
       const thownData = await getMyDropHistory();
       setThrownHistoryList(thownData);
+      setIsLoading(false)
     }
   };
 
@@ -38,20 +41,25 @@ const MyThrowngHistoryMenu = () => {
 
   return (
     <div className="MyThrowngHistoryMenu">
-      <div className="menu-header">
-        <div className="header-btn-div">
-          <div className={`btn-item ${!page ? "" : "active"}`} onClick={() => setPageIdx(false)}>두기</div>
-          <div className={`btn-item ${page ? "" : "active"}`} onClick={() => setPageIdx(true)}>줍기</div>
-        </div>
-        <div className="song-cnt">전체 {histoyCnt}개</div>
-        <div className="filter-div" onClick={filterModalHandler}>
-          <div className="filter"><div>필터</div><LuListFilter/></div>
-        </div>
-      </div>
-      <MyThrowngHistroyList pageIdx={page} setHistoryCnt={setHistoryCnt}/>
-      {filterModal && <MyThrowngHistoryFilterModal />}
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="menu-header">
+            <div className="header-btn-div">
+              <div className={`btn-item ${!page ? "" : "active"}`} onClick={() => setPageIdx(false)}>두기</div>
+              <div className={`btn-item ${page ? "" : "active"}`} onClick={() => setPageIdx(true)}>줍기</div>
+            </div>
+            <div className="song-cnt">전체 {histoyCnt}개</div>
+            <div className="filter-div" onClick={filterModalHandler}>
+              <div className="filter"><div>필터</div><LuListFilter/></div>
+            </div>
+          </div>
+          <MyThrowngHistroyList pageIdx={page} setHistoryCnt={setHistoryCnt}/>
+          {filterModal && <MyThrowngHistoryFilterModal />}
+        </>
+      )}
     </div>
   );
 };
-
 export default MyThrowngHistoryMenu;
