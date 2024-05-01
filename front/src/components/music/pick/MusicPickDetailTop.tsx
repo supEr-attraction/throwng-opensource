@@ -24,7 +24,7 @@ const MusicPickDetailTop = ({ musicInfo }: { musicInfo: MusicInfo }) => {
     <div className="MusicPickDetailTop">
       <img className="album-image" src={musicInfo.albumImage} alt="" />
       <div className="cover">
-        {/* <div className="black-cover" /> */}
+        <div className="black-cover" />
         <div className="black-gradient" />
         <div className="content">
           <Header centerText={musicInfo.address} type="address" />
