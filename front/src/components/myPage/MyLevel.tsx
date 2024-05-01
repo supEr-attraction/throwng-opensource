@@ -59,7 +59,7 @@ const  MyLevel = () => {
       case 3:
         return '버즈프로';
       case 4:
-        return 'VVIP';
+        return 'VVIP 👑🫅';
       default:
         return '이어폰';
     }
@@ -72,6 +72,9 @@ const  MyLevel = () => {
     if (level === 1) {
       total = 20;
       current = drop;
+    } else if (level === 4) {
+      total = 1000;
+      current = drop + pick;
     } else {
       total = 100;
       current = drop + pick;
@@ -102,7 +105,7 @@ const  MyLevel = () => {
               {level === 1 && (<span>/20</span>)}
               {level === 2 && (<span>/100</span>)}
               {level === 3 && (<span>/100</span>)}
-              {level === 4 && (<span>/100</span>)}
+              {level === 4 && (<span>/1000</span>)}
             </div>
             {level !== 1 && (
               <div className="drop-pick">줍기 : {pick}
