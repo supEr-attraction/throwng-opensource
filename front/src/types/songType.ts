@@ -68,7 +68,7 @@ export interface SearchedWordsList {
 
 export interface MyHistory extends Omit<SongHistory, "youtubeId"> {
   myThrowId?: number;
-  myPickId: number;
+  myPickId?: number;
   dropDate?: string;
   pickDate?: string;
   throwId?: string;
