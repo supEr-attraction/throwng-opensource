@@ -78,7 +78,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
               placeholder="노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
               value={text}
               maxLength={50}
-              className="input-area"
+              className="input-area none-scroll"
               ref={inputEl}
               required
             />
