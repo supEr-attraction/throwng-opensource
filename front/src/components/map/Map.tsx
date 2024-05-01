@@ -12,13 +12,11 @@ import {
   markersState,
   prevLocationState,
 } from "@store/map/atoms";
-import { Location } from "../../types/mapType";
 import "@styles/map/Map.scss";
 import getDistance from "@/utils/map/getDistance";
 import MyLocation from "@components/map/MyLocation";
 import MusicMarkerItem from "@components/map/MusicMarkerItem";
 import { getMusicRadius, postAddress } from "@services/mapAPi";
-import Loading from "@components/Loading";
 
 const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
 
@@ -176,12 +174,12 @@ const Map = () => {
             }
           }
 
+          setLocation(currentLocation);
+          fetchAddress(currentLocation, "myLocation");
+
           if (center) {
             map.panTo(currentLocation);
           }
-
-          setLocation(currentLocation);
-          fetchAddress(currentLocation, "myLocation");
         },
         () => {
           console.error("Error fetching location");

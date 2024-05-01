@@ -9,7 +9,7 @@ export const ToasterMsg = () => (
       style: {
         background: "#363636",
         color: "#fff",
-        fontSize: "1.7dvh",
+        fontSize: "1.5dvh",
       },
     }}
   />
