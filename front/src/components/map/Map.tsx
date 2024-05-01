@@ -8,6 +8,7 @@ import {
   addressState,
   centerState,
   locationState,
+  mapCenterAddressState,
   markersState,
   prevLocationState,
 } from "@store/map/atoms";
@@ -16,7 +17,8 @@ import "@styles/map/Map.scss";
 import getDistance from "@/utils/map/getDistance";
 import MyLocation from "@components/map/MyLocation";
 import MusicMarkerItem from "@components/map/MusicMarkerItem";
-import { getMusicRadius } from "@services/mapAPi";
+import { getMusicRadius, postAddress } from "@services/mapAPi";
+import Loading from "@components/Loading";
 
 const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
 
@@ -34,6 +36,7 @@ const Map = () => {
   const [markers, setMarkers] = useRecoilState(markersState);
   const [center, setCenter] = useRecoilState(centerState);
   const setAddress = useSetRecoilState(addressState);
+  const setMapCenterAddress = useSetRecoilState(mapCenterAddressState);
   const [initialLoad, setInitialLoad] = useState(true);
 
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
@@ -45,10 +48,9 @@ const Map = () => {
       if (zoom !== undefined && zoom < 15) {
         map.setZoom(15);
       }
+      getMusic(true, location);
       map.panTo(location);
       setCenter(true);
-      getMusic(true, location);
-      fetchAddress(location);
     }
   };
 
@@ -57,43 +59,44 @@ const Map = () => {
       const mapCenter = map.getCenter()!;
       const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
       getMusic(false, mapPosition);
-      fetchAddress(mapPosition);
+      fetchAddress(mapPosition, "mapCenter");
     }
   };
 
-  const fetchAddress = (location: Location): void => {
-    if (isLoaded) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ location }, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          if (results?.[0]) {
-            const addressComponents = results[0].address_components;
-            let district = "";
-            let neighborhood = "";
-            // console.log(addressComponents);
+  // const fetchAddress = (location: Location, type: string): void => {
+  //   if (isLoaded) {
+  //     const geocoder = new window.google.maps.Geocoder();
+  //     geocoder.geocode({ location }, (results, status) => {
+  //       if (status === google.maps.GeocoderStatus.OK) {
+  //         if (results?.[0]) {
+  //           const addressComponents = results[0].address_components;
+  //           let district = "";
+  //           let neighborhood = "";
+  //           console.log(addressComponents);
 
-            addressComponents.forEach((component) => {
-              if (component.types.includes("sublocality_level_2")) {
-                neighborhood = component.long_name;
-              }
-              if (
-                component.types.includes("sublocality_level_1") &&
-                component.types.includes("political")
-              ) {
-                district = component.long_name;
-              }
-            });
-            // console.log(`구: ${district}, 동: ${neighborhood}`); // 구와 동을 콘솔에 출력
-            setAddress(`${district} ${neighborhood}`);
-          } else {
-            console.error("No address found");
-          }
-        } else {
-          console.error("Geocoder failed: " + status);
-        }
-      });
-    }
-  };
+  //           addressComponents.forEach((component) => {
+  //             if (component.types.includes("sublocality_level_2")) {
+  //               neighborhood = component.long_name;
+  //             }
+  //             if (
+  //               component.types.includes("sublocality_level_1") &&
+  //               component.types.includes("political")
+  //             ) {
+  //               district = component.long_name;
+  //             }
+  //           });
+  //           type === "myLocation"
+  //             ? setAddress(`${district} ${neighborhood}`)
+  //             : setMapCenterAddress(`${district} ${neighborhood}`);
+  //         } else {
+  //           console.error("No address found");
+  //         }
+  //       } else {
+  //         console.error("Geocoder failed: " + status);
+  //       }
+  //     });
+  //   }
+  // };
 
   const getMusic = async (
     isUserLocation: boolean,
@@ -104,6 +107,18 @@ const Map = () => {
   ) => {
     const data = await getMusicRadius(isUserLocation, position);
     setMarkers(data);
+  };
+
+  const fetchAddress = async (
+    position: {
+      lat: number;
+      lng: number;
+    },
+    type: string
+  ) => {
+    const data = await postAddress(position);
+    console.log(data);
+    type === "myLocation" ? setAddress(data) : setMapCenterAddress(data);
   };
 
   const onDragEnd = () => {
@@ -129,11 +144,10 @@ const Map = () => {
             lng: coords.longitude,
           };
           map.setCenter(currentLocation);
-          map.setZoom(15);
           setLocation(currentLocation);
           setPrevLocation(currentLocation);
           getMusic(true, currentLocation);
-          fetchAddress(currentLocation);
+          fetchAddress(currentLocation, "myLocation");
           setCenter(true);
           setInitialLoad(false);
         },
@@ -154,7 +168,7 @@ const Map = () => {
           };
 
           const distance = getDistance(prevLocation, currentLocation);
-          console.log(distance);
+
           if (distance >= 50) {
             setPrevLocation(currentLocation);
             if (center) {
@@ -164,10 +178,10 @@ const Map = () => {
 
           if (center) {
             map.panTo(currentLocation);
-            fetchAddress(currentLocation);
           }
 
           setLocation(currentLocation);
+          fetchAddress(currentLocation, "myLocation");
         },
         () => {
           console.error("Error fetching location");
@@ -178,7 +192,7 @@ const Map = () => {
         navigator.geolocation.clearWatch(watchId);
       };
     }
-  }, [center]);
+  }, [center, prevLocation]);
 
   return isLoaded ? (
     <div className="Map">
@@ -186,7 +200,7 @@ const Map = () => {
       <GoogleMap
         mapContainerStyle={CONTAINER_STYLE}
         // center={location}
-        // zoom={15}
+        zoom={15}
         options={MAP_OPTIONS}
         onLoad={onLoad}
         onUnmount={onUnmount}

@@ -16,6 +16,11 @@ export const addressState = atom({
   default: "",
 });
 
+export const mapCenterAddressState = atom({
+  key: "mapCenterAddressState",
+  default: "",
+});
+
 export const locationState = atom<Location>({
   key: "locationState",
   default: { lat: 0, lng: 0 },
