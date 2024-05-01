@@ -8,6 +8,7 @@ import MusicSearchInput from "./MusicSearchInput.tsx"
 import { useEffect, useState } from "react"
 import { getSearchMusic } from "@services/musicSearchApi/MusicSearchApi.tsx"
 import { selectMusic } from "@store/music/drop/atoms.ts"
+import Loading from "@components/Loading.tsx"
 
 const MusicList = () => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const MusicList = () => {
   const resetSelectMusic = useResetRecoilState(selectMusic)
   const params = useParams();
   const searchKeyword = params.id;
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     resetSelectMusic()
@@ -26,11 +28,13 @@ const MusicList = () => {
   }, [searchKeyword])
 
   const onSearch = async (searchKeyWord: string) => {
+    setIsLoading(true)
     setTitle(searchKeyWord);
     const res = await getSearchMusic(searchKeyWord);
     if (res) {
       setSearchResults(res);
     }
+    setIsLoading(false)
   };
 
   const handleGoNavigation = (song : Song) => {
@@ -44,7 +48,8 @@ const MusicList = () => {
         <Header/>
         <MusicSearchInput/>
       </div>
-      {searchResults && searchResults.length > 0 ? (
+      {isLoading ? ( <Loading /> ) 
+      : searchResults && searchResults.length > 0 ? (
         <div className="searchResults">
           {searchResults.map((song, index:number) => (
             <div key={index} className="result-item" onClick={() => handleGoNavigation(song)}>
