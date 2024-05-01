@@ -21,6 +21,9 @@
       .drop-pick {
         display: flex;
         align-items: flex-end;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
 
         span {
           font-size: 1.5dvh;

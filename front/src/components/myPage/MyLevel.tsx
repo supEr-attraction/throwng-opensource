@@ -59,7 +59,7 @@ const MyLevel = () => {
       case 3:
         return "버즈프로";
       case 4:
-        return "VVIP 👑";
+        return 'VVIP';
       default:
         return "이어폰";
     }
