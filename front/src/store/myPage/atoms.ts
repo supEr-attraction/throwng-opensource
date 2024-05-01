@@ -1,4 +1,4 @@
-import { MyPickHistory, MyThrowHistory } from "../../types/songType";
+import { MyHistory } from "../../types/songType";
 import { atom } from "recoil";
 
 export const throwngFilterModal = atom<boolean>({
@@ -21,12 +21,12 @@ export const pageIdx = atom<boolean>({
   default: false,
 });
 
-export const myThrowHistoryList = atom<MyThrowHistory[]>({
+export const myThrowHistoryList = atom<MyHistory[]>({
   key: "myThrowHistoryList",
   default: [],
 })
 
-export const myPickHistoryList = atom<MyPickHistory[]>({
+export const myPickHistoryList = atom<MyHistory[]>({
   key: "myPickHistoryList",
   default: [],
 })

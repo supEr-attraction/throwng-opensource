@@ -87,6 +87,8 @@
           text-decoration: underline;
           text-align: center;
           cursor: pointer;
+          display: flex;
+          flex-direction: row;
           
           &:active {
             color: var(--placeholder-color);
@@ -112,7 +114,7 @@
               text-align: center;
 
               &.animated {
-                animation: scroll 5s linear infinite; /* 애니메이션 적용 */
+                animation: scroll 5s linear infinite;
               }
             }
           }

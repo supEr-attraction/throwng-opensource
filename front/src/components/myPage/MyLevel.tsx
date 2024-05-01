@@ -27,22 +27,26 @@ const  MyLevel = () => {
   const getLevelBarColor = (level:number) => {
     switch (level) {
       case 2:
-        return 'linear-gradient(to right, #ffffff, var(--level-platinum))';
+        return 'linear-gradient(to right, #ffffff, var(--level-gold))';
       case 3:
+        return 'linear-gradient(to right, #ffffff, var(--level-platinum))';
+      case 4:
         return 'linear-gradient(to right, #ffffff, var(--main-color))';
       default:
-        return 'linear-gradient(to right, #ffffff, var(--level-gold))';
+        return 'linear-gradient(to right, #ffffff, #52DC22)';
     }
   };
 
   const getLevelDiv = (level:number) => {
     switch (level) {
       case 2:
-        return 'var(--level-platinum)';
+        return 'var(--level-gold)';
       case 3:
+        return 'var(--main-platinum)';
+      case 4:
         return 'var(--main-color)';
       default:
-        return 'var(--level-gold)';
+        return '#52DC22';
     }
   };
 
@@ -54,6 +58,8 @@ const  MyLevel = () => {
         return '버즈';
       case 3:
         return '버즈프로';
+      case 4:
+        return 'VVIP';
       default:
         return '이어폰';
     }
@@ -96,11 +102,13 @@ const  MyLevel = () => {
               {level === 1 && (<span>/20</span>)}
               {level === 2 && (<span>/100</span>)}
               {level === 3 && (<span>/100</span>)}
+              {level === 4 && (<span>/100</span>)}
             </div>
             {level !== 1 && (
               <div className="drop-pick">줍기 : {pick}
                 {level === 2 && (<span>/100</span>)}
                 {level === 3 && (<span>/100</span>)}
+                {level === 4 && (<span>/1000</span>)}
               </div>
             )}
           </div>

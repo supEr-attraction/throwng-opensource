@@ -7,6 +7,7 @@ import PlayListDirectListenModal from "./PlayListDirectListenModal";
 import { useRecoilState, useResetRecoilState } from "recoil";
 import { detailModal, speedListenModal } from "@store/playList/atoms";
 import { getMyPlayList } from "@services/myPlayListApi/MyPlayListApi";
+import Loading from "@components/Loading";
 
 const PlayListBody = () => {
   const [playList, setPlayList] = useState<Content[]>([]);
@@ -17,6 +18,7 @@ const PlayListBody = () => {
   const resetPlayModal = useResetRecoilState(speedListenModal);
   const resetDetailModal = useResetRecoilState(detailModal);
   const observer = useRef<IntersectionObserver | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   
   const lastElementRef = useCallback((node: Element | null) => {
     if (observer.current) observer.current.disconnect();
@@ -36,12 +38,14 @@ const PlayListBody = () => {
   }, []);
   
   const fetchData = async (lastModifiedAt: string = "") => {
+    setIsLoading(true);
     const data = await getMyPlayList(lastModifiedAt);
     if (data.last) {
       setIsLastPage(true);
     }
     setPlayList(prev => [...prev, ...data.content]);
     setLastModifiedAt(data.content[data.content.length - 1].modifiedAt);
+    setIsLoading(false);
   };
 
   const modalStateHandler = (index: number) => {
@@ -68,44 +72,46 @@ const PlayListBody = () => {
 
   return (
     <div className="PlayListBody">
-      {playList.length > 0 ? (
-        <div>
-          {playList.map((song, index) => (
-            <div key={index} className="result-item">
-              <div className="content-container">
-                <div
-                  className="image-container"
-                  onClick={() => speedListenModalHandler(index)}
-                >
-                  <img src={song.albumImage} />
-                </div>
-                <div className="item-wide">
+      {isLoading ? <Loading /> : 
+        playList.length > 0 ? (
+          <div>
+            {playList.map((song, index) => (
+              <div key={index} className="result-item">
+                <div className="content-container">
                   <div
-                    className="item-detail"
+                    className="image-container"
                     onClick={() => speedListenModalHandler(index)}
                   >
-                    <div className="item-title">{song.title}</div>
-                    <div className="item-artist">{song.artist}</div>
+                    <img src={song.albumImage} />
                   </div>
-                  <div
-                    className="item-detail-btn"
-                    onClick={() => modalStateHandler(index)}
-                  >
-                    <IoMdMore />
+                  <div className="item-wide">
+                    <div
+                      className="item-detail"
+                      onClick={() => speedListenModalHandler(index)}
+                    >
+                      <div className="item-title">{song.title}</div>
+                      <div className="item-artist">{song.artist}</div>
+                    </div>
+                    <div
+                      className="item-detail-btn"
+                      onClick={() => modalStateHandler(index)}
+                    >
+                      <IoMdMore />
+                    </div>
                   </div>
                 </div>
+                {modalSongIndex === index && <PlayListItemModal song={song} deleteSongFromPlayList={deleteSongFromPlayList} />}
+                {speedModal === index && (
+                  <PlayListDirectListenModal song={song} />
+                )}
+                {index === playList.length - 1 ? <div ref={lastElementRef} /> : null}
               </div>
-              {modalSongIndex === index && <PlayListItemModal song={song} deleteSongFromPlayList={deleteSongFromPlayList} />}
-              {speedModal === index && (
-                <PlayListDirectListenModal song={song} />
-              )}
-              {index === playList.length - 1 ? <div ref={lastElementRef} /> : null}
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div>플레이리스트가 비어있습니다.</div>
-      )}
+            ))}
+          </div>
+        ) : (
+          <div>플레이리스트가 비어있습니다.</div>
+        )
+      }
     </div>
   );
 };

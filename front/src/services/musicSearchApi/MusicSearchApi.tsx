@@ -7,7 +7,6 @@ const apiFile = axiosFileApi()
 const getSearchMusic = async(title:string):Promise<Song[]>=> {
   try {
     const {data} = await api.get<Song[]>(`/music/search/${title}`)
-    console.log(data)
     return data
   } catch (e) {
     console.log(e)
@@ -15,26 +14,21 @@ const getSearchMusic = async(title:string):Promise<Song[]>=> {
   }
 }
 
-const postThrowngMusic = async (youtubeId:string, requestBody:DropSong, imageUrl:File|null) => {
+const postImageUpload = async(file: File) => {
   try {
     const formData = new FormData();
+    formData.append('imageUrl', file);
+    const {data} = await apiFile.post(`/music/upload-image`, formData);
+    return data;
+  } catch (e) {
+    console.error(e);
+    throw e;
+  }
+}
 
-    if (imageUrl) {
-      formData.append("imageUrl", imageUrl)
-    }
-    formData.append("thrownItemRequest", new Blob([JSON.stringify(requestBody)], {type:'application/json'}));
-
-    const { data } = await apiFile.post(
-      `/music/thrown-song/${youtubeId}`, 
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        }
-      }
-    );
-
-    console.log(data);
+const postThrowngMusic = async (youtubeId:string, requestBody:DropSong) => {
+  try {
+    const { data } = await api.post(`/music/thrown-song/${youtubeId}`, requestBody);
     return data;
   } catch (e) {
     console.log(e);
@@ -45,4 +39,5 @@ const postThrowngMusic = async (youtubeId:string, requestBody:DropSong, imageUrl
 export {
   getSearchMusic,
   postThrowngMusic,
+  postImageUpload
 }
