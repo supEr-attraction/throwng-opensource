@@ -36,11 +36,11 @@
         background-color: var(--input-box-color);
         border: none;
         border-radius: 1vh;
-        padding: 3dvh;
+        padding: 2.5dvh;
 
         textarea::placeholder {
           color: var(--placeholder-color);
-          font-size: 1.5dvh;
+          font-size: 1.6dvh;
           white-space: pre-line;
         }
 
@@ -52,7 +52,7 @@
           background-color: transparent;
           caret-color: white;
           border: none;
-          font-size: 1.7dvh;
+          font-size: 1.6dvh;
           color: #ffffff;
           resize: none;
           overflow: auto;
