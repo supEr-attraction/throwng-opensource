@@ -12,17 +12,17 @@
     position: absolute;
     inset: 0;
 
-    // .black-cover {
-    //   background-color: #0f1114;
-    //   opacity: 0.5;
-    //   position: absolute;
-    //   inset: 0;
-    // }
+    .black-cover {
+      background-color: rgba(15, 17, 20, 0.2);
+      opacity: 0.5;
+      position: absolute;
+      inset: 0;
+    }
 
     .black-gradient {
       background: linear-gradient(
         180deg,
-        rgba(15, 17, 20, 0.35) 0%,
+        rgba(15, 17, 20, 0.2) 0%,
         #0f1114 100%
       );
       width: 100%;
@@ -98,12 +98,3 @@
     transform: translateX(-120%);
   }
 }
-// @keyframes scroll {
-//   0%,
-//   100% {
-//     transform: translateX(100%); /* 텍스트가 오른쪽에서 시작 */
-//   }
-//   50% {
-//     transform: translateX(-100%); /* 텍스트가 왼쪽 끝으로 이동 */
-//   }
-// }
