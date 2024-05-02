@@ -79,14 +79,12 @@ const Map = () => {
   const onDragEnd = () => {
     if (center) {
       setCenter(false);
-      console.log("drag");
     }
   };
 
   const onZoomChanged = () => {
     if (!initialLoad && center) {
       setCenter(false);
-      console.log("zoom");
     }
   };
 
@@ -130,9 +128,6 @@ const Map = () => {
             lat: coords.latitude,
             lng: coords.longitude,
           };
-
-          console.log(centerRef);
-          console.log(prevLocationRef);
 
           const distance = getDistance(
             prevLocationRef.current,
