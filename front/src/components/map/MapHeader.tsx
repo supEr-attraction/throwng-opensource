@@ -19,21 +19,19 @@ const MapHeader = ({ returnMyLocation }: Props) => {
 
   return (
     <div className="MapHeader">
-      {address && (
-        <div className="header">
-          <div className="blank"></div>
-          <div className="title">
-            <img src={ping} alt="" />
-            <div>{center ? address : mapCenterAddress}</div>
-          </div>
-          <div className="gps">
-            <MdMyLocation
-              className={`${center ? "true" : "false"}`}
-              onClick={returnMyLocation}
-            />
-          </div>
+      <div className="header">
+        <div className="blank"></div>
+        <div className="title">
+          <img src={ping} alt="" />
+          <div>{center ? address : mapCenterAddress}</div>
         </div>
-      )}
+        <div className="gps">
+          <MdMyLocation
+            className={`${center ? "true" : "false"}`}
+            onClick={returnMyLocation}
+          />
+        </div>
+      </div>
     </div>
   );
 };

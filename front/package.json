@@ -27,7 +27,6 @@
     "react-router-dom": "^6.22.3",
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
-    "recoilize": "^3.2.0",
     "sass": "^1.75.0",
     "swiper": "^11.1.1"
   },

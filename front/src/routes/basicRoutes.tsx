@@ -15,9 +15,10 @@ const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
 const MusicPickDetailPage = lazy(() => import("@pages/MusicPickDetailPage"));
-const MusicList = lazy(() => import("@components/musicSearch/MusicList"))
+const MusicList = lazy(() => import("@components/musicSearch/MusicList"));
 
-const QuizClosePage = lazy(() => import("@pages/quiz/QuizClosePage"))
+const QuizClosePage = lazy(() => import("@pages/quiz/QuizClosePage"));
+const NonePermissionPage = lazy(() => import("@pages/NonePermissionPage"));
 
 export default {
   path: "/",
@@ -87,7 +88,7 @@ export default {
         },
         {
           path: "count",
-          element: <QuizCountDown />
+          element: <QuizCountDown />,
         },
         {
           path: "solve",
@@ -111,5 +112,6 @@ export default {
         },
       ],
     },
+    { path: "none-permission", element: <NonePermissionPage /> },
   ],
 };

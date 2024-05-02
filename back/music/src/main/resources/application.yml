@@ -1,10 +1,19 @@
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
 server:
   port: 8084
 
+>>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
 spring:
+  config:
+    import: optional:configserver:http://throwng:458859@localhost:8088
   application:
     name: music
+<<<<<<< HEAD
+  profiles:
+    active: dev
+=======
 
   eureka:
     client:
@@ -19,3 +28,4 @@ spring:
   profiles:
     active: dev
 >>>>>>> ba89da3ff349afec5bb62d148d7a6e24d4604ae2
+>>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
