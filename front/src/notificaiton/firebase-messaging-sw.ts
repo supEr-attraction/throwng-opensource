@@ -26,8 +26,7 @@ export async function requestPermission() {
   console.log("알림 권한이 허용됨");
 
   const token = await getToken(messaging, {
-    vapidKey:
-      "BCSszT3YW8snVQJvsaxGXHAzWALd90j1dnWdVlbvoG6I6GL1pRmdu7bfkHa6LELNBdOlumJmTSmeiWQAXjRH08Q",
+    vapidKey: import.meta.env.VITE_APP_VAPID_KEY
   });
 
   if (token) console.log("token: ", token);
