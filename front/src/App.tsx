@@ -3,10 +3,8 @@ import router from "./routes/router";
 import { Suspense } from "react";
 import { RecoilRoot } from "recoil";
 import RecoilizeDebugger from "recoilize";
-// import { requestPermission } from "./notificaiton/firebase-messaging-sw";
 
 function App() {
-  // requestPermission();
   return (
     <RecoilRoot>
       <RecoilizeDebugger />
