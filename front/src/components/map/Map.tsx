@@ -1,6 +1,6 @@
-import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
+import { CENTER, CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import MapHeader from "./MapHeader";
 import { ToasterMsg } from "@components/ToasterMsg";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -17,6 +17,7 @@ import getDistance from "@/utils/map/getDistance";
 import MyLocation from "@components/map/MyLocation";
 import MusicMarkerItem from "@components/map/MusicMarkerItem";
 import { getMusicRadius, postAddress } from "@services/mapAPi";
+import { Location } from "../../types/mapType";
 
 const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
 
@@ -36,6 +37,8 @@ const Map = () => {
   const setAddress = useSetRecoilState(addressState);
   const setMapCenterAddress = useSetRecoilState(mapCenterAddressState);
   const [initialLoad, setInitialLoad] = useState(true);
+  const centerRef = useRef(center);
+  const prevLocationRef = useRef(prevLocation);
 
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
   const onUnmount = useCallback(() => setMap(null), []);
@@ -54,68 +57,22 @@ const Map = () => {
 
   const changeCenter = () => {
     if (map && !center) {
-      const mapCenter = map.getCenter()!;
-      const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
-      getMusic(false, mapPosition);
-      fetchAddress(mapPosition, "mapCenter");
+      const mapCenter = map.getCenter();
+      if (mapCenter) {
+        const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
+        getMusic(false, mapPosition);
+        fetchAddress(mapPosition, "mapCenter");
+      }
     }
   };
 
-  // const fetchAddress = (location: Location, type: string): void => {
-  //   if (isLoaded) {
-  //     const geocoder = new window.google.maps.Geocoder();
-  //     geocoder.geocode({ location }, (results, status) => {
-  //       if (status === google.maps.GeocoderStatus.OK) {
-  //         if (results?.[0]) {
-  //           const addressComponents = results[0].address_components;
-  //           let district = "";
-  //           let neighborhood = "";
-  //           console.log(addressComponents);
-
-  //           addressComponents.forEach((component) => {
-  //             if (component.types.includes("sublocality_level_2")) {
-  //               neighborhood = component.long_name;
-  //             }
-  //             if (
-  //               component.types.includes("sublocality_level_1") &&
-  //               component.types.includes("political")
-  //             ) {
-  //               district = component.long_name;
-  //             }
-  //           });
-  //           type === "myLocation"
-  //             ? setAddress(`${district} ${neighborhood}`)
-  //             : setMapCenterAddress(`${district} ${neighborhood}`);
-  //         } else {
-  //           console.error("No address found");
-  //         }
-  //       } else {
-  //         console.error("Geocoder failed: " + status);
-  //       }
-  //     });
-  //   }
-  // };
-
-  const getMusic = async (
-    isUserLocation: boolean,
-    position: {
-      lat: number;
-      lng: number;
-    }
-  ) => {
+  const getMusic = async (isUserLocation: boolean, position: Location) => {
     const data = await getMusicRadius(isUserLocation, position);
     setMarkers(data);
   };
 
-  const fetchAddress = async (
-    position: {
-      lat: number;
-      lng: number;
-    },
-    type: string
-  ) => {
+  const fetchAddress = async (position: Location, type: string) => {
     const data = await postAddress(position);
-    console.log(data);
     type === "myLocation" ? setAddress(data) : setMapCenterAddress(data);
   };
 
@@ -134,6 +91,14 @@ const Map = () => {
   };
 
   useEffect(() => {
+    centerRef.current = center;
+  }, [center]);
+
+  useEffect(() => {
+    prevLocationRef.current = prevLocation;
+  }, [prevLocation]);
+
+  useEffect(() => {
     if (map && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         ({ coords }) => {
@@ -149,9 +114,10 @@ const Map = () => {
           setCenter(true);
           setInitialLoad(false);
         },
-        () => {
-          console.error("Error fetching location");
-        }
+        (err) => {
+          console.error("Error fetching location", err);
+        },
+        { enableHighAccuracy: true }
       );
     }
   }, [map]);
@@ -165,11 +131,17 @@ const Map = () => {
             lng: coords.longitude,
           };
 
-          const distance = getDistance(prevLocation, currentLocation);
+          console.log(centerRef);
+          console.log(prevLocationRef);
+
+          const distance = getDistance(
+            prevLocationRef.current,
+            currentLocation
+          );
 
           if (distance >= 50) {
             setPrevLocation(currentLocation);
-            if (center) {
+            if (centerRef.current) {
               getMusic(true, currentLocation);
             }
           }
@@ -177,27 +149,28 @@ const Map = () => {
           setLocation(currentLocation);
           fetchAddress(currentLocation, "myLocation");
 
-          if (center) {
+          if (centerRef.current) {
             map.panTo(currentLocation);
           }
         },
         () => {
           console.error("Error fetching location");
-        }
+        },
+        { enableHighAccuracy: true }
       );
 
       return () => {
         navigator.geolocation.clearWatch(watchId);
       };
     }
-  }, [center, prevLocation]);
+  }, [map]);
 
   return isLoaded ? (
     <div className="Map">
       <MapHeader returnMyLocation={returnMyLocation} />
       <GoogleMap
         mapContainerStyle={CONTAINER_STYLE}
-        // center={location}
+        center={CENTER}
         zoom={15}
         options={MAP_OPTIONS}
         onLoad={onLoad}
