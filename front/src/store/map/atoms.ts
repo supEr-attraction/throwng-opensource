@@ -41,5 +41,5 @@ export const prevLocationState = atom<Location>({
 
 export const centerState = atom({
   key: "centerState",
-  default: false,
+  default: true,
 });
