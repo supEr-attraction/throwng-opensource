@@ -50,12 +50,12 @@ const MusicList = () => {
       </div>
       {isLoading ? ( <Loading /> ) 
       : searchResults && searchResults.length > 0 ? (
-        <div className="searchResults">
+        <div className="searchResults none-scroll">
           {searchResults.map((song, index:number) => (
             <div key={index} className="result-item" onClick={() => handleGoNavigation(song)}>
               
               <div className="image-container">
-                <img src={song.albumImage}/>
+                <img src={song.albumImage} loading="lazy"/>
               </div>
 
               <div className="item-wide">
