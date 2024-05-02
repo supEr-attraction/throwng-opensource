@@ -35,9 +35,10 @@ const MusicSearchInput = () => {
       onSearch(title);
       if (title.trim() !== '') {
       setWords((prevWords) => {
-          const newId = prevWords.length ? prevWords[prevWords.length - 1].id + 1 : 1;
-          const updatedWords = prevWords.filter((word) => word.title !== title);
-          return [{ id: newId, title: title }, ...updatedWords];
+        const newId = prevWords.length ? prevWords[0].id + 1 : 0;
+        const updatedWords = prevWords.filter((word) => word.title !== title);
+        console.log(updatedWords)
+        return [{ id: newId, title: title }, ...updatedWords];
         });
       } else {
         toastMsg("검색어를 입력하세요")
