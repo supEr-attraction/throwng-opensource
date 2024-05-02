@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { selectMusic } from "@store/music/drop/atoms";
 import MusicDropBtn from "./MusicDropBtn";
 import "@styles/musicDrop/MusicDropBody.scss";
+import { ToasterMsg } from "@components/ToasterMsg";
+import { toastMsg } from "@/utils/toastMsg";
 
 interface Props {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,7 +58,11 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
       albumImageUrl: songInfo.albumImage,
     };
 
-    await postThrowngMusic(songInfo.youtubeId, requestBody);
+    const res = await postThrowngMusic(songInfo.youtubeId, requestBody);
+
+    if (res === 'Song_400_2') {
+      alert("하루 쓰롱 개수를 초과하였습니다.\n내일 다시 쓰롱 해주세요.")
+    }
     resetUserImage();
     resetImagePreview();
     navigate("/", { replace: true });
@@ -91,9 +97,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
         </div>
         <MusicDropBtn onClick={postThrownSong} btnText="쓰롱하기" />
       </form>
-      {/* <div className="body">
-        
-      </div> */}
+      <ToasterMsg />
     </div>
   );
 };

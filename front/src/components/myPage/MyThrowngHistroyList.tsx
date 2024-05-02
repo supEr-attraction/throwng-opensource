@@ -60,8 +60,6 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
     fetchAndFilterHistory();
   }, [filter, pageIdx, filterThrownList, filterPickList]);
 
-  console.log(songHistoryList);
-
   const handleGoNavigation = (song: MyHistory) => {
     if ("myThrowId" in song) {
       navigate(`/music/pick/${song.myThrowId}`);
