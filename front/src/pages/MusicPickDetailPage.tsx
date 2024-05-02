@@ -29,7 +29,6 @@ const MusicPickDetailPage = () => {
   const musicDetail = async () => {
     try {
       const data = await getMusicDetails(id!);
-      console.log(data);
       setMusicInfo(data);
     } catch (error) {
       console.log(error);
