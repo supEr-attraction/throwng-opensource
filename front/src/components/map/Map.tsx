@@ -1,4 +1,4 @@
-import { CENTER, CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
+import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import MapHeader from "./MapHeader";
@@ -37,10 +37,16 @@ const Map = () => {
   const setAddress = useSetRecoilState(addressState);
   const setMapCenterAddress = useSetRecoilState(mapCenterAddressState);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [centerLocation, setCenterLocation] = useState({ lat: 0, lng: 0 });
   const centerRef = useRef(center);
   const prevLocationRef = useRef(prevLocation);
+  const initialLoadRef = useRef(initialLoad);
+  const isValidLocation = centerLocation.lat !== 0 && centerLocation.lng !== 0;
 
-  const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
+  const onLoad = useCallback((map: google.maps.Map) => {
+    setMap(map);
+  }, []);
+
   const onUnmount = useCallback(() => setMap(null), []);
 
   const returnMyLocation = () => {
@@ -56,28 +62,38 @@ const Map = () => {
   };
 
   const changeCenter = () => {
-    if (map && !center) {
+    if (map && !center && isValidLocation) {
       const mapCenter = map.getCenter();
       if (mapCenter) {
         const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
-        getMusic(false, mapPosition);
-        fetchAddress(mapPosition, "mapCenter");
+        if (mapPosition.lat !== 0 && mapPosition.lng !== 0) {
+          getMusic(false, mapPosition);
+          fetchAddress(mapPosition, "mapCenter");
+        }
       }
     }
   };
 
   const getMusic = async (isUserLocation: boolean, position: Location) => {
-    const data = await getMusicRadius(isUserLocation, position);
-    setMarkers(data);
+    try {
+      const data = await getMusicRadius(isUserLocation, position);
+      setMarkers(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const fetchAddress = async (position: Location, type: string) => {
-    const data = await postAddress(position);
-    type === "myLocation" ? setAddress(data) : setMapCenterAddress(data);
+    try {
+      const data = await postAddress(position);
+      type === "myLocation" ? setAddress(data) : setMapCenterAddress(data);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onDragEnd = () => {
-    if (center) {
+    if (!initialLoad && center) {
       setCenter(false);
     }
   };
@@ -97,31 +113,11 @@ const Map = () => {
   }, [prevLocation]);
 
   useEffect(() => {
-    if (map && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        ({ coords }) => {
-          const currentLocation = {
-            lat: coords.latitude,
-            lng: coords.longitude,
-          };
-          map.setCenter(currentLocation);
-          setLocation(currentLocation);
-          setPrevLocation(currentLocation);
-          getMusic(true, currentLocation);
-          fetchAddress(currentLocation, "myLocation");
-          setCenter(true);
-          setInitialLoad(false);
-        },
-        (err) => {
-          console.error("Error fetching location", err);
-        },
-        { enableHighAccuracy: true }
-      );
-    }
-  }, [map]);
+    initialLoadRef.current = initialLoad;
+  }, [initialLoad]);
 
   useEffect(() => {
-    if (map && navigator.geolocation) {
+    if (map) {
       const watchId = navigator.geolocation.watchPosition(
         ({ coords }) => {
           const currentLocation = {
@@ -129,27 +125,37 @@ const Map = () => {
             lng: coords.longitude,
           };
 
-          const distance = getDistance(
-            prevLocationRef.current,
-            currentLocation
-          );
-
-          if (distance >= 50) {
+          if (initialLoadRef.current) {
+            setCenterLocation(currentLocation);
+            getMusic(true, currentLocation);
+            fetchAddress(currentLocation, "myLocation");
+            setLocation(currentLocation);
             setPrevLocation(currentLocation);
+            // setCenter(true);
+            setInitialLoad(false);
+          } else {
+            const distance = getDistance(
+              prevLocationRef.current,
+              currentLocation
+            );
+
+            if (distance >= 50) {
+              setPrevLocation(currentLocation);
+              if (centerRef.current) {
+                getMusic(true, currentLocation);
+              }
+            }
+
+            setLocation(currentLocation);
+            fetchAddress(currentLocation, "myLocation");
+
             if (centerRef.current) {
-              getMusic(true, currentLocation);
+              map.panTo(currentLocation);
             }
           }
-
-          setLocation(currentLocation);
-          fetchAddress(currentLocation, "myLocation");
-
-          if (centerRef.current) {
-            map.panTo(currentLocation);
-          }
         },
-        () => {
-          console.error("Error fetching location");
+        (err) => {
+          console.error("Error fetching location", err);
         },
         { enableHighAccuracy: true }
       );
@@ -162,10 +168,10 @@ const Map = () => {
 
   return isLoaded ? (
     <div className="Map">
-      <MapHeader returnMyLocation={returnMyLocation} />
+      {isValidLocation && <MapHeader returnMyLocation={returnMyLocation} />}
       <GoogleMap
         mapContainerStyle={CONTAINER_STYLE}
-        center={CENTER}
+        center={centerLocation}
         zoom={15}
         options={MAP_OPTIONS}
         onLoad={onLoad}
