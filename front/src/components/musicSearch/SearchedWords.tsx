@@ -13,7 +13,7 @@ const SearchedWords = () => {
 
   const onWordClick = (searchKeyWord: string) => {
     setTitle(searchKeyWord);
-    navigate(`/music/search/${searchKeyWord}`)
+    navigate(`/music/search/${searchKeyWord}`, {replace:true})
   };
 
   const deleteWord = (id: number) => {

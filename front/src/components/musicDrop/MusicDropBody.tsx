@@ -7,8 +7,6 @@ import { useNavigate } from "react-router-dom";
 import { selectMusic } from "@store/music/drop/atoms";
 import MusicDropBtn from "./MusicDropBtn";
 import "@styles/musicDrop/MusicDropBody.scss";
-import { ToasterMsg } from "@components/ToasterMsg";
-import { toastMsg } from "@/utils/toastMsg";
 
 interface Props {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -97,7 +95,6 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
         </div>
         <MusicDropBtn onClick={postThrownSong} btnText="쓰롱하기" />
       </form>
-      <ToasterMsg />
     </div>
   );
 };

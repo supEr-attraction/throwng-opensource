@@ -16,7 +16,7 @@ const MusicSearchInput = () => {
 
   const onSearch = async (searchKeyWord: string) => {
     if (searchKeyWord.trim() !== '') {
-      navigate(`/music/search/${searchKeyWord}`)
+      navigate(`/music/search/${searchKeyWord}`, { replace: true })
     } else {
       navigate('/music/search', { replace: true });
     }
