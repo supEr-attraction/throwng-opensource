@@ -1,5 +1,6 @@
 import { axiosApi, axiosFileApi } from "@/utils/common";
 import { DropSong, Song } from "../../types/songType"
+import axios from "axios";
 
 const api = axiosApi()
 const apiFile = axiosFileApi()
@@ -31,8 +32,10 @@ const postThrowngMusic = async (youtubeId:string, requestBody:DropSong) => {
     const { data } = await api.post(`/music/thrown-song/${youtubeId}`, requestBody);
     return data;
   } catch (e) {
-    console.log(e);
-    throw e;
+    if (axios.isAxiosError(e) && e.response) {
+      const {code} = e.response.data
+      return code
+    }
   }
 };
 
