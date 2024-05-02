@@ -23,12 +23,12 @@
       flex: 1;
 
       img {
-        width: 2dvh;
-        height: 2.5dvh;
+        width: 1.8dvh;
+        height: 2.3dvh;
       }
 
       div {
-        font-size: 2.2dvh;
+        font-size: 2dvh;
         // font-weight: bold;
       }
     }
@@ -41,10 +41,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
 
       svg {
-        color: #7b66ff;
         font-size: 3vh;
+
+        &.true {
+          color: #7b66ff;
+        }
+
+        &.false {
+          color: #7b8696;
+        }
       }
     }
   }

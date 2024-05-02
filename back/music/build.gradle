@@ -22,6 +22,10 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
@@ -31,10 +35,34 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+=======
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+>>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
+>>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> ba89da3ff349afec5bb62d148d7a6e24d4604ae2
+>>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
+>>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

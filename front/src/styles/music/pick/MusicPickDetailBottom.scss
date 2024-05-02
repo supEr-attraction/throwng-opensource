@@ -1,0 +1,76 @@
+.MusicPickDetailBottom {
+  padding: 3dvh;
+  height: 50dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 2dvh;
+
+  .top {
+    flex: 1;
+    background-color: var(--input-box-color);
+    border-radius: 1dvh;
+    padding: 2.5dvh;
+    display: flex;
+    flex-direction: column;
+    gap: 2dvh;
+
+    .option {
+      display: flex;
+      justify-content: end;
+      svg {
+        color: var(--main-color);
+        cursor: pointer;
+        font-size: 2dvh;
+      }
+    }
+
+    .content {
+      flex: 1;
+      font-size: 1.8dvh;
+    }
+
+    .date {
+      text-align: end;
+      color: var(--placeholder-color);
+      font-size: 1.5dvh;
+    }
+  }
+
+  .bottom {
+    display: flex;
+    gap: 2dvh;
+
+    button {
+      border: none;
+      color: white;
+      background-color: var(--input-box-color);
+      font-size: 2dvh;
+      padding-block: 2.5dvh;
+      border-radius: 1dvh;
+      cursor: pointer;
+
+      &.listen {
+        flex: 3;
+        display: flex;
+        gap: 1dvh;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          width: 3dvh;
+          height: 3dvh;
+        }
+      }
+
+      &.pick {
+        flex: 2;
+
+        &.disable {
+          color: #7b8696;
+          background-color: #17191f;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}

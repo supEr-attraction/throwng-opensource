@@ -1,0 +1,50 @@
+.MyThrowngHistoryMenu {
+
+  .menu-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    .header-btn-div {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .btn-item {
+        padding: 0 1dvh;
+        font-size: 2.5dvh;
+        font-weight: bold;
+
+        &.active {
+          color: var(--placeholder-color);
+        }
+      }
+    }
+
+    .song-cnt {
+      font-size: 1.5dvh;
+      color: var(--placeholder-color);
+    }
+
+    .filter-div {
+      .filter {
+        padding: 1dvh;
+        font-size: 1.5dvh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: row;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border-radius: 1dvh;
+
+        &:active {
+          background-color: var(--input-box-color);
+          border-radius: 1dvh;
+          padding: 1dvh;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.put-btn-div {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  // width: 100%;
+
+  .put-btn {
+    // width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
+    color: white;
+    padding: 2.5dvh;
+    border: none;
+    border-radius: 1.5dvh;
+    font-size: 2dvh;
+    transition: background-color 0.1s ease;
+
+    &:active {
+      background-color: #9382ff;
+    }
+  }
+}
