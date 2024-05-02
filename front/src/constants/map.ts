@@ -1,8 +1,3 @@
-export const CENTER = {
-  lat: 35.20532120647508,
-  lng: 126.81149710166211,
-};
-
 export const CONTAINER_STYLE = {
   width: "100dvw",
   height: "100dvh",
