@@ -4,7 +4,7 @@ import { IoSearch } from "react-icons/io5";
 import { GiMicrophone } from "react-icons/gi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
-import { detailModal, speedListenModal } from "@store/playList/atoms";
+import { detailModal, scrollSongIndex, speedListenModal } from "@store/playList/atoms";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchedWords } from "@store/musicSearch/atoms";
@@ -22,6 +22,7 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
   const setSpeedModal = useResetRecoilState(speedListenModal);
   const setSelectMusic = useSetRecoilState(selectMusic);
   const setWords = useSetRecoilState<SearchedWordsList[]>(searchedWords);
+  const setScrollSongIndex = useSetRecoilState(scrollSongIndex)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
   }, []);
 
   const goSearch = (keyword: string) => {
+    setScrollSongIndex(song.youtubeId)
     navigate(`/music/search/${keyword}`);
     setWords((prevWords) => {
       const newId = prevWords.length
@@ -55,6 +57,7 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
       playTime: "",
     };
     setSelectMusic(songForSelectMusic);
+    setScrollSongIndex(song.youtubeId)
     navigate(`/music/drop/${song.youtubeId}`);
   };
 

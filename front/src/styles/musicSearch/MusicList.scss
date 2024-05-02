@@ -1,4 +1,7 @@
 .MusicList {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
 
   .MusicList-header {
     display: flex; 
@@ -8,6 +11,8 @@
 
   .searchResults {
     padding: 3dvh;
+    overflow: auto;
+    flex: 1;
 
     .result-item {
       display: flex;
