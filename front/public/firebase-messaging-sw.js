@@ -16,7 +16,6 @@ self.addEventListener("push", function (e) {
   const notificationOptions = {
     body: resultData.body,
     icon: resultData.image,
-    // icon: "/icons/pica.png",
     tag: resultData.tag,
     ...resultData,
   };
