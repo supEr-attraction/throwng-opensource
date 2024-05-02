@@ -29,7 +29,7 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
   }, []);
 
   const goSearch = (keyword: string) => {
-    navigate(`/music/search/${keyword}`, { replace: true });
+    navigate(`/music/search/${keyword}`);
     setWords((prevWords) => {
       const newId = prevWords.length
         ? prevWords[prevWords.length - 1].id + 1

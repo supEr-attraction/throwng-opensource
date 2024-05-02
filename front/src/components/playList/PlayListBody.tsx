@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import "@styles/playList/PlayListBody.scss";
 import { Content } from "../../types/songType";
 import { IoMdMore } from "react-icons/io";
@@ -23,35 +23,34 @@ const PlayListBody = () => {
   const observer = useRef<IntersectionObserver | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const lastElementRef = useCallback(
-    (node: Element | null) => {
-      if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && !isLastPage) {
-          const lastItem = playList[playList.length - 1];
-          fetchData(lastItem.modifiedAt);
-        }
-      });
-      if (node) observer.current.observe(node);
-    },
-    [isLastPage, playList]
-  );
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchData();
-    resetPlayModal();
-    resetDetailModal();
-  }, []);
-
-  const fetchData = async (lastModifiedAt: string = "") => {
+  const fetchData = useCallback(async (lastModifiedAt: string = "") => {
     const data = await getMyPlayList(lastModifiedAt);
     if (data.last) {
       setIsLastPage(true);
     }
     setPlayList((prev) => [...prev, ...data.content]);
     setIsLoading(false);
-  };
+  }, []);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchData();
+    resetPlayModal();
+    resetDetailModal();
+    return () => observer.current?.disconnect();
+  }, [fetchData]);
+
+  const lastElementRef = useCallback((node: HTMLDivElement) => {
+    if (isLoading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !isLastPage) {
+        fetchData(playList.length ? playList[playList.length - 1].modifiedAt : "");
+      }
+    });
+    
+    if (node) observer.current.observe(node);
+  }, [isLoading, isLastPage, fetchData, playList]);
 
   const modalStateHandler = (index: number) => {
     if (modalSongIndex === index) {
@@ -84,7 +83,7 @@ const PlayListBody = () => {
       ) : playList.length > 0 ? (
         <div>
           {playList.map((song, index) => (
-            <div key={index} className="result-item">
+            <div key={song.playlistId} className="result-item">
               <div className="content-container">
                 <div
                   className="image-container"
@@ -130,4 +129,4 @@ const PlayListBody = () => {
   );
 };
 
-export default PlayListBody;
+export default memo(PlayListBody); 
