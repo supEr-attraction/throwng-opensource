@@ -11,7 +11,6 @@ import Loading from "@components/Loading";
 
 const PlayListBody = () => {
   const [playList, setPlayList] = useState<Content[]>([]);
-  const [, setLastModifiedAt] = useState<string>("");
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
   const [modalSongIndex, setModalSongIndex] = useRecoilState<number | null>(
     detailModal
@@ -51,7 +50,6 @@ const PlayListBody = () => {
       setIsLastPage(true);
     }
     setPlayList((prev) => [...prev, ...data.content]);
-    setLastModifiedAt(data.content[data.content.length - 1].modifiedAt);
     setIsLoading(false);
   };
 
