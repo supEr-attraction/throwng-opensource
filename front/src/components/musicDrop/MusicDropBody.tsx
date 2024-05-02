@@ -56,7 +56,11 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
       albumImageUrl: songInfo.albumImage,
     };
 
-    await postThrowngMusic(songInfo.youtubeId, requestBody);
+    const res = await postThrowngMusic(songInfo.youtubeId, requestBody);
+
+    if (res === 'Song_400_2') {
+      alert("하루 쓰롱 개수를 초과하였습니다.\n내일 다시 쓰롱 해주세요.")
+    }
     resetUserImage();
     resetImagePreview();
     navigate("/", { replace: true });
@@ -91,9 +95,6 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
         </div>
         <MusicDropBtn onClick={postThrownSong} btnText="쓰롱하기" />
       </form>
-      {/* <div className="body">
-        
-      </div> */}
     </div>
   );
 };

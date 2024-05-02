@@ -13,7 +13,7 @@ export const myNickName = atom<string>({
 
 export const throwngFilter = atom<string>({
   key: "throwngFilter",
-  default: '오늘',
+  default: '전체',
 });
 
 export const pageIdx = atom<boolean>({

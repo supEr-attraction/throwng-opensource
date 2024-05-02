@@ -2,13 +2,13 @@ import { initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAvpaLumUt3oSgo0VxNfOmUWlVa7B-vi5U",
-  authDomain: "throwng-a72e9.firebaseapp.com",
-  projectId: "throwng-a72e9",
-  storageBucket: "throwng-a72e9.appspot.com",
-  messagingSenderId: "857673974729",
-  appId: "1:857673974729:web:fd8c37ef63556ca19c9e18",
-  measurementId: "G-12ZP96ZF2R"
+  apiKey: import.meta.env.VITE_APP_FCM_API_KEY,
+  authDomain: import.meta.env.VITE_APP_FCM_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_APP_FCM_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_APP_FCM_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_FCM_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_FCM_APP_ID,
+  measurementId: import.meta.env.VITE_APP_FCM_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
@@ -26,8 +26,7 @@ export async function requestPermission() {
   console.log("알림 권한이 허용됨");
 
   const token = await getToken(messaging, {
-    vapidKey: "BCSszT3YW8snVQJvsaxGXHAzWALd90j1dnWdVlbvoG6I6GL1pRmdu7bfkHa6LELNBdOlumJmTSmeiWQAXjRH08Q"
-    ,
+    vapidKey: import.meta.env.VITE_APP_VAPID_KEY
   });
 
   if (token) console.log("token: ", token);
@@ -35,8 +34,5 @@ export async function requestPermission() {
 
   onMessage(messaging, (payload) => {
     console.log("메시지가 도착했습니다.", payload);
-    // ...
   });
 }
-
-// requestPermission();

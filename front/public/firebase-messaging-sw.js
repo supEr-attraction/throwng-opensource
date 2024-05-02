@@ -16,7 +16,6 @@ self.addEventListener("push", function (e) {
   const notificationOptions = {
     body: resultData.body,
     icon: resultData.image,
-    // icon: "/icons/pica.png",
     tag: resultData.tag,
     ...resultData,
   };
@@ -29,5 +28,5 @@ self.addEventListener("notificationclick", function (event) {
   console.log("notification click");
   const url = "/quiz/main";
   event.notification.close();
-  event.waitUntil(clients.openWindow(url));
+  event.waitUntil(clients.navigate(url)); // new window open
 });

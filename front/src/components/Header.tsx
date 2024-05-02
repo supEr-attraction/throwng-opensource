@@ -1,7 +1,6 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { IoIosArrowBack } from "react-icons/io";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { inputSearchKeyWord } from "@store/musicSearch/atoms";
+import { useSetRecoilState } from "recoil";
 import { FiLogOut } from "react-icons/fi";
 import { logoutModalState } from "@store/auth/atom";
 import ping from "@assets/images/ping.webp";
@@ -14,19 +13,10 @@ interface Props {
 
 const Header = ({ centerText, type }: Props) => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [searchKeyWord, setSearchKeyWord] = useRecoilState(inputSearchKeyWord);
   const setLogoutModal = useSetRecoilState(logoutModalState);
 
   const handleBackNavigation = () => {
-    if (location.pathname.startsWith("/music/search")) {
-      if (searchKeyWord !== "") {
-        setSearchKeyWord("");
-      }
-      navigate("/");
-    } else {
-      navigate(-1);
-    }
+    navigate(-1);
   };
 
   const handleOpenModal = () => {
