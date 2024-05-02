@@ -39,13 +39,13 @@ const PlayListBody = () => {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     fetchData();
     resetPlayModal();
     resetDetailModal();
   }, []);
 
   const fetchData = async (lastModifiedAt: string = "") => {
-    setIsLoading(true);
     const data = await getMyPlayList(lastModifiedAt);
     if (data.last) {
       setIsLastPage(true);
