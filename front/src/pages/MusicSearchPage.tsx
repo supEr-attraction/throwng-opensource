@@ -17,7 +17,7 @@ const MusicSearchPage = () => {
     if (title !== "") {
       resetDetailModal();
     }
-    resetTitle();  
+    resetTitle();
   }, []);
 
   return (

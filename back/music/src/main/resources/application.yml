@@ -1,39 +1,10 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
 server:
   port: 8084
+  servlet:
+    context-path: /music
 
->>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
->>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
 spring:
   config:
-    import: optional:configserver:http://throwng:458859@localhost:8088
+    import: optional:configserver:http://throwng:458859@back-config:8088
   application:
     name: music
-<<<<<<< HEAD
-  profiles:
-    active: dev
-=======
-<<<<<<< HEAD
-  profiles:
-    active: dev
-=======
-
-  eureka:
-    client:
-      service-url:
-        default-zone: http://localhost:8761/eureka
-=======
-spring:
-  config:
-    import: optional:configserver:http://throwng:458859@localhost:8088
-  application:
-    name: music
-  profiles:
-    active: dev
->>>>>>> ba89da3ff349afec5bb62d148d7a6e24d4604ae2
->>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
->>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
