@@ -37,7 +37,6 @@ const MusicSearchInput = () => {
       setWords((prevWords) => {
         const newId = prevWords.length ? prevWords[0].id + 1 : 0;
         const updatedWords = prevWords.filter((word) => word.title !== title);
-        // console.log(updatedWords)
         return [{ id: newId, title: title }, ...updatedWords];
         });
       } else {
