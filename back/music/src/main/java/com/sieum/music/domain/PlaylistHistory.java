@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PlaylistHistory extends BaseTime {
+public class PlaylistHistory extends CreatedTime {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
