@@ -14,7 +14,10 @@
     .all-delete {
       font-size: 1.5dvh;
       color: var(--placeholder-color);
+<<<<<<< HEAD
+=======
       cursor: pointer;
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
     }
   }
 
@@ -25,6 +28,10 @@
       justify-content: space-between;
       align-items: center;
 
+<<<<<<< HEAD
+      .word-delete {
+        color: var(--placeholder-color);
+=======
       .word-title {
         width: 90%;
         text-overflow: ellipsis;
@@ -37,6 +44,7 @@
       .word-delete {
         color: var(--placeholder-color);
         cursor: pointer;
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
       }
     }
   }

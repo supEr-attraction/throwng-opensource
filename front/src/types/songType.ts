@@ -1,3 +1,12 @@
+<<<<<<< HEAD
+export type Song = {
+  id: number;
+  image: string;
+  artist: string;
+  title: string;
+  length: string;
+}
+=======
 export interface Content {
   playlistId: number;
   youtubeId: string;
@@ -73,3 +82,4 @@ export interface MyHistory extends Omit<SongHistory, "youtubeId"> {
   pickDate?: string;
   throwId?: string;
 }
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
