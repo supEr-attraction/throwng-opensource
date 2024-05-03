@@ -1,26 +1,10 @@
 .MusicList {
-<<<<<<< HEAD
-  padding: 3dvh;
-
-  .searchResults {
-
-    .result-item {
-      display: flex;
-      flex-direction: row;
-      padding: 1dvh 0px 1dvh 0px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-      img {
-        width: 8dvh;
-        height: 8dvh;
-        border-radius: 1dvh;
-=======
   height: 100dvh;
   display: flex;
   flex-direction: column;
 
   .MusicList-header {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: start;
   }
@@ -48,29 +32,10 @@
           height: 6dvh;
           border-radius: 1dvh;
         }
->>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
       }
 
       .item-wide {
         display: flex;
-<<<<<<< HEAD
-        flex: 1;
-        justify-content: space-between;
-
-        .item-detail {
-          padding-left: 2dvh;
-          display: flex;
-          flex-direction: column;
-          align-items: start;
-          text-align: start;
-          justify-content: center;
-
-          .item-title {
-            width: 25dvh;
-            font-size: 2dvh;
-            font-weight: 600;
-            padding-bottom: 0.5dvh;
-=======
         align-items: center;
         overflow: hidden;
         width: 90%;
@@ -79,36 +44,12 @@
           overflow: hidden;
           width: 90%;
 
-
           .item-title {
             font-size: 2dvh;
->>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
           }
-<<<<<<< HEAD
-  
-          .item-artist {
-            padding-top: 0.5dvh;
-            font-size: 1.7dvh;
-            font-weight: 500;
-            color: var(--subtitle-color);
-          }
-        }
-        
-        .item-length {
-          display: flex;
-          font-size: 1.7dvh;
-          color: var(--subtitle-color);
-          align-items: center;
-        }
-      }
-      
-      &:last-child {
-        border-bottom: none;
-      }
-=======
 
           .item-artist {
             font-size: 1.7dvh;
@@ -128,7 +69,6 @@
         background-color: var(--input-box-color);
         border-radius: 1dvh;
       }
->>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
     }
   }
-} 
+}

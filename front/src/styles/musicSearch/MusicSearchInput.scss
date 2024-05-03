@@ -1,41 +1,4 @@
 .MusicSearchInput {
-<<<<<<< HEAD
-  width: 100%;
-  padding: 1dvh 2dvh 1dvh 0px;
-
-  .input {
-    padding: 2dvh;
-    background-color: var(--input-box-color);
-    border: none;
-    border-radius: 1.5dvh;
-    color: white;
-    font-size: 2vh;
-    width: inherit;
-  }
-
-  .clear-button {
-    position: absolute;
-    top: 3dvh;
-    right: 4dvh;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    color: var(--placeholder-color);
-
-    &:active {
-      background: none;
-      border: none;
-    }
-  }
-
-  input::placeholder {
-    color: var(--placeholder-color);
-  }
-  
-  :focus{
-    outline:none;
-  }
-=======
   flex-grow: 1;
   padding: 1dvh 2dvh 1dvh 0;
 
@@ -47,7 +10,7 @@
     border: none;
     border-radius: 1.5dvh;
     align-items: center;
-    
+
     .input {
       width: 100%;
       background-color: transparent;
@@ -58,29 +21,28 @@
       overflow: hidden;
       white-space: nowrap;
     }
-  
+
     .clear-button {
       background: transparent;
       border: none;
       cursor: pointer;
       color: var(--placeholder-color);
-  
+
       &:active {
         background: none;
         border: none;
       }
     }
-  
+
     input::placeholder {
       color: var(--placeholder-color);
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
     }
-    
-    :focus{
-      outline:none;
+
+    :focus {
+      outline: none;
     }
   }
->>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
 }
