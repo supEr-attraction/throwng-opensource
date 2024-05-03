@@ -18,6 +18,16 @@ function PrivateRoutes() {
     };
 
     checkPermissions();
+
+    const handleFocus = () => {
+      checkPermissions(); // 윈도우 포커스를 다시 얻으면 권한 재확인
+    };
+
+    window.addEventListener("focus", handleFocus);
+
+    return () => {
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
 
   return isLogin ? <Outlet /> : <Navigate to="/login" replace />;
