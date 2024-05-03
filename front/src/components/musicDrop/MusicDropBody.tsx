@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { selectMusic } from "@store/music/drop/atoms";
 import MusicDropBtn from "./MusicDropBtn";
 import "@styles/musicDrop/MusicDropBody.scss";
+import { scrollSongIndex } from "@store/playList/atoms";
 
 interface Props {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,6 +24,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
   const songInfo = useRecoilValue(selectMusic);
   const resetUserImage = useResetRecoilState(userImageURL);
   const resetImagePreview = useResetRecoilState(musicDropImage);
+  const resetScrollSongIndex = useResetRecoilState(scrollSongIndex)
 
   const textOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 50) {
@@ -63,6 +65,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
     }
     resetUserImage();
     resetImagePreview();
+    resetScrollSongIndex()
     navigate("/", { replace: true });
   };
 
