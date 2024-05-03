@@ -6,11 +6,10 @@ export const ToasterMsg = () => (
       margin: "0 auto",
     }}
     toastOptions={{
-      // Define default options
       style: {
         background: "#363636",
         color: "#fff",
-        fontSize: "2vh",
+        fontSize: "1.5dvh",
       },
     }}
   />

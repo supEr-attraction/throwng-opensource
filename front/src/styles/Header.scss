@@ -10,8 +10,27 @@
 
   .center {
     flex: 1;
-    font-size: 2dvh;
+    // font-size: 2dvh;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+
+    img {
+      width: 1.8dvh;
+      height: 2.3dvh;
+    }
+
+    div {
+      font-size: 2dvh;
+    }
+  }
+
+  .logout {
+    // font-size: 3dvh;
+    width: 3dvh;
+    height: 2.5dvh;
   }
 
   .blank {

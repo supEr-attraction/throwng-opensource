@@ -1,0 +1,22 @@
+.LoginPage {
+  height: 100dvh;
+  padding-inline: 5dvh;
+  padding-block: 15dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  .logo {
+    display: flex;
+    justify-content: center;
+    padding-block: 5dvh;
+
+    img {
+      width: 15dvh;
+    }
+  }
+
+  .login-btn {
+    width: 100%;
+  }
+}

@@ -1,218 +1,195 @@
-import { CIRCLE_OPTIONS, CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
-import {
-  GoogleMap,
-  useJsApiLoader,
-  MarkerF,
-  CircleF,
-} from "@react-google-maps/api";
-import { useCallback, useEffect, useState } from "react";
-import marker from "@assets/images/usermarker.webp";
+import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
+import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import MapHeader from "./MapHeader";
-import pin from "@assets/images/pin.webp";
-import pin1 from "@assets/images/pin1.webp";
-import "@styles/map/Map.scss";
-import { toastMsg } from "@/utils/toastMsg";
 import { ToasterMsg } from "@components/ToasterMsg";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  addressState,
+  centerState,
+  locationState,
+  mapCenterAddressState,
+  markersState,
+  prevLocationState,
+} from "@store/map/atoms";
+import "@styles/map/Map.scss";
+import getDistance from "@/utils/map/getDistance";
+import MyLocation from "@components/map/MyLocation";
+import MusicMarkerItem from "@components/map/MusicMarkerItem";
+import { getMusicRadius, postAddress } from "@services/mapAPi";
+import { Location } from "../../types/mapType";
 
-interface Location {
-  lat: number;
-  lng: number;
-}
-
-const googleMapsLibraries: ("places" | "geometry")[] = ["places", "geometry"];
+const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
 
 const Map = () => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
-    googleMapsApiKey: "AIzaSyB6-Xpzz_O5OWj5KOavve7YKqn2ii_4uoQ",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
     language: "ko",
-    libraries: googleMapsLibraries,
+    libraries: GOOGLE_MAPS_LIBRARIES,
   });
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [location, setLocation] = useState({ lat: 0, lng: 0 });
-  const [address, setAddress] = useState("");
-  const [activeMarkerId, setActiveMarkerId] = useState<number | null>(null);
-
-  const handleMarkerClick = (id: number) => {
-    setActiveMarkerId(id); // 클릭된 마커 ID로 상태 업데이트
-  };
-
-  const getMarkerIcon = (id: number) => ({
-    url: id === activeMarkerId ? pin1 : pin,
-    scaledSize: new window.google.maps.Size(46, 50),
-    origin: new window.google.maps.Point(0, 0), // 이미지에서 마커로 사용할 부분의 시작점
-    // anchor: new window.google.maps.Point(23, 25),
-  });
-
-  const [markers, setMarkers] = useState([
-    {
-      id: 1,
-      position: { lat: 35.203117334571935, lng: 126.80858111342218 },
-      music: {
-        img: "https://www.akbobada.com/home/akbobada/archive/akbo/img/202404011417025.jpg",
-        title: "Magnetic",
-        singer: "아일릿(ILLIT)",
-      },
-    },
-    {
-      id: 2,
-      position: { lat: 35.203910921628214, lng: 126.81463012075089 },
-      music: {
-        img: "https://www.akbobada.com/home/akbobada/archive/akbo/img/202404031519030.jpg",
-        title: "고민중독",
-        singer: "QWER",
-      },
-    },
-    {
-      id: 3,
-      position: { lat: 35.196855157684766, lng: 126.80999034944725 },
-      music: {
-        img: "https://i.namu.wiki/i/vhLGDDDc-Li_qN6coMRSYw8y9o6P35-LiCqqVD0cW6EtaDIkCv1qcRx0Pv7_B0y-Y3t2HOjhHXWgCkgvrBLgGg.webp",
-        title: "밤양갱",
-        singer: "비비 (BIBI)",
-      },
-    },
-    // ... 다른 마커 데이터
-  ]);
+  const [location, setLocation] = useRecoilState(locationState);
+  const [prevLocation, setPrevLocation] = useRecoilState(prevLocationState);
+  const [markers, setMarkers] = useRecoilState(markersState);
+  const [center, setCenter] = useRecoilState(centerState);
+  const setAddress = useSetRecoilState(addressState);
+  const setMapCenterAddress = useSetRecoilState(mapCenterAddressState);
+  const [initialLoad, setInitialLoad] = useState(true);
+  const [centerLocation, setCenterLocation] = useState({ lat: 0, lng: 0 });
+  const centerRef = useRef(center);
+  const prevLocationRef = useRef(prevLocation);
+  const initialLoadRef = useRef(initialLoad);
+  const isValidLocation = centerLocation.lat !== 0 && centerLocation.lng !== 0;
 
   const onLoad = useCallback((map: google.maps.Map) => {
     setMap(map);
   }, []);
 
-  const onUnmount = useCallback(function callback() {
-    setMap(null);
-  }, []);
+  const onUnmount = useCallback(() => setMap(null), []);
 
-  const a = (currentLocation: { lat: number; lng: number }) => {
-    setLocation(currentLocation);
-    map?.panTo(currentLocation);
-    map?.setZoom(15);
-    fetchAddress(currentLocation);
-  };
-
-  const fetchAddress = (location: Location): void => {
-    if (isLoaded) {
-      const geocoder = new window.google.maps.Geocoder();
-      geocoder.geocode({ location }, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-          if (results?.[0]) {
-            const addressComponents = results[0].address_components;
-            let district = "";
-            let neighborhood = "";
-            console.log(addressComponents);
-
-            addressComponents.forEach((component) => {
-              if (component.types.includes("sublocality_level_2")) {
-                neighborhood = component.long_name;
-              }
-              if (
-                component.types.includes("sublocality_level_1") &&
-                component.types.includes("political")
-              ) {
-                district = component.long_name;
-              }
-            });
-            console.log(`구: ${district}, 동: ${neighborhood}`); // 구와 동을 콘솔에 출력
-            setAddress(`${district} ${neighborhood}`);
-          } else {
-            console.error("No address found");
-          }
-        } else {
-          console.error("Geocoder failed: " + status);
-        }
-      });
+  const returnMyLocation = () => {
+    if (map) {
+      const zoom = map.getZoom();
+      if (zoom !== undefined && zoom < 15) {
+        map.setZoom(15);
+      }
+      getMusic(true, location);
+      map.panTo(location);
+      setCenter(true);
     }
   };
 
-  // const insideCircleClick = (marker) => {
-  //   console.log("Clicked inside circle:", marker.id);
-  //   // Additional logic for markers inside the circle
-  // };
+  const changeCenter = () => {
+    if (map && !center && isValidLocation) {
+      const mapCenter = map.getCenter();
+      if (mapCenter) {
+        const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
+        if (mapPosition.lat !== 0 && mapPosition.lng !== 0) {
+          getMusic(false, mapPosition);
+          fetchAddress(mapPosition, "mapCenter");
+        }
+      }
+    }
+  };
 
-  // const outsideCircleClick = () => {
-  //   toastMsg("반경 밖 음악을 듣고 싶다면 위치를 이동해 보세요!");
-  //   // Additional logic for markers outside the circle
-  // };
+  const getMusic = async (isUserLocation: boolean, position: Location) => {
+    try {
+      const data = await getMusicRadius(isUserLocation, position);
+      setMarkers(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  // const getOnClickFunction = (marker) => {
-  //   console.log(marker);
-  //   const distance = google.maps.geometry.spherical.computeDistanceBetween(
-  //     new google.maps.LatLng(location.lat, location.lng),
-  //     new google.maps.LatLng(marker.position.lat, marker.position.lng)
-  //   );
+  const fetchAddress = async (position: Location, type: string) => {
+    try {
+      const data = await postAddress(position);
+      type === "myLocation" ? setAddress(data) : setMapCenterAddress(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
-  //   console.log(distance);
+  const onDragEnd = () => {
+    if (!initialLoad && center) {
+      setCenter(false);
+    }
+  };
 
-  //   return distance <= 600 ? insideCircleClick(marker) : outsideCircleClick();
-  // };
+  const onZoomChanged = () => {
+    if (!initialLoad && center) {
+      setCenter(false);
+    }
+  };
 
   useEffect(() => {
-    console.log(navigator.geolocation);
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
+    centerRef.current = center;
+  }, [center]);
+
+  useEffect(() => {
+    prevLocationRef.current = prevLocation;
+  }, [prevLocation]);
+
+  useEffect(() => {
+    initialLoadRef.current = initialLoad;
+  }, [initialLoad]);
+
+  useEffect(() => {
+    if (map) {
+      const watchId = navigator.geolocation.watchPosition(
+        ({ coords }) => {
           const currentLocation = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
+            lat: coords.latitude,
+            lng: coords.longitude,
           };
-          setLocation(currentLocation);
-          map?.panTo(currentLocation);
-          fetchAddress(currentLocation);
+
+          if (initialLoadRef.current) {
+            setCenterLocation(currentLocation);
+            getMusic(true, currentLocation);
+            fetchAddress(currentLocation, "myLocation");
+            setLocation(currentLocation);
+            setPrevLocation(currentLocation);
+            // setCenter(true);
+            setInitialLoad(false);
+          } else {
+            const distance = getDistance(
+              prevLocationRef.current,
+              currentLocation
+            );
+
+            if (distance >= 50) {
+              setPrevLocation(currentLocation);
+              if (centerRef.current) {
+                getMusic(true, currentLocation);
+              }
+            }
+
+            setLocation(currentLocation);
+            fetchAddress(currentLocation, "myLocation");
+
+            if (centerRef.current) {
+              map.panTo(currentLocation);
+            }
+          }
         },
-        () => {
-          console.error("Error fetching location");
-        }
+        (err) => {
+          console.error("Error fetching location", err);
+        },
+        { enableHighAccuracy: true }
       );
+
+      return () => {
+        navigator.geolocation.clearWatch(watchId);
+      };
     }
   }, [map]);
 
   return isLoaded ? (
     <div className="Map">
-      <MapHeader address={address} a={a} />
+      {isValidLocation && <MapHeader returnMyLocation={returnMyLocation} />}
       <GoogleMap
         mapContainerStyle={CONTAINER_STYLE}
-        center={location}
+        center={centerLocation}
         zoom={15}
         options={MAP_OPTIONS}
         onLoad={onLoad}
         onUnmount={onUnmount}
-        onClick={() => setActiveMarkerId(null)}
+        onDragStart={onDragEnd}
+        onZoomChanged={onZoomChanged}
+        onIdle={changeCenter}
       >
-        <CircleF center={location} options={CIRCLE_OPTIONS} />
-        <MarkerF
-          position={location}
-          icon={{
-            url: marker, // 그라데이션을 적용한 마커 이미지의 URL
-            scaledSize: new window.google.maps.Size(60, 60), // 마커의 크기를 조정합니다.
-            // origin: new window.google.maps.Point(0, 0), // 이미지에서 마커로 사용할 부분의 시작점
-            anchor: new window.google.maps.Point(30, 30), // 마커가 지도에 고정될 위치 (이미지의 중심점)
-          }}
-        />
-        {/* {markers.map((marker) => (
-          <MarkerF
-            key={marker.id}
-            icon={getMarkerIcon(marker.id)}
-            position={marker.position}
-            onClick={() => handleMarkerClick(marker.id)}
-            // onClick={() => getOnClickFunction(marker)}
-          />
-        ))} */}
-        {/* {location && (
-        <Marker
-          position={location}
-          icon={{
-            url: marker, // 그라데이션을 적용한 마커 이미지의 URL
-            scaledSize: new window.google.maps.Size(60, 60), // 마커의 크기를 조정합니다.
-            // origin: new window.google.maps.Point(0, 0), // 이미지에서 마커로 사용할 부분의 시작점
-            anchor: new window.google.maps.Point(30, 30), // 마커가 지도에 고정될 위치 (이미지의 중심점)
-          }}
-        />
-      )} */}
+        <MyLocation />
+        {markers.map((marker) => (
+          <MusicMarkerItem key={marker.itemId} marker={marker} />
+        ))}
       </GoogleMap>
       <ToasterMsg />
     </div>
-  ) : null;
+  ) : (
+    <></>
+  );
 };
 
-export default Map;
+export default memo(Map);

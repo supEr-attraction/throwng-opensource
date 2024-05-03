@@ -1,0 +1,55 @@
+.MyLevel {
+
+  .level-div {
+    display: flex;
+    flex-direction: column;
+
+    .level-info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      padding-bottom: 2dvh;
+
+      .level-color {
+        color: var(--level-gold);
+        border: 2px solid var(--level-gold);
+        padding: 1dvh;
+        border-radius: 2dvh;
+        font-size: 1.7dvh;
+      }
+
+      .drop-pick {
+        display: flex;
+        align-items: flex-end;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+
+        span {
+          font-size: 1.5dvh;
+          color: var(--placeholder-color);
+        }
+      }
+    }
+
+    .level-bar {
+      height: 3dvh;
+      background-color: #2A2F38;
+      border-radius: 1dvh;
+      overflow: hidden;
+
+      .level-bar-fill {
+        height: inherit;
+        background-color: linear-gradient(var(--main-color),);
+        border-radius: 1dvh;
+        animation: fillLevelBar 0.8s ease-in-out forwards;
+      }
+    }
+  }
+}
+
+@keyframes fillLevelBar {
+  from {
+    width: 0%;
+  }
+}

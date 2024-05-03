@@ -1,0 +1,100 @@
+.MusicPickDetailTop {
+  height: 50dvh;
+  position: relative;
+
+  .album-image {
+    width: 100dvw;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cover {
+    position: absolute;
+    inset: 0;
+
+    .black-cover {
+      background-color: rgba(15, 17, 20, 0.2);
+      opacity: 0.5;
+      position: absolute;
+      inset: 0;
+    }
+
+    .black-gradient {
+      background: linear-gradient(
+        180deg,
+        rgba(15, 17, 20, 0.2) 0%,
+        #0f1114 100%
+      );
+      width: 100%;
+      height: 100%;
+      // position: absolute;
+      // bottom: 0;
+      // inset: 0;
+      // height: 50dvh;
+      // inset-inline: 0;
+    }
+
+    .content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+
+      .content-bottom {
+        flex: 1;
+        padding-bottom: 3dvh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2dvh;
+
+        > div {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .title {
+            font-size: 2.3dvh;
+            font-weight: bold;
+            width: calc(100vw - 6vh);
+            overflow: hidden;
+
+            > div {
+              width: 100%;
+              white-space: nowrap;
+              text-align: center;
+
+              &.animated {
+                animation: scroll 7s linear infinite; /* 애니메이션 적용 */
+              }
+            }
+          }
+
+          .artist {
+            font-size: 1.8dvh;
+            color: #a5b2c5;
+            font-weight: bold;
+          }
+        }
+
+        img {
+          height: 30dvh;
+          flex-grow: 1;
+          aspect-ratio: 1;
+          border-radius: 2dvh;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
+}

@@ -1,0 +1,31 @@
+.MyPageMenu {
+
+  .menu-body {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+    .menu-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 13dvh;
+      height: 10dvh;
+      
+      svg {
+        margin: 1dvh;
+        font-size: 3.5dvh;
+      }
+
+      .desc {
+        font-size: 1.7dvh;
+      }
+
+      &:active {
+        background-color: rgb(47, 47, 47);
+        border-radius: 1dvh;
+      }
+    }
+  }
+}

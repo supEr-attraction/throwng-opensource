@@ -1,0 +1,21 @@
+@keyframes shrink {
+  from { width: 90%; }
+  to { width: 0%; }
+}
+
+.QuizTimeBar {
+  padding: 1dvh;
+  height: 5dvh;
+  border-radius: 2dvh;
+  background-color: rgba(123, 102, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .quiz-timer-bar {
+    height: 1.5dvh;
+    border-radius: 1dvh;
+    background-image: linear-gradient(to right, #fc2020, #a920fc);
+    animation: shrink 20s linear forwards;
+  }
+}
