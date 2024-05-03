@@ -21,7 +21,7 @@ public class ReverseGeoResponse {
                                 + " "
                                 + kakaoMapReverseGeoResponse
                                         .getDocuments()
-                                        .get(1)
+                                        .get(0)
                                         .region_3depth_name)
                 .build();
     }
