@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+import { useNavigate } from "react-router-dom"
+import {Song} from "../../types/songType.ts"
+import SearchedWords from "./SearchedWords.tsx"
+import "@styles/musicSearch/MusicList.scss"
+
+interface Props {
+  searchResults?: Song[],
+  onWordClick: (title: string) => void,
+}
+
+const MusicList = ({searchResults, onWordClick}:Props) => {
+  const navigate = useNavigate();
+
+  const handleGoNavigation = (song : Song) => {
+    navigate(`/music/drop/${song.id}`, {state: {image:song.image}})
+=======
 import { useNavigate, useParams } from "react-router-dom"
 import {Song} from "../../types/songType.ts"
 import "@styles/musicSearch/MusicList.scss"
@@ -40,10 +57,18 @@ const MusicList = () => {
   const handleGoNavigation = (song : Song) => {
     setSelectMusic(song)
     navigate(`/music/drop/${song.youtubeId}`)
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
   }
 
   return (
     <div className="MusicList">
+<<<<<<< HEAD
+      {searchResults && searchResults.length > 0 ? (
+        <div className="searchResults">
+          {searchResults.map((song) => (
+            <div key={song.id} className="result-item" onClick={() => handleGoNavigation(song)}>
+              <img src={song.image}/>
+=======
       <div className="MusicList-header">
         <Header/>
         <MusicSearchInput/>
@@ -58,22 +83,31 @@ const MusicList = () => {
                 <img src={song.albumImage} loading="lazy"/>
               </div>
 
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
               <div className="item-wide">
                 <div className="item-detail">
                   <div className="item-title">{song.title}</div>
                   <div className="item-artist">{song.artist}</div>
                 </div>
+<<<<<<< HEAD
+                <div className="item-length">{song.length}</div>
+=======
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
               </div>
             </div>
           ))}
         </div>
       ) : (
+<<<<<<< HEAD
+        <SearchedWords onWordClick={onWordClick} />
+=======
       <div className="SearchedWords">
         <div className="no-word-container">
           <div className="title">앗!</div>
           <div className="subtitle">검색결과가 없어요.</div>
         </div>
       </div>
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
       )}
     </div>
   )

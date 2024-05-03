@@ -1,3 +1,21 @@
+<<<<<<< HEAD
+import { useRef, useEffect } from "react"
+import { MdOutlineClear } from "react-icons/md";
+import "@/styles/musicSearch/MusicSearchInput.scss"
+
+interface Props {
+  onSearch: (songInfo: string) => void;
+  title: string;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const MusicSearchInput = ({ onSearch, title, setTitle }: Props) => {
+  const inputEl = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    inputEl.current!.focus();
+  }, []);
+=======
 import { useRef } from "react"
 import { MdOutlineClear } from "react-icons/md";
 import "@/styles/musicSearch/MusicSearchInput.scss"
@@ -21,16 +39,38 @@ const MusicSearchInput = () => {
       navigate('/music/search', { replace: true });
     }
   };
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
 
   const titleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     if (e.target.value === '') {
+<<<<<<< HEAD
+      if (localStorage.getItem('searchKeyWord')) {
+        localStorage.removeItem('searchKeyWord')
+      }
+=======
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
       onSearch('');
     }
   };
 
   const titleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+<<<<<<< HEAD
+    if (localStorage.getItem('searchKeyWord')) {
+      localStorage.removeItem('searchKeyWord')
+    }
+    localStorage.setItem('searchKeyWord', JSON.stringify(title));
+    onSearch(title);
+  };
+
+  const clearTitle = () => {
+    setTitle('');
+    inputEl.current!.focus();
+    if (localStorage.getItem('searchKeyWord')) {
+      localStorage.removeItem('searchKeyWord')
+    }
+=======
     if (title !== '') {
       onSearch(title);
       if (title.trim() !== '') {
@@ -48,10 +88,17 @@ const MusicSearchInput = () => {
   
   const clearTitle = () => {
     setTitle('');
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
     onSearch('');
   };
 
   return (
+<<<<<<< HEAD
+    <form className="MusicSearchInput" onSubmit={titleOnSubmit}>
+      <input className="input" ref={inputEl} type="text" placeholder="검색어를 입력하세요." value={title} onChange={titleOnChange} />
+      {title && <MdOutlineClear className="clear-button" onClick={clearTitle} />}
+    </form>
+=======
     <div className="MusicSearchInput">
       <form onSubmit={titleOnSubmit}>
         <div className="input-div">
@@ -69,6 +116,7 @@ const MusicSearchInput = () => {
       </form>
       <ToasterMsg />
     </div>
+>>>>>>> fc4541909ce121d8eedbf54d6b06b950d3f74eee
   );
 };
 
