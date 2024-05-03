@@ -4,7 +4,7 @@
   flex-direction: column;
 
   .MusicList-header {
-    display: flex; 
+    display: flex;
     align-items: center;
     justify-content: start;
   }
@@ -44,7 +44,6 @@
           overflow: hidden;
           width: 90%;
 
-
           .item-title {
             font-size: 2dvh;
             text-overflow: ellipsis;
@@ -72,4 +71,4 @@
       }
     }
   }
-} 
+}

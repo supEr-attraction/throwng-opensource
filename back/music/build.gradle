@@ -3,6 +3,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.18'
 	id 'io.spring.dependency-management' version '1.1.4'
 	id 'com.diffplug.spotless' version '6.16.0'
+	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 }
 
 group = 'com.sieum'
@@ -12,57 +13,62 @@ java {
 	sourceCompatibility = '11'
 }
 
-repositories {
-	mavenCentral()
+allprojects {
+	repositories {
+		mavenCentral()
+		maven { url "https://jitpack.io" }
+	}
 }
+
 
 ext {
 	set('springCloudVersion', "2021.0.9")
+	queryDslVersion = "5.0.0"
 }
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
-
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
 	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-<<<<<<< HEAD
-=======
-=======
-<<<<<<< HEAD
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-=======
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
-	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
-
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
-	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
->>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
->>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
-
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'io.github.openfeign:feign-jackson:13.2.1'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+
+	implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+	implementation 'io.springfox:springfox-swagger2:3.0.0'
+	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+	implementation 'org.hibernate:hibernate-spatial'
+
+	implementation "com.querydsl:querydsl-core"
+	implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+	annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}"
+	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+	annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+
+	implementation 'se.michaelthelin.spotify:spotify-web-api-java:7.0.0'
+//	implementation 'org.apache.httpcomponents.client5:httpclient5:5.1.1'
+//	implementation 'com.github.thelinmichael:spotify-web-api-java:master-SNAPSHOT'
+//	implementation 'com.github.jitpack:gradle-simple:1.0'
+//	implementation group: 'se.michaelthelin.spotify', name: 'spotify-web-api-java', version: '7.0.0'
+
+
 	runtimeOnly 'com.mysql:mysql-connector-j'
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ba89da3ff349afec5bb62d148d7a6e24d4604ae2
->>>>>>> d2d646a48abd6bbf6a4972f6c0e6371a02cad312
->>>>>>> f48935d6194df63c3b8b7337c70c8995aeb61e89
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
@@ -74,6 +80,27 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main.java.srcDir querydslDir
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+
+compileQuerydsl {
+	options.annotationProcessorPath = configurations.querydsl
 }
 
 spotless {

@@ -10,14 +10,6 @@ interface Props {
 
 const PlayListDirectListenModal = ({song}:Props) => {
   const setSpeedModal = useSetRecoilState(speedListenModal);
-  
-  // const listenSong = (song:SongInfo) => {
-  //   console.log(song)
-
-  //   const youtubeMusicUrl = `youtubemusic://watch?list=gwuCZYJdnT8`;
-  //   // const youtubeMusicUrl = `https://www.youtube.com/watch?v=${song.youtubeId}`;
-  //   window.location.href = youtubeMusicUrl;
-  // }
 
   const listenSong = (song: Content) => {
     const musicName = encodeURIComponent(song.title);
@@ -25,10 +17,8 @@ const PlayListDirectListenModal = ({song}:Props) => {
     const youtubeMusicAppURL = `youtubemusic://search?q=${musicName}-${artistName}`;
     const youtubeMusicWebURL = `https://music.youtube.com/search?q=${musicName}-${artistName}`;
 
-    // 유튜브뮤직 앱으로 시도
     window.location.href = youtubeMusicAppURL;
 
-    // 앱으로의 리다이렉션이 실패할 경우를 대비해, 일정 시간 후에 웹 URL로 다시 시도
     setTimeout(() => {
       window.location.href = youtubeMusicWebURL;
     }, 1500);
