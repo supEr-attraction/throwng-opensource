@@ -8,9 +8,13 @@ function PrivateRoutes() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isLogin) return;
+
     const checkPermissions = async () => {
       const status = await fetchLocationPermissionStatus();
-      status !== "granted" && navigate("none-permission", { replace: true });
+      if (!["granted", "prompt"].includes(status)) {
+        navigate("none-permission", { replace: true });
+      }
     };
 
     checkPermissions();
