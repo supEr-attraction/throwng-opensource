@@ -19,6 +19,10 @@ public class Song {
     @Column(name = "song_id")
     private Integer id;
 
+    @Column(name = "youtube_id", length = 100)
+    @NotNull
+    private String youtubeId;
+
     @Column(length = 400)
     @NotNull
     private String title;
