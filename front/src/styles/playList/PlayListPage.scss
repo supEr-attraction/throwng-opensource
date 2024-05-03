@@ -1,0 +1,11 @@
+.PlayListPage {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+
+  .body {
+    flex: 1;
+    padding: 3dvh;
+    overflow: auto;
+  }
+}

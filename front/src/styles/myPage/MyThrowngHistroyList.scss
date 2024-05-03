@@ -1,0 +1,100 @@
+.MyThrowngHistroyList {
+  .list-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1dvh;
+    
+    .result-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1dvh 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+      .item-header {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-bottom: 0.5dvh;
+
+        .item-location {
+          color: var(--main-color);
+          font-size: 1.7dvh;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+
+          svg {
+            font-size: 2dvh;
+          }
+        }
+
+        .item-date {
+          color: var(--placeholder-color);
+          font-size: 1.7dvh;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+      }
+      
+      .item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .img-container {
+          padding-right: 10px;
+  
+          img {
+            width: 6dvh;
+            height: 6dvh;
+            border-radius: 1dvh;
+          }
+        }
+  
+        .item-detail {
+          width: 76%;
+          
+          .item-title,
+          .item-artist,
+          .item-comment {
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+
+          .item-title {
+            font-size: 1.9dvh;
+            font-weight: 300;
+          }
+          
+          .item-artist {
+            font-size: 1.7dvh;
+            color: var(--placeholder-color);
+          }
+          
+          .item-comment {
+            font-size: 1.8dvh;
+          }
+        }
+      }
+      &:active {
+        background-color: var(--input-box-color);
+        border-radius: 1dvh;
+      }
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .no-result {
+      display: flex;
+      height: 40dvh;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

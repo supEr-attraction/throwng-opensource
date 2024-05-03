@@ -1,0 +1,76 @@
+.ReportModal {
+  position: absolute;
+  inset: 0;
+
+  .background {
+    background-color: rgba(15, 17, 20, 0.6);
+    width: 100%;
+    height: 100%;
+  }
+
+  .container {
+    animation: downUp 0.8s;
+    background-color: var(--input-box-color);
+    position: fixed;
+    bottom: 0;
+    inset-inline: 0;
+    // padding: 4dvh;
+    border-radius: 2dvh 2dvh 0 0;
+    // display: flex;
+    // flex-direction: column;
+    // gap: 5dvh;
+    margin: 0 auto;
+
+    .report {
+      padding: 2dvh;
+      font-size: 2.3dvh;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    hr {
+      border-width: 1px;
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .content {
+      padding: 3dvh;
+      font-size: 2dvh;
+      display: flex;
+      flex-direction: column;
+      gap: 4dvh;
+
+      .title {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5dvh;
+
+        > div:first-child {
+          font-weight: bold;
+        }
+
+        > div:last-child {
+          color: #7b8696;
+          font-size: 1.5dvh;
+        }
+      }
+
+      .reson {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5dvh;
+        list-style-type: none;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@keyframes downUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}

@@ -132,7 +132,7 @@ export const CIRCLE_OPTIONS = {
   strokeOpacity: 0.5,
   strokeWeight: 1,
   fillColor: "#7B66FF",
-  fillOpacity: 0.03,
+  fillOpacity: 0.1,
   clickable: false,
   draggable: false,
   editable: false,
@@ -154,6 +154,6 @@ export const MAP_OPTIONS = {
   //   },
   //   strictBounds: true,
   // },
-  // minZoom: 5, // 최소 확대 레벨
-  // maxZoom: 50, // 최대 확대 레벨
+  minZoom: 7, // 최소 확대 레벨
+  maxZoom: 20, // 최대 확대 레벨
 };
