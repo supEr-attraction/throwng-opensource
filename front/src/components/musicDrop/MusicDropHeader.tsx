@@ -84,14 +84,15 @@ const MusicDropHeader = () => {
         <div className="content">
           <div className="header">
             <Header />
-            <div className="volume" onClick={handleChangeBgm}>
+            {songInfo.previewUrl &&
+              <div className="volume" onClick={handleChangeBgm}>
                 {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
                 <audio 
                   ref={audioRef} 
-                  src="https://p.scdn.co/mp3-preview/f480dd07f843eb0ef125a609bb947ea2bcf5b215?cid=cfe923b2d660439caf2b557b21f31221"
-                  // src={songInfo.prelisten}
+                  src={songInfo.previewUrl}
                 ></audio>
-            </div>
+              </div>
+            }
           </div>
           <div className="content-bottom">
             <div className="info">
