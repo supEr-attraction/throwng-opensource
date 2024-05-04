@@ -19,13 +19,13 @@ self.addEventListener("push", function (e) {
     tag: resultData.tag,
     ...resultData,
   };
-  console.log("push: ", { resultData, notificationTitle, notificationOptions });
+  // console.log("push: ", { resultData, notificationTitle, notificationOptions });
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 self.addEventListener("notificationclick", function (event) {
-  console.log("notification click");
+  // console.log("notification click");
   const url = "/quiz/main";
   event.notification.close();
   event.waitUntil(clients.openWindow(url)); 
