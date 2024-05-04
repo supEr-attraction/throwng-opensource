@@ -11,6 +11,7 @@ const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
 const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
+const MyCouponPage = lazy(() => (import("@pages/MyCouponPage")))
 // const Error404 = loadable(() => import("./Error404"));
 const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
@@ -39,6 +40,10 @@ export default {
         {
           path: "notification",
           element: <NotificationPage />,
+        },
+        {
+          path: "mycoupons",
+          element: <MyCouponPage/>
         },
       ],
     },
