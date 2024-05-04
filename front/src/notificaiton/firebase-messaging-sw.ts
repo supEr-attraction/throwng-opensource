@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 import { postFcmToken } from "@services/noticeApi/FirebaseApi.tsx";
 
 const firebaseConfig = {
@@ -18,7 +18,7 @@ const messaging = getMessaging(app);
 export async function requestPermission() {
   const permission = await Notification.requestPermission();
   if (permission === "denied") {
-    console.log("Notification permission denied");
+    // console.log("Notification permission denied");
     return;
   }
 
@@ -27,13 +27,9 @@ export async function requestPermission() {
   });
 
   if (token) {
-    console.log("FCM token:", token);
+    // console.log("FCM token:", token);
     postFcmToken(token);
   } else {
-    console.log("Cannot retrieve FCM token");
+    // console.log("Cannot retrieve FCM token");
   }
-
-  onMessage(messaging, (payload) => {
-    console.log("Message received:", payload);
-  });
 }
