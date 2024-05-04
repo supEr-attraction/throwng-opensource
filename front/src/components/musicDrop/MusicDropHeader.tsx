@@ -10,6 +10,8 @@ import { selectMusic } from "@store/music/drop/atoms";
 import { postImageUpload } from "@services/musicSearchApi/MusicSearchApi";
 import { ImVolumeMedium } from "react-icons/im";
 import { ImVolumeMute2 } from "react-icons/im";
+import heic2any from "heic2any";
+import Loading from "@components/Loading";
 
 const MusicDropHeader = () => {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -22,6 +24,7 @@ const MusicDropHeader = () => {
   const resetSetUserImageUrl = useResetRecoilState(userImageURL);
   const [isBgmPlay, setIsBgmPlay] = useState(true)
   const audioRef = useRef<HTMLAudioElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
   
   useEffect(() => {
     if (textRef.current) {
@@ -61,17 +64,36 @@ const MusicDropHeader = () => {
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const file = e.target.files[0];
+      setIsLoading(true);
+      let file = e.target.files[0];
       if (file.size > 5000000) {
         alert("사진의 용량이 너무 커요. 다른 사진을 사용해 주세요.");
         resetSetImagePreview();
         resetSetUserImageUrl();
         return;
       } else {
+        if (file.type === "") {
+          try {
+            const convertedBlob = await heic2any({
+              blob: file,
+              toType: "image/jpeg",
+            });
+            if (convertedBlob instanceof Blob) {
+              file = new File([convertedBlob], file.name.replace(/^data:image\/jpeg;base64,/, ""), {
+                type: "image/jpeg",
+                lastModified: Date.now(),
+              });  
+            }
+          } catch (error) {
+            alert("사진의 유형이 올바르지 않습니다. 다른 사진을 사용해 주세요.");
+            return;
+          }
+        }
         setImagePreview(URL.createObjectURL(file));
         const data = await postImageUpload(file);
         setUserImageUrl(data);
       }
+      setIsLoading(false);
     }
   };
 
@@ -81,17 +103,19 @@ const MusicDropHeader = () => {
       <div className="cover">
         <div className="black-cover" />
         <div className="black-gradient" />
-        <div className="content">
+        {isLoading ? <Loading/>
+        :<div className="content">
           <div className="header">
             <Header />
-            <div className="volume" onClick={handleChangeBgm}>
+            {songInfo.previewUrl &&
+              <div className="volume" onClick={handleChangeBgm}>
                 {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
                 <audio 
                   ref={audioRef} 
-                  src="https://p.scdn.co/mp3-preview/f480dd07f843eb0ef125a609bb947ea2bcf5b215?cid=cfe923b2d660439caf2b557b21f31221"
-                  // src={songInfo.prelisten}
+                  src={songInfo.previewUrl}
                 ></audio>
-            </div>
+              </div>
+            }
           </div>
           <div className="content-bottom">
             <div className="info">
@@ -127,6 +151,7 @@ const MusicDropHeader = () => {
             />
           </div>
         </div>
+        }
       </div>
     </div>
   );
