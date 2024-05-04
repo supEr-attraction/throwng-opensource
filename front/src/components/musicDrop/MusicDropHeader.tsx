@@ -8,6 +8,8 @@ import { musicDropImage, userImageURL } from "@store/musicSearch/atoms";
 import { useRecoilValue } from "recoil";
 import { selectMusic } from "@store/music/drop/atoms";
 import { postImageUpload } from "@services/musicSearchApi/MusicSearchApi";
+import { ImVolumeMedium } from "react-icons/im";
+import { ImVolumeMute2 } from "react-icons/im";
 
 const MusicDropHeader = () => {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -18,7 +20,9 @@ const MusicDropHeader = () => {
   const setUserImageUrl = useSetRecoilState(userImageURL);
   const resetSetImagePreview = useResetRecoilState(musicDropImage);
   const resetSetUserImageUrl = useResetRecoilState(userImageURL);
-
+  const [isBgmPlay, setIsBgmPlay] = useState(true)
+  const audioRef = useRef<HTMLAudioElement>(null);
+  
   useEffect(() => {
     if (textRef.current) {
       const textWidth = textRef.current.scrollWidth;
@@ -32,10 +36,27 @@ const MusicDropHeader = () => {
     }
     resetSetImagePreview();
     resetSetUserImageUrl();
+    if (audioRef.current) {
+      audioRef.current.play().catch((error) => {
+        console.error("Audio play failed", error);
+        setIsBgmPlay(false);
+      });
+    }
   }, []);
 
   const handleFileButtonClick = () => {
     fileRef.current!.click();
+  };
+
+  const handleChangeBgm = () => {
+    if (audioRef.current) {
+      if (isBgmPlay) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsBgmPlay(!isBgmPlay);
+    }
   };
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,7 +82,17 @@ const MusicDropHeader = () => {
         <div className="black-cover" />
         <div className="black-gradient" />
         <div className="content">
-          <Header />
+          <div className="header">
+            <Header />
+            <div className="volume" onClick={handleChangeBgm}>
+                {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
+                <audio 
+                  ref={audioRef} 
+                  src="https://p.scdn.co/mp3-preview/f480dd07f843eb0ef125a609bb947ea2bcf5b215?cid=cfe923b2d660439caf2b557b21f31221"
+                  // src={songInfo.prelisten}
+                ></audio>
+            </div>
+          </div>
           <div className="content-bottom">
             <div className="info">
               <div className={`title`}>
@@ -87,11 +118,6 @@ const MusicDropHeader = () => {
               />
               {!imagePreview && <IoCloudUploadOutline />}
             </div>
-            {/* {imagePreview && (
-              <div className="reselect-image">
-                <div onClick={handleFileButtonClick}>다시 선택하기</div>
-              </div>
-            )} */}
             <input
               type="file"
               ref={fileRef}
