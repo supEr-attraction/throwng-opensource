@@ -53,11 +53,9 @@ const MusicList = () => {
         <div className="searchResults none-scroll">
           {searchResults.map((song, index:number) => (
             <div key={index} className="result-item" onClick={() => handleGoNavigation(song)}>
-              
               <div className="image-container">
                 <img src={song.albumImage} loading="lazy"/>
               </div>
-
               <div className="item-wide">
                 <div className="item-detail">
                   <div className="item-title">{song.title}</div>

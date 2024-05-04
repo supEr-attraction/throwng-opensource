@@ -15,7 +15,6 @@ const NotificationBody = () => {
 
   useEffect(() => {
     // api 요청
-    // const data = []
     setNoticeList([]);
   }, []);
 
