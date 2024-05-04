@@ -209,10 +209,10 @@ public class MusicService {
         //            throw new BadRequestException(NOT_THROW_ITEM_IN_LIMITED_RADIUS);
         //        }
 
-        String[] zipArray = thrownItemRequest.getLocation().split("\\s");
+        // String[] zipArray = thrownItemRequest.getLocation().split("\\s");
         Zipcode zipcode =
                 zipCodeRepository
-                        .findBySigunguAndDong(zipArray[0], zipArray[1])
+                        .findByCode(thrownItemRequest.getCode())
                         .orElseThrow(() -> new BadRequestException(NOT_FOUND_ZIP_CODE));
 
         boolean isSong = songRepository.existsByYoutubeId(youtubeId);
