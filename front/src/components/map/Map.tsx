@@ -1,5 +1,9 @@
-import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
-import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
+import {
+  CONTAINER_STYLE,
+  GOOGLE_MAPS_LIBRARIES,
+  MAP_OPTIONS,
+} from "@constants/map";
+import { GoogleMap, LoadScriptNext } from "@react-google-maps/api";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import MapHeader from "./MapHeader";
 import { ToasterMsg } from "@components/ToasterMsg";
@@ -13,22 +17,14 @@ import {
   prevLocationState,
 } from "@store/map/atoms";
 import "@styles/map/Map.scss";
-import getDistance from "@/utils/map/getDistance";
 import MyLocation from "@components/map/MyLocation";
 import MusicMarkerItem from "@components/map/MusicMarkerItem";
-import { getMusicRadius, postAddress } from "@services/mapAPi";
+import { postAddress } from "@services/mapAPi";
 import { Location } from "../../types/mapType";
-
-const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = ["places", "geometry"];
+import fetchMusic from "@/utils/map/fetchMusic";
+import fetchDistance from "@/utils/map/fetchDistance";
 
 const Map = () => {
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAP_API,
-    language: "ko",
-    libraries: GOOGLE_MAPS_LIBRARIES,
-  });
-
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [location, setLocation] = useRecoilState(locationState);
   const [prevLocation, setPrevLocation] = useRecoilState(prevLocationState);
@@ -43,9 +39,7 @@ const Map = () => {
   const initialLoadRef = useRef(initialLoad);
   const isValidLocation = centerLocation.lat !== 0 && centerLocation.lng !== 0;
 
-  const onLoad = useCallback((map: google.maps.Map) => {
-    setMap(map);
-  }, []);
+  const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
 
   const onUnmount = useCallback(() => setMap(null), []);
 
@@ -55,7 +49,7 @@ const Map = () => {
       if (zoom !== undefined && zoom < 15) {
         map.setZoom(15);
       }
-      getMusic(true, location);
+      fetchMusic(true, location, setMarkers);
       map.panTo(location);
       setCenter(true);
     }
@@ -67,19 +61,10 @@ const Map = () => {
       if (mapCenter) {
         const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
         if (mapPosition.lat !== 0 && mapPosition.lng !== 0) {
-          getMusic(false, mapPosition);
+          fetchMusic(false, mapPosition, setMarkers);
           fetchAddress(mapPosition, "mapCenter");
         }
       }
-    }
-  };
-
-  const getMusic = async (isUserLocation: boolean, position: Location) => {
-    try {
-      const data = await getMusicRadius(isUserLocation, position);
-      setMarkers(data);
-    } catch (err) {
-      console.error(err);
     }
   };
 
@@ -92,13 +77,7 @@ const Map = () => {
     }
   };
 
-  const onDragEnd = () => {
-    if (!initialLoad && center) {
-      setCenter(false);
-    }
-  };
-
-  const onZoomChanged = () => {
+  const onChanged = () => {
     if (!initialLoad && center) {
       setCenter(false);
     }
@@ -127,14 +106,13 @@ const Map = () => {
 
           if (initialLoadRef.current) {
             setCenterLocation(currentLocation);
-            getMusic(true, currentLocation);
+            fetchMusic(true, currentLocation, setMarkers);
             fetchAddress(currentLocation, "myLocation");
             setLocation(currentLocation);
             setPrevLocation(currentLocation);
-            // setCenter(true);
             setInitialLoad(false);
           } else {
-            const distance = getDistance(
+            const distance = fetchDistance(
               prevLocationRef.current,
               currentLocation
             );
@@ -142,7 +120,7 @@ const Map = () => {
             if (distance >= 50) {
               setPrevLocation(currentLocation);
               if (centerRef.current) {
-                getMusic(true, currentLocation);
+                fetchMusic(true, currentLocation, setMarkers);
               }
             }
 
@@ -166,29 +144,35 @@ const Map = () => {
     }
   }, [map]);
 
-  return isLoaded ? (
+  return (
     <div className="Map">
       {isValidLocation && <MapHeader returnMyLocation={returnMyLocation} />}
-      <GoogleMap
-        mapContainerStyle={CONTAINER_STYLE}
-        center={centerLocation}
-        zoom={15}
-        options={MAP_OPTIONS}
-        onLoad={onLoad}
-        onUnmount={onUnmount}
-        onDragStart={onDragEnd}
-        onZoomChanged={onZoomChanged}
-        onIdle={changeCenter}
+      <LoadScriptNext
+        id="google-map-script"
+        googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP_API}
+        language="ko"
+        libraries={GOOGLE_MAPS_LIBRARIES}
+        loadingElement={<></>}
       >
-        <MyLocation />
-        {markers.map((marker) => (
-          <MusicMarkerItem key={marker.itemId} marker={marker} />
-        ))}
-      </GoogleMap>
+        <GoogleMap
+          mapContainerStyle={CONTAINER_STYLE}
+          center={centerLocation}
+          zoom={15}
+          options={MAP_OPTIONS}
+          onLoad={onLoad}
+          onUnmount={onUnmount}
+          onDragStart={onChanged}
+          onZoomChanged={onChanged}
+          onIdle={changeCenter}
+        >
+          <MyLocation />
+          {markers.map((marker) => (
+            <MusicMarkerItem key={marker.itemId} marker={marker} />
+          ))}
+        </GoogleMap>
+      </LoadScriptNext>
       <ToasterMsg />
     </div>
-  ) : (
-    <></>
   );
 };
 

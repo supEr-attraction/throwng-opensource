@@ -24,3 +24,8 @@ export interface MusicInfo {
   thrownDate: string;
   title: string;
 }
+
+export interface Address {
+  code: string;
+  regionName: string;
+}

@@ -1,5 +1,5 @@
 import { recoilPersist } from "recoil-persist";
-import { Location, Marker } from "../../types/mapType";
+import { Address, Location, Marker } from "../../types/mapType";
 import { atom } from "recoil";
 
 const { persistAtom } = recoilPersist({
@@ -17,15 +17,15 @@ export const activeMarkerState = atom<number | null>({
   default: null,
 });
 
-export const addressState = atom({
+export const addressState = atom<Address>({
   key: "addressState",
-  default: "",
+  default: { code: "", regionName: "" },
   effects_UNSTABLE: [persistAtom],
 });
 
-export const mapCenterAddressState = atom({
+export const mapCenterAddressState = atom<Address>({
   key: "mapCenterAddressState",
-  default: "",
+  default: { code: "", regionName: "" },
 });
 
 export const locationState = atom<Location>({

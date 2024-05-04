@@ -1,0 +1,68 @@
+.MyCouponBody {
+  display: flex;
+  flex-direction: column;
+  gap: 3dvh;
+
+  .coupon-body {
+    display: flex;
+    flex-direction: column;
+    padding: 2dvh;
+    border: 2px solid var(--placeholder-color);
+    border-radius: 1dvh;
+    gap: 1.8dvh;
+
+    .coupon-header {
+      display: flex;
+      flex-direction: column;
+      gap: 1dvh;
+      
+      .coupon-title {
+        font-size: 2dvh;
+      }
+  
+      .coupon-desc {
+        font-size: 1.4dvh;
+        color: var(--placeholder-color);
+      }
+    }
+
+    .coupon-apply {
+      display: flex;
+      justify-content: flex-end;
+
+      .coupon-apply-btn {
+        font-size: 1.4dvh;
+        padding: 0.8dvh;
+        border: 1px solid var(--placeholder-color);
+        border-radius: 1dvh;
+
+        &:active {
+          background-color: var(--input-box-color);
+        }
+      }
+
+      .coupon-apply-active {
+        background-color: var(--placeholder-color);
+      }
+    }
+
+    hr {
+      border: dashed 1px var(--placeholder-color);
+    }
+
+    .coupon-end-date {
+      display: flex;
+      flex-direction: row;
+      gap: 1dvh;
+      font-size: 1.6dvh;
+
+      .coupon-end-date-how-imminent {
+        color: #FF8A8A;
+      }
+
+      .coupon-end-date-when {
+        color: var(--placeholder-color);
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 import { axiosApi } from "@/utils/common";
-import { Marker, Location } from "../types/mapType";
+import { Marker, Location, Address } from "../types/mapType";
 
-async function getMusicRadius(
+async function postMusicRadius(
   isUserLocation: boolean,
   position: Location
 ): Promise<Marker[]> {
@@ -17,19 +17,16 @@ async function getMusicRadius(
   }
 }
 
-const postAddress = async (position: Location): Promise<string> => {
+const postAddress = async (position: Location): Promise<Address> => {
   try {
-    const { data } = await axiosApi().post<{ regionName: string }>(
-      `music/reverse-geocode`,
-      {
-        latitude: position.lat,
-        longitude: position.lng,
-      }
-    );
-    return data.regionName;
+    const { data } = await axiosApi().post<Address>(`music/reverse-geocode`, {
+      latitude: position.lat,
+      longitude: position.lng,
+    });
+    return data;
   } catch (error) {
     throw error;
   }
 };
 
-export { getMusicRadius, postAddress };
+export { postMusicRadius, postAddress };

@@ -11,6 +11,11 @@ const MyPageMenu = () => {
     navigate('/user/notification', {replace:true})
   }
 
+  const goCouponPage = (e:React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    navigate('/user/mycoupons')
+  }
+
   return (
     <div className="MyPageMenu">
       <div className="menu-body">
@@ -18,7 +23,7 @@ const MyPageMenu = () => {
           <FaRegBell />
           <div className="desc">알림</div>
         </div>
-        <div className="menu-item">
+        <div className="menu-item" onClick={(e) => goCouponPage(e)}>
           <RiCoupon2Line />
           <div className="desc">쿠폰함</div>
         </div>
