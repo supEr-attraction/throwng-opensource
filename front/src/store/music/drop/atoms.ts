@@ -3,7 +3,7 @@ import { Song } from "./../../../types/songType";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist({
-  key: "musicDropInfoStorage", // 고유한 key 값
+  key: "musicDropInfoStorage",
   storage: sessionStorage,
 });
 
@@ -15,6 +15,7 @@ export const selectMusic = atom<Song>({
     artist: "",
     title: "",
     playTime: "",
+    // prelisten: ""
   },
   effects_UNSTABLE: [persistAtom],
 });

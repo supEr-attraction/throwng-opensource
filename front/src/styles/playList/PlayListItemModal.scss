@@ -16,7 +16,6 @@
     inset-inline: 0;
     border-radius: 2dvh 2dvh 0 0;
     margin: 0 auto;
-    // padding: 2dvh;
 
     .item {
       display: flex;
@@ -74,7 +73,6 @@
         display: flex;
         align-items: center;
         gap: 1dvh;
-        // padding: 1dvh;
 
         &:active {
           background-color: var(--input-box-color);

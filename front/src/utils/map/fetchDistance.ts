@@ -1,6 +1,6 @@
 import { Location } from "../../types/mapType";
 
-const getDistance = (marker: Location, location: Location) => {
+const fetchDistance = (marker: Location, location: Location) => {
   const distance = google.maps.geometry.spherical.computeDistanceBetween(
     new google.maps.LatLng(location.lat, location.lng),
     new google.maps.LatLng(marker.lat, marker.lng)
@@ -9,4 +9,4 @@ const getDistance = (marker: Location, location: Location) => {
   return distance;
 };
 
-export default getDistance;
+export default fetchDistance;

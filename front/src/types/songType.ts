@@ -45,15 +45,17 @@ export interface SongInfo {
 
 export interface Song extends SongInfo {
   playTime: string;
+  // prelisten: string;
 }
 
 export interface DropSong extends Omit<SongInfo, "youtubeId" | "albumImage"> {
-  longitude: number;
+  albumImageUrl: string;
+  code: string;
+  comment: string;
+  imageUrl: string | null;
   latitude: number;
   location: string;
-  comment: string;
-  albumImageUrl: string;
-  imageUrl: string | null;
+  longitude: number;
 }
 
 export interface SongHistory extends SongInfo {
