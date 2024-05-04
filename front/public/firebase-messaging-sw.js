@@ -28,5 +28,5 @@ self.addEventListener("notificationclick", function (event) {
   console.log("notification click");
   const url = "/quiz/main";
   event.notification.close();
-  event.waitUntil(clients.navigate(url)); // new window open
+  event.waitUntil(clients.openWindow(url)); 
 });
