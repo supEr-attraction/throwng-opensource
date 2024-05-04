@@ -18,7 +18,7 @@ const MusicDropHeader = () => {
   const setUserImageUrl = useSetRecoilState(userImageURL);
   const resetSetImagePreview = useResetRecoilState(musicDropImage);
   const resetSetUserImageUrl = useResetRecoilState(userImageURL);
-  
+
   useEffect(() => {
     if (textRef.current) {
       const textWidth = textRef.current.scrollWidth;

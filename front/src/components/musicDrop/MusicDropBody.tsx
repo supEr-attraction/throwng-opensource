@@ -24,7 +24,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
   const songInfo = useRecoilValue(selectMusic);
   const resetUserImage = useResetRecoilState(userImageURL);
   const resetImagePreview = useResetRecoilState(musicDropImage);
-  const resetScrollSongIndex = useResetRecoilState(scrollSongIndex)
+  const resetScrollSongIndex = useResetRecoilState(scrollSongIndex);
 
   const textOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length <= 50) {
@@ -48,24 +48,25 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
     }
 
     const requestBody = {
-      longitude: myLocation.lng,
-      latitude: myLocation.lat,
-      location: myAddress,
-      comment: text.trim(),
-      title: songInfo.title,
-      imageUrl: imageUrl,
-      artist: songInfo.artist,
       albumImageUrl: songInfo.albumImage,
+      artist: songInfo.artist,
+      code: myAddress.code,
+      comment: text.trim(),
+      imageUrl: imageUrl,
+      latitude: myLocation.lat,
+      location: myAddress.regionName,
+      longitude: myLocation.lng,
+      title: songInfo.title,
     };
 
     const res = await postThrowngMusic(songInfo.youtubeId, requestBody);
 
-    if (res === 'Song_400_2') {
-      alert("하루 쓰롱 개수를 초과하였습니다.\n내일 다시 쓰롱 해주세요.")
+    if (res === "Song_400_2") {
+      alert("하루 쓰롱 개수를 초과하였습니다.\n내일 다시 쓰롱 해주세요.");
     }
     resetUserImage();
     resetImagePreview();
-    resetScrollSongIndex()
+    resetScrollSongIndex();
     navigate("/", { replace: true });
   };
 
@@ -73,7 +74,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
     <div className="MusicDropBody">
       <div className="header">
         <p>
-          <span>{myAddress}</span>에
+          <span>{myAddress.regionName}</span>에
         </p>
         음악을 두고 갈까요?
       </div>

@@ -17,6 +17,7 @@ const MyLocation = () => {
           scaledSize: new window.google.maps.Size(60, 60),
           anchor: new window.google.maps.Point(30, 30),
         }}
+        zIndex={0}
       />
     </>
   );

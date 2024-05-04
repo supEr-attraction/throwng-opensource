@@ -1,3 +1,8 @@
+export const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = [
+  "places",
+  "geometry",
+];
+
 export const CONTAINER_STYLE = {
   width: "100dvw",
   height: "100dvh",
@@ -155,5 +160,4 @@ export const MAP_OPTIONS = {
   //   strictBounds: true,
   // },
   minZoom: 7, // 최소 확대 레벨
-  maxZoom: 20, // 최대 확대 레벨
 };

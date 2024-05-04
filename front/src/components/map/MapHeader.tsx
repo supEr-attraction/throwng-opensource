@@ -23,7 +23,7 @@ const MapHeader = ({ returnMyLocation }: Props) => {
         <div className="blank"></div>
         <div className="title">
           <img src={ping} alt="" />
-          <div>{center ? address : mapCenterAddress}</div>
+          <div>{center ? address.regionName : mapCenterAddress.regionName}</div>
         </div>
         <div className="gps">
           <MdMyLocation
