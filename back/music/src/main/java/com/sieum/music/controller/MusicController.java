@@ -107,7 +107,7 @@ public class MusicController {
     public ResponseEntity<?> thrownSong(
             @RequestHeader("Authorization") final String authorization,
             @PathVariable("youtubeId") final String youtubeId,
-            @RequestBody ThrownItemRequest thrownItemRequest) {
+            @RequestBody @Valid ThrownItemRequest thrownItemRequest) {
         //        final long userId = musicService.getLimitAccount(authorization);
         UserLevelInfoResponse userLevelInfoResponse = musicService.getLimitAccount(authorization);
         musicService.thrownSong(userLevelInfoResponse, youtubeId, thrownItemRequest);
