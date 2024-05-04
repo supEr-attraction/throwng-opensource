@@ -5,7 +5,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { activeMarkerState, locationState } from "@store/map/atoms";
 import { toastMsg } from "@/utils/toastMsg";
 import { Location, Marker } from "../../types/mapType";
-import getDistance from "@/utils/map/getDistance";
+import fetchDistance from "@/utils/map/fetchDistance";
 
 interface Props {
   marker: Marker;
@@ -26,7 +26,7 @@ const MusicMarkerItem = ({ marker }: Props) => {
   };
 
   const getOnClickFunction = (marker: MarkerPosition) => {
-    const distance = getDistance(marker.position, location);
+    const distance = fetchDistance(marker.position, location);
 
     return distance <= 600
       ? setActiveMarkerId(marker.id) // handleMarkerClick(marker.id)

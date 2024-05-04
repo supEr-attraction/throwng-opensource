@@ -1,4 +1,4 @@
-import getDistance from "@/utils/map/getDistance";
+import fetchDistance from "@/utils/map/fetchDistance";
 import { locationState, markersState } from "@store/map/atoms";
 import { selector } from "recoil";
 
@@ -10,7 +10,7 @@ export const markerRadiusState = selector({
 
     return markers.filter(
       (marker) =>
-        getDistance(
+        fetchDistance(
           { lat: marker.latitude, lng: marker.longitude },
           location
         ) <= 600
