@@ -5,6 +5,8 @@ export interface Content {
   artist: string;
   albumImage: string;
   modifiedAt: string;
+  // 여기가 문제...
+  // previewUrl: string;
 }
 
 export interface Pageable {
@@ -45,7 +47,7 @@ export interface SongInfo {
 
 export interface Song extends SongInfo {
   playTime: string;
-  // prelisten: string;
+  previewUrl: string;
 }
 
 export interface DropSong extends Omit<SongInfo, "youtubeId" | "albumImage"> {
