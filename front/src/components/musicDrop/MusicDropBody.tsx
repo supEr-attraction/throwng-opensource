@@ -57,6 +57,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
       location: myAddress.regionName,
       longitude: myLocation.lng,
       title: songInfo.title,
+      previewUrl: songInfo.previewUrl,
     };
 
     const res = await postThrowngMusic(songInfo.youtubeId, requestBody);

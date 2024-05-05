@@ -55,8 +55,7 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
       artist: song.artist,
       title: song.title,
       playTime: "",
-      // 여기가 문제...
-      previewUrl:""
+      previewUrl:song.previewUrl
     };
     setSelectMusic(songForSelectMusic);
     setScrollSongIndex(song.youtubeId)
