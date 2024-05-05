@@ -18,7 +18,7 @@ const messaging = getMessaging(app);
 export async function requestPermission() {
   const permission = await Notification.requestPermission();
   if (permission === "denied") {
-    // console.log("Notification permission denied");
+    console.log("Notification permission denied");
     return;
   }
 
@@ -27,9 +27,9 @@ export async function requestPermission() {
   });
 
   if (token) {
-    // console.log("FCM token:", token);
+    console.log("FCM token:", token);
     postFcmToken(token);
   } else {
-    // console.log("Cannot retrieve FCM token");
+    console.log("Cannot retrieve FCM token");
   }
 }
