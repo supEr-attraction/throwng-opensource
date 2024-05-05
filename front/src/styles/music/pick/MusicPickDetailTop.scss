@@ -41,6 +41,17 @@
       flex-direction: column;
       overflow: hidden;
 
+      .volume {
+        padding: 2dvh;
+        position: absolute;
+        right: 0;
+
+        svg {
+          font-size: 2.5dvh;
+          cursor: pointer;
+        }
+      }
+
       .content-bottom {
         flex: 1;
         padding-bottom: 3dvh;

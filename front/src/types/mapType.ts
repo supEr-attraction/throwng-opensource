@@ -23,6 +23,7 @@ export interface MusicInfo {
   throwId: number;
   thrownDate: string;
   title: string;
+  previewUrl: string | null
 }
 
 export interface Address {
