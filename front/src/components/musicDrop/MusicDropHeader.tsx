@@ -109,9 +109,6 @@ const MusicDropHeader = () => {
       <div className="cover">
         <div className="black-cover" />
         <div className="black-gradient" />
-        {isLoading ? (
-          <Loading />
-        ) : (
           <div className="content">
             <div className="header">
               <Header />
@@ -136,6 +133,9 @@ const MusicDropHeader = () => {
                 </div>
                 <div className="artist">{songInfo.artist}</div>
               </div>
+              {isLoading ? (
+                <Loading />
+              ) : (       
               <div className="upload-image-div" onClick={handleFileButtonClick}>
                 <img
                   src={imagePreview || whiteBox}
@@ -147,6 +147,7 @@ const MusicDropHeader = () => {
                 />
                 {!imagePreview && <IoCloudUploadOutline />}
               </div>
+              )}
               <input
                 type="file"
                 ref={fileRef}
@@ -156,7 +157,6 @@ const MusicDropHeader = () => {
               />
             </div>
           </div>
-        )}
       </div>
     </div>
   );
