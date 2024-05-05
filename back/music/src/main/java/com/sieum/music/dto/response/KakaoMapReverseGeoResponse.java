@@ -16,6 +16,7 @@ public class KakaoMapReverseGeoResponse {
         public String region_2depth_name;
         public String region_3depth_name;
         public String region_4depth_name;
+        public String code;
         public Double x;
         public Double y;
     }

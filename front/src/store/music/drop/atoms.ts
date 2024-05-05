@@ -15,7 +15,7 @@ export const selectMusic = atom<Song>({
     artist: "",
     title: "",
     playTime: "",
-    // prelisten: ""
+    previewUrl: "",
   },
   effects_UNSTABLE: [persistAtom],
 });
