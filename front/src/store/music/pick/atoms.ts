@@ -23,5 +23,6 @@ export const musicInfoState = atom<MusicInfo>({
     throwId: 0,
     thrownDate: "",
     title: "",
+    previewUrl:"",
   },
 });
