@@ -27,7 +27,7 @@ export async function requestPermission() {
   });
 
   if (token) {
-    console.log("FCM token:", token);
+    // console.log("FCM token:", token);
     postFcmToken(token);
   } else {
     console.log("Cannot retrieve FCM token");
