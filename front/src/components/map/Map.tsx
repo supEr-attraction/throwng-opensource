@@ -18,22 +18,23 @@ import {
 } from "@store/map/atoms";
 import "@styles/map/Map.scss";
 import MyLocation from "@components/map/MyLocation";
-import MusicMarkerItem from "@components/map/MusicMarkerItem";
 import { postAddress } from "@services/mapAPi";
 import { Location } from "../../types/mapType";
 import fetchMusic from "@/utils/map/fetchMusic";
 import fetchDistance from "@/utils/map/fetchDistance";
+import MapClusterer from "./MapClusterer";
 
 const Map = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [location, setLocation] = useRecoilState(locationState);
   const [prevLocation, setPrevLocation] = useRecoilState(prevLocationState);
-  const [markers, setMarkers] = useRecoilState(markersState);
   const [center, setCenter] = useRecoilState(centerState);
   const setAddress = useSetRecoilState(addressState);
+  const setMarkers = useSetRecoilState(markersState);
   const setMapCenterAddress = useSetRecoilState(mapCenterAddressState);
   const [initialLoad, setInitialLoad] = useState(true);
   const [centerLocation, setCenterLocation] = useState({ lat: 0, lng: 0 });
+  const [zoomLevel, setZoomLevel] = useState(15);
   const centerRef = useRef(center);
   const prevLocationRef = useRef(prevLocation);
   const initialLoadRef = useRef(initialLoad);
@@ -47,7 +48,8 @@ const Map = () => {
     if (map) {
       const zoom = map.getZoom();
       if (zoom !== undefined && zoom < 15) {
-        map.setZoom(15);
+        // map.setZoom(15);
+        setZoomLevel(15);
       }
       fetchMusic(true, location, setMarkers);
       map.panTo(location);
@@ -83,6 +85,17 @@ const Map = () => {
     }
   };
 
+  const onZoomChanged = () => {
+    if (!initialLoad && center) {
+      setCenter(false);
+    }
+
+    if (map) {
+      const zoom = map.getZoom()!;
+      setZoomLevel(zoom);
+    }
+  };
+
   useEffect(() => {
     centerRef.current = center;
   }, [center]);
@@ -105,6 +118,7 @@ const Map = () => {
           };
 
           if (initialLoadRef.current) {
+            // map.setCenter(currentLocation);
             setCenterLocation(currentLocation);
             fetchMusic(true, currentLocation, setMarkers);
             fetchAddress(currentLocation, "myLocation");
@@ -157,18 +171,16 @@ const Map = () => {
         <GoogleMap
           mapContainerStyle={CONTAINER_STYLE}
           center={centerLocation}
-          zoom={15}
+          zoom={zoomLevel}
           options={MAP_OPTIONS}
           onLoad={onLoad}
           onUnmount={onUnmount}
           onDragStart={onChanged}
-          onZoomChanged={onChanged}
+          onZoomChanged={onZoomChanged}
           onIdle={changeCenter}
         >
           <MyLocation />
-          {markers.map((marker) => (
-            <MusicMarkerItem key={marker.itemId} marker={marker} />
-          ))}
+          <MapClusterer map={map} zoomLevel={zoomLevel} />
         </GoogleMap>
       </LoadScriptNext>
       <ToasterMsg />
