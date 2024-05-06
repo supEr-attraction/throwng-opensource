@@ -109,33 +109,33 @@ const MusicDropHeader = () => {
       <div className="cover">
         <div className="black-cover" />
         <div className="black-gradient" />
-          <div className="content">
-            <div className="header">
-              <Header />
-              {songInfo.previewUrl && (
-                <div className="volume" onClick={handleChangeBgm}>
-                  {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
-                  <audio ref={audioRef} src={songInfo.previewUrl}></audio>
-                </div>
-              )}
-            </div>
-            <div className="content-bottom">
-              <div className="info">
-                <div className={`title`}>
-                  <div
-                    ref={textRef}
-                    className={`scrolling-text ${
-                      isScrollNeeded ? "animated" : ""
-                    }`}
-                  >
-                    {songInfo.title}
-                  </div>
-                </div>
-                <div className="artist">{songInfo.artist}</div>
+        <div className="content">
+          <div className="header">
+            <Header />
+            {songInfo.previewUrl && (
+              <div className="volume" onClick={handleChangeBgm}>
+                {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
+                <audio ref={audioRef} src={songInfo.previewUrl}></audio>
               </div>
-              {isLoading ? (
-                <Loading />
-              ) : (       
+            )}
+          </div>
+          <div className="content-bottom">
+            <div className="info">
+              <div className={`title`}>
+                <div
+                  ref={textRef}
+                  className={`scrolling-text ${
+                    isScrollNeeded ? "animated" : ""
+                  }`}
+                >
+                  {songInfo.title}
+                </div>
+              </div>
+              <div className="artist">{songInfo.artist}</div>
+            </div>
+            {isLoading ? (
+              <Loading />
+            ) : (
               <div className="upload-image-div" onClick={handleFileButtonClick}>
                 <img
                   src={imagePreview || whiteBox}
@@ -147,16 +147,16 @@ const MusicDropHeader = () => {
                 />
                 {!imagePreview && <IoCloudUploadOutline />}
               </div>
-              )}
-              <input
-                type="file"
-                ref={fileRef}
-                hidden={true}
-                onChange={handleFileChange}
-                className="image-input"
-              />
-            </div>
+            )}
+            <input
+              type="file"
+              ref={fileRef}
+              hidden={true}
+              onChange={handleFileChange}
+              className="image-input"
+            />
           </div>
+        </div>
       </div>
     </div>
   );

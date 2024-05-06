@@ -3,6 +3,11 @@ export interface Location {
   lng: number;
 }
 
+export interface MarkerPosition {
+  id: number;
+  position: Location;
+}
+
 export interface Marker {
   itemId: number;
   latitude: number;
@@ -23,7 +28,7 @@ export interface MusicInfo {
   throwId: number;
   thrownDate: string;
   title: string;
-  previewUrl: string | null
+  previewUrl: string | null;
 }
 
 export interface Address {

@@ -161,3 +161,33 @@ export const MAP_OPTIONS = {
   // },
   minZoom: 7, // 최소 확대 레벨
 };
+
+export const IMAGE_URL =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/wIAAgMBAAjAB2hgAAAAAElFTkSuQmCC";
+
+export const CLUSTER_STYLES = [
+  {
+    url: IMAGE_URL,
+    className: "clusterer1",
+    height: 50,
+    width: 50,
+    textSize: 15,
+    textColor: "#a5b2c5",
+  },
+  {
+    url: IMAGE_URL,
+    className: "clusterer2",
+    height: 70,
+    width: 70,
+    textSize: 15,
+    textColor: "#a5b2c5",
+  },
+  {
+    url: IMAGE_URL,
+    className: "clusterer3",
+    height: 90,
+    width: 90,
+    textSize: 15,
+    textColor: "#a5b2c5",
+  },
+];
