@@ -94,7 +94,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
             <div className="input-count">{count}/50</div>
           </div>
           <div className="warning-msg">
-            텍스트 및 사진은 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은
+            사진은 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은
             삭제됩니다.
           </div>
         </div>
