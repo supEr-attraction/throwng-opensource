@@ -11,15 +11,14 @@ const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
 const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
-const MyCouponPage = lazy(() => (import("@pages/MyCouponPage")))
-// const Error404 = loadable(() => import("./Error404"));
+const MyCouponPage = lazy(() => import("@pages/MyCouponPage"));
 const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
 const MusicPickDetailPage = lazy(() => import("@pages/MusicPickDetailPage"));
 const MusicList = lazy(() => import("@components/musicSearch/MusicList"));
-
-const QuizClosePage = lazy(() => import("@pages/quiz/QuizClosePage"));
 const NonePermissionPage = lazy(() => import("@pages/NonePermissionPage"));
+const QuizClosePage = lazy(() => import("@pages/quiz/QuizClosePage"));
+// const Error404 = loadable(() => import("./Error404"));
 
 export default {
   path: "/",
@@ -43,7 +42,7 @@ export default {
         },
         {
           path: "mycoupons",
-          element: <MyCouponPage/>
+          element: <MyCouponPage />,
         },
       ],
     },
