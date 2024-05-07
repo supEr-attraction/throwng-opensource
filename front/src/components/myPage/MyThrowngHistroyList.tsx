@@ -106,7 +106,12 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
             </div>
           ))
         ) : (
-          <div className="no-result">내역이 없습니다.</div>
+          <div className="SearchedWords">
+            <div className="no-word-container">
+              <div className="title">앗!</div>
+              <div className="subtitle">기록이 없습니다.</div>
+            </div>
+          </div>
         )}
       </div>
     </div>

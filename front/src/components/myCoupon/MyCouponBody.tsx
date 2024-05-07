@@ -1,55 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "@styles/myCoupon/MyCouponBody.scss";
 import dayjs from 'dayjs';
+import { Coupon } from '../../types/couponType';
+import { getMyCoupon, postMyCoupon } from '@services/myCouponApi/MyCouponAPi';
 
 const MyCouponBody = () => {
-  const [coupons, setCoupons] = useState([
-    {
-      couponId:1,
-      couponName:"무제한 Throw",
-      couponDesc:"1시간 동안 무제한으로 음악을 Throw가 가능해요!",
-      couponEndDate:"2024-05-06T00:00:00",
-      couponApply: false,
-    },
-    {
-      couponId:2,
-      couponName:"무제한 Throw",
-      couponDesc:"1시간 동안 무제한으로 음악을 Throw가 가능해요!",
-      couponEndDate:"2024-05-10T00:00:00",
-      couponApply: false,
-    },
-    {
-      couponId:3,
-      couponName:"범위 밖 노래 정보 조회",
-      couponDesc:"내 범위구역 밖에 있는 노래들의 상세 정보를 조회할 수 있어요!",
-      couponEndDate:"2024-05-06T00:00:00",
-      couponApply: false,
-    },
-    {
-      couponId:4,
-      couponName:"범위 밖 노래 정보 조회",
-      couponDesc:"내 범위구역 밖에 있는 노래들의 상세 정보를 조회할 수 있어요!",
-      couponEndDate:"2024-05-05T00:00:00",
-      couponApply: true,
-    },
-  ]);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
 
-  const handleChangeApply = (couponId:number) => {
-    const isConfirmed = window.confirm("쿠폰을 적용하겠습니까?");
+  useEffect(() => {
+    fetchGetMyCoupon();
+  }, [])
+
+  const fetchGetMyCoupon = async () => {
+    const res = await getMyCoupon();
+    setCoupons(res)
+  }
+
+  const handleChangeApply = async (couponId: number) => {
+    const isConfirmed = window.confirm("쿠폰을 적용하시겠습니까?");
     if (isConfirmed) {
-      setCoupons((prevCoupons) => {
-        const newCoupons = prevCoupons.map((coupon) => {
-          if (coupon.couponId === couponId) {
-            if (!prevCoupons.some(c => c.couponName === coupon.couponName && c.couponApply)) {
-              return { ...coupon, couponApply: true };
-            } else {
-              alert('이미 동일한 쿠폰이 적용 중입니다.');
-            }
-          }
-          return coupon;
-        });
-        return newCoupons;
-      });
+      const selectedCoupon = coupons.find(coupon => coupon.couponId === couponId);
+      if (!selectedCoupon) return;
+      const isCouponInUse = coupons.some(coupon => coupon.couponName === selectedCoupon.couponName && coupon.couponStatus === "사용 중");
+      if (isCouponInUse) {
+        alert("이미 같은 쿠폰을 사용중입니다.");
+        return;
+      }
+      await postMyCoupon(couponId);
+      fetchGetMyCoupon();
     }
   };
 
@@ -63,11 +41,11 @@ const MyCouponBody = () => {
             <div key={coupon.couponId} className="coupon-body">
               <div className="coupon-header">
                 <div className="coupon-title">{coupon.couponName}</div>
-                <div className="coupon-desc">{coupon.couponDesc}</div>
+                <div className="coupon-desc">{coupon.couponDescription}</div>
               </div>
-              <div className="coupon-apply" onClick={() => !coupon.couponApply && handleChangeApply(coupon.couponId)}>
-                <div className={`coupon-apply-btn ${coupon.couponApply && 'coupon-apply-active'}`}>
-                  {coupon.couponApply ? "사용 중" : "적용 안됨"}
+              <div className={`coupon-apply ${coupon.couponStatus === "사용 전" ? '' : 'inactive'}`} onClick={() => coupon.couponStatus === "사용 전" && handleChangeApply(coupon.couponId)}>
+                <div className={`coupon-apply-btn ${coupon.couponStatus !== "사용 전" && 'coupon-apply-active'}`}>
+                  {coupon.couponStatus}
                 </div>
               </div>
               <hr />
@@ -75,15 +53,17 @@ const MyCouponBody = () => {
                 <div className={`${isExpiring && 'coupon-end-date-how-imminent'}`}>
                   {`D-${daysLeft}`}
                 </div>
-                <div className="coupon-end-date-when">{dayjs(coupon.couponEndDate).format('YY/MM/DD')} 00:00:00까지</div>
+                <div className="coupon-end-date-when">{dayjs(coupon.couponEndDate).format('YY/MM/DD HH:mm:ss')}까지</div>
               </div>
             </div>
           );
         })
       ) : (
-        <div>
-          <div>앗</div>
-          <div>사용 가능한 쿠폰이 없습니다.</div>
+        <div className="SearchedWords">
+          <div className="no-word-container">
+            <div className="title">앗!</div>
+            <div className="subtitle">사용 가능한 쿠폰이 없습니다.</div>
+          </div>
         </div>
       )}
     </div>
