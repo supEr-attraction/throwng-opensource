@@ -141,7 +141,12 @@ const PlayListBody = () => {
           ))}
         </div>
       ) : (
-        <div>플레이리스트가 비어있습니다.</div>
+        <div className="SearchedWords">
+          <div className="no-word-container">
+            <div className="title">앗!</div>
+            <div className="subtitle">플레이리스트가 비어있습니다.</div>
+          </div>
+        </div>
       )}
     </div>
   );

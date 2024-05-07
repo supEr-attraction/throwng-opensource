@@ -14,7 +14,6 @@ const NotificationBody = () => {
   const [noticeList, setNoticeList] = useState<NoticeType[]>([]);
 
   useEffect(() => {
-    // api 요청
     setNoticeList([]);
   }, []);
 
@@ -46,7 +45,12 @@ const NotificationBody = () => {
           </div>
         ))
       ) : (
-        <div className="no-notifications">알림 내역이 없습니다.</div>
+      <div className="SearchedWords">
+        <div className="no-word-container">
+          <div className="title">앗!</div>
+          <div className="subtitle">알림 내역이 없습니다.</div>
+        </div>
+      </div>
       )}
     </div>
   );

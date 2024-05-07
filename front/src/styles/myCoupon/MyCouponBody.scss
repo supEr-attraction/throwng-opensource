@@ -21,7 +21,7 @@
       }
   
       .coupon-desc {
-        font-size: 1.4dvh;
+        font-size: 1.7dvh;
         color: var(--placeholder-color);
       }
     }
@@ -32,7 +32,7 @@
 
       .coupon-apply-btn {
         font-size: 1.4dvh;
-        padding: 0.8dvh;
+        padding: 1.2dvh;
         border: 1px solid var(--placeholder-color);
         border-radius: 1dvh;
 
@@ -54,15 +54,37 @@
       display: flex;
       flex-direction: row;
       gap: 1dvh;
-      font-size: 1.6dvh;
+      font-size: 1.8dvh;
 
       .coupon-end-date-how-imminent {
         color: #FF8A8A;
+        font-size: 2dvh;
       }
 
       .coupon-end-date-when {
         color: var(--placeholder-color);
       }
+    }
+  }
+  
+  .no-word-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 2dvh;
+      color: var(--placeholder-color);
     }
   }
 }

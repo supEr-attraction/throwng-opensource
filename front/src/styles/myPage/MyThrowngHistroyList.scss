@@ -90,11 +90,25 @@
       border-bottom: none;
     }
 
-    .no-result {
+    .no-word-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       display: flex;
-      height: 40dvh;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      width: 100%;
+  
+      .title {
+        font-weight: bold;
+      }
+  
+      .subtitle {
+        font-size: 2dvh;
+        color: var(--placeholder-color);
+      }
     }
   }
 }
