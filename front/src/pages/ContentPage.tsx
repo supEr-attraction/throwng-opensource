@@ -4,14 +4,12 @@ import logo from "@/assets/images/backlogo.webp";
 import hammer from "@/assets/images/Hammer.webp";
 import game2 from "@/assets/images/Rockpaperscissors.webp";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 
 const ContentPage = () => {
   const navigate = useNavigate();
   const handleGoQuiz = () => {
-    navigate('/quiz/main')
-  }
-
+    navigate("/quiz/main");
+  };
 
   return (
     <div className="ContentPage">
