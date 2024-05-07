@@ -3,7 +3,7 @@ import { Address, Location, Marker } from "../../types/mapType";
 import { atom } from "recoil";
 
 const { persistAtom } = recoilPersist({
-  key: "mapStorage", // 고유한 key 값
+  key: "mapStorage",
   storage: sessionStorage,
 });
 
