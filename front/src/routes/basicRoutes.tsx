@@ -1,9 +1,3 @@
-import QuizCountDown from "@pages/quiz/QuizCountDown";
-import QuizCouponPage from "@pages/quiz/QuizCouponPage";
-import QuizFailPage from "@pages/quiz/QuizFailPage";
-import QuizInfoPage from "@pages/quiz/QuizInfoPage";
-import QuizSolvePage from "@pages/quiz/QuizSolvePage";
-import QuizSuccessPage from "@pages/quiz/QuizSuccessPage";
 import { lazy } from "react";
 const PrivateRoute = lazy(() => import("@components/PrivateRoute"));
 const HomePage = lazy(() => import("@pages/HomePage"));
@@ -18,6 +12,13 @@ const MusicPickDetailPage = lazy(() => import("@pages/MusicPickDetailPage"));
 const MusicList = lazy(() => import("@components/musicSearch/MusicList"));
 const NonePermissionPage = lazy(() => import("@pages/NonePermissionPage"));
 const QuizClosePage = lazy(() => import("@pages/quiz/QuizClosePage"));
+const ContentPage = lazy(() => import("@pages/ContentPage"));
+const QuizCountDown = lazy(() => import("@pages/quiz/QuizCountDown"));
+const QuizCouponPage = lazy(() => import("@pages/quiz/QuizCouponPage"));
+const QuizFailPage = lazy(() => import("@pages/quiz/QuizFailPage"));
+const QuizInfoPage = lazy(() => import("@pages/quiz/QuizInfoPage"));
+const QuizSolvePage = lazy(() => import("@pages/quiz/QuizSolvePage"));
+const QuizSuccessPage = lazy(() => import("@pages/quiz/QuizSuccessPage"));
 // const Error404 = loadable(() => import("./Error404"));
 
 export default {
@@ -78,6 +79,10 @@ export default {
           ],
         },
       ],
+    },
+    {
+      path: "content",
+      element: <ContentPage />,
     },
     {
       path: "quiz",
