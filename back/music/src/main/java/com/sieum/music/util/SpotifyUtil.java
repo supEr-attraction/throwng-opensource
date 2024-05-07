@@ -64,6 +64,7 @@ public class SpotifyUtil {
             final List<Track> trackPaging = Arrays.asList(searchTracksRequest.execute().getItems());
 
             trackPaging.stream()
+                    .filter(track -> track.getAlbum().getImages().length > 0)
                     .map(
                             track -> {
                                 return SearchSongResponse.builder()
