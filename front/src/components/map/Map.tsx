@@ -16,13 +16,14 @@ import {
   markersState,
   prevLocationState,
 } from "@store/map/atoms";
-import "@styles/map/Map.scss";
 import MyLocation from "@components/map/MyLocation";
 import { postAddress } from "@services/mapAPi";
 import { Location } from "../../types/mapType";
 import fetchMusic from "@/utils/map/fetchMusic";
 import fetchDistance from "@/utils/map/fetchDistance";
 import MapClusterer from "./MapClusterer";
+import Loading from "@components/Loading";
+import "@styles/map/Map.scss";
 
 const Map = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -33,12 +34,11 @@ const Map = () => {
   const setMarkers = useSetRecoilState(markersState);
   const setMapCenterAddress = useSetRecoilState(mapCenterAddressState);
   const [initialLoad, setInitialLoad] = useState(true);
-  const [centerLocation, setCenterLocation] = useState({ lat: 0, lng: 0 });
+  const [tilesLoaded, setTilesLoaded] = useState(false);
   const [zoomLevel, setZoomLevel] = useState(15);
   const centerRef = useRef(center);
   const prevLocationRef = useRef(prevLocation);
   const initialLoadRef = useRef(initialLoad);
-  const isValidLocation = centerLocation.lat !== 0 && centerLocation.lng !== 0;
 
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
 
@@ -48,25 +48,11 @@ const Map = () => {
     if (map) {
       const zoom = map.getZoom();
       if (zoom !== undefined && zoom < 15) {
-        // map.setZoom(15);
         setZoomLevel(15);
       }
       fetchMusic(true, location, setMarkers);
       map.panTo(location);
       setCenter(true);
-    }
-  };
-
-  const changeCenter = () => {
-    if (map && !center && isValidLocation) {
-      const mapCenter = map.getCenter();
-      if (mapCenter) {
-        const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
-        if (mapPosition.lat !== 0 && mapPosition.lng !== 0) {
-          fetchMusic(false, mapPosition, setMarkers);
-          fetchAddress(mapPosition, "mapCenter");
-        }
-      }
     }
   };
 
@@ -79,6 +65,19 @@ const Map = () => {
     }
   };
 
+  const changeCenter = () => {
+    if (map && !center) {
+      const mapCenter = map.getCenter();
+      if (mapCenter) {
+        const mapPosition = { lat: mapCenter.lat(), lng: mapCenter.lng() };
+        if (mapPosition.lat !== 0 && mapPosition.lng !== 0) {
+          fetchMusic(false, mapPosition, setMarkers);
+          fetchAddress(mapPosition, "mapCenter");
+        }
+      }
+    }
+  };
+
   const onChanged = () => {
     if (!initialLoad && center) {
       setCenter(false);
@@ -86,13 +85,17 @@ const Map = () => {
   };
 
   const onZoomChanged = () => {
-    if (!initialLoad && center) {
-      setCenter(false);
-    }
+    onChanged();
 
     if (map) {
       const zoom = map.getZoom()!;
       setZoomLevel(zoom);
+    }
+  };
+
+  const onTilesLoaded = () => {
+    if (!tilesLoaded) {
+      setTilesLoaded(true);
     }
   };
 
@@ -118,8 +121,7 @@ const Map = () => {
           };
 
           if (initialLoadRef.current) {
-            // map.setCenter(currentLocation);
-            setCenterLocation(currentLocation);
+            map.setCenter(currentLocation);
             fetchMusic(true, currentLocation, setMarkers);
             fetchAddress(currentLocation, "myLocation");
             setLocation(currentLocation);
@@ -160,7 +162,7 @@ const Map = () => {
 
   return (
     <div className="Map">
-      {isValidLocation && <MapHeader returnMyLocation={returnMyLocation} />}
+      {tilesLoaded && <MapHeader returnMyLocation={returnMyLocation} />}
       <LoadScriptNext
         id="google-map-script"
         googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP_API}
@@ -170,8 +172,8 @@ const Map = () => {
       >
         <GoogleMap
           mapContainerStyle={CONTAINER_STYLE}
-          center={centerLocation}
           zoom={zoomLevel}
+          onTilesLoaded={onTilesLoaded}
           options={MAP_OPTIONS}
           onLoad={onLoad}
           onUnmount={onUnmount}
@@ -179,11 +181,16 @@ const Map = () => {
           onZoomChanged={onZoomChanged}
           onIdle={changeCenter}
         >
-          <MyLocation />
-          <MapClusterer map={map} zoomLevel={zoomLevel} />
+          {tilesLoaded && (
+            <>
+              <MyLocation />
+              <MapClusterer zoomLevel={zoomLevel} />
+            </>
+          )}
         </GoogleMap>
       </LoadScriptNext>
       <ToasterMsg />
+      {!tilesLoaded && <Loading />}
     </div>
   );
 };
