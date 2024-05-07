@@ -20,7 +20,7 @@ const QuizMainPage = () => {
       </div>
       <div className="quiz-main-border">
         <p>
-          오늘의 깜짝 퀴즈에 <br />
+          오늘의 퀴즈에 <br />
           도전하세요!
         </p>
       </div>

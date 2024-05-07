@@ -24,7 +24,7 @@ const QuizOX = ({ setIsCorrect, setCanSubmit }: QuizOXProps) => {
 
   return (
     <div className="QuizOX">
-      <h2>Q3.</h2>
+      <h2>Q.</h2>
       <div className="ox-question">{question}</div>
       <div className="ox-answers">
         <div

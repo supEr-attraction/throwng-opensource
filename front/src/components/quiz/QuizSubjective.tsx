@@ -29,7 +29,7 @@ const QuizSubjective = ({
 
   return (
     <div className="QuizSubjective">
-      <h2>Q2.</h2>
+      <h2>Q.</h2>
       <div className="sub-question">{question}</div>
       <h2>정답 입력</h2>
       <input

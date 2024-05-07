@@ -117,7 +117,7 @@ const QuizInfo = () => {
           checked={areAllChecked()}
           onClick={handleCheckkAll}
         />
-        <label htmlFor="checkbox-all">다 알아요 ㅋ</label>
+        <label htmlFor="checkbox-all">전체 확인</label>
       </div>
 
       <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>

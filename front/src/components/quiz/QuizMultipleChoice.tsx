@@ -33,7 +33,7 @@ const QuizMultipleChoice = ({ setIsCorrect, setCanSubmit }: QuizMultipleChoicePr
 
   return (
     <div className="QuizMultipleChoice">
-      <h2>Q1.</h2>
+      <h2>Q.</h2>
       <div className="mc-question">
         <p>{question}</p>
       </div>

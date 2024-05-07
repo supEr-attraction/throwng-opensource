@@ -15,7 +15,7 @@ const QuizSolvePage = () => {
   const navigate = useNavigate();
 
   // API
-  const questionTypes = ["객관식", "주관식", "OX"];
+  const questionTypes = ["객관식", "주관식", "객관식"];
 
   useEffect(() => {
     if (currentQuestionIndex >= questionTypes.length) {
@@ -27,7 +27,7 @@ const QuizSolvePage = () => {
 
   useEffect(() => {
     if (timeLeft === 0) {
-      navigate("/quiz/fail");
+      // navigate("/quiz/fail");
     }
   }, [timeLeft, navigate]);
 
