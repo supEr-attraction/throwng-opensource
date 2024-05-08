@@ -1,8 +1,14 @@
 .QuizMultipleChoice {
-  h2 {
-    margin-top: 5dvh;
-    margin-bottom: 1dvh;
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    h2 {
+      margin-top: 5dvh;
+      margin-bottom: 1dvh;
+    }
   }
+
   .mc-question {
     display: flex;
     padding: 2dvh;
