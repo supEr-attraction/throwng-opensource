@@ -19,7 +19,7 @@ const ContentPage = () => {
           <div className="quiz-title">
             <p>쓰롱-퀴즈</p>
             <div className="participation">
-              <p>0/1</p>
+              <p>ON</p>
             </div>
           </div>
           <div>
@@ -30,7 +30,7 @@ const ContentPage = () => {
           <div className="game1-title">
             <p>리듬게임</p>
             <div className="participation">
-              <p>1/1</p>
+              <p>OFF</p>
             </div>
           </div>
           <div>
@@ -41,7 +41,7 @@ const ContentPage = () => {
           <div className="game2-title">
             <p>가위바위보?</p>
             <div className="participation">
-              <p>1/1</p>
+              <p>OFF</p>
             </div>
           </div>
           <div>
