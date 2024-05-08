@@ -23,7 +23,18 @@ const getMyCoupon = async ():Promise<Coupon[]> => {
   }
 };
 
+const putNickName = async (nickName:string):Promise<string> => {
+  try {
+    const { data } = await api.put(`/users/user/nickname`, nickName);
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw(e);
+  }
+}
+
 export {
   postMyCoupon,
   getMyCoupon,
+  putNickName
 }
