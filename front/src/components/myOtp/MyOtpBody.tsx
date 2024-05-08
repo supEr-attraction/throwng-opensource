@@ -1,3 +1,4 @@
+import MusicDropBtn from "@components/musicDrop/MusicDropBtn";
 import { getMyOtp } from "@services/myOtpApi/MyOtpApi";
 import "@styles/myOtp/MyOtpBody.scss"
 import { useState, useEffect } from "react";
@@ -40,7 +41,7 @@ const MyOtpBody = () => {
           {otp !== ''&& <div>유효시간 : {timeLeft}초</div>}
         </div>
       </div>
-      <div className="otp-btn" onClick={fetchMyOtp}>발급받기</div>
+      <MusicDropBtn onClick={fetchMyOtp} btnText="발급받기" />
     </div>
   )
 }
