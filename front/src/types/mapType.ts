@@ -3,11 +3,6 @@ export interface Location {
   lng: number;
 }
 
-export interface MarkerPosition {
-  id: number;
-  position: Location;
-}
-
 export interface Marker {
   itemId: number;
   latitude: number;

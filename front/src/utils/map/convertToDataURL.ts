@@ -1,18 +1,17 @@
-const convertToDataUR = async (imageUrl: string) => {
+const convertToDataURL = async (imageUrl: string): Promise<string> => {
   try {
     const response = await fetch(imageUrl);
-    const blob = await response.blob(); // 이미지 데이터를 Blob으로 변환
+    const blob = await response.blob();
 
-    // FileReader로 이미지 인코딩
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result); // Base64 문자열을 데이터 URL로 반환
+      reader.onloadend = () => resolve(reader.result as string);
       reader.onerror = reject;
-      reader.readAsDataURL(blob); // Blob 데이터를 Base64로 인코딩
+      reader.readAsDataURL(blob);
     });
   } catch (error) {
-    console.error(error);
+    throw error;
   }
 };
 
-export default convertToDataUR;
+export default convertToDataURL;

@@ -43,3 +43,8 @@ export const centerState = atom({
   key: "centerState",
   default: true,
 });
+
+export const zoomLevelState = atom({
+  key: "zoomLevelState",
+  default: 15,
+});
