@@ -5,22 +5,32 @@ import QuizOX from "@components/quiz/QuizOX";
 import QuizSubjective from "@components/quiz/QuizSubjective";
 import QuizTimeBar from "@components/quiz/QuizTimeBar";
 import "@styles/quiz/QuizSolvePage.scss";
-import { QuizData } from "@/types/quizType"; 
+import { QuizData } from "@/types/quizType";
 import getQuizSolve from "@services/quizApi/QuizSolveApi";
 
-const QuizSolvePage: React.FC = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+function QuizSolvePage() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [quizData, setQuizData] = useState<QuizData[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
-  const [canSubmit, setCanSubmit] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<number>(20);
+  const [canSubmit, setCanSubmit] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(20);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchQuiz = async () => {
       const data = await getQuizSolve();
-      console.log(data);
-      setQuizData(data);
+      const formattedData = data.map((item) => ({
+        ...item,
+        choice: item.choice
+          ? Object.keys(item.choice).map((key) => ({
+              id: key,
+              //@ts-ignore
+              text: item.choice[key],
+            }))
+          : [],
+      }));
+      console.log(formattedData);
+      setQuizData(formattedData);
     };
     fetchQuiz();
   }, []);
@@ -30,13 +40,12 @@ const QuizSolvePage: React.FC = () => {
       navigate("/quiz/success");
     }
   }, [currentQuestionIndex, navigate, quizData]);
-  
+
   useEffect(() => {
     if (timeLeft === 0) {
-      // navigate("/quiz/fail");
+      navigate("/quiz/fail");
     }
   }, [timeLeft, navigate]);
-  
 
   const handleSubmission = () => {
     if (isCorrect === null) {
@@ -63,19 +72,16 @@ const QuizSolvePage: React.FC = () => {
     }
 
     const currentQuiz = quizData[currentQuestionIndex];
-
-    const choices = Array.isArray(currentQuiz.choice) ? currentQuiz.choice : [];
-
     const props = {
       setIsCorrect,
       setTimeLeft,
       setCanSubmit,
       question: currentQuiz.question,
-      choices: choices,
+      choices: currentQuiz.choice,
       correctAnswer: currentQuiz.answer,
       index: currentQuestionIndex,
       previewUrl: currentQuiz.previewUrl,
-      quizImage: currentQuiz.quizImage
+      quizImage: currentQuiz.quizImage,
     };
 
     switch (currentQuiz.quizType) {
@@ -105,6 +111,6 @@ const QuizSolvePage: React.FC = () => {
       )}
     </div>
   );
-};
+}
 
 export default QuizSolvePage;
