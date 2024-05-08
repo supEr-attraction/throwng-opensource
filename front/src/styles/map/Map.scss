@@ -22,6 +22,7 @@
   .common_cluster {
     border-radius: 50%;
     backdrop-filter: blur(2px);
+    background-image: none;
 
     &.clusterer1 {
       background-color: rgba(123, 102, 255, 0.5);
@@ -34,6 +35,10 @@
     &.clusterer3 {
       background-color: rgba(41, 182, 243, 0.5);
       z-index: 4;
+    }
+
+    > img {
+      display: none;
     }
   }
 }

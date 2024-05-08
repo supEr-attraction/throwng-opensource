@@ -22,6 +22,7 @@ const MusicPickDetailPage = () => {
     throwId: 0,
     thrownDate: "",
     title: "",
+    previewUrl: null,
   });
 
   const { id } = useParams();

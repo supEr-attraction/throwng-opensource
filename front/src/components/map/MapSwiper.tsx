@@ -1,4 +1,3 @@
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { activeMarkerState } from "@store/map/atoms";
@@ -7,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "@styles/map/MapSwiper.scss";
+import { memo } from "react";
 
 const MapSwiper = () => {
   const markerRadius = useRecoilValue(markerRadiusState);
@@ -45,7 +45,7 @@ const MapSwiper = () => {
                 navigate(`/music/pick/${marker.itemId}`);
               }}
             >
-              <img src={marker.albumImage} />
+              <img src={marker.albumImage} loading="lazy" />
               <div className="content">
                 <div className="title">{marker.songTitle}</div>
                 <div className="singer">{marker.artistName}</div>
@@ -58,4 +58,4 @@ const MapSwiper = () => {
   );
 };
 
-export default MapSwiper;
+export default memo(MapSwiper);

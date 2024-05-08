@@ -15,25 +15,7 @@
       height: 5vh;
     }
 
-    .title {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 1vh;
-      flex: 1;
-
-      img {
-        width: 1.8dvh;
-        height: 2.3dvh;
-      }
-
-      div {
-        font-size: 2dvh;
-        // font-weight: bold;
-      }
-    }
-
-    .gps {
+    .GpsBtn {
       background-color: #0f1114;
       width: 5vh;
       height: 5vh;
@@ -46,11 +28,11 @@
       svg {
         font-size: 3vh;
 
-        &.true {
+        &.centered {
           color: #7b66ff;
         }
 
-        &.false {
+        &.not-centered {
           color: #7b8696;
         }
       }
