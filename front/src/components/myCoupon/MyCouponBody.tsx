@@ -3,10 +3,15 @@ import "@styles/myCoupon/MyCouponBody.scss";
 import dayjs from 'dayjs';
 import { Coupon } from '../../types/couponType';
 import { getMyCoupon, postMyCoupon } from '@services/myCouponApi/MyCouponAPi';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { changeNickNameCouponId } from '@store/myPage/atoms';
 
 const MyCouponBody = () => {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
-
+  const navigate = useNavigate()
+  const setChangeNickNameCouponId = useSetRecoilState(changeNickNameCouponId)
+  
   useEffect(() => {
     fetchGetMyCoupon();
   }, [])
@@ -21,6 +26,11 @@ const MyCouponBody = () => {
     if (isConfirmed) {
       const selectedCoupon = coupons.find(coupon => coupon.couponId === couponId);
       if (!selectedCoupon) return;
+      if (selectedCoupon.couponName === "닉네임 변경 쿠폰") {
+        setChangeNickNameCouponId(selectedCoupon.couponId)
+        navigate('/user/mypage/change-nickname');
+        return;
+      }
       const isCouponInUse = coupons.some(coupon => coupon.couponName === selectedCoupon.couponName && coupon.couponStatus === "사용 중");
       if (isCouponInUse) {
         alert("이미 같은 쿠폰을 사용중입니다.");

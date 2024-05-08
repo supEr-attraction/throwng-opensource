@@ -16,21 +16,22 @@ const MusicList = () => {
   const [searchResults, setSearchResults] = useState<Song[]>([]);
   const setSelectMusic = useSetRecoilState(selectMusic);
   const resetSelectMusic = useResetRecoilState(selectMusic);
-  const params = useParams();
-  const searchKeyword = params.id;
+  const searchParams = new URLSearchParams(location.search);
+  const searchKeyword = searchParams.get('query');
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     resetSelectMusic();
     if (searchKeyword) {
-      onSearch(searchKeyword);
+      onSearch(decodeURIComponent(searchKeyword));
     }
   }, [searchKeyword]);
 
   const onSearch = async (searchKeyWord: string) => {
     setIsLoading(true);
-    setTitle(searchKeyWord);
-    const res = await getSearchMusic(searchKeyWord);
+    const decodedKeyword = decodeURIComponent(searchKeyWord);
+    setTitle(decodedKeyword);
+    const res = await getSearchMusic(decodedKeyword);
     if (res) {
       setSearchResults(res);
     }

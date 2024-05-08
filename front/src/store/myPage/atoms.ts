@@ -30,3 +30,18 @@ export const myPickHistoryList = atom<MyHistory[]>({
   key: "myPickHistoryList",
   default: [],
 })
+
+export const changeNickNameCouponId = atom<number>({
+  key:'changeNickNameCouponId',
+  default: 0,
+})
+
+export const levelInfoModal = atom<boolean>({
+  key:'levelInfoModal',
+  default: false,
+})
+
+export const scrollHistoryIndex = atom<string>({
+  key: 'scrollHistoryIndexState',
+  default: '',
+});

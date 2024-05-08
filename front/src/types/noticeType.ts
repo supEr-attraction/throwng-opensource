@@ -1,4 +1,4 @@
 export interface NoticeType {
-  quizId:number,
+  content:string,
   date:string,
 }
