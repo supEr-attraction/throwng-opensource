@@ -6,6 +6,7 @@ const PlayListPage = lazy(() => import("@pages/PlayListPage"));
 const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 const MyCouponPage = lazy(() => import("@pages/MyCouponPage"));
+const MyOtpPage = lazy(() => import("@pages/MyOtpPage"));
 const ChangeNickNamePage = lazy(() => import('@pages/ChangeNickNamePage'))
 const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
@@ -51,6 +52,10 @@ export default {
         {
           path: "mycoupons",
           element: <MyCouponPage />,
+        },
+        {
+          path: "myotp",
+          element: <MyOtpPage />,
         },
       ],
     },

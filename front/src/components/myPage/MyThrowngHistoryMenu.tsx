@@ -3,11 +3,12 @@ import "@styles/myPage/MyThrowngHistoryMenu.scss";
 import MyThrowngHistroyList from "./MyThrowngHistroyList";
 import { LuListFilter } from "react-icons/lu";
 import MyThrowngHistoryFilterModal from "./MyThrowngHistoryFilterModal";
-import { useRecoilState, useResetRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   myPickHistoryList,
   myThrowHistoryList,
   pageIdx,
+  scrollHistoryIndex,
   throwngFilterModal,
 } from "@store/myPage/atoms";
 import {
@@ -24,6 +25,7 @@ const MyThrowngHistoryMenu = () => {
   const setThrownHistoryList = useSetRecoilState(myThrowHistoryList);
   const setPickHistoryList = useSetRecoilState(myPickHistoryList);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const scrollIndex = useRecoilValue(scrollHistoryIndex)
 
   useEffect(() => {
     resetThrowngFilterState();
@@ -32,14 +34,22 @@ const MyThrowngHistoryMenu = () => {
 
   const fetchData = async () => {
     setIsLoading(true);
-    if (page) {
-      const pickData = await getMyPickHistory();
-      setPickHistoryList(pickData);
+    if (scrollIndex) {
       setIsLoading(false);
     } else {
-      const thownData = await getMyDropHistory();
-      setThrownHistoryList(thownData);
-      setIsLoading(false);
+      if (page) {
+        if (myThrowHistoryList) {
+          const pickData = await getMyPickHistory();
+          setPickHistoryList(pickData);
+          setIsLoading(false);
+        }
+      } else {
+        if (myPickHistoryList) {
+          const thownData = await getMyDropHistory();
+          setThrownHistoryList(thownData);
+          setIsLoading(false);
+        }
+      }
     }
   };
 

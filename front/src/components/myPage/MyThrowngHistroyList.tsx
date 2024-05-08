@@ -32,52 +32,50 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
 
   dayjs.extend(isBetween);
 
-  const fetchAndFilterHistory = () => {
-    if (scrollIndex) {
-      moveScroll()
-    }
-    const dataList = !pageIdx ? filterThrownList : filterPickList;
-    const filteredData = dataList
-      .filter((item: MyHistory) => {
-        const dateToUse = item.dropDate ? item.dropDate : item.pickDate;
-        const itemDate = dayjs(dateToUse);
-        switch (filter) {
-          case "오늘":
-            return now.isSame(itemDate, "day");
-          case "이번 주":
-            return dayjs(now).isBetween(sevenDaysAgo, now, "day", "[]");
-          case "이번 달":
-            return now.isSame(itemDate, "month");
-          case "전체":
-            return true;
-          default:
-            return false;
-        }
-      })
-      .sort((a, b) => {
-        const dateA = a.dropDate ? a.dropDate : a.pickDate;
-        const dateB = b.dropDate ? b.dropDate : b.pickDate;
-        return dayjs(dateB).diff(dayjs(dateA));
-      });
-
-    setSongHistoryList(filteredData);
-    setHistoryCnt(filteredData.length);
-  };
-
   useEffect(() => {
-    fetchAndFilterHistory();
+    const fetchAndFilterHistory = () => {
+      const dataList = !pageIdx ? filterThrownList : filterPickList;
+      const filteredData = dataList
+        .filter((item: MyHistory) => {
+          const dateToUse = item.dropDate ? item.dropDate : item.pickDate;
+          const itemDate = dayjs(dateToUse);
+          switch (filter) {
+            case "오늘":
+              return now.isSame(itemDate, "day");
+            case "이번 주":
+              return dayjs(now).isBetween(sevenDaysAgo, now, "day", "[]");
+            case "이번 달":
+              return now.isSame(itemDate, "month");
+            case "전체":
+              return true;
+            default:
+              return false;
+          }
+        })
+        .sort((a, b) => {
+          const dateA = a.dropDate ? a.dropDate : a.pickDate;
+          const dateB = b.dropDate ? b.dropDate : b.pickDate;
+          return dayjs(dateB).diff(dayjs(dateA));
+        });
 
-  }, [filter, pageIdx, filterThrownList, filterPickList, scrollIndex]);
+      setSongHistoryList(filteredData);
+      setHistoryCnt(filteredData.length);
+    };
 
-  const moveScroll = () => {
-    if (scrollIndex) {
+    const moveScroll = () => {
       const element = document.getElementById(scrollIndex);
       if (element) {
-        element.scrollIntoView({ block: 'center' });
+        element.scrollIntoView({ block: 'center'});
         resetScrollHistoryIndex();
       }
+    };
+
+    fetchAndFilterHistory();
+
+    if (scrollIndex && songHistoryList.length > 0) {
+      moveScroll();
     }
-  };
+  }, [filter, pageIdx, scrollIndex, songHistoryList.length]);
 
   const handleGoNavigation = (song: MyHistory, index: number) => {
     setScrollHistoryIndex(`${index}`); 
