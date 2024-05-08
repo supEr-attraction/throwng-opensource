@@ -245,7 +245,7 @@ public class MusicService {
                         .locationPoint(point)
                         .userId(userId)
                         .zipcode(zipcode)
-                        .song(songRepository.findByTitle(thrownItemRequest.getTitle()))
+                        .song(song)
                         .build());
 
         thrownCount--;
