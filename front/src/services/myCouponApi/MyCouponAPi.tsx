@@ -1,5 +1,6 @@
 import { axiosApi } from "@/utils/common";
 import { Coupon } from "../../types/couponType";
+import { changeNickNameCoupon } from "../../types/myPage";
 
 const api = axiosApi();
 
@@ -23,9 +24,9 @@ const getMyCoupon = async ():Promise<Coupon[]> => {
   }
 };
 
-const putNickName = async (nickName:string):Promise<string> => {
+const putNickName = async (requestBody:changeNickNameCoupon):Promise<changeNickNameCoupon> => {
   try {
-    const { data } = await api.put(`/users/user/nickname`, nickName);
+    const { data } = await api.put(`/users/user/nickname`, requestBody);
     return data;
   } catch (e) {
     console.log(e);

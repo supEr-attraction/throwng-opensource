@@ -1,15 +1,17 @@
 import { useState, useEffect } from "react";
 import "@styles/myPage/MyLevel.scss";
 import { getMyLevel } from "@services/myPageHistoryApi/MyPageHistoryApi";
-import { useSetRecoilState } from "recoil";
-import { myNickName } from "@store/myPage/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { levelInfoModal, myNickName } from "@store/myPage/atoms";
+import { IoMdInformationCircleOutline } from "react-icons/io";
+import LevelInfoModal from "./LevelInfoModal";
 
 const MyLevel = () => {
   const [level, setLevel] = useState(0);
-  const [drop, setDrop] = useState(0);
-  const [pick, setPick] = useState(0);
+  const [experiencePoint, setExperiencePoint] = useState(0);
   const [isBlock, setIsBlock] = useState("NONE");
   const setMyNickName = useSetRecoilState(myNickName);
+  const [infoModal, setInfoModal] = useRecoilState(levelInfoModal)
 
   useEffect(() => {
     apiGetMyLevel();
@@ -18,35 +20,38 @@ const MyLevel = () => {
   const apiGetMyLevel = async () => {
     const data = await getMyLevel();
     setLevel(data.level);
-    setDrop(data.thrownCount);
-    setPick(data.pickCount);
+    setExperiencePoint(data.experiencePoint);
     setIsBlock(data.isBlock);
     setMyNickName(data.nickName);
   };
 
   const getLevelBarColor = (level: number) => {
     switch (level) {
+      case 1:
+        return "linear-gradient(to right, #D2FFE4, #34DB77)";
       case 2:
-        return "linear-gradient(to right, #ffffff, var(--level-gold))";
+        return "linear-gradient(to right, #DEFFFB, var(--level-platinum))";
       case 3:
-        return "linear-gradient(to right, #ffffff, var(--level-platinum))";
+        return "linear-gradient(to right, #DAD4FF, var(--main-color))";
       case 4:
-        return "linear-gradient(to right, #ffffff, var(--main-color))";
+          return "linear-gradient(to right, #FFFEDC, var(--level-gold))";
       default:
-        return "linear-gradient(to right, #ffffff, #52DC22)";
+        return "linear-gradient(to right, #D2FFE4, #34DB77)";
     }
   };
 
   const getLevelDiv = (level: number) => {
     switch (level) {
+      case 1:
+        return "#34DB77";
       case 2:
-        return "var(--level-gold)";
+        return "var(--level-platinum)";
       case 3:
-        return "var(--main-platinum)";
-      case 4:
         return "var(--main-color)";
+      case 4:
+        return "var(--level-gold)";
       default:
-        return "#52DC22";
+        return "#0F1114";
     }
   };
 
@@ -59,7 +64,7 @@ const MyLevel = () => {
       case 3:
         return "버즈프로";
       case 4:
-        return 'VVIP';
+        return '갤럭시';
       default:
         return "이어폰";
     }
@@ -67,21 +72,23 @@ const MyLevel = () => {
 
   const calculateWidth = () => {
     let total;
-    let current;
+    let current = experiencePoint;
 
     if (level === 1) {
-      total = 20;
-      current = drop;
-    } else if (level === 4) {
-      total = 1000;
-      current = drop + pick;
+        total = 100;
+    } else if (level === 2) {
+        total = 400;
+    } else if (level === 3) {
+        total = 1000;
     } else {
-      total = 100;
-      current = drop + pick;
+        total = 1000;
     }
-
-    return (current / total) * 100;
+    return Math.ceil((current / total) * 100);
   };
+
+  const openInfoModal = () => {
+    setInfoModal(!infoModal)
+  }
 
   return (
     <div className="MyLevel">
@@ -102,20 +109,9 @@ const MyLevel = () => {
               Lv.{level} {getProductName(level)}
             </div>
             <div className="drop-pick">
-              두기 : {drop}
-              {level === 1 && <span>/20</span>}
-              {level === 2 && <span>/100</span>}
-              {level === 3 && <span>/100</span>}
-              {level === 4 && <span>/1000</span>}
+              {calculateWidth()}%
+              <IoMdInformationCircleOutline onClick={openInfoModal} />
             </div>
-            {level !== 1 && (
-              <div className="drop-pick">
-                줍기 : {pick}
-                {level === 2 && <span>/100</span>}
-                {level === 3 && <span>/100</span>}
-                {level === 4 && <span>/1000</span>}
-              </div>
-            )}
           </div>
           <div className="level-bar">
             <div
@@ -126,6 +122,7 @@ const MyLevel = () => {
               }}
             ></div>
           </div>
+          {infoModal && <LevelInfoModal/>}
         </div>
       )}
     </div>

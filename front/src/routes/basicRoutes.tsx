@@ -62,7 +62,7 @@ export default {
           children: [
             { index: true, element: <MusicSearchPage /> },
             {
-              path: ":id",
+              path: "results",
               element: <MusicList />,
             },
           ],

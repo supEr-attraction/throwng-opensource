@@ -4,26 +4,33 @@ import { NoticeType } from "../../types/noticeType";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+import { getMyNotice } from "@services/myPageHistoryApi/MyPageHistoryApi";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
 const NotificationBody = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [noticeList, setNoticeList] = useState<NoticeType[]>([]);
 
   useEffect(() => {
+    fetchGetMyNotice();
     setNoticeList([]);
   }, []);
+
+  const fetchGetMyNotice = async () => {
+    const res = await getMyNotice();
+    setNoticeList(res)
+  }
 
   const formatDistanceToNow = (dateString: string) => {
     return dayjs(dateString).fromNow();
   };
 
-  const goQuiz = (index: number) => {
-    navigate(`/quiz/${index}`, { replace: true });
-  };
+  // const goQuiz = (index: number) => {
+  //   navigate(`/quiz/${index}`, { replace: true });
+  // };
 
   return (
     <div className="NotificationBody">
@@ -32,7 +39,7 @@ const NotificationBody = () => {
           <div
             className="body"
             key={index}
-            onClick={() => goQuiz(notice.quizId)}
+            // onClick={() => goQuiz(notice.quizId)}
           >
             <div className="header">
               <div className="category">퀴즈/이벤트</div>

@@ -15,8 +15,11 @@ const MusicSearchInput = () => {
   const [title, setTitle] = useRecoilState(inputSearchKeyWord);
 
   const onSearch = async (searchKeyWord: string) => {
-    if (searchKeyWord.trim() !== "") {
-      navigate(`/music/search/${searchKeyWord}`, { replace: true });
+    const trimmedKeyword = searchKeyWord.trim();
+    const encodedSearchKeyword = encodeURIComponent(trimmedKeyword);
+  
+    if (encodedSearchKeyword !== "") {
+      navigate(`/music/search/results?query=${encodedSearchKeyword}`, { replace: true });
     } else {
       navigate("/music/search", { replace: true });
     }

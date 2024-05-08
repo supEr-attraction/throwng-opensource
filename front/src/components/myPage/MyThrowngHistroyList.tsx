@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { MyHistory } from "../../types/songType";
 import "@styles/myPage/MyThrowngHistroyList.scss";
 import { TiLocation } from "react-icons/ti";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   myPickHistoryList,
   myThrowHistoryList,
+  scrollHistoryIndex,
   throwngFilter,
 } from "@store/myPage/atoms";
 import { useNavigate } from "react-router-dom";
@@ -25,9 +26,16 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   const now = dayjs();
   const sevenDaysAgo = dayjs().subtract(7, "days");
   const navigate = useNavigate();
+  const setScrollHistoryIndex = useSetRecoilState(scrollHistoryIndex);
+  const scrollIndex = useRecoilValue(scrollHistoryIndex)
+  const resetScrollHistoryIndex = useResetRecoilState(scrollHistoryIndex)
+
   dayjs.extend(isBetween);
 
   const fetchAndFilterHistory = () => {
+    if (scrollIndex) {
+      moveScroll()
+    }
     const dataList = !pageIdx ? filterThrownList : filterPickList;
     const filteredData = dataList
       .filter((item: MyHistory) => {
@@ -58,9 +66,21 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
 
   useEffect(() => {
     fetchAndFilterHistory();
-  }, [filter, pageIdx, filterThrownList, filterPickList]);
 
-  const handleGoNavigation = (song: MyHistory) => {
+  }, [filter, pageIdx, filterThrownList, filterPickList, scrollIndex]);
+
+  const moveScroll = () => {
+    if (scrollIndex) {
+      const element = document.getElementById(scrollIndex);
+      if (element) {
+        element.scrollIntoView({ block: 'center' });
+        resetScrollHistoryIndex();
+      }
+    }
+  };
+
+  const handleGoNavigation = (song: MyHistory, index: number) => {
+    setScrollHistoryIndex(`${index}`); 
     if ("myThrowId" in song) {
       navigate(`/music/pick/${song.myThrowId}`);
     } else if ("myPickId" in song) {
@@ -75,8 +95,9 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
           songHistoryList.map((song, index) => (
             <div
               key={index}
+              id={`${index}`}
               className="result-item"
-              onClick={() => handleGoNavigation(song)}
+              onClick={() => handleGoNavigation(song, index)}
             >
               <div className="item-header">
                 {!pageIdx ? (
