@@ -1,52 +1,52 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "@styles/quiz/QuizMultipleChoice.scss";
 
+
 interface Choice {
-  id: number;
+  id: string;
   text: string;
 }
 
 interface QuizMultipleChoiceProps {
   setIsCorrect: (isCorrect: boolean) => void;
   setCanSubmit: (canSubmit: boolean) => void;
-  
+  question: string;
+  choices: Choice[];
+  correctAnswer: string;
+  index: number
+  previewUrl?: string;
+  quizImage?: string;
 }
 
-const QuizMultipleChoice = ({ setIsCorrect, setCanSubmit }: QuizMultipleChoiceProps) => {
-  const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
+const QuizMultipleChoice: React.FC<QuizMultipleChoiceProps> = ({
+  setIsCorrect,
+  setCanSubmit,
+  question,
+  choices,
+  correctAnswer,
+  index,
+  previewUrl,
+  quizImage
+}) => {
+  const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
 
-  // API
-  const question: string = "여기에 객관식 문제 뿌려~~~";
-  const choices: Choice[] = [
-    { id: 1, text: "보기1" },
-    { id: 2, text: "보기2" },
-    { id: 3, text: "보기3" },
-    { id: 4, text: "보기4" },
-  ];
-  const correctAnswer = 3;
-
-  const handleChoiceClick = (id: number) => {
+  const handleChoiceClick = (id: string) => {
     setSelectedChoice(id);
-    setIsCorrect(id === correctAnswer);
-    setCanSubmit(true)
+    setIsCorrect(id === correctAnswer); 
+    setCanSubmit(true);
   };
 
   return (
     <div className="QuizMultipleChoice">
-      <h2>Q.</h2>
-      <div className="mc-question">
-        <p>{question}</p>
-      </div>
+      <h2>Q{index + 1}. {question}</h2>
       <div className="mc-choice">
         {choices.map((choice) => (
           <div
             key={choice.id}
-            className={`choice ${
-              selectedChoice === choice.id ? "selected" : ""
-            }`}
+            className={`choice ${selectedChoice === choice.id ? "selected" : ""}`}
             onClick={() => handleChoiceClick(choice.id)}
           >
-            {choice.id}. {choice.text}
+            {choice.text}
           </div>
         ))}
       </div>

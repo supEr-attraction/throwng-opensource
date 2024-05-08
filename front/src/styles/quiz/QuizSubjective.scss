@@ -1,8 +1,24 @@
 .QuizSubjective {
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    .quiz-audio {
+      margin-bottom: 1dvh;
+
+      svg {
+        font-size: 3dvh;
+      }
+    }
+  }
+
+
   h2 {
     margin-top: 5dvh;
     margin-bottom: 1dvh;
   }
+
   .sub-question {
     padding: 2dvh;
     height: 40dvh;
@@ -14,6 +30,9 @@
     p {
       margin-top: 1dvh;
       margin-bottom: 1dvh;
+    }
+    img {
+      width: 30%;
     }
   }
 
