@@ -28,62 +28,70 @@ const MyLevel = () => {
   const getLevelBarColor = (level: number) => {
     switch (level) {
       case 1:
-        return "linear-gradient(to right, #D2FFE4, #34DB77)";
+        return "linear-gradient(to right, #D3C1B4, var(--level-one))";
       case 2:
-        return "linear-gradient(to right, #DEFFFB, var(--level-platinum))";
+        return "linear-gradient(to right, #DAD4FF, var(--level-two))";
       case 3:
-        return "linear-gradient(to right, #DAD4FF, var(--main-color))";
+        return "linear-gradient(to right, #FFE8BC, var(--level-three))";
       case 4:
-          return "linear-gradient(to right, #FFFEDC, var(--level-gold))";
+          return "linear-gradient(to right, #F6F049, var(--level-four))";
+      case 5:
+          return "linear-gradient(to right, #C7FBFA, var(--level-five))";
+      case 6:
+          return "linear-gradient(to right, #DEFFFB, var(--level-six))";
+      case 7:
+          return "linear-gradient(to right, #D2EDFF, var(--level-seven))";
+      case 8:
+          return "linear-gradient(to right, #FFC8CC, var(--level-eight))";
       default:
-        return "linear-gradient(to right, #D2FFE4, #34DB77)";
+        return "linear-gradient(to right, #D3C1B4, var(--level-one))";
     }
   };
 
   const getLevelDiv = (level: number) => {
     switch (level) {
       case 1:
-        return "#34DB77";
+        return "var(--level-one)";
       case 2:
-        return "var(--level-platinum)";
+        return "var(--level-two)";
       case 3:
-        return "var(--main-color)";
+        return "var(--level-three)";
       case 4:
-        return "var(--level-gold)";
+        return "var(--level-four)";
+      case 5:
+        return "var(--level-five)";
+      case 6:
+        return "var(--level-six)";
+      case 7:
+        return "var(--level-seven)";
+      case 8:
+        return "var(--level-eight)";
       default:
-        return "#0F1114";
+        return "var(--level-one)";
     }
   };
 
   const getProductName = (level: number) => {
     switch (level) {
       case 1:
-        return "이어폰";
+        return "EARPHONE";
       case 2:
-        return "버즈";
+        return "BUDS_FE";
       case 3:
-        return "버즈프로";
+        return "BUDS";
       case 4:
-        return '갤럭시';
+        return 'BUDS_PLUS';
+      case 5:
+        return 'BUDS_PRO';
+      case 6:
+        return 'LP';
+      case 7:
+        return 'SPEAKER';
+      case 8:
+        return 'GALAXY';
       default:
-        return "이어폰";
+        return "EARPHONE";
     }
-  };
-
-  const calculateWidth = () => {
-    let total;
-    let current = experiencePoint;
-
-    if (level === 1) {
-        total = 100;
-    } else if (level === 2) {
-        total = 400;
-    } else if (level === 3) {
-        total = 1000;
-    } else {
-        total = 1000;
-    }
-    return Math.ceil((current / total) * 100);
   };
 
   const openInfoModal = () => {
@@ -108,16 +116,16 @@ const MyLevel = () => {
             >
               Lv.{level} {getProductName(level)}
             </div>
-            <div className="drop-pick">
-              {calculateWidth()}%
-              <IoMdInformationCircleOutline onClick={openInfoModal} />
+            <div className="drop-pick" >
+              {experiencePoint}%
+              <IoMdInformationCircleOutline style={{ color: getLevelDiv(level) }} onClick={openInfoModal} />
             </div>
           </div>
           <div className="level-bar">
             <div
               className="level-bar-fill"
               style={{
-                width: `${calculateWidth()}%`,
+                width: `${experiencePoint}%`,
                 background: getLevelBarColor(level),
               }}
             ></div>

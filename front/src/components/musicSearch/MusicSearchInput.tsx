@@ -64,7 +64,7 @@ const MusicSearchInput = () => {
             className="input"
             ref={inputEl}
             type="text"
-            placeholder="검색어를 입력하세요."
+            placeholder="쓰롱 할 음악을 검색하세요"
             value={title}
             onChange={titleOnChange}
             maxLength={30}
