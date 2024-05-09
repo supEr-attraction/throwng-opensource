@@ -18,12 +18,9 @@ const getQuizSolve = async (): Promise<QuizData[]> => {
   }
 };
 
-
-
 const postQuizSolve = async (quizResult: QuizResult) => {
   try {
     const response = await api.post("/quizzes/result", quizResult);
-    console.log("Post result:", response.data);
     return response;
   } catch (e) {
     if (axios.isAxiosError(e)) {

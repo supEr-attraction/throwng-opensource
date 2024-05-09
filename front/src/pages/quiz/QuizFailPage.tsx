@@ -1,10 +1,12 @@
 import QuizCryLottie from "@components/lottie/QuizCryLottie";
+import useQuizRedirect from "@hooks/useQuizRedirect";
 import "@styles/quiz/QuizFailPage.scss";
 import { useNavigate } from "react-router-dom";
 
 const QuizFailPage = () => {
   const navigate = useNavigate();
-
+  useQuizRedirect();
+  
   const handleGoHome = () => {
     navigate("/");
   };
