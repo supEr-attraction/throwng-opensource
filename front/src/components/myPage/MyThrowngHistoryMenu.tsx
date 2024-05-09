@@ -3,7 +3,12 @@ import "@styles/myPage/MyThrowngHistoryMenu.scss";
 import MyThrowngHistroyList from "./MyThrowngHistroyList";
 import { LuListFilter } from "react-icons/lu";
 import MyThrowngHistoryFilterModal from "./MyThrowngHistoryFilterModal";
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilValue,
+  useResetRecoilState,
+  useSetRecoilState,
+} from "recoil";
 import {
   myPickHistoryList,
   myThrowHistoryList,
@@ -25,7 +30,7 @@ const MyThrowngHistoryMenu = () => {
   const setThrownHistoryList = useSetRecoilState(myThrowHistoryList);
   const setPickHistoryList = useSetRecoilState(myPickHistoryList);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const scrollIndex = useRecoilValue(scrollHistoryIndex)
+  const scrollIndex = useRecoilValue(scrollHistoryIndex);
 
   useEffect(() => {
     resetThrowngFilterState();
@@ -57,39 +62,35 @@ const MyThrowngHistoryMenu = () => {
     setFilterModal(!filterModal);
   };
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <div className="MyThrowngHistoryMenu">
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <>
-          <div className="menu-header">
-            <div className="header-btn-div">
-              <div
-                className={`btn-item ${!page ? "" : "active"}`}
-                onClick={() => setPageIdx(false)}
-              >
-                두기
-              </div>
-              <div
-                className={`btn-item ${page ? "" : "active"}`}
-                onClick={() => setPageIdx(true)}
-              >
-                줍기
-              </div>
-            </div>
-            <div className="song-cnt">전체 {histoyCnt}개</div>
-            <div className="filter-div" onClick={filterModalHandler}>
-              <div className="filter">
-                <div>필터</div>
-                <LuListFilter />
-              </div>
-            </div>
+      <div className="menu-header">
+        <div className="header-btn-div">
+          <div
+            className={`btn-item ${!page ? "" : "active"}`}
+            onClick={() => setPageIdx(false)}
+          >
+            두기
           </div>
-          <MyThrowngHistroyList pageIdx={page} setHistoryCnt={setHistoryCnt} />
-          {filterModal && <MyThrowngHistoryFilterModal />}
-        </>
-      )}
+          <div
+            className={`btn-item ${page ? "" : "active"}`}
+            onClick={() => setPageIdx(true)}
+          >
+            줍기
+          </div>
+        </div>
+        <div className="song-cnt">전체 {histoyCnt}개</div>
+        <div className="filter-div" onClick={filterModalHandler}>
+          <div className="filter">
+            <div>필터</div>
+            <LuListFilter />
+          </div>
+        </div>
+      </div>
+      <MyThrowngHistroyList pageIdx={page} setHistoryCnt={setHistoryCnt} />
+      {filterModal && <MyThrowngHistoryFilterModal />}
     </div>
   );
 };

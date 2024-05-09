@@ -5,7 +5,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { SearchedWordsList } from "../../types/songType";
 import { inputSearchKeyWord, searchedWords } from "@store/musicSearch/atoms";
 import { useNavigate } from "react-router-dom";
-import { ToasterMsg } from "@components/ToasterMsg";
+import ToasterMsg from "@components/ToasterMsg";
 import { toastMsg } from "@/utils/toastMsg";
 
 const MusicSearchInput = () => {
@@ -17,9 +17,11 @@ const MusicSearchInput = () => {
   const onSearch = async (searchKeyWord: string) => {
     const trimmedKeyword = searchKeyWord.trim();
     const encodedSearchKeyword = encodeURIComponent(trimmedKeyword);
-  
+
     if (encodedSearchKeyword !== "") {
-      navigate(`/music/search/results?query=${encodedSearchKeyword}`, { replace: true });
+      navigate(`/music/search/results?query=${encodedSearchKeyword}`, {
+        replace: true,
+      });
     } else {
       navigate("/music/search", { replace: true });
     }

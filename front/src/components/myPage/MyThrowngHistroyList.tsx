@@ -27,8 +27,8 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   const sevenDaysAgo = dayjs().subtract(7, "days");
   const navigate = useNavigate();
   const setScrollHistoryIndex = useSetRecoilState(scrollHistoryIndex);
-  const scrollIndex = useRecoilValue(scrollHistoryIndex)
-  const resetScrollHistoryIndex = useResetRecoilState(scrollHistoryIndex)
+  const scrollIndex = useRecoilValue(scrollHistoryIndex);
+  const resetScrollHistoryIndex = useResetRecoilState(scrollHistoryIndex);
 
   dayjs.extend(isBetween);
 
@@ -65,7 +65,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
     const moveScroll = () => {
       const element = document.getElementById(scrollIndex);
       if (element) {
-        element.scrollIntoView({ block: 'center'});
+        element.scrollIntoView({ block: "center" });
         resetScrollHistoryIndex();
       }
     };
@@ -78,7 +78,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   }, [filter, pageIdx, scrollIndex, songHistoryList.length]);
 
   const handleGoNavigation = (song: MyHistory, index: number) => {
-    setScrollHistoryIndex(`${index}`); 
+    setScrollHistoryIndex(`${index}`);
     if ("myThrowId" in song) {
       navigate(`/music/pick/${song.myThrowId}`);
     } else if ("myPickId" in song) {

@@ -32,6 +32,10 @@
     }
 
     .body {
+      padding: 3dvh;
+      display: flex;
+      flex-direction: column;
+      gap: 3dvh;
       .body-header {
         font-size: 1.5dvh;
         font-weight: 600;
@@ -48,7 +52,6 @@
           padding: 1dvh;
           border-radius: 1dvh;
           border: transparent 2px solid;
-
 
           &.selected {
             border: var(--main-color) 2px solid;
