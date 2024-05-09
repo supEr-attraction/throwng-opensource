@@ -37,12 +37,13 @@ const MusicMarkerItem = ({ marker }: Props) => {
       key={marker.itemId}
       position={{ lat: marker.latitude, lng: marker.longitude }}
       mapPaneName="overlayMouseTarget"
+      zIndex={1}
       getPixelPositionOffset={(width, height) => ({
         x: -width / 2,
         y: -height / 1.2,
       })}
     >
-      <div onClick={handleMarkerClick}>
+      <div className="MusicMarkerItem" onClick={handleMarkerClick}>
         <img
           src={isActive ? purplePin : whitePin}
           alt="Custom Overlay"
