@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import QuizMultipleChoice from "@components/quiz/QuizMultipleChoice";
 import QuizOX from "@components/quiz/QuizOX";
 import QuizSubjective from "@components/quiz/QuizSubjective";
 import QuizTimeBar from "@components/quiz/QuizTimeBar";
 import "@styles/quiz/QuizSolvePage.scss";
-import { QuizData } from "@/types/quizType";
-import getQuizSolve from "@services/quizApi/QuizSolveApi";
+import { QuizData, QuizResult } from "@/types/quizType";
+import { getQuizSolve, postQuizSolve } from "@services/quizApi/QuizSolveApi";
 
 function QuizSolvePage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -29,7 +29,6 @@ function QuizSolvePage() {
             }))
           : [],
       }));
-      console.log(formattedData);
       setQuizData(formattedData);
     };
     fetchQuiz();
@@ -37,24 +36,33 @@ function QuizSolvePage() {
 
   useEffect(() => {
     if (quizData.length > 0 && currentQuestionIndex >= quizData.length) {
-      navigate("/quiz/success");
+      navigate("/quiz/success", { replace: true });
     }
   }, [currentQuestionIndex, navigate, quizData]);
 
   useEffect(() => {
     if (timeLeft === 0) {
-      navigate("/quiz/fail");
+      navigate("/quiz/fail", { replace: true });
     }
   }, [timeLeft, navigate]);
 
-  const handleSubmission = () => {
+  const handleSubmission = async () => {
     if (isCorrect === null) {
-      navigate("/quiz/fail");
+      navigate("/quiz/fail", { replace: true });
       return;
     }
 
+    const currentQuiz = quizData[currentQuestionIndex];
+    const resultData: QuizResult = {
+      quizId: currentQuiz.quizId,
+      submit: currentQuiz.answer,
+      result: isCorrect
+    };
+    
+    await postQuizSolve(resultData);
+
     if (!isCorrect) {
-      navigate("/quiz/fail");
+      navigate("/quiz/fail", { replace: true });
     } else {
       goToNextQuestion();
     }
@@ -62,6 +70,7 @@ function QuizSolvePage() {
 
   const goToNextQuestion = () => {
     setTimeLeft(20);
+    setIsCorrect(null);
     setCanSubmit(false);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };

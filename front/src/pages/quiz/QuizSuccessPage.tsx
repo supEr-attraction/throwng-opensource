@@ -23,7 +23,7 @@ const QuizSuccessPage = () => {
   useEffect(() => {
     if (isOpen) {
       const timer = setTimeout(() => {
-        navigate("/quiz/coupon");
+        navigate("/quiz/coupon", { replace: true });
       }, 2500);
       return () => clearTimeout(timer);
     }

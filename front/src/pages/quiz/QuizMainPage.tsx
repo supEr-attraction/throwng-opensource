@@ -8,7 +8,7 @@ const QuizMainPage = () => {
   const navigate = useNavigate();
 
   const handleGoInfo = () => {
-    navigate("/quiz/info");
+    navigate("/quiz/info", { replace: true });
   };
 
   return (

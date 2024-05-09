@@ -85,7 +85,7 @@ const QuizMultipleChoice = ({
             </div>
           ))
         ) : (
-          <p>No choices available</p>
+          <p></p>
         )}
       </div>
     </div>

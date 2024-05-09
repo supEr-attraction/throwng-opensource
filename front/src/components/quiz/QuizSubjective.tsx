@@ -26,10 +26,11 @@ const QuizSubjective = ({
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
+    setUserAnswer("");
     if (audioRef.current) {
       audioRef.current.play();
     }
-  }, [isMuted]); 
+  }, [index, isMuted]);
 
   const handleAnswerChange = (event: ChangeEvent<HTMLInputElement>) => {
     const answer = event.target.value;
@@ -59,16 +60,14 @@ const QuizSubjective = ({
         <h2>Q{index + 1}.</h2>
         {previewUrl && (
           <div className="quiz-audio" onClick={toggleMute}>
-            {isMuted ? <ImVolumeMute2/> : <ImVolumeMedium />}
+            {isMuted ? <ImVolumeMute2 /> : <ImVolumeMedium />}
             <audio ref={audioRef} muted={isMuted} src={previewUrl}></audio>
           </div>
         )}
       </div>
       <div className="sub-question">
         <p>{question}</p>
-        {quizImage && (
-          <img src={quizImage} alt="Quiz related image" />
-        )}
+        {quizImage && <img src={quizImage} alt="Quiz related image" />}
       </div>
       <h2>정답 입력</h2>
       <input

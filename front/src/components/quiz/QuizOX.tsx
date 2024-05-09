@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "@styles/quiz/QuizOX.scss";
 
 import oImage from "@assets/images/o.webp";
@@ -10,8 +10,6 @@ interface QuizOXProps {
   question: string;
   correctAnswer: string;
   index: number;
-  previewUrl?: string;
-  quizImage?: string;
 }
 
 const QuizOX = ({
@@ -20,10 +18,13 @@ const QuizOX = ({
   question,
   correctAnswer,
   index,
-  previewUrl,
-  quizImage
 }: QuizOXProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
+
+  useEffect(() => {
+    setSelectedAnswer("");
+    setCanSubmit(false);
+  }, [index]);
 
   const handleAnswerClick = (answer: string) => {
     setSelectedAnswer(answer);
@@ -33,10 +34,10 @@ const QuizOX = ({
 
   return (
     <div className="QuizOX">
-      <h2>
-        Q{index + 1}. {question}
-      </h2>{" "}
-      {/* Display the question number and the dynamic question */}
+      <h2>Q{index + 1}.</h2>
+      <div className="ox-question">
+        <p>{question}</p>
+      </div>
       <div className="ox-answers">
         <div
           className={`o-answer ${selectedAnswer === "O" ? "selected" : ""}`}

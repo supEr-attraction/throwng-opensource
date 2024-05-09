@@ -1,5 +1,5 @@
 import "@styles/quiz/QuizInfo.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface QuizItem {
@@ -63,9 +63,10 @@ const QuizInfo = () => {
   ]);
 
   const [buttonVisible, setButtonVisible] = useState(false);
-  const areAllChecked = () => {
-    return items.every((item) => item.checked);
-  };
+  const areAllChecked = useMemo(
+    () => items.every((item) => item.checked),
+    [items]
+  );
 
   const handleCheck = (id: number) => {
     setItems(
@@ -75,22 +76,19 @@ const QuizInfo = () => {
     );
   };
 
-  const handleCheckkAll = () => {
-    const allChecked = areAllChecked();
-
-    const updatedItems = items.map((item) => ({
-      ...item,
-      checked: !allChecked,
-    }));
-    setItems(updatedItems);
+  // 전체 항목 체크 토글
+  const handleCheckAll = () => {
+    setItems(items.map((item) => ({ ...item, checked: !areAllChecked })));
   };
 
+  // 체크 상태에 따라 버튼 보이기 설정
   useEffect(() => {
-    setButtonVisible(areAllChecked());
-  }, [items]);
+    setButtonVisible(areAllChecked);
+  }, [areAllChecked]);
 
+  // 퀴즈 시작
   const handleQuizStart = () => {
-    navigate("/quiz/count");
+    navigate("/quiz/count", { replace: true });
   };
 
   return (
@@ -114,8 +112,8 @@ const QuizInfo = () => {
         <input
           type="checkbox"
           id="checkbox-all"
-          checked={areAllChecked()}
-          onClick={handleCheckkAll}
+          checked={areAllChecked}
+          onChange={handleCheckAll}
         />
         <label htmlFor="checkbox-all">전체 확인</label>
       </div>
