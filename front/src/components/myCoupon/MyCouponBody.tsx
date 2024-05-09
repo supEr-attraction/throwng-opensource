@@ -6,19 +6,23 @@ import { getMyCoupon, postMyCoupon } from '@services/myCouponApi/MyCouponAPi';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { changeNickNameCouponId } from '@store/myPage/atoms';
+import Loading from '@components/Loading';
 
 const MyCouponBody = () => {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const navigate = useNavigate()
   const setChangeNickNameCouponId = useSetRecoilState(changeNickNameCouponId)
-  
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   useEffect(() => {
+    setIsLoading(true);
     fetchGetMyCoupon();
   }, [])
 
   const fetchGetMyCoupon = async () => {
     const res = await getMyCoupon();
     setCoupons(res)
+    setIsLoading(false);
   }
 
   const handleChangeApply = async (couponId: number) => {
@@ -43,39 +47,42 @@ const MyCouponBody = () => {
 
   return (
     <div className="MyCouponBody">
-      {coupons.length > 0 ? (
-        coupons.map((coupon) => {
-          const daysLeft = dayjs(coupon.couponEndDate).diff(dayjs(), 'day');
-          const isExpiring = daysLeft <= 5;
-          return (
-            <div key={coupon.couponId} className="coupon-body">
-              <div className="coupon-header">
-                <div className="coupon-title">{coupon.couponName}</div>
-                <div className="coupon-desc">{coupon.couponDescription}</div>
-              </div>
-              <div className={`coupon-apply ${coupon.couponStatus === "사용 전" ? '' : 'inactive'}`} onClick={() => coupon.couponStatus === "사용 전" && handleChangeApply(coupon.couponId)}>
-                <div className={`coupon-apply-btn ${coupon.couponStatus !== "사용 전" && 'coupon-apply-active'}`}>
-                  {coupon.couponStatus}
+      {isLoading ? (
+      <Loading/>
+      ) 
+      : coupons.length > 0 ? (
+          coupons.map((coupon) => {
+            const daysLeft = dayjs(coupon.couponEndDate).diff(dayjs(), 'day');
+            const isExpiring = daysLeft <= 5;
+            return (
+              <div key={coupon.couponId} className="coupon-body">
+                <div className="coupon-header">
+                  <div className="coupon-title">{coupon.couponName}</div>
+                  <div className="coupon-desc">{coupon.couponDescription}</div>
+                </div>
+                <div className={`coupon-apply ${coupon.couponStatus === "사용 전" ? '' : 'inactive'}`} onClick={() => coupon.couponStatus === "사용 전" && handleChangeApply(coupon.couponId)}>
+                  <div className={`coupon-apply-btn ${coupon.couponStatus !== "사용 전" && 'coupon-apply-active'}`}>
+                    {coupon.couponStatus}
+                  </div>
+                </div>
+                <hr />
+                <div className="coupon-end-date">
+                  <div className={`${isExpiring && 'coupon-end-date-how-imminent'}`}>
+                    {`D-${daysLeft}`}
+                  </div>
+                  <div className="coupon-end-date-when">{dayjs(coupon.couponEndDate).format('YY/MM/DD HH:mm:ss')}까지</div>
                 </div>
               </div>
-              <hr />
-              <div className="coupon-end-date">
-                <div className={`${isExpiring && 'coupon-end-date-how-imminent'}`}>
-                  {`D-${daysLeft}`}
-                </div>
-                <div className="coupon-end-date-when">{dayjs(coupon.couponEndDate).format('YY/MM/DD HH:mm:ss')}까지</div>
-              </div>
+            );
+          })
+        ) : (
+          <div className="SearchedWords">
+            <div className="no-word-container">
+              <div className="title">앗!</div>
+              <div className="subtitle">사용 가능한 쿠폰이 없습니다.</div>
             </div>
-          );
-        })
-      ) : (
-        <div className="SearchedWords">
-          <div className="no-word-container">
-            <div className="title">앗!</div>
-            <div className="subtitle">사용 가능한 쿠폰이 없습니다.</div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };
