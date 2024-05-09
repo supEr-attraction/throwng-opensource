@@ -9,7 +9,7 @@ const MyPageMenu = () => {
 
   const goNoticePage = (e:React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault()
-    navigate('/user/notification', {replace:true})
+    navigate('/user/notification')
   }
 
   const goCouponPage = (e:React.MouseEvent<HTMLDivElement>) => {
