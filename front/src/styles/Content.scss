@@ -36,8 +36,12 @@
         text-align: center;
         width: 40%;
         border-radius: 1dvh;
-        background-color: #7B66FF;
+        background-color: #7b66ff;
         color: white;
+      }
+
+      .participation.inactive {
+        background-color: #808080;
       }
     }
   }

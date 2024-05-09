@@ -26,12 +26,15 @@
     word-break: keep-all;
     font-size: 2.5dvh;
     font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     p {
       margin-top: 1dvh;
       margin-bottom: 1dvh;
     }
     img {
-      width: 30%;
+      width: 20dvh;
     }
   }
 

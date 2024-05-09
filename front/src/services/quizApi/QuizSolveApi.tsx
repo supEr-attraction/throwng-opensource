@@ -1,6 +1,5 @@
 import { axiosApi } from "@/utils/common";
-import "@types/quizType";
-import { QuizData } from "../../types/quizType";
+import { QuizData, QuizResult } from "../../types/quizType";
 import axios from "axios";
 
 const api = axiosApi();
@@ -19,15 +18,24 @@ const getQuizSolve = async (): Promise<QuizData[]> => {
   }
 };
 
-export default getQuizSolve;
 
-const postQuizSolve = async (result: boolean) => {
+
+const postQuizSolve = async (quizResult: QuizResult) => {
   try {
-    const response = await api.post("quizzes/result", { result });
+    const response = await api.post("/quizzes/result", quizResult);
+    console.log("Post result:", response.data);
     return response;
   } catch (e) {
-    console.error(e);
+    if (axios.isAxiosError(e)) {
+      console.error(
+        "Failed to post quiz result:",
+        e.response?.data || e.message
+      );
+    } else {
+      console.error("Error posting quiz result:", e);
+    }
+    throw e;
   }
 };
 
-export { postQuizSolve };
+export { postQuizSolve, getQuizSolve };

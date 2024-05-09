@@ -5,7 +5,7 @@ import "@/styles/quiz/QuizCouponPage.scss"
 const QuizCouponPage = () => {
   const navigate = useNavigate();
   const handleGoMypage = () => {
-    navigate("/user/mypage")
+    navigate("/user/mypage", { replace: true })
   }
   
   return (
