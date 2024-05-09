@@ -1,5 +1,5 @@
 import { memo, useState } from "react";
-import { ToasterMsg } from "@components/ToasterMsg";
+import ToasterMsg from "@components/ToasterMsg";
 import MapHeader from "./MapHeader";
 import LoadMap from "@components/map/LoadMap";
 import Loading from "@components/Loading";

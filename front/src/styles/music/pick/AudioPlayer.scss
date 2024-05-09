@@ -1,0 +1,11 @@
+.AudioPlayer {
+  padding: 2dvh;
+  position: absolute;
+  right: 0;
+
+  svg {
+    width: 2.5dvh;
+    height: 3dvh;
+    cursor: pointer;
+  }
+}

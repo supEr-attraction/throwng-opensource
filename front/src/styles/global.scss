@@ -5,10 +5,11 @@
   max-width: 450px;
   -webkit-tap-highlight-color: transparent;
   font-family: "SUIT-Regular", sans-serif;
-  // -ms-overflow-style: none;
-  // ::-webkit-scrollbar {
-  //   display: none;
-  // }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html {
@@ -31,10 +32,6 @@ a {
   &:visited {
     color: white;
   }
-}
-
-.none-scroll::-webkit-scrollbar {
-  display: none;
 }
 
 @font-face {

@@ -1,7 +1,7 @@
 import { PiSiren } from "react-icons/pi";
-import "@styles/music/pick/OptionModal.scss";
 import { useSetRecoilState } from "recoil";
 import { optionModalState, reportModalState } from "@store/music/pick/atoms";
+import "@styles/music/pick/OptionModal.scss";
 
 const OptionModal = () => {
   const setReportModal = useSetRecoilState(reportModalState);

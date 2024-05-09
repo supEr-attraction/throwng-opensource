@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { Toaster } from "react-hot-toast";
 
-export const ToasterMsg = () => (
+const ToasterMsg = () => (
   <Toaster
     containerStyle={{
       margin: "0 auto",
@@ -14,3 +15,5 @@ export const ToasterMsg = () => (
     }}
   />
 );
+
+export default memo(ToasterMsg);
