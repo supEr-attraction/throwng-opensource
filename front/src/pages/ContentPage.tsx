@@ -7,16 +7,19 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuizContent } from "@services/contentApi/ContentApi";
 import { QuizContent } from "@/types/quizType";
+import Loading from "@components/Loading";
 
 const ContentPage = () => {
   const navigate = useNavigate();
   const [quizContents, setQuizContents] = useState<QuizContent[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchQuizContents = async () => {
       try {
         const data: QuizContent[] = await getQuizContent();
         setQuizContents(data);
+        setLoading(false);
       } catch (error) {
         console.error("Failed to fetch quiz contents:", error);
       }
@@ -30,6 +33,14 @@ const ContentPage = () => {
       navigate("/quiz/main", { replace: true });
     }
   };
+
+  if (loading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
 
   return (
     <div className="ContentPage">
@@ -63,7 +74,7 @@ const ContentPage = () => {
           <div className="game1-title">
             <p>리듬게임</p>
             <div className="participation">
-              <p>OFF</p>
+              <p>준비중</p>
             </div>
           </div>
           <div>
@@ -74,7 +85,7 @@ const ContentPage = () => {
           <div className="game2-title">
             <p>가위바위보?</p>
             <div className="participation">
-              <p>OFF</p>
+              <p>준비중</p>
             </div>
           </div>
           <div>

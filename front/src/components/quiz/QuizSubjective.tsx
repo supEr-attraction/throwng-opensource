@@ -3,20 +3,18 @@ import "@styles/quiz/QuizSubjective.scss";
 import { ImVolumeMedium, ImVolumeMute2 } from "react-icons/im";
 
 interface QuizSubjectiveProps {
-  setIsCorrect: (value: boolean) => void;
   setCanSubmit: (canSubmit: boolean) => void;
   question: string;
-  correctAnswer: string;
   index: number;
   previewUrl?: string;
   quizImage?: string;
+  onUserInput: (input: string) => void; // 사용자 입력을 상위 컴포넌트로 전달하는 콜백
 }
 
 const QuizSubjective = ({
-  setIsCorrect,
+  onUserInput,
   setCanSubmit,
   question,
-  correctAnswer,
   index,
   previewUrl,
   quizImage,
@@ -36,11 +34,7 @@ const QuizSubjective = ({
     const answer = event.target.value;
     setUserAnswer(answer);
     setCanSubmit(answer.trim() !== "");
-  };
-
-  const checkAnswer = () => {
-    const isValid = userAnswer.trim() === correctAnswer;
-    setIsCorrect(isValid);
+    onUserInput(answer.trim());
   };
 
   const toggleMute = () => {
@@ -76,7 +70,6 @@ const QuizSubjective = ({
         className="sub-answer"
         value={userAnswer}
         onChange={handleAnswerChange}
-        onBlur={checkAnswer}
       />
     </div>
   );

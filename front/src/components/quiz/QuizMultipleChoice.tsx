@@ -8,21 +8,19 @@ interface Choice {
 }
 
 interface QuizMultipleChoiceProps {
-  setIsCorrect: (isCorrect: boolean) => void;
   setCanSubmit: (canSubmit: boolean) => void;
   question: string;
   choices: Choice[];
-  correctAnswer: string;
   index: number;
   previewUrl?: string;
+  onUserInput: (input: string) => void; // 사용자 입력을 상위 컴포넌트로 전달하는 콜백
 }
 
 const QuizMultipleChoice = ({
-  setIsCorrect,
+  onUserInput,
   setCanSubmit,
   question,
   choices,
-  correctAnswer,
   index,
   previewUrl,
 }: QuizMultipleChoiceProps) => {
@@ -42,7 +40,7 @@ const QuizMultipleChoice = ({
 
   const handleChoiceClick = (id: string) => {
     setSelectedChoice(id);
-    setIsCorrect(id === correctAnswer);
+    onUserInput(id);
     setCanSubmit(true);
   };
 

@@ -1,3 +1,4 @@
+import useQuizRedirect from "@hooks/useQuizRedirect";
 import "@styles/quiz/QuizInfo.scss";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +11,7 @@ interface QuizItem {
 
 const QuizInfo = () => {
   const navigate = useNavigate();
+  useQuizRedirect();
   const [items, setItems] = useState<QuizItem[]>([
     {
       id: 1,

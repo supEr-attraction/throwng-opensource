@@ -5,18 +5,15 @@ import oImage from "@assets/images/o.webp";
 import xImage from "@assets/images/x.webp";
 
 interface QuizOXProps {
-  setIsCorrect: (value: boolean) => void;
   setCanSubmit: (canSubmit: boolean) => void;
   question: string;
-  correctAnswer: string;
   index: number;
 }
 
 const QuizOX = ({
-  setIsCorrect,
   setCanSubmit,
   question,
-  correctAnswer,
+
   index,
 }: QuizOXProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -28,7 +25,6 @@ const QuizOX = ({
 
   const handleAnswerClick = (answer: string) => {
     setSelectedAnswer(answer);
-    setIsCorrect(answer === correctAnswer);
     setCanSubmit(true);
   };
 

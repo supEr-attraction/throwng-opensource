@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getContentCoupon } from "@/services/couponApi/CouponApi";
 import QuizOpenLottie from "@components/lottie/QuizOpenLottie";
 import QuizPreopenLottie from "@components/lottie/QuizPreopenLottie";
 import "@styles/quiz/QuizSuccessPage.scss";
@@ -11,23 +12,36 @@ import coupon5 from "@assets/images/coupon5.webp";
 import coupon6 from "@assets/images/coupon6.webp";
 import coupon7 from "@assets/images/coupon7.webp";
 import boom from "@assets/images/boom.webp";
+import { quizCoupon } from "../../types/couponType";
+import useQuizRedirect from "@hooks/useQuizRedirect";
+import useRestrictQuizSuccess from "@hooks/useRestrictQuizSuccess";
 
-const QuizSuccessPage = () => {
+const QuizSuccessPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const [coupon, setCoupon] = useState<quizCoupon | null>(null);
 
-  const handleLottieClick = () => {
+  const navigate = useNavigate();
+  useRestrictQuizSuccess();
+  // useQuizRedirect();
+
+  const handleLottieClick = async () => {
     setIsOpen(true);
+    try {
+      const couponData = (await getContentCoupon("quiz")) as quizCoupon;
+      setCoupon(couponData);
+    } catch (error) {
+      console.error("Failed to fetch coupon:", error);
+    }
   };
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && coupon) {
       const timer = setTimeout(() => {
-        navigate("/quiz/coupon", { replace: true });
+        navigate("/quiz/coupon", { state: { coupon }, replace: true });
       }, 2500);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, navigate]);
+  }, [isOpen, coupon, navigate]);
 
   return (
     <div className="QuizSuccessPage">
@@ -46,29 +60,29 @@ const QuizSuccessPage = () => {
         <div className="quiz-success-footer">
           <div className="quiz-success-img">
             <div className="content">
-              <img src={coupon1} alt="abroad" className="img" />
+              <img src={coupon2} alt="abroad" className="img" />
               <p className="coupon-info">무제한 쓰롱</p>
             </div>
             <div className="content">
-              <img src={coupon2} alt="unlimited" className="img" />
+              <img src={coupon1} alt="unlimited" className="img" />
               <p className="coupon-info">5개 쓰롱 추가</p>
             </div>
             <div className="content">
-              <img src={coupon3} alt="boom" className="img" />
+              <img src={coupon5} alt="boom" className="img" />
               <p className="coupon-info">2배 쓰롱 추가</p>
             </div>
             <div className="content">
-              <img src={coupon4} alt="boom" className="img" />
+              <img src={coupon6} alt="boom" className="img" />
               <p className="coupon-info">레벨 쓰롱 추가</p>
             </div>
           </div>
           <div className="quiz-success-img">
             <div className="content">
-              <img src={coupon5} alt="abroad" className="img" />
+              <img src={coupon3} alt="abroad" className="img" />
               <p className="coupon-info">범위 밖 노래 조회</p>
             </div>
             <div className="content">
-              <img src={coupon6} alt="unlimited" className="img" />
+              <img src={coupon4} alt="unlimited" className="img" />
               <p className="coupon-info">닉네임 변경</p>
             </div>
             <div className="content">
