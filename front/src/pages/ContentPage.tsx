@@ -3,14 +3,14 @@ import "@/styles/Content.scss";
 import logo from "@/assets/images/backlogo.webp";
 import hammer from "@/assets/images/Hammer.webp";
 import game2 from "@/assets/images/Rockpaperscissors.webp";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuizContent } from "@services/contentApi/ContentApi";
 import { QuizContent } from "@/types/quizType";
 import Loading from "@components/Loading";
 
 const ContentPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [quizContents, setQuizContents] = useState<QuizContent[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -18,21 +18,26 @@ const ContentPage = () => {
     const fetchQuizContents = async () => {
       try {
         const data: QuizContent[] = await getQuizContent();
-        setQuizContents(data);
+        const isActive = localStorage.getItem('quizActive') !== 'false';
+        setQuizContents(data.map(content => ({
+          ...content,
+          active: content.name === 'quiz' ? isActive : content.active
+        })));
         setLoading(false);
       } catch (error) {
         console.error("Failed to fetch quiz contents:", error);
       }
     };
-
+  
     fetchQuizContents();
   }, []);
+  
 
-  const handleGoQuiz = (status: boolean) => {
-    if (!status) {
-      navigate("/quiz/main", { replace: true });
-    }
-  };
+  // const handleGoQuiz = (status: boolean) => {
+  //   if (!status) {
+  //     navigate("/quiz/main", { replace: true });
+  //   }
+  // };
 
   if (loading) {
     return (
@@ -51,8 +56,8 @@ const ContentPage = () => {
             content.name === "quiz" && (
               <div
                 key={content.name}
-                className="quiz-border"
-                onClick={() => handleGoQuiz(content.status)}
+                className={`quiz-border ${!content.active ? "inactive" : ""}`}
+                // onClick={() => handleGoQuiz(content.status)}
               >
                 <div className="quiz-title">
                   <p>쓰롱-퀴즈</p>
@@ -61,7 +66,7 @@ const ContentPage = () => {
                       content.status ? "inactive" : ""
                     }`}
                   >
-                    <p>{content.status ? "OFF" : "ON"}</p>
+                    <p>{content.status ? "준비중" : "준비중"}</p>
                   </div>
                 </div>
                 <div>

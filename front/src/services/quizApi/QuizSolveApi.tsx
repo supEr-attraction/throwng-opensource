@@ -20,9 +20,11 @@ const getQuizSolve = async (): Promise<QuizData[]> => {
 
 const postQuizSolve = async (quizResult: QuizResult) => {
   try {
+    console.log(quizResult)
     const response = await api.post("/quizzes/result", quizResult);
     return response;
   } catch (e) {
+    console.log(e)
     if (axios.isAxiosError(e)) {
       console.error(
         "Failed to post quiz result:",
