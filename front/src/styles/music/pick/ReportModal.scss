@@ -21,7 +21,7 @@
     margin: 0 auto;
 
     .report {
-      padding: 3dvh;
+      padding: 2dvh;
       font-size: 2dvh;
       font-weight: bold;
       text-align: center;
@@ -37,7 +37,7 @@
       font-size: 1.7dvh;
       display: flex;
       flex-direction: column;
-      gap: 4dvh;
+      gap: 3dvh;
 
       .title {
         display: flex;
@@ -57,7 +57,7 @@
       .reson {
         display: flex;
         flex-direction: column;
-        gap: 2.5dvh;
+        gap: 2dvh;
         list-style-type: none;
         cursor: pointer;
       }

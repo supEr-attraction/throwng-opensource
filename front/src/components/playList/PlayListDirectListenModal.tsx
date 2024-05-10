@@ -1,14 +1,14 @@
-import "@styles/playList/PlayListDirectListenModal.scss"
-import { Content } from "../../types/songType"
-import youtubeMusic from "@assets/images/youtubeMusic.webp"
-import { useSetRecoilState } from "recoil"
-import { speedListenModal } from "@store/playList/atoms"
+import "@styles/playList/PlayListDirectListenModal.scss";
+import { Content } from "../../types/songType";
+import youtubeMusic from "@assets/images/youtubeMusic.webp";
+import { useSetRecoilState } from "recoil";
+import { speedListenModal } from "@store/playList/atoms";
 
 interface Props {
-  song:Content
+  song: Content;
 }
 
-const PlayListDirectListenModal = ({song}:Props) => {
+const PlayListDirectListenModal = ({ song }: Props) => {
   const setSpeedModal = useSetRecoilState(speedListenModal);
 
   const listenSong = (song: Content) => {
@@ -34,7 +34,7 @@ const PlayListDirectListenModal = ({song}:Props) => {
         <div>바로 듣기</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PlayListDirectListenModal
+export default PlayListDirectListenModal;

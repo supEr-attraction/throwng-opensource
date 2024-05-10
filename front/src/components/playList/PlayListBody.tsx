@@ -5,7 +5,12 @@ import { IoMdMore } from "react-icons/io";
 import PlayListItemModal from "./PlayListItemModal";
 import PlayListDirectListenModal from "./PlayListDirectListenModal";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
-import { detailModal, myPlayList, scrollSongIndex, speedListenModal } from "@store/playList/atoms";
+import {
+  detailModal,
+  myPlayList,
+  scrollSongIndex,
+  speedListenModal,
+} from "@store/playList/atoms";
 import { getMyPlayList } from "@services/myPlayListApi/MyPlayListApi";
 import Loading from "@components/Loading";
 
@@ -20,9 +25,9 @@ const PlayListBody = () => {
   );
   const resetPlayModal = useResetRecoilState(speedListenModal);
   const resetDetailModal = useResetRecoilState(detailModal);
-  const resetPlayList = useResetRecoilState(myPlayList)
-  const scrollIndex = useRecoilValue(scrollSongIndex)
-  const resetScrollSongIndex = useResetRecoilState(scrollSongIndex)
+  const resetPlayList = useResetRecoilState(myPlayList);
+  const scrollIndex = useRecoilValue(scrollSongIndex);
+  const resetScrollSongIndex = useResetRecoilState(scrollSongIndex);
   const observer = useRef<IntersectionObserver | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -38,36 +43,41 @@ const PlayListBody = () => {
   useEffect(() => {
     setIsLoading(true);
     if (!scrollIndex) {
-      resetPlayList()
+      resetPlayList();
       fetchData();
     } else {
-      moveScroll()
+      moveScroll();
     }
     resetPlayModal();
     resetDetailModal();
   }, []);
 
-  const lastElementRef = useCallback((node: HTMLDivElement) => {
-    if (isLoading) return;
-    if (observer.current) observer.current.disconnect();
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && !isLastPage) {
-        fetchData(playList.length ? playList[playList.length - 1].modifiedAt : "");
-      }
-    });
-    if (node) observer.current.observe(node);
-  }, [isLoading, isLastPage, fetchData, playList]);
+  const lastElementRef = useCallback(
+    (node: HTMLDivElement) => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && !isLastPage) {
+          fetchData(
+            playList.length ? playList[playList.length - 1].modifiedAt : ""
+          );
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, isLastPage, fetchData, playList]
+  );
 
   const moveScroll = () => {
     if (scrollIndex) {
       const element = document.getElementById(scrollIndex);
       if (element) {
-          element.scrollIntoView({ block: 'center' });
-          setIsLoading(false);
-          resetScrollSongIndex()
+        element.scrollIntoView({ block: "center" });
+        setIsLoading(false);
+        resetScrollSongIndex();
       }
     }
-  }
+  };
 
   const modalStateHandler = (index: number) => {
     if (modalSongIndex === index) {
@@ -75,7 +85,6 @@ const PlayListBody = () => {
       setSpeedModal(null);
     } else {
       setModalSongIndex(index);
-
     }
   };
 
@@ -99,15 +108,19 @@ const PlayListBody = () => {
       {isLoading ? (
         <Loading />
       ) : playList.length > 0 ? (
-        <div>
+        <>
           {playList.map((song, index) => (
-            <div key={`${song.playlistId}-${index}`} id={song.youtubeId} className="result-item">
+            <div
+              key={`${song.playlistId}-${index}`}
+              id={song.youtubeId}
+              className="result-item"
+            >
               <div className="content-container">
                 <div
                   className="image-container"
                   onClick={() => speedListenModalHandler(index)}
                 >
-                  <img src={song.albumImage} loading="lazy"/>
+                  <img src={song.albumImage} loading="lazy" />
                 </div>
                 <div className="item-wide">
                   <div
@@ -139,7 +152,7 @@ const PlayListBody = () => {
               ) : null}
             </div>
           ))}
-        </div>
+        </>
       ) : (
         <div className="SearchedWords">
           <div className="no-word-container">
@@ -152,4 +165,4 @@ const PlayListBody = () => {
   );
 };
 
-export default memo(PlayListBody); 
+export default memo(PlayListBody);

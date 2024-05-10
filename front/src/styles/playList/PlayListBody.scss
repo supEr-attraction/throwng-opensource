@@ -1,11 +1,15 @@
 .PlayListBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1dvh;
+
   .ref-div {
     background-color: red;
     width: 100dvw;
   }
 
   .result-item {
-    padding: 1dvh 0;
+    padding-bottom: 1dvh;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
     .content-container {
@@ -14,10 +18,7 @@
       gap: 1dvh;
 
       .image-container {
-        .item-wide {
-          width: 100%;
-        }
-
+        cursor: pointer;
         img {
           width: 6dvh;
           height: 6dvh;
@@ -29,11 +30,14 @@
         display: flex;
         align-items: center;
         overflow: hidden;
-        width: 90%;
+        flex-grow: 1;
+        justify-content: space-between;
+        gap: 1dvh;
 
         .item-detail {
           overflow: hidden;
-          width: 90%;
+          flex-grow: 1;
+          cursor: pointer;
 
           .item-title {
             font-size: 1.7dvh;
@@ -57,6 +61,7 @@
           display: flex;
           align-items: center;
           justify-content: center;
+          cursor: pointer;
 
           svg {
             font-size: 2.5dvh;

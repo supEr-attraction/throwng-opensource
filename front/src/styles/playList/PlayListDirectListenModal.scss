@@ -1,22 +1,19 @@
 .PlayListDirectListenModal {
   .modal-body {
-    padding: 10px;
-    text-align: center;
-    border-radius: 5px;
-    margin-top: 5px;
-    animation: slideDown 0.5s ease forwards;
     font-size: 1.5dvh;
+    padding: 1dvh;
+    margin-top: 1dvh;
+    animation: slideDown 0.5s ease forwards;
     display: flex;
-    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 1dvh;
+    cursor: pointer;
 
     .img-container {
       display: flex;
-      padding-right: 5px;
-      
       img {
-        width: 3dvh;
+        width: 2.5dvh;
       }
     }
 
@@ -25,10 +22,10 @@
       border-radius: 2dvh;
     }
   }
-  
+
   @keyframes slideDown {
     from {
-      transform: translateY(-20px);
+      transform: translateY(-50%);
       opacity: 0;
     }
     to {
