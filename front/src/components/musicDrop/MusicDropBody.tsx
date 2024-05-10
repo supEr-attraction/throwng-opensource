@@ -64,6 +64,8 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
 
     if (res === "Song_400_2") {
       alert("하루 쓰롱 개수를 초과하였습니다.\n내일 다시 쓰롱 해주세요.");
+    } else if (res === "Throw_400_2") {
+      alert("반경 100m 내에는 같은 날 같은 노래를 쓰롱할 수 없어요.");
     }
     resetUserImage();
     resetImagePreview();
