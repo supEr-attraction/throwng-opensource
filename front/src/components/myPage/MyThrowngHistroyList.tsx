@@ -108,15 +108,9 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
                     {dayjs(song.pickDate).format("YYYY-MM-DD")}
                   </div>
                   )}
-                <div className="item-how-many">
-                  <div className="item-count">
-                    <FaHeart/>
-                    <div className="item-count-no">{song.otherPickedCount}</div>
-                  </div>
-                  <div className="item-location">
-                    <TiLocation />
-                    <div>{song.location}</div>
-                  </div>
+                <div className="item-location">
+                  <TiLocation />
+                  <div>{song.location}</div>
                 </div>
               </div>
               <div className="item">
@@ -126,7 +120,15 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
                 <div className="item-detail">
                   <div className="item-title">{song.title}</div>
                   <div className="item-artist">{song.artist}</div>
-                  <div className="item-comment">{song.comment}</div>
+                  <div className="item-how-many">
+                    <div className="item-comment">{song.comment}</div>
+                    {!pageIdx &&
+                    <div className="item-count">
+                      <FaHeart/>
+                      <div className="item-count-no">{song.otherPickedCount}</div>
+                    </div>
+                    }
+                  </div>
                 </div>
               </div>
             </div>
