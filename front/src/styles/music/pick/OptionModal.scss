@@ -14,12 +14,12 @@
     position: fixed;
     bottom: 0;
     inset-inline: 0;
-    padding: 4dvh;
+    padding: 3dvh;
     border-radius: 2dvh 2dvh 0 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4dvh;
+    gap: 3dvh;
     margin: 0 auto;
 
     .report {
@@ -30,11 +30,11 @@
       cursor: pointer;
 
       svg {
-        font-size: 2.5dvh;
+        font-size: 2dvh;
       }
 
       div {
-        font-size: 2dvh;
+        font-size: 1.8dvh;
       }
     }
 
@@ -42,7 +42,7 @@
       background-color: transparent;
       border: none;
       color: white;
-      font-size: 2dvh;
+      font-size: 1.8dvh;
       cursor: pointer;
     }
   }
