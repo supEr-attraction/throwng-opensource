@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { MyHistory } from "../../types/songType";
 import "@styles/myPage/MyThrowngHistroyList.scss";
 import { TiLocation } from "react-icons/ti";
+import { FaHeart } from "react-icons/fa";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   myPickHistoryList,
@@ -97,19 +98,25 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
               className="result-item"
               onClick={() => handleGoNavigation(song, index)}
             >
-              <div className="item-header">
+              <div className="item-header">           
                 {!pageIdx ? (
                   <div className="item-date">
                     {dayjs(song.dropDate).format("YYYY-MM-DD")}
                   </div>
-                ) : (
+                  ) : (
                   <div className="item-date">
                     {dayjs(song.pickDate).format("YYYY-MM-DD")}
                   </div>
-                )}
-
-                <div className="item-location">
-                  <TiLocation /> {song.location}
+                  )}
+                <div className="item-how-many">
+                  <div className="item-count">
+                    <FaHeart/>
+                    <div className="item-count-no">{song.otherPickedCount}</div>
+                  </div>
+                  <div className="item-location">
+                    <TiLocation />
+                    <div>{song.location}</div>
+                  </div>
                 </div>
               </div>
               <div className="item">

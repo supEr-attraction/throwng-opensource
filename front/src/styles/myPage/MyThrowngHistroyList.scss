@@ -19,24 +19,45 @@
         justify-content: space-between;
         padding-bottom: 0.5dvh;
 
-        .item-location {
-          color: var(--main-color);
-          font-size: 1.7dvh;
-          text-overflow: ellipsis;
-          overflow: hidden;
-          white-space: nowrap;
-
-          svg {
-            font-size: 2dvh;
-          }
-        }
-
         .item-date {
           color: var(--placeholder-color);
           font-size: 1.7dvh;
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
+        }
+
+        .item-how-many {
+          display: flex;
+          flex: 1;
+          flex-direction: row;
+          justify-content: flex-end;
+
+          .item-count {
+            font-size: 1.7dvh;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            gap: 0.5dvh;
+            padding-right: 2dvh;
+
+            svg {
+              font-size: 1.7dvh;
+              color: rgb(242, 162, 162);
+            }
+          }
+
+          .item-location {
+            display: flex;
+            flex-direction: row;
+            justify-content: end;
+            color: var(--main-color);
+            font-size: 1.7dvh;
+  
+            svg {
+              font-size: 2dvh;
+            }
+          }
         }
       }
 
