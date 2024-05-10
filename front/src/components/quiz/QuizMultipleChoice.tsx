@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import "@styles/quiz/QuizMultipleChoice.scss";
 import { ImVolumeMedium, ImVolumeMute2 } from "react-icons/im";
 
-interface Choice {
-  id: string;
-  text: string;
-}
+// interface Choice {
+//   id: string;
+//   text: string;
+// }
 
 interface QuizMultipleChoiceProps {
   setCanSubmit: (canSubmit: boolean) => void;
