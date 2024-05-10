@@ -1,9 +1,13 @@
 import fetchDistance from "@/utils/map/fetchDistance";
-import { locationState, markersState } from "@store/map/atoms";
-import { selector } from "recoil";
+import {
+  activeMarkerState,
+  locationState,
+  markersState,
+} from "@store/map/atoms";
+import { selector, selectorFamily } from "recoil";
 
 export const markerRadiusState = selector({
-  key: "markerRadiusState", // atom의 key와 동일하며 프로젝트 전체에서 고유한 문자열
+  key: "markerRadiusState",
   get: ({ get }) => {
     const markers = get(markersState);
     const location = get(locationState);
@@ -16,4 +20,25 @@ export const markerRadiusState = selector({
         ) <= 600
     );
   },
+});
+
+export const initialSlideState = selector({
+  key: "initialSlideState",
+  get: ({ get }) => {
+    const markers = get(markerRadiusState);
+    const active = get(activeMarkerState);
+
+    return markers.findIndex((marker) => marker.itemId === active);
+  },
+});
+
+export const isActiveState = selectorFamily({
+  key: "isActiveState",
+  get:
+    (id) =>
+    ({ get }) => {
+      const active = get(activeMarkerState);
+
+      return active === id;
+    },
 });

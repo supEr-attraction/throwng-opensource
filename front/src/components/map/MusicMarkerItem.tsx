@@ -1,22 +1,25 @@
 import { memo, useCallback } from "react";
 import { OverlayViewF } from "@react-google-maps/api";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { activeMarkerState, locationState } from "@store/map/atoms";
 import { Marker } from "../../types/mapType";
 import { toastMsg } from "@/utils/toastMsg";
 import getDistance from "@/utils/map/fetchDistance";
 import whitePin from "@assets/images/whitePin.webp";
 import purplePin from "@assets/images/purplePin.webp";
+import { isActiveState } from "@store/map/selectors";
 
 interface Props {
   marker: Marker;
 }
 
 const MusicMarkerItem = ({ marker }: Props) => {
-  const [activeMarkerId, setActiveMarkerId] = useRecoilState(activeMarkerState);
+  // const [activeMarkerId, setActiveMarkerId] = useRecoilState(activeMarkerState);
+  const setActiveMarkerId = useSetRecoilState(activeMarkerState);
   const location = useRecoilValue(locationState);
 
-  const isActive = marker.itemId === activeMarkerId;
+  // const isActive = marker.itemId === activeMarkerId;
+  const isActive = useRecoilValue(isActiveState(marker.itemId));
 
   const handleMarkerClick = useCallback(() => {
     const distance = getDistance(
@@ -48,6 +51,7 @@ const MusicMarkerItem = ({ marker }: Props) => {
           src={isActive ? purplePin : whitePin}
           alt="Custom Overlay"
           style={{ width: "30px", height: "35px" }}
+          loading="lazy"
         />
         <div className="cover-img">
           <img src={marker.albumImage} alt="Custom Overlay" />

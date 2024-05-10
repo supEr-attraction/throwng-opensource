@@ -1,17 +1,17 @@
+import { memo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { activeMarkerState } from "@store/map/atoms";
-import { markerRadiusState } from "@store/map/selectors";
+import { initialSlideState, markerRadiusState } from "@store/map/selectors";
 import { useNavigate } from "react-router-dom";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "@styles/map/MapSwiper.scss";
-import { memo } from "react";
 
 const MapSwiper = () => {
   const markerRadius = useRecoilValue(markerRadiusState);
-  const [activeMarkerId, setActiveMarkerId] = useRecoilState(activeMarkerState);
-
+  const initialSlide = useRecoilValue(initialSlideState);
+  const setActiveMarkerId = useSetRecoilState(activeMarkerState);
   const navigate = useNavigate();
 
   return (
@@ -24,9 +24,7 @@ const MapSwiper = () => {
         }}
       />
       <Swiper
-        initialSlide={markerRadius.findIndex(
-          (marker) => marker.itemId === activeMarkerId
-        )}
+        initialSlide={initialSlide}
         slidesPerView={3}
         centeredSlides={true}
         grabCursor={true}

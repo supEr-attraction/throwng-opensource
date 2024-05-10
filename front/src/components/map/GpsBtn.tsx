@@ -15,7 +15,9 @@ const GpsBtn = ({ map }: Props) => {
   const returnMyLocation = useCallback(() => {
     if (!center && map) {
       const zoom = map.getZoom() ?? 15;
+      console.log(zoom);
       if (zoom < 15) {
+        map.setZoom(15);
         setZoomLevel(15);
       }
       map.panTo(location);
