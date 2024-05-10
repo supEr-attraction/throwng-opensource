@@ -6,7 +6,7 @@ import { RecoilRoot } from "recoil";
 function App() {
   return (
     <RecoilRoot>
-      <Suspense fallback={<></>}>
+      <Suspense fallback={<div></div>}>
         <RouterProvider router={router} />
       </Suspense>
     </RecoilRoot>

@@ -1,0 +1,18 @@
+.Error404 {
+  height: 100dvh;
+  width: 100%;
+
+  .quiz-main-container {
+    position: fixed;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+  }
+
+  .put-btn-div {
+    position: fixed;
+    bottom: 0;
+    padding: 3dvh;
+  }
+}
