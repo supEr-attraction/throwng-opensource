@@ -2,6 +2,7 @@
   padding: 3dvh;
   height: 50dvh;
   display: flex;
+  position: relative;
   flex-direction: column;
   gap: 2dvh;
 
@@ -31,8 +32,8 @@
 
     .date {
       text-align: end;
-      color: var(--placeholder-color);
       font-size: 1.5dvh;
+      color: var(--placeholder-color);
     }
   }
 

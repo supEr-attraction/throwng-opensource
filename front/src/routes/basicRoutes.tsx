@@ -7,7 +7,7 @@ const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));
 const NotificationPage = lazy(() => import("@pages/NotificationPage"));
 const MyCouponPage = lazy(() => import("@pages/MyCouponPage"));
 const MyOtpPage = lazy(() => import("@pages/MyOtpPage"));
-const ChangeNickNamePage = lazy(() => import('@pages/ChangeNickNamePage'))
+const ChangeNickNamePage = lazy(() => import("@pages/ChangeNickNamePage"));
 const MusicDrop = lazy(() => import("@pages/musicDrop/MusicDrop"));
 const QuizMain = lazy(() => import("@pages/quiz/QuizMainPage"));
 const MusicPickDetailPage = lazy(() => import("@pages/MusicPickDetailPage"));
@@ -34,11 +34,11 @@ export default {
         {
           path: "mypage",
           children: [
-            {index:true, element: <MyPage />},
+            { index: true, element: <MyPage /> },
             {
-              path:"change-nickname",
-              element:<ChangeNickNamePage/>
-            }
+              path: "change-nickname",
+              element: <ChangeNickNamePage />,
+            },
           ],
         },
         {

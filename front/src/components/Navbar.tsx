@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import { FaRegUser } from "react-icons/fa";
 import { LuHome } from "react-icons/lu";
 import { FaRegCirclePlay } from "react-icons/fa6";
-// import { BsMusicPlayer } from "react-icons/bs";
 import circle from "@assets/images/Cone.webp";
 import logo from "@assets/images/logo.png";
 import "@styles/Navbar.scss";
@@ -23,7 +22,6 @@ const Navbar = () => {
         <div className="menu__item disable">
           <NavLink to={"/music/search"} className="center">
             <img className="circle" src={circle} alt="" />
-            {/* <BsMusicPlayer /> */}
             <img className="logo" src={logo} alt="" />
           </NavLink>
         </div>

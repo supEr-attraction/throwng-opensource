@@ -24,6 +24,7 @@ export interface MusicInfo {
   thrownDate: string;
   title: string;
   previewUrl: string | null;
+  otherPickedCount: number;
 }
 
 export interface Address {
