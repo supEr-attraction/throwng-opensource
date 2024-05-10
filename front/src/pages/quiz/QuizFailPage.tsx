@@ -1,12 +1,10 @@
 import QuizCryLottie from "@components/lottie/QuizCryLottie";
-import useQuizRedirect from "@hooks/useQuizRedirect";
 import "@styles/quiz/QuizFailPage.scss";
 import { useNavigate } from "react-router-dom";
 
 const QuizFailPage = () => {
   const navigate = useNavigate();
-  useQuizRedirect();
-  
+
   const handleGoHome = () => {
     navigate("/");
   };
@@ -22,7 +20,10 @@ const QuizFailPage = () => {
         <QuizCryLottie />
       </div>
       <div className="quiz-fail-footer">
-        <p>매일 퀴즈가 <br />깜짝 등장 합니다.</p>
+        <p>
+          매일 퀴즈가 <br />
+          깜짝 등장 합니다.
+        </p>
         <p>또 도전 해 주실거죠??</p>
       </div>
       <div className="quiz-fail-button">

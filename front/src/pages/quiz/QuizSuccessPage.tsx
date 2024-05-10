@@ -13,31 +13,31 @@ import coupon6 from "@assets/images/coupon6.webp";
 import coupon7 from "@assets/images/coupon7.webp";
 import boom from "@assets/images/boom.webp";
 import { quizCoupon } from "../../types/couponType";
-// import useQuizRedirect from "@hooks/useQuizRedirect";
-import useRestrictQuizSuccess from "@hooks/useRestrictQuizSuccess";
 
-const QuizSuccessPage: React.FC = () => {
+const QuizSuccessPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [coupon, setCoupon] = useState<quizCoupon | null>(null);
 
   const navigate = useNavigate();
-  useRestrictQuizSuccess();
-  // useQuizRedirect();
 
   const handleLottieClick = async () => {
+    console.log("handleLottieClick called");
     setIsOpen(true);
     try {
-      const couponData = (await getContentCoupon("quiz")) as quizCoupon;
+      console.log("Attempting to fetch coupon");
+      const couponData = await getContentCoupon("quiz");
+      console.log("API response data:", couponData);
       setCoupon(couponData);
     } catch (error) {
       console.error("Failed to fetch coupon:", error);
     }
   };
+  // console.log(coupon)
 
   useEffect(() => {
     if (isOpen && coupon) {
       const timer = setTimeout(() => {
-        navigate("/quiz/coupon", { state: { coupon }, replace: true });
+        navigate("/quiz/coupon", { replace: true });
       }, 2500);
       return () => clearTimeout(timer);
     }

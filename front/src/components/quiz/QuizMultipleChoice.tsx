@@ -10,10 +10,10 @@ interface Choice {
 interface QuizMultipleChoiceProps {
   setCanSubmit: (canSubmit: boolean) => void;
   question: string;
-  choices: Choice[];
+  choices: { [key: string]: string };
   index: number;
   previewUrl?: string;
-  onUserInput: (input: string) => void; // 사용자 입력을 상위 컴포넌트로 전달하는 콜백
+  onUserInput: (input: string) => void;
 }
 
 const QuizMultipleChoice = ({
@@ -27,6 +27,10 @@ const QuizMultipleChoice = ({
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    console.log(choices);
+  }, [choices]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -70,21 +74,15 @@ const QuizMultipleChoice = ({
         <p>{question}</p>
       </div>
       <div className="mc-choice">
-        {choices.length > 0 ? (
-          choices.map((choice) => (
-            <div
-              key={choice.id}
-              className={`choice ${
-                selectedChoice === choice.id ? "selected" : ""
-              }`}
-              onClick={() => handleChoiceClick(choice.id)}
-            >
-              {choice.text}
-            </div>
-          ))
-        ) : (
-          <p></p>
-        )}
+        {Object.entries(choices).map(([id, text]) => (
+          <div
+            key={id}
+            className={`choice ${selectedChoice === id ? "selected" : ""}`}
+            onClick={() => handleChoiceClick(id)}
+          >
+            {text}
+          </div>
+        ))}
       </div>
     </div>
   );

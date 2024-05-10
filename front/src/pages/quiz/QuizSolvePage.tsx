@@ -25,6 +25,7 @@ function QuizSolvePage() {
   useEffect(() => {
     const fetchQuiz = async () => {
       const data = await getQuizSolve();
+      console.log(data)
       setQuizData(data);
     };
     fetchQuiz();
@@ -38,35 +39,47 @@ function QuizSolvePage() {
 
   useEffect(() => {
     if (timeLeft === 0) {
+      handleSubmission(null);
       navigate("/quiz/fail", { replace: true });
     }
   }, [timeLeft, navigate]);
 
-  const handleSubmission = async () => {
-    if (!userInput) return; // 사용자 입력이 없으면 아무 것도 하지 않음
+  useEffect(() => {
+    setCanSubmit(userInput !== null);
+  }, [userInput]);
 
+  const handleSubmission = async (submission = userInput) => {
+    if (submission === null) {
+      submission = null;
+    }
+  
     const currentQuiz = quizData[currentQuestionIndex];
     const resultData: QuizResult = {
       quizId: currentQuiz.quizId,
-      submit: userInput,
+      submit: submission,
     };
-
+  
     try {
       const response = await postQuizSolve(resultData);
-      if (response.status) {
+      console.log(response); 
+      if (response.data.status) {
         goToNextQuestion();
       } else {
-        navigate("/quiz/fail", { replace: true });
+        handleFailNavigation();
       }
     } catch (error) {
       console.error("Failed to submit the quiz:", error);
-      navigate("/quiz/fail", { replace: true });
+      handleFailNavigation();
     }
+  };
+
+  const handleFailNavigation = () => {
+    navigate("/quiz/fail", { replace: true });
   };
 
   const goToNextQuestion = () => {
     setTimeLeft(20);
-    setUserInput(null); // 다음 문제로 넘어갈 때 사용자 입력 초기화
+    setUserInput(null);
     setCanSubmit(false);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
@@ -76,9 +89,11 @@ function QuizSolvePage() {
       return <div></div>;
     }
 
+
+    
     const currentQuiz = quizData[currentQuestionIndex];
     const props = {
-      onUserInput: handleUserInput, // 사용자 입력을 처리할 콜백 함수 전달
+      onUserInput: handleUserInput,
       setTimeLeft,
       setCanSubmit,
       question: currentQuiz.question,
@@ -90,6 +105,7 @@ function QuizSolvePage() {
 
     switch (currentQuiz.quizType) {
       case "객관식":
+        //@ts-ignore
         return <QuizMultipleChoice {...props} />;
       case "주관식":
         return <QuizSubjective {...props} />;
@@ -109,7 +125,10 @@ function QuizSolvePage() {
       />
       {renderQuestionComponent()}
       {canSubmit && (
-        <button onClick={handleSubmission} className="submission-button">
+        <button
+          onClick={() => handleSubmission()}
+          className="submission-button"
+        >
           제출
         </button>
       )}

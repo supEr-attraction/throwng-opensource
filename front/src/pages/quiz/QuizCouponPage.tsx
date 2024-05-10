@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "@/styles/quiz/QuizCouponPage.scss";
 import { quizCoupon } from "../../types/couponType";
 import boom from "@assets/images/boom.webp";
@@ -9,21 +9,32 @@ import coupon4 from "@assets/images/coupon4.webp";
 import coupon5 from "@assets/images/coupon5.webp";
 import coupon6 from "@assets/images/coupon6.webp";
 import coupon7 from "@assets/images/coupon7.webp";
-import useQuizRedirect from "@hooks/useQuizRedirect";
+import { useEffect, useState } from "react";
+import { getContentCoupon } from "@services/couponApi/CouponApi";
 
 const QuizCouponPage = () => {
+  const { couponId } = useParams();
+  const [coupon, setCoupon] = useState<quizCoupon | null>(null);
   const navigate = useNavigate();
-  const { state } = useLocation();
-  useQuizRedirect();
 
-  if (!state || !state.coupon) {
-    console.error("No coupon data provided.");
+  useEffect(() => {
+    const fetchCoupon = async () => {
+      if (!couponId) return navigate("/");
+      try {
+        const couponData = await getContentCoupon(couponId);
+        setCoupon(couponData);
+      } catch (error) {
+        console.error("Failed to fetch coupon:", error);
+        navigate("/");
+      }
+    };
 
-    navigate("/");
-    return <div></div>;
+    fetchCoupon();
+  }, [couponId, navigate]);
+
+  if (!coupon) {
+    return <div>Loading...</div>;
   }
-
-  const { coupon } = state as { coupon: quizCoupon };
 
   const handleGoMypage = () => {
     navigate("/user/mypage", { replace: true });
@@ -36,7 +47,7 @@ const QuizCouponPage = () => {
     "레벨만큼 추가 쓰롱 쿠폰": coupon6,
     "쓰롱 5개 추가 쿠폰": coupon1,
     "닉네임 변경 쿠폰": coupon4,
-    꽝: boom,
+    "꽝": boom,
     "물음표 음악 조회 쿠폰": coupon7,
   };
 
