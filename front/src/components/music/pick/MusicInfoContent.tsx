@@ -4,10 +4,13 @@ import {
 } from "@store/music/pick/selectors";
 import { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
+import { FaHeart } from "react-icons/fa";
 
 const MusicInfoContent = () => {
   const { itemImage, albumImage } = useRecoilValue(musicPickImageState);
-  const { title, artist } = useRecoilValue(musicPickMusicInfoState);
+  const { title, artist, otherPickedCount } = useRecoilValue(
+    musicPickMusicInfoState
+  );
   const [isScrollNeeded, setIsScrollNeeded] = useState(false);
   const textRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +29,7 @@ const MusicInfoContent = () => {
 
   return (
     <div className="content-bottom">
-      <div>
+      <div className="music-info">
         <div className={`title`}>
           <div
             ref={textRef}
@@ -37,12 +40,18 @@ const MusicInfoContent = () => {
         </div>
         <div className="artist">{artist}</div>
       </div>
-      <img
-        src={itemImage || albumImage}
-        onError={(e) => {
-          e.currentTarget.src = albumImage;
-        }}
-      />
+      <div className="music-cover">
+        <img
+          src={itemImage || albumImage}
+          onError={(e) => {
+            e.currentTarget.src = albumImage;
+          }}
+        />
+        <div className="heart">
+          <FaHeart />
+          <div>{otherPickedCount}</div>
+        </div>
+      </div>
     </div>
   );
 };

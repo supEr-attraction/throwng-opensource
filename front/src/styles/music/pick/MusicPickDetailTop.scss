@@ -43,7 +43,7 @@
         align-items: center;
         gap: 2dvh;
 
-        > div {
+        .music-info {
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -72,12 +72,32 @@
           }
         }
 
-        img {
+        .music-cover {
           height: 30dvh;
           flex-grow: 1;
           aspect-ratio: 1;
-          border-radius: 2dvh;
-          object-fit: cover;
+          position: relative;
+
+          img {
+            width: 100%;
+            height: 100%;
+            border-radius: 2dvh;
+            object-fit: cover;
+          }
+
+          .heart {
+            display: flex;
+            align-items: center;
+            gap: 1dvh;
+            font-size: 1.8dvh;
+            position: absolute;
+            bottom: -10%;
+            right: 5%;
+
+            > svg {
+              color: rgb(242, 162, 162);
+            }
+          }
         }
       }
     }

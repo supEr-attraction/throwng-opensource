@@ -24,5 +24,6 @@ export const musicInfoState = atom<MusicInfo>({
     thrownDate: "",
     title: "",
     previewUrl: "",
+    otherPickedCount: 0,
   },
 });

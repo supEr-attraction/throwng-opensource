@@ -28,8 +28,8 @@ export const musicPickStatusState = selector({
 export const musicPickMusicInfoState = selector({
   key: "musicPickMusicInfoState",
   get: ({ get }) => {
-    const { title, artist } = get(musicInfoState);
-    return { title, artist };
+    const { title, artist, otherPickedCount } = get(musicInfoState);
+    return { title, artist, otherPickedCount };
   },
 });
 
