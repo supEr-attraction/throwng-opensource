@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { MyHistory } from "../../types/songType";
 import "@styles/myPage/MyThrowngHistroyList.scss";
 import { TiLocation } from "react-icons/ti";
-import { FaHeart } from "react-icons/fa";
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from "recoil";
 import {
   myPickHistoryList,
@@ -120,15 +119,7 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
                 <div className="item-detail">
                   <div className="item-title">{song.title}</div>
                   <div className="item-artist">{song.artist}</div>
-                  <div className="item-how-many">
-                    <div className="item-comment">{song.comment}</div>
-                    {!pageIdx &&
-                    <div className="item-count">
-                      <FaHeart/>
-                      <div className="item-count-no">{song.otherPickedCount}</div>
-                    </div>
-                    }
-                  </div>
+                  <div className="item-comment">{song.comment}</div>
                 </div>
               </div>
             </div>

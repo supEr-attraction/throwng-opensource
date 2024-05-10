@@ -22,7 +22,7 @@
 
         .item-date {
           color: var(--placeholder-color);
-          font-size: 1.7dvh;
+          font-size: 1.5dvh;
         }
              
         .item-location {
@@ -30,7 +30,7 @@
           flex-direction: row;
           justify-content: end;
           color: var(--main-color);
-          font-size: 1.7dvh;
+          font-size: 1.5dvh;
 
           svg {
             font-size: 2dvh;
@@ -57,50 +57,27 @@
           width: 80%;
 
           .item-title,
-          .item-artis {
+          .item-artis,
+          .item-comment {
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
           }
 
-          .item-how-many {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            gap: 1.5dvh;
-  
-            .item-count {
-              font-size: 1.7dvh;
-              display: flex;
-              align-items: center;
-              flex-direction: row;
-              gap: 0.5dvh;
-  
-              svg {
-                font-size: 1.7dvh;
-                color: rgb(242, 162, 162);
-              }
-            }
-
-            .item-comment {
-              text-overflow: ellipsis;
-              overflow: hidden;
-              white-space: nowrap;
-            }
-          }
-
           .item-title {
-            font-size: 1.9dvh;
+            font-size: 1.7dvh;
             font-weight: 300;
           }
 
           .item-artist {
-            font-size: 1.7dvh;
-            color: var(--placeholder-color);
+            font-size: 1.4dvh;
+
+            color: var(--subtitle-color);
           }
 
           .item-comment {
-            font-size: 1.8dvh;
+            font-size: 1.3dvh;
+            color: var(--placeholder-color);
           }
         }
       }
