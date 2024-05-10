@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Song } from "../../types/songType.ts";
 import "@styles/musicSearch/MusicList.scss";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
@@ -17,7 +17,7 @@ const MusicList = () => {
   const setSelectMusic = useSetRecoilState(selectMusic);
   const resetSelectMusic = useResetRecoilState(selectMusic);
   const searchParams = new URLSearchParams(location.search);
-  const searchKeyword = searchParams.get('query');
+  const searchKeyword = searchParams.get("query");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {

@@ -74,7 +74,7 @@
               text-align: center;
 
               &.animated {
-                animation: scroll 5s linear infinite;
+                animation: scroll 15s linear infinite;
               }
             }
           }
@@ -120,6 +120,6 @@
     transform: translateX(100%);
   }
   100% {
-    transform: translateX(-250%);
+    transform: translateX(-220%);
   }
 }

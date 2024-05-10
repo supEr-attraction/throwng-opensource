@@ -60,7 +60,7 @@
               text-align: center;
 
               &.animated {
-                animation: scroll 7s linear infinite; /* 애니메이션 적용 */
+                animation: scroll 15s linear infinite;
               }
             }
           }
@@ -89,6 +89,6 @@
     transform: translateX(100%);
   }
   100% {
-    transform: translateX(-120%);
+    transform: translateX(-220%);
   }
 }

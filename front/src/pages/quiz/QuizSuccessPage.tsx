@@ -13,7 +13,7 @@ import coupon6 from "@assets/images/coupon6.webp";
 import coupon7 from "@assets/images/coupon7.webp";
 import boom from "@assets/images/boom.webp";
 import { quizCoupon } from "../../types/couponType";
-import useQuizRedirect from "@hooks/useQuizRedirect";
+// import useQuizRedirect from "@hooks/useQuizRedirect";
 import useRestrictQuizSuccess from "@hooks/useRestrictQuizSuccess";
 
 const QuizSuccessPage: React.FC = () => {
