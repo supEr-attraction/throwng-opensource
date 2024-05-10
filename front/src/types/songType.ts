@@ -76,4 +76,5 @@ export interface MyHistory extends Omit<SongHistory, "youtubeId"> {
   dropDate?: string;
   pickDate?: string;
   throwId?: string;
+  otherPickedCount?: number
 }
