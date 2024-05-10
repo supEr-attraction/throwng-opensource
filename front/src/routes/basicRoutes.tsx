@@ -1,5 +1,5 @@
 import { lazy } from "react";
-const PrivateRoute = lazy(() => import("@components/PrivateRoute"));
+import PrivateRoute from "@components/PrivateRoute";
 const HomePage = lazy(() => import("@pages/HomePage"));
 const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
@@ -21,7 +21,7 @@ const QuizFailPage = lazy(() => import("@pages/quiz/QuizFailPage"));
 const QuizInfoPage = lazy(() => import("@pages/quiz/QuizInfoPage"));
 const QuizSolvePage = lazy(() => import("@pages/quiz/QuizSolvePage"));
 const QuizSuccessPage = lazy(() => import("@pages/quiz/QuizSuccessPage"));
-// const Error404 = loadable(() => import("./Error404"));
+const Error404 = lazy(() => import("@pages/Error404"));
 
 export default {
   path: "/",
@@ -135,4 +135,5 @@ export default {
     },
     { path: "none-permission", element: <NonePermissionPage /> },
   ],
+  errorElement: <Error404 />,
 };
