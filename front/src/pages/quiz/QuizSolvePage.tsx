@@ -65,8 +65,7 @@ function QuizSolvePage() {
 
       if (response.data.status) {
         if (currentQuestionIndex === quizData.length - 1) {
-          // 마지막 문제를 맞춘 경우 세션에 저장
-          sessionStorage.setItem('quizCompleted', 'true');
+          sessionStorage.setItem("quizCompleted", "true");
         }
         goToNextQuestion();
       } else {

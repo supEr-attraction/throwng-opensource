@@ -8,7 +8,7 @@ interface QuizSubjectiveProps {
   index: number;
   previewUrl?: string;
   quizImage?: string;
-  onUserInput: (input: string) => void; // 사용자 입력을 상위 컴포넌트로 전달하는 콜백
+  onUserInput: (input: string) => void;
 }
 
 const QuizSubjective = ({

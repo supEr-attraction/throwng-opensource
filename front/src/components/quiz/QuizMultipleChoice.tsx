@@ -2,11 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import "@styles/quiz/QuizMultipleChoice.scss";
 import { ImVolumeMedium, ImVolumeMute2 } from "react-icons/im";
 
-// interface Choice {
-//   id: string;
-//   text: string;
-// }
-
 interface QuizMultipleChoiceProps {
   setCanSubmit: (canSubmit: boolean) => void;
   question: string;
@@ -28,8 +23,7 @@ const QuizMultipleChoice = ({
   const [isMuted, setIsMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
-  useEffect(() => {
-  }, [choices]);
+  useEffect(() => {}, [choices]);
 
   useEffect(() => {
     if (audioRef.current) {
