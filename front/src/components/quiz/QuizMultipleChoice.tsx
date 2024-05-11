@@ -29,7 +29,6 @@ const QuizMultipleChoice = ({
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
-    console.log(choices);
   }, [choices]);
 
   useEffect(() => {

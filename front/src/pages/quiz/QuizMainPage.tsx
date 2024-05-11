@@ -3,12 +3,9 @@ import Header from "@components/Header";
 import QuizMainLottie from "@components/lottie/QuizMainLottie";
 import "@styles/quiz/QuizMainPage.scss";
 import { useNavigate } from "react-router-dom";
-import useQuizRedirect from "@/hooks/useQuizRedirect";
 
 const QuizMainPage = () => {
   const navigate = useNavigate();
-  useQuizRedirect();
-
   const handleGoInfo = () => {
     navigate("/quiz/info", { replace: true });
   };

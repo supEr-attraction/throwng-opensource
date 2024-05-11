@@ -8,7 +8,7 @@
     margin-bottom: 2dvh;
 
     .quiz-check {
-      font-size: 2.5dvh;
+      font-size: 2.3dvh;
       word-break: keep-all;
 
       .check-item {
@@ -72,7 +72,7 @@
   }
   .all-check {
     margin-left: 2dvh;
-    font-size: 2.5dvh;
+    font-size: 2.3dvh;
     input[type="checkbox"] {
       position: absolute;
       opacity: 0;
@@ -82,6 +82,7 @@
       display: block;
       padding-left: 5dvh;
       position: relative;
+      
 
       &::before,
       &::after {
@@ -139,7 +140,7 @@
       cursor: pointer;
     }
     button {
-      font-size: 2.5dvh;
+      font-size: 2.3dvh;
     }
   }
 }

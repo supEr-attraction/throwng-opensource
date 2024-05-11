@@ -1,4 +1,3 @@
-import useQuizRedirect from "@hooks/useQuizRedirect";
 import "@styles/quiz/QuizInfo.scss";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -11,42 +10,41 @@ interface QuizItem {
 
 const QuizInfo = () => {
   const navigate = useNavigate();
-  useQuizRedirect();
+
   const [items, setItems] = useState<QuizItem[]>([
-    {
-      id: 1,
-      text: (
-        <>
-          문제는 <span className="highlight">총 3문제</span>입니다.
-        </>
-      ),
-      checked: false,
-    },
-    {
-      id: 2,
-      text: (
-        <>
-          <span className="highlight">객관식, 주관식, OX</span> 문제가
-          <br />
-          주어집니다.
-        </>
-      ),
-      checked: false,
-    },
-    {
-      id: 3,
-      text: (
-        <>
-          문제당 제한 시간은 <span className="highlight">20초</span>입니다.
-        </>
-      ),
-      checked: false,
-    },
+    // {
+    //   id: 1,
+    //   text: (
+    //     <>
+    //       문제는 <span className="highlight">총 3문제</span>입니다.
+    //     </>
+    //   ),
+    //   checked: false,
+    // },
+    // {
+    //   id: 2,
+    //   text: (
+    //     <>
+    //       <span className="highlight">객관식, 주관식, OX</span> 문제가
+    //       <br />
+    //       주어집니다.
+    //     </>
+    //   ),
+    //   checked: false,
+    // },
+    // {
+    //   id: 3,
+    //   text: (
+    //     <>
+    //       문제당 제한 시간은 <span className="highlight">20초</span>입니다.
+    //     </>
+    //   ),
+    //   checked: false,
+    // },
     {
       id: 4,
       text: (
         <>
-          한 문제라도 틀리면 <span className="highlight-red">끝!</span> <br />
           3문제 <span className="highlight">모두 맞춰야</span> 정답으로
           인정됩니다.
         </>
@@ -57,7 +55,16 @@ const QuizInfo = () => {
       id: 5,
       text: (
         <>
-          매일 <span className="highlight">기회는 한 번</span>입니다.
+          쿠폰을 얻을 때 까지 <br /><span className="highlight">재도전</span> 가능합니다
+        </>
+      ),
+      checked: false,
+    },
+    {
+      id: 6,
+      text: (
+        <>
+          매일 쿠폰 발급은<span className="highlight"><br /> 한 번</span>입니다.
         </>
       ),
       checked: false,
@@ -78,17 +85,14 @@ const QuizInfo = () => {
     );
   };
 
-  // 전체 항목 체크 토글
   const handleCheckAll = () => {
     setItems(items.map((item) => ({ ...item, checked: !areAllChecked })));
   };
 
-  // 체크 상태에 따라 버튼 보이기 설정
   useEffect(() => {
     setButtonVisible(areAllChecked);
   }, [areAllChecked]);
 
-  // 퀴즈 시작
   const handleQuizStart = () => {
     navigate("/quiz/count", { replace: true });
   };

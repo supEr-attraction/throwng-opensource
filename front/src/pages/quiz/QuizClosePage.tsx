@@ -14,7 +14,7 @@ const QuizClosePage = () => {
     <div className="QuizClosePage">
       <div className="body">
         <div className="header">
-          <div>만료된 퀴즈입니다</div>
+          <div>오늘 이미 쿠폰을 뽑았습니다.</div>
           <div>내일 다시 도전해 주세요</div>
         </div>
         <div><QuizCloseLottie/></div>

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "@/styles/quiz/QuizCouponPage.scss";
 import { quizCoupon } from "../../types/couponType";
 import boom from "@assets/images/boom.webp";
@@ -11,29 +11,45 @@ import coupon6 from "@assets/images/coupon6.webp";
 import coupon7 from "@assets/images/coupon7.webp";
 import { useEffect, useState } from "react";
 import { getContentCoupon } from "@services/couponApi/CouponApi";
+import Loading from "@components/Loading";
 
 const QuizCouponPage = () => {
-  const { couponId } = useParams();
   const [coupon, setCoupon] = useState<quizCoupon | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    const quizCompleted = sessionStorage.getItem('quizCompleted');
+    if (!quizCompleted) {
+      navigate('/content', { replace: true });
+      return;
+    }
+  
     const fetchCoupon = async () => {
-      if (!couponId) return navigate("/");
+      setLoading(true);
       try {
-        const couponData = await getContentCoupon(couponId);
+        const couponData = await getContentCoupon("quiz");
         setCoupon(couponData);
       } catch (error) {
-        console.error("Failed to fetch coupon:", error);
-        navigate("/");
+        // console.error("Failed to fetch coupon:", error);
       }
+      setLoading(false);
     };
-
+  
     fetchCoupon();
-  }, [couponId, navigate]);
+  }, [navigate]);
+  
+
+  if (loading) {
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  }
 
   if (!coupon) {
-    return <div>Loading...</div>;
+    return navigate("/content", { replace: true });
   }
 
   const handleGoMypage = () => {
