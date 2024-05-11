@@ -12,35 +12,26 @@ const QuizInfo = () => {
   const navigate = useNavigate();
 
   const [items, setItems] = useState<QuizItem[]>([
-    // {
-    //   id: 1,
-    //   text: (
-    //     <>
-    //       문제는 <span className="highlight">총 3문제</span>입니다.
-    //     </>
-    //   ),
-    //   checked: false,
-    // },
-    // {
-    //   id: 2,
-    //   text: (
-    //     <>
-    //       <span className="highlight">객관식, 주관식, OX</span> 문제가
-    //       <br />
-    //       주어집니다.
-    //     </>
-    //   ),
-    //   checked: false,
-    // },
-    // {
-    //   id: 3,
-    //   text: (
-    //     <>
-    //       문제당 제한 시간은 <span className="highlight">20초</span>입니다.
-    //     </>
-    //   ),
-    //   checked: false,
-    // },
+    {
+      id: 1,
+      text: (
+        <>
+          문제는 <span className="highlight">총 3문제</span>입니다.
+        </>
+      ),
+      checked: false,
+    },
+    {
+      id: 2,
+      text: (
+        <>
+          <span className="highlight">객관식, 주관식, OX</span> 문제가
+          <br />
+          주어집니다.
+        </>
+      ),
+      checked: false,
+    },
     {
       id: 4,
       text: (

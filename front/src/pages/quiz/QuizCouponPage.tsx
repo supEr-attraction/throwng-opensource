@@ -19,12 +19,12 @@ const QuizCouponPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const quizCompleted = sessionStorage.getItem('quizCompleted');
+    const quizCompleted = sessionStorage.getItem("quizCompleted");
     if (!quizCompleted) {
-      navigate('/content', { replace: true });
+      navigate("/content", { replace: true });
       return;
     }
-  
+
     const fetchCoupon = async () => {
       setLoading(true);
       try {
@@ -35,10 +35,9 @@ const QuizCouponPage = () => {
       }
       setLoading(false);
     };
-  
+
     fetchCoupon();
   }, [navigate]);
-  
 
   if (loading) {
     return (
@@ -49,7 +48,8 @@ const QuizCouponPage = () => {
   }
 
   if (!coupon) {
-    return navigate("/content", { replace: true });
+    navigate("/content", { replace: true });
+    return;
   }
 
   const handleGoMypage = () => {
@@ -63,7 +63,7 @@ const QuizCouponPage = () => {
     "레벨만큼 추가 쓰롱 쿠폰": coupon6,
     "쓰롱 5개 추가 쿠폰": coupon1,
     "닉네임 변경 쿠폰": coupon4,
-    "꽝": boom,
+    꽝: boom,
     "물음표 음악 조회 쿠폰": coupon7,
   };
 
