@@ -31,13 +31,16 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
 
   const goSearch = (keyword: string) => {
     setScrollSongIndex(song.youtubeId)
-    navigate(`/music/search/${keyword}`);
+    const trimmedKeyword = keyword.trim();
+    const encodedSearchKeyword = encodeURIComponent(trimmedKeyword);
+
+    if (encodedSearchKeyword !== "") {
+      navigate(`/music/search/results?query=${encodedSearchKeyword}`)
+    }
     setWords((prevWords) => {
-      const newId = prevWords.length
-        ? prevWords[prevWords.length - 1].id + 1
-        : 1;
-      const updatedWords = prevWords.filter((word) => word.title !== keyword);
-      return [{ id: newId, title: keyword }, ...updatedWords];
+      const newId = prevWords.length ? prevWords[0].id + 1 : 0;
+      const updatedWords = prevWords.filter((word) => word.title !== trimmedKeyword);
+      return [{ id: newId, title: trimmedKeyword }, ...updatedWords];
     });
   };
 
