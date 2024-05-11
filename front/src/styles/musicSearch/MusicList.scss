@@ -10,22 +10,24 @@
   }
 
   .searchResults {
-    padding: 3dvh;
+    padding-inline: 3dvh;
+    padding-bottom: 3dvh;
+    padding-top: 1dvh;
     overflow: auto;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1dvh;
 
     .result-item {
       display: flex;
-      padding: 1dvh;
+      gap: 1dvh;
+      padding-bottom: 1dvh;
       align-items: center;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 
       .image-container {
-        padding-right: 1dvh;
-
-        .item-wide {
-          width: 100%;
-        }
+        display: flex;
 
         img {
           width: 6dvh;
@@ -38,11 +40,11 @@
         display: flex;
         align-items: center;
         overflow: hidden;
-        width: 90%;
+        flex: 1;
 
         .item-detail {
           overflow: hidden;
-          width: 90%;
+          width: 100%;
 
           .item-title {
             font-size: 1.7dvh;
@@ -52,7 +54,7 @@
           }
 
           .item-artist {
-            font-size: 1.4dvh;
+            font-size: 1.5dvh;
             font-weight: 500;
             color: var(--placeholder-color);
             text-overflow: ellipsis;
