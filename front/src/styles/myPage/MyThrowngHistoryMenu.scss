@@ -11,12 +11,11 @@
 
     .header-btn-div {
       display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+      gap: 2dvh;
 
       .btn-item {
-        padding: 0 1dvh;
-        font-size: 2.5dvh;
+        // padding: 0 0.5dvh;
+        font-size: 2.2dvh;
         font-weight: bold;
         cursor: pointer;
 
@@ -33,20 +32,17 @@
 
     .filter-div {
       .filter {
-        padding: 1dvh;
+        // padding: 1dvh;
         font-size: 1.5dvh;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-direction: row;
         cursor: pointer;
         transition: background-color 0.3s ease;
-        border-radius: 1dvh;
 
         &:active {
           background-color: var(--input-box-color);
           border-radius: 1dvh;
-          padding: 1dvh;
         }
       }
     }

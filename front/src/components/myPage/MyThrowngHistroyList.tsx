@@ -97,16 +97,16 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
               className="result-item"
               onClick={() => handleGoNavigation(song, index)}
             >
-              <div className="item-header">           
+              <div className="item-header">
                 {!pageIdx ? (
                   <div className="item-date">
                     {dayjs(song.dropDate).format("YYYY-MM-DD")}
                   </div>
-                  ) : (
+                ) : (
                   <div className="item-date">
                     {dayjs(song.pickDate).format("YYYY-MM-DD")}
                   </div>
-                  )}
+                )}
                 <div className="item-location">
                   <TiLocation />
                   <div>{song.location}</div>
@@ -125,11 +125,9 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
             </div>
           ))
         ) : (
-          <div className="SearchedWords">
-            <div className="no-word-container">
-              <div className="title">앗!</div>
-              <div className="subtitle">기록이 없습니다.</div>
-            </div>
+          <div className="no-word-container">
+            <div className="title">앗!</div>
+            <div className="subtitle">기록이 없습니다.</div>
           </div>
         )}
       </div>

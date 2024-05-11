@@ -11,7 +11,7 @@ const MyLevel = () => {
   const [experiencePoint, setExperiencePoint] = useState(0);
   const [isBlock, setIsBlock] = useState("NONE");
   const setMyNickName = useSetRecoilState(myNickName);
-  const [infoModal, setInfoModal] = useRecoilState(levelInfoModal)
+  const [infoModal, setInfoModal] = useRecoilState(levelInfoModal);
 
   useEffect(() => {
     apiGetMyLevel();
@@ -34,15 +34,15 @@ const MyLevel = () => {
       case 3:
         return "linear-gradient(to right, #FFE8BC, var(--level-three))";
       case 4:
-          return "linear-gradient(to right, #F6F049, var(--level-four))";
+        return "linear-gradient(to right, #F6F049, var(--level-four))";
       case 5:
-          return "linear-gradient(to right, #C7FBFA, var(--level-five))";
+        return "linear-gradient(to right, #C7FBFA, var(--level-five))";
       case 6:
-          return "linear-gradient(to right, #DEFFFB, var(--level-six))";
+        return "linear-gradient(to right, #DEFFFB, var(--level-six))";
       case 7:
-          return "linear-gradient(to right, #D2EDFF, var(--level-seven))";
+        return "linear-gradient(to right, #D2EDFF, var(--level-seven))";
       case 8:
-          return "linear-gradient(to right, #FFC8CC, var(--level-eight))";
+        return "linear-gradient(to right, #FFC8CC, var(--level-eight))";
       default:
         return "linear-gradient(to right, #D3C1B4, var(--level-one))";
     }
@@ -80,23 +80,23 @@ const MyLevel = () => {
       case 3:
         return "BUDS";
       case 4:
-        return 'BUDS_PLUS';
+        return "BUDS_PLUS";
       case 5:
-        return 'BUDS_PRO';
+        return "BUDS_PRO";
       case 6:
-        return 'LP';
+        return "LP";
       case 7:
-        return 'SPEAKER';
+        return "SPEAKER";
       case 8:
-        return 'GALAXY';
+        return "GALAXY";
       default:
         return "EARPHONE";
     }
   };
 
   const openInfoModal = () => {
-    setInfoModal(!infoModal)
-  }
+    setInfoModal(!infoModal);
+  };
 
   return (
     <div className="MyLevel">
@@ -116,9 +116,12 @@ const MyLevel = () => {
             >
               Lv.{level} {getProductName(level)}
             </div>
-            <div className="drop-pick" >
-              {experiencePoint}%
-              <IoMdInformationCircleOutline style={{ color: getLevelDiv(level) }} onClick={openInfoModal} />
+            <div className="drop-pick">
+              <div>{experiencePoint}%</div>
+              <IoMdInformationCircleOutline
+                style={{ color: getLevelDiv(level) }}
+                onClick={openInfoModal}
+              />
             </div>
           </div>
           <div className="level-bar">
@@ -130,7 +133,7 @@ const MyLevel = () => {
               }}
             ></div>
           </div>
-          {infoModal && <LevelInfoModal/>}
+          {infoModal && <LevelInfoModal />}
         </div>
       )}
     </div>
