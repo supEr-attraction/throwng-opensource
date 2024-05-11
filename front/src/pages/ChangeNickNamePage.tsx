@@ -5,6 +5,8 @@ import { useRecoilValue } from "recoil";
 import "@styles/ChangeNickName/ChangeNickName.scss"
 import { putNickName } from "@services/myCouponApi/MyCouponAPi";
 import { useNavigate } from "react-router-dom";
+import ToasterMsg from "@components/ToasterMsg";
+import { toastMsg } from "@/utils/toastMsg";
 
 const ChangeNickNamePage = () => {
   const inputEl = useRef<HTMLInputElement>(null);
@@ -30,7 +32,7 @@ const ChangeNickNamePage = () => {
       await putNickName(requestBody)
       navigate('/user/mypage', {replace:true})
     } else {
-      alert("닉네임은 한글 단어로만 설정이 가능하며, 영어, 숫자, 공백, 특수문자는 사용할 수 없습니다. 최대 15자까지 가능합니다.");
+      toastMsg("닉네임은 한글 단어로만 설정이 가능하며, 영어, 숫자, 공백, 특수문자는 사용할 수 없습니다. 최대 15자까지 가능합니다.");
       setNickName('');
       return false;
     }
@@ -59,12 +61,13 @@ const ChangeNickNamePage = () => {
               />
           </div>
           <div className="notice">
-            <div>닉네임은 한글 단어로만 설정이 가능합니다.</div>
-            <div>영어, 숫자, 공백, 특수문자는 불가능합니다.</div>
-            <div>최대 15자까지 가능합니다.</div>
+            <div>닉네임은 <span>한글 단어</span>로만 설정이 가능합니다.</div>
+            <div>영어, 숫자, 공백, 특수문자의 사용은 <span>불가능</span>합니다.</div>
+            <div>최대 <span>15자</span>까지 가능합니다.</div>
           </div>
         </div>
       </div>
+      <ToasterMsg/>
     </div>
   )
 }

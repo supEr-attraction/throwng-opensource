@@ -8,6 +8,7 @@ import {
   changeNickNameCouponId,
   levelInfoModal,
   myNickName,
+  pageIdx,
 } from "@store/myPage/atoms";
 import { useEffect } from "react";
 import { useRecoilValue, useResetRecoilState } from "recoil";
@@ -21,11 +22,13 @@ const MyPage = () => {
     changeNickNameCouponId
   );
   const resetLevelInfoModal = useResetRecoilState(levelInfoModal);
+  const resetPageIdx = useResetRecoilState(pageIdx);
 
   useEffect(() => {
     resetLogoutModal();
     resetChangeNickNameCouponId();
     resetLevelInfoModal();
+    resetPageIdx();
   }, []);
 
   return (

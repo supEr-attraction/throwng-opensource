@@ -12,6 +12,7 @@ import { ImVolumeMedium } from "react-icons/im";
 import { ImVolumeMute2 } from "react-icons/im";
 import heic2any from "heic2any";
 import Loading from "@components/Loading";
+import { toastMsg } from "@/utils/toastMsg";
 
 const MusicDropHeader = () => {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -67,9 +68,10 @@ const MusicDropHeader = () => {
       setIsLoading(true);
       let file = e.target.files[0];
       if (file.size > 5000000) {
-        alert("사진의 용량이 너무 커요. 다른 사진을 사용해 주세요.");
+        toastMsg("사진의 용량이 너무 커요. 다른 사진을 사용해 주세요.");
         resetSetImagePreview();
         resetSetUserImageUrl();
+        setIsLoading(false);
         return;
       } else {
         if (file.type === "") {
@@ -89,7 +91,7 @@ const MusicDropHeader = () => {
               );
             }
           } catch (error) {
-            alert(
+            toastMsg(
               "사진의 유형이 올바르지 않습니다. 다른 사진을 사용해 주세요."
             );
             return;
