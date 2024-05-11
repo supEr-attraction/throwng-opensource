@@ -16,7 +16,9 @@ const SearchedWords = () => {
     const encodedSearchKeyword = encodeURIComponent(trimmedKeyword);
 
     setTitle(searchKeyWord);
-    navigate(`/music/search/results?query=${encodedSearchKeyword}`, { replace: true });
+    navigate(`/music/search/results?query=${encodedSearchKeyword}`, {
+      replace: true,
+    });
   };
 
   const deleteWord = (id: number) => {
