@@ -1,8 +1,8 @@
 .MyThrowngHistroyList {
+  padding-top: 1dvh;
   .list-body {
     display: flex;
     flex-direction: column;
-    padding-inline: 1dvh;
     gap: 1dvh;
 
     .result-item {
@@ -10,12 +10,12 @@
       flex-direction: column;
       padding-bottom: 1dvh;
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 0.5dvh;
+      cursor: pointer;
 
       .item-header {
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
-        padding-bottom: 0.5dvh;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -24,11 +24,10 @@
           color: var(--placeholder-color);
           font-size: 1.5dvh;
         }
-             
+
         .item-location {
           display: flex;
-          flex-direction: row;
-          justify-content: end;
+          align-items: center;
           color: var(--main-color);
           font-size: 1.5dvh;
 
@@ -40,12 +39,11 @@
 
       .item {
         display: flex;
-        flex-direction: row;
         align-items: center;
+        gap: 1dvh;
 
         .img-container {
-          padding-right: 10px;
-
+          display: flex;
           img {
             width: 6dvh;
             height: 6dvh;
@@ -54,7 +52,8 @@
         }
 
         .item-detail {
-          width: 80%;
+          overflow: hidden;
+          flex: 1;
 
           .item-title,
           .item-artis,
@@ -71,12 +70,11 @@
 
           .item-artist {
             font-size: 1.4dvh;
-
             color: var(--subtitle-color);
           }
 
           .item-comment {
-            font-size: 1.3dvh;
+            font-size: 1.2dvh;
             color: var(--placeholder-color);
           }
         }
@@ -85,10 +83,10 @@
         background-color: var(--input-box-color);
         border-radius: 1dvh;
       }
-    }
-
-    &:last-child {
-      border-bottom: none;
+      &:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
     }
 
     .no-word-container {
@@ -103,6 +101,7 @@
       width: 100%;
 
       .title {
+        font-size: 2.5dvh;
         font-weight: bold;
       }
 

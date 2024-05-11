@@ -18,6 +18,7 @@
       gap: 1dvh;
 
       .image-container {
+        display: flex;
         cursor: pointer;
         img {
           width: 6dvh;
@@ -76,6 +77,7 @@
     }
     &:last-child {
       border-bottom: none;
+      padding-bottom: 0;
     }
   }
 
