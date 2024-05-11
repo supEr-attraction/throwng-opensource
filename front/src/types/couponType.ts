@@ -10,3 +10,7 @@ export interface quizCoupon {
   couponType: string;
   couponDescription: string;
 }
+
+export interface isQuizCoupon {
+  couponStatus: boolean;
+}

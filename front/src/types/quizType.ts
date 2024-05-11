@@ -20,5 +20,4 @@ export interface QuizResult {
 export interface QuizContent {
   name: string;
   status: boolean;
-  active: boolean;
 }

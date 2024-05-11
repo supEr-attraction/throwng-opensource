@@ -8,12 +8,13 @@ interface QuizOXProps {
   setCanSubmit: (canSubmit: boolean) => void;
   question: string;
   index: number;
+  onUserInput: (input: string) => void;
 }
 
 const QuizOX = ({
+  onUserInput,
   setCanSubmit,
   question,
-
   index,
 }: QuizOXProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -26,6 +27,7 @@ const QuizOX = ({
   const handleAnswerClick = (answer: string) => {
     setSelectedAnswer(answer);
     setCanSubmit(true);
+    onUserInput(answer)
   };
 
   return (

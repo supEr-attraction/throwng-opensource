@@ -1,11 +1,9 @@
 import QuizCountDownLottie from "@components/lottie/QuizCountDownLottie";
-import useQuizRedirect from "@hooks/useQuizRedirect";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const QuizCountDown = () => {
   const navigate = useNavigate()
-  useQuizRedirect();
 
   useEffect(() => {
     const timer = setTimeout(() => {

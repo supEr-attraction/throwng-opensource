@@ -7,6 +7,7 @@ const api = axiosApi();
 const getQuizContent = async (): Promise<QuizContent[]> => {
   try {
     const response = await api.get<QuizContent[]>("/quizzes/contents");
+    // console.log(response.data)
     return response.data;
   } catch (e) {
     if (axios.isAxiosError(e)) {

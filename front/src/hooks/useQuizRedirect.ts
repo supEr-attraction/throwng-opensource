@@ -1,32 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getQuizContent } from "@services/contentApi/ContentApi";
-import { QuizContent } from "@/types/quizType";
+import { getIsCoupon } from "@services/couponApi/IsCouponApi";
 
-const useQuizRedirect = () => {
+export const useCouponAccess = () => {
   const navigate = useNavigate();
-  const [quizStatus, setQuizStatus] = useState<boolean>();
 
   useEffect(() => {
-    const fetchQuizStatus = async () => {
+    const verifyCoupon = async () => {
       try {
-        const data: QuizContent[] = await getQuizContent();
-        const quizData = data.find((content) => content.name === "quiz");
-        setQuizStatus(quizData?.status);
+        const couponData = await getIsCoupon("quiz");
+        if (!couponData.couponStatus) {
+          // 쿠폰 상태가 false일 때만 /quiz/coupon 페이지로 접근 허용
+          navigate("/quiz/coupon", { replace: true });
+        } else {
+          // 그 외의 경우 /content 페이지로 리디렉션
+          navigate("/content", { replace: true });
+        }
       } catch (error) {
-        console.error("Failed to fetch quiz status:", error);
+        console.error("Error during coupon verification:", error);
+        navigate("/content", { replace: true });
       }
     };
 
-    fetchQuizStatus();
-  }, []);
-
-  useEffect(() => {
-    // 퀴즈 막혀있을 때 
-    if (quizStatus) {
-      navigate("/content", { replace: true });
-    }
-  }, [quizStatus, navigate]);
+    verifyCoupon();
+  }, [navigate]);
 };
-
-export default useQuizRedirect;
