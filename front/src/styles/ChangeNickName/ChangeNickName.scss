@@ -71,6 +71,10 @@
         padding: 1dvh;
         color: var(--placeholder-color);
         font-size: 1.6dvh;
+
+        span {
+          color: var(--main-color);
+        }
       }
     }
   }

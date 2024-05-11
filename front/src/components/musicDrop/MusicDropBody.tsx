@@ -8,6 +8,8 @@ import { selectMusic } from "@store/music/drop/atoms";
 import MusicDropBtn from "./MusicDropBtn";
 import "@styles/musicDrop/MusicDropBody.scss";
 import { scrollSongIndex } from "@store/playList/atoms";
+import ToasterMsg from "@components/ToasterMsg";
+import { toastMsg } from "@/utils/toastMsg";
 
 interface Props {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,8 +32,6 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
     if (e.target.value.length <= 50) {
       setText(e.target.value);
       setCount(e.target.value.length);
-    } else {
-      alert("텍스트는 최대 50자까지 입력 가능합니다.");
     }
   };
 
@@ -40,9 +40,8 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
     e.preventDefault();
 
     if (text.trim().length === 0) {
-      alert(
-        "노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
-      );
+      toastMsg("노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요.")
+      setText('')
       setIsLoading(false);
       return;
     }
@@ -63,9 +62,9 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
     const res = await postThrowngMusic(songInfo.youtubeId, requestBody);
 
     if (res === "Song_400_2") {
-      alert("하루 쓰롱 개수를 초과하였습니다.\n내일 다시 쓰롱 해주세요.");
+      alert("하루 쓰롱 개수를 초과하였습니다.\n내일 다시 쓰롱 해주세요");
     } else if (res === "Throw_400_2") {
-      alert("반경 100m 내에는 같은 날 같은 노래를 쓰롱할 수 없어요.");
+      alert("반경 100m 내에는 같은 날, 같은 노래를 쓰롱할 수 없어요");
     }
     resetUserImage();
     resetImagePreview();
@@ -102,6 +101,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
         </div>
         <MusicDropBtn onClick={postThrownSong} btnText="쓰롱하기" />
       </form>
+      <ToasterMsg />
     </div>
   );
 };
