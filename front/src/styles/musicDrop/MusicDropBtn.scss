@@ -1,16 +1,16 @@
 .put-btn-div {
   width: 100%;
-  
+
   .put-btn {
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: var(--main-color);
     color: white;
-    padding: 2.5dvh;
+    height: 6dvh;
     border: none;
     border-radius: 1.5dvh;
-    font-size: 2dvh;
+    font-size: 1.7dvh;
     transition: background-color 0.1s ease;
 
     &:active {

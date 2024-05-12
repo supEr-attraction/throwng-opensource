@@ -1,20 +1,27 @@
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { radiusActiveIdState } from "@store/map/atoms";
+import {
+  couponUsageActiveIdState,
+  radiusActiveIdState,
+} from "@store/map/atoms";
 import {
   musicPickStatusState,
   musicPickMusicInfoState,
 } from "@store/music/pick/selectors";
 import { postMusicPick } from "@services/musicPickApi";
 import MusicComment from "@components/music/pick/MusicComment";
-import youtubeMusic from "@assets/images/youtubeMusic.webp";
+import listenSong from "@/utils/listenSong";
 import "@styles/music/pick/MusicPickDetailBottom.scss";
+import MusicPickBtn from "./MusicPickBtn";
 
 const MusicPickDetailBottom = () => {
   const { throwId, pickupStatus } = useRecoilValue(musicPickStatusState);
   const { title, artist } = useRecoilValue(musicPickMusicInfoState);
   const setRadiusActiveId = useSetRecoilState(radiusActiveIdState);
+  const setCouponUsageActiveIdState = useSetRecoilState(
+    couponUsageActiveIdState
+  );
 
   const navigate = useNavigate();
 
@@ -22,34 +29,28 @@ const MusicPickDetailBottom = () => {
     try {
       await postMusicPick(throwId);
       setRadiusActiveId(null);
+      setCouponUsageActiveIdState(null);
       navigate("/");
     } catch (err) {
       console.error(err);
     }
   };
 
-  const listenSong = () => {
-    const musicName = encodeURIComponent(title);
-    const artistName = encodeURIComponent(artist);
-    const youtubeMusicWebURL = `https://music.youtube.com/search?q=${musicName}-${artistName}`;
-    window.location.href = youtubeMusicWebURL;
-  };
-
   return (
     <div className="MusicPickDetailBottom">
       <MusicComment />
       <div className="bottom">
-        <button className="listen" onClick={listenSong}>
-          <img src={youtubeMusic} alt="" />
-          <div>바로 듣기</div>
-        </button>
-        <button
+        <MusicPickBtn
+          text="바로 듣기"
+          className="listen"
+          onClick={() => listenSong(title, artist)}
+        />
+        <MusicPickBtn
+          text="줍기"
           className={`pick ${pickupStatus && "disable"}`}
           onClick={pickMusic}
           disabled={pickupStatus}
-        >
-          줍기
-        </button>
+        />
       </div>
     </div>
   );
