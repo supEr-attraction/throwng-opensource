@@ -12,7 +12,7 @@
   }
 }
 
-.QuizMainPage {
+.MemoryMainPage {
   padding: 2vh;
   height: 93vh;
   display: flex;
@@ -32,7 +32,7 @@
     }
 
     img {
-      width: 40vh;
+      width: 30vh;
       opacity: 0;
       animation: popIn 0.6s ease-out forwards;
       animation-delay: 0.2s;
@@ -42,7 +42,7 @@
     border-radius: 2vh;
     background-color: rgba(123, 102, 255, 0.1);
     width: 90%;
-    height: 30vh;
+    height: 20vh;
     margin-top: 3dvh;
     display: flex;
     align-items: center;
@@ -54,7 +54,8 @@
       word-break: keep-all;
       text-align: center;
       padding: 2vh;
-      font-size: 3vh;
+      font-size: 2.5vh;
+
     }
   }
 

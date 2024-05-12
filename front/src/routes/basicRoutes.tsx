@@ -1,6 +1,12 @@
 import { lazy } from "react";
 import PrivateRoute from "@components/PrivateRoute";
 import Error404 from "@pages/Error404";
+import MemoryTestPage from "@pages/game/MemoryTestPage";
+
+import MemoryInfoPage from "@pages/game/MemoryInfoPage";
+import MemoryMainPage from "@pages/game/MemoryMainPage";
+import MemoryCouponPage from "@pages/game/MemoryCouponPage";
+import MemorySuccessPage from "@pages/game/MemorySuccessPage";
 const HomePage = lazy(() => import("@pages/HomePage"));
 const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
@@ -132,6 +138,40 @@ export default {
           element: <QuizClosePage />,
         },
       ],
+    },
+    {
+      path: "hammer",
+      children: [
+        {
+          path: "main",
+          
+        },
+      ]
+    },
+    {
+      path: "memory",
+      children: [
+        {
+          path: "main",
+          element: <MemoryMainPage />
+        },
+        {
+          path: "info",
+          element: <MemoryInfoPage />
+        },
+        {
+          path: "game",
+          element: <MemoryTestPage />
+        },
+        {
+          path: "success",
+          element: <MemorySuccessPage />
+        },
+        {
+          path: "coupon",
+          element: <MemoryCouponPage />
+        },
+      ]
     },
     { path: "none-permission", element: <NonePermissionPage /> },
   ],
