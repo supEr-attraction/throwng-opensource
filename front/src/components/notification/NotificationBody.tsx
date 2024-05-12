@@ -4,14 +4,14 @@ import { NoticeType } from "../../types/noticeType";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getMyNotice } from "@services/myPageHistoryApi/MyPageHistoryApi";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ko");
 
 const NotificationBody = () => {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [noticeList, setNoticeList] = useState<NoticeType[]>([]);
 
   useEffect(() => {
@@ -21,16 +21,24 @@ const NotificationBody = () => {
 
   const fetchGetMyNotice = async () => {
     const res = await getMyNotice();
-    setNoticeList(res)
-  }
+    const updatedNotices = res.map(notice => {
+      const url = new URL(notice.link);
+      const path = url.pathname;
+      return {
+        ...notice,
+        link: path,
+      };
+    });
+    setNoticeList(updatedNotices);
+  };
 
   const formatDistanceToNow = (dateString: string) => {
     return dayjs(dateString).fromNow();
   };
 
-  // const goQuiz = (index: number) => {
-  //   navigate(`/quiz/${index}`, { replace: true });
-  // };
+  const goQuiz = (link: string) => {
+    navigate(link);
+  };  
 
   return (
     <div className="NotificationBody">
@@ -39,15 +47,15 @@ const NotificationBody = () => {
           <div
             className="body"
             key={index}
-            // onClick={() => goQuiz(notice.quizId)}
+            onClick={() => goQuiz(notice.link)}
           >
             <div className="header">
-              <div className="category">퀴즈/이벤트</div>
+              <div className="category">{notice.category}</div>
               <div className="date">{formatDistanceToNow(notice.date)}</div>
             </div>
-            <div className="title">매일 30분만 열리는 깜짝 퀴즈 타임!</div>
+            <div className="title">{notice.title}</div>
             <div className="sub-title">
-              문제를 다 맞추면 특별한 랜덤박스를 지급해 드려요 (선착순)
+              {notice.body}
             </div>
           </div>
         ))

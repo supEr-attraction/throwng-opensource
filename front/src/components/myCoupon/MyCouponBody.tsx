@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { changeNickNameCouponId } from '@store/myPage/atoms';
 import Loading from '@components/Loading';
+import ToasterMsg from '@components/ToasterMsg';
+import { toastMsg } from '@/utils/toastMsg';
 
 const MyCouponBody = () => {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
@@ -26,25 +28,42 @@ const MyCouponBody = () => {
   }
 
   const handleChangeApply = async (couponId: number) => {
-    const isConfirmed = window.confirm("쿠폰을 적용하시겠습니까?");
+    const selectedCoupon = coupons.find(coupon => coupon.couponId === couponId);
+    if (!selectedCoupon) return;
+
+    const isConfirmed = window.confirm(`${selectedCoupon.couponName}을 적용하시겠어요?`);
     if (isConfirmed) {
-      const selectedCoupon = coupons.find(coupon => coupon.couponId === couponId);
-      if (!selectedCoupon) return;
       if (selectedCoupon.couponName === "닉네임 변경 쿠폰") {
-        setChangeNickNameCouponId(selectedCoupon.couponId)
+        setChangeNickNameCouponId(selectedCoupon.couponId);
         navigate('/user/mypage/change-nickname');
         return;
       }
+  
       const isCouponInUse = coupons.some(coupon => coupon.couponName === selectedCoupon.couponName && coupon.couponStatus === "사용 중");
       if (isCouponInUse) {
-        alert("이미 같은 쿠폰을 사용중입니다.");
+        toastMsg("동일한 쿠폰을 사용중이에요");
         return;
       }
-      await postMyCoupon(couponId);
+  
+      const throwngTypes = ['THROWNG_INF', 'THROWNG_TWICE', 'THROWNG_LEVEL', 'THROWNG_FIVE'];
+      if (throwngTypes.includes(selectedCoupon.couponType)) {
+        const isSameTypeCouponInUse = coupons.some(coupon => throwngTypes.includes(coupon.couponType) && coupon.couponStatus === "사용 중");
+        if (isSameTypeCouponInUse) {
+          toastMsg("같은 유형의 쿠폰을 사용중이에요");
+          return;
+        }
+      }
+  
+      const requestBody = {
+        'couponId': couponId,
+        'couponType': selectedCoupon.couponType,
+      }
+  
+      await postMyCoupon(requestBody);
       fetchGetMyCoupon();
     }
   };
-
+  
   return (
     <div className="MyCouponBody">
       {isLoading ? (
@@ -83,6 +102,7 @@ const MyCouponBody = () => {
             </div>
           </div>
         )}
+      <ToasterMsg/>
     </div>
   );
 };
