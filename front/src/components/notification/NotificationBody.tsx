@@ -45,7 +45,7 @@ const NotificationBody = () => {
       {noticeList.length > 0 ? (
         noticeList.map((notice, index) => (
           <div
-            className="body"
+            className="notice-body"
             key={index}
             onClick={() => goQuiz(notice.link)}
           >
