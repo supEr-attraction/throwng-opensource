@@ -26,6 +26,7 @@ const ChangeNickNamePage = () => {
     const requestBody = {
       'couponId':changeNickNameCouponIdValue,
       'nickName':nickName,
+      'couponType':"NICKNAME",
     }
 
     if (regex.test(nickName)) {

@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { MdOutlineClear } from "react-icons/md";
 import "@/styles/musicSearch/MusicSearchInput.scss";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -9,7 +8,6 @@ import ToasterMsg from "@components/ToasterMsg";
 import { toastMsg } from "@/utils/toastMsg";
 
 const MusicSearchInput = () => {
-  const inputEl = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const setWords = useSetRecoilState<SearchedWordsList[]>(searchedWords);
   const [title, setTitle] = useRecoilState(inputSearchKeyWord);
@@ -62,7 +60,6 @@ const MusicSearchInput = () => {
         <div className="input-div">
           <input
             className="input"
-            ref={inputEl}
             type="text"
             placeholder="쓰롱 할 음악을 검색하세요"
             value={title}

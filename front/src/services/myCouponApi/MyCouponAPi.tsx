@@ -1,12 +1,12 @@
 import { axiosApi } from "@/utils/common";
-import { Coupon } from "../../types/couponType";
+import { ApplyCoupon, Coupon } from "../../types/couponType";
 import { changeNickNameCoupon } from "../../types/myPage";
 
 const api = axiosApi();
 
-const postMyCoupon = async (couponId:number) => {
+const postMyCoupon = async (requestBody:ApplyCoupon) => {
   try {
-    const { data } = await api.post(`/users/user/coupon/${couponId}`);
+    const { data } = await api.post(`/users/user/coupon`, requestBody);
     return data;
   } catch (e) {
     console.log(e);
