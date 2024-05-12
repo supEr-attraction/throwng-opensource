@@ -1,8 +1,6 @@
 .MyPageMenu {
   .menu-body {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
 
     .menu-item {
       display: flex;
@@ -10,6 +8,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      flex: 1;
 
       svg {
         font-size: 3dvh;
