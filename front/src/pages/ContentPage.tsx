@@ -2,7 +2,7 @@ import Header from "@components/Header";
 import "@/styles/Content.scss";
 import logo from "@/assets/images/backlogo.webp";
 import hammer from "@/assets/images/Hammer.webp";
-import game2 from "@/assets/images/Rockpaperscissors.webp";
+import memory from "@/assets/images/memory.webp"
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getQuizContent } from "@services/contentApi/ContentApi";
@@ -36,6 +36,10 @@ const ContentPage = () => {
     navigate("/quiz/main");
   };
 
+  const handleGoMemory = () => {
+    navigate("/memory/main")
+  }
+
   if (loading) {
     return (
       <div>
@@ -68,7 +72,7 @@ const ContentPage = () => {
               </div>
             )
         )}
-        <div className="game1-border">
+        <div className="game1-border" >
           <div className="game1-title">
             <p>리듬게임</p>
             <div className="participation">
@@ -79,15 +83,15 @@ const ContentPage = () => {
             <img src={hammer} alt="game1" />
           </div>
         </div>
-        <div className="game2-border">
+        <div className="game2-border" onClick={handleGoMemory}>
           <div className="game2-title">
-            <p>가위바위보?</p>
+            <p>기억력 측정</p>
             <div className="participation">
               <p>준비중</p>
             </div>
           </div>
           <div>
-            <img src={game2} alt="game2" />
+            <img src={memory} alt="game2" />
           </div>
         </div>
       </div>
