@@ -53,7 +53,7 @@ const QuizCouponPage = () => {
   }
 
   const handleGoMypage = () => {
-    navigate("/user/mypage", { replace: true });
+    navigate("/user/mycoupons", { replace: true });
   };
 
   const couponImages: { [key: string]: string } = {
@@ -63,7 +63,7 @@ const QuizCouponPage = () => {
     "레벨만큼 추가 쓰롱 쿠폰": coupon6,
     "쓰롱 5개 추가 쿠폰": coupon1,
     "닉네임 변경 쿠폰": coupon4,
-    꽝: boom,
+    "꽝": boom,
     "물음표 음악 조회 쿠폰": coupon7,
   };
 
