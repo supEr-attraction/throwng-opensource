@@ -2,7 +2,7 @@ import { GOOGLE_MAPS_LIBRARIES } from "@constants/map";
 import { LoadScriptNext } from "@react-google-maps/api";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
-  addressState,
+  myAddressState,
   centerState,
   locationState,
   mapCenterAddressState,
@@ -38,7 +38,7 @@ const LoadMap = ({ map, setMap, tilesLoaded, setTilesLoaded }: Props) => {
   const setZoomLevel = useSetRecoilState(zoomLevelState);
   const center = useRecoilValue(centerState);
   const setLocation = useSetRecoilState(locationState);
-  const [address, setAddress] = useRecoilState(addressState);
+  const [myAddress, setMyAddress] = useRecoilState(myAddressState);
   const [markers, setMarkers] = useRecoilState(markersState);
   const [mapCenterAddress, setMapCenterAddress] = useRecoilState(
     mapCenterAddressState
@@ -52,8 +52,8 @@ const LoadMap = ({ map, setMap, tilesLoaded, setTilesLoaded }: Props) => {
       try {
         const data = await postAddress(position);
         if (type === "myLocation") {
-          if (address.code !== data.code) {
-            setAddress(data);
+          if (myAddress.code !== data.code) {
+            setMyAddress(data);
           }
         } else {
           if (mapCenterAddress.code !== data.code) {
@@ -64,7 +64,7 @@ const LoadMap = ({ map, setMap, tilesLoaded, setTilesLoaded }: Props) => {
         console.error(err);
       }
     },
-    [mapCenterAddress, address]
+    [mapCenterAddress, myAddress]
   );
 
   const updateMyLocation = useCallback(

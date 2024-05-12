@@ -12,13 +12,18 @@ export const markersState = atom<Marker[]>({
   default: [],
 });
 
-export const activeMarkerState = atom<number | null>({
-  key: "activeMarkerState",
+export const radiusActiveIdState = atom<number | null>({
+  key: "radiusActiveIdState",
   default: null,
 });
 
-export const addressState = atom<Address>({
-  key: "addressState",
+export const couponUsageActiveIdState = atom<number | null>({
+  key: "couponUsageActiveIdState",
+  default: null,
+});
+
+export const myAddressState = atom<Address>({
+  key: "myAddressState",
   default: { code: "", regionName: "" },
   effects_UNSTABLE: [persistAtom],
 });

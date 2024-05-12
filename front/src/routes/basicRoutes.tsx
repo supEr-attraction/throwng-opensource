@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import PrivateRoute from "@components/PrivateRoute";
+import Error404 from "@pages/Error404";
 const HomePage = lazy(() => import("@pages/HomePage"));
 const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
@@ -21,7 +22,6 @@ const QuizFailPage = lazy(() => import("@pages/quiz/QuizFailPage"));
 const QuizInfoPage = lazy(() => import("@pages/quiz/QuizInfoPage"));
 const QuizSolvePage = lazy(() => import("@pages/quiz/QuizSolvePage"));
 const QuizSuccessPage = lazy(() => import("@pages/quiz/QuizSuccessPage"));
-const Error404 = lazy(() => import("@pages/Error404"));
 
 export default {
   path: "/",

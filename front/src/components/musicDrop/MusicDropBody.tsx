@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { useRecoilValue, useResetRecoilState } from "recoil";
-import { addressState, locationState } from "@store/map/atoms";
+import { myAddressState, locationState } from "@store/map/atoms";
 import { postThrowngMusic } from "@services/musicSearchApi/MusicSearchApi";
 import { musicDropImage, userImageURL } from "@store/musicSearch/atoms";
 import { useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
   const [text, setText] = useState("");
   const inputEl = useRef<HTMLTextAreaElement>(null);
   const myLocation = useRecoilValue(locationState);
-  const myAddress = useRecoilValue(addressState);
+  const myAddress = useRecoilValue(myAddressState);
   const imageUrl = useRecoilValue(userImageURL);
   const navigate = useNavigate();
   const songInfo = useRecoilValue(selectMusic);
@@ -40,8 +40,10 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
     e.preventDefault();
 
     if (text.trim().length === 0) {
-      toastMsg("노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요.")
-      setText('')
+      toastMsg(
+        "노래, 현재 감정, 상황, 관련 에피소드, 거리, 가수 등 떠오르는 말을 적어보세요."
+      );
+      setText("");
       setIsLoading(false);
       return;
     }
@@ -95,8 +97,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
             <div className="input-count">{count}/50</div>
           </div>
           <div className="warning-msg">
-            사진은 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은
-            삭제됩니다.
+            사진은 생략이 가능하며 욕설, 성희롱, 비방과 같은 내용은 삭제됩니다.
           </div>
         </div>
         <MusicDropBtn onClick={postThrownSong} btnText="쓰롱하기" />

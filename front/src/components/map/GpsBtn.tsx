@@ -2,6 +2,7 @@ import { centerState, locationState, zoomLevelState } from "@store/map/atoms";
 import { memo, useCallback } from "react";
 import { MdMyLocation } from "react-icons/md";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import "@styles/map/GpsBtn.scss";
 
 interface Props {
   map: google.maps.Map | null;
@@ -13,9 +14,8 @@ const GpsBtn = ({ map }: Props) => {
   const [center, setCenter] = useRecoilState(centerState);
 
   const returnMyLocation = useCallback(() => {
-    if (!center && map) {
+    if (map && !center) {
       const zoom = map.getZoom() ?? 15;
-      console.log(zoom);
       if (zoom < 15) {
         map.setZoom(15);
         setZoomLevel(15);
@@ -27,7 +27,7 @@ const GpsBtn = ({ map }: Props) => {
 
   return (
     <div className="GpsBtn" onClick={returnMyLocation}>
-      <MdMyLocation className={`${center ? "centered" : "not-centered"}`} />
+      <MdMyLocation className={center ? "centered" : "not-centered"} />
     </div>
   );
 };
