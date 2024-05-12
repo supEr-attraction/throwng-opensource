@@ -1,37 +1,55 @@
 import { memo, useCallback } from "react";
 import { OverlayViewF } from "@react-google-maps/api";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { activeMarkerState, locationState } from "@store/map/atoms";
+import {
+  radiusActiveIdState,
+  couponUsageActiveIdState,
+  locationState,
+} from "@store/map/atoms";
 import { Marker } from "../../types/mapType";
 import { toastMsg } from "@/utils/toastMsg";
 import getDistance from "@/utils/map/fetchDistance";
 import whitePin from "@assets/images/whitePin.webp";
 import purplePin from "@assets/images/purplePin.webp";
-import { isActiveState } from "@store/map/selectors";
+import {
+  isActiveOutsideState,
+  isActiveInsideState,
+} from "@store/map/selectors";
+import { getCheckRadiusCoupon } from "@services/mapAPi";
 
 interface Props {
   marker: Marker;
 }
 
 const MusicMarkerItem = ({ marker }: Props) => {
-  // const [activeMarkerId, setActiveMarkerId] = useRecoilState(activeMarkerState);
-  const setActiveMarkerId = useSetRecoilState(activeMarkerState);
+  const setRadiusActiveId = useSetRecoilState(radiusActiveIdState);
+  const setCouponUsageActiveId = useSetRecoilState(couponUsageActiveIdState);
+  const isActiveInside = useRecoilValue(isActiveInsideState(marker.itemId));
+  const isActiveOutside = useRecoilValue(isActiveOutsideState(marker.itemId));
   const location = useRecoilValue(locationState);
 
-  // const isActive = marker.itemId === activeMarkerId;
-  const isActive = useRecoilValue(isActiveState(marker.itemId));
+  const handleMarkerClick = useCallback(async () => {
+    try {
+      const distance = getDistance(
+        { lat: marker.latitude, lng: marker.longitude },
+        location
+      );
 
-  const handleMarkerClick = useCallback(() => {
-    const distance = getDistance(
-      { lat: marker.latitude, lng: marker.longitude },
-      location
-    );
+      const data = await getCheckRadiusCoupon();
 
-    if (distance <= 600) {
-      setActiveMarkerId(marker.itemId);
-    } else {
-      toastMsg("반경 밖 음악을 듣고 싶다면 위치를 이동해 보세요!");
-      setActiveMarkerId(null);
+      if (distance <= 600) {
+        setRadiusActiveId(marker.itemId);
+      } else {
+        if (data) {
+          setCouponUsageActiveId(marker.itemId);
+        } else {
+          toastMsg("반경 밖 음악을 듣고 싶다면 위치를 이동해 보세요!");
+          setRadiusActiveId(null);
+        }
+      }
+    } catch (error) {
+      console.error("Error checking coupon availability:", error);
+      toastMsg("잠시 후 다시 이용해 주세요");
     }
   }, [marker, location]);
 
@@ -48,7 +66,7 @@ const MusicMarkerItem = ({ marker }: Props) => {
     >
       <div className="MusicMarkerItem" onClick={handleMarkerClick}>
         <img
-          src={isActive ? purplePin : whitePin}
+          src={isActiveInside || isActiveOutside ? purplePin : whitePin}
           alt="Custom Overlay"
           style={{ width: "30px", height: "35px" }}
           loading="lazy"

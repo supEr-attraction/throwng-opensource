@@ -6,19 +6,17 @@
 
     .menu-item {
       display: flex;
+      gap: 0.5dvh;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 13dvh;
-      height: 10dvh;
 
       svg {
-        margin: 1dvh;
-        font-size: 3.5dvh;
+        font-size: 3dvh;
       }
 
       .desc {
-        font-size: 1.7dvh;
+        font-size: 1.5dvh;
       }
 
       &:active {

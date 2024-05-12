@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useRecoilValue } from "recoil";
 import {
-  addressState,
+  myAddressState,
   centerState,
   mapCenterAddressState,
 } from "@store/map/atoms";
@@ -14,12 +14,12 @@ interface Props {
 }
 
 const MapHeader = ({ map }: Props) => {
-  const address = useRecoilValue(addressState);
+  const myAddress = useRecoilValue(myAddressState);
   const mapCenterAddress = useRecoilValue(mapCenterAddressState);
   const center = useRecoilValue(centerState);
 
   const currentAddress = center
-    ? address.regionName
+    ? myAddress.regionName
     : mapCenterAddress.regionName;
 
   return (

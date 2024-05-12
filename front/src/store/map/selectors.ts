@@ -1,13 +1,14 @@
 import fetchDistance from "@/utils/map/fetchDistance";
 import {
-  activeMarkerState,
+  radiusActiveIdState,
+  couponUsageActiveIdState,
   locationState,
   markersState,
 } from "@store/map/atoms";
 import { selector, selectorFamily } from "recoil";
 
-export const markerRadiusState = selector({
-  key: "markerRadiusState",
+export const insideRadiusMarkerState = selector({
+  key: "insideRadiusMarkerState",
   get: ({ get }) => {
     const markers = get(markersState);
     const location = get(locationState);
@@ -22,23 +23,44 @@ export const markerRadiusState = selector({
   },
 });
 
-export const initialSlideState = selector({
-  key: "initialSlideState",
+export const outsideRadiusMarkerState = selector({
+  key: "outsideRadiusMarkerState",
   get: ({ get }) => {
-    const markers = get(markerRadiusState);
-    const active = get(activeMarkerState);
+    const markers = get(markersState);
+    const couponUsageActiveId = get(couponUsageActiveIdState);
 
-    return markers.findIndex((marker) => marker.itemId === active);
+    return markers.filter((marker) => marker.itemId === couponUsageActiveId);
   },
 });
 
-export const isActiveState = selectorFamily({
-  key: "isActiveState",
+export const initialSlideState = selector({
+  key: "initialSlideState",
+  get: ({ get }) => {
+    const markers = get(insideRadiusMarkerState);
+    const activeId = get(radiusActiveIdState);
+
+    return markers.findIndex((marker) => marker.itemId === activeId);
+  },
+});
+
+export const isActiveInsideState = selectorFamily({
+  key: "isActiveInsideState",
   get:
     (id) =>
     ({ get }) => {
-      const active = get(activeMarkerState);
+      const activeId = get(radiusActiveIdState);
 
-      return active === id;
+      return activeId === id;
+    },
+});
+
+export const isActiveOutsideState = selectorFamily({
+  key: "isActiveOutsideState",
+  get:
+    (id) =>
+    ({ get }) => {
+      const activeId = get(couponUsageActiveIdState);
+
+      return activeId === id;
     },
 });

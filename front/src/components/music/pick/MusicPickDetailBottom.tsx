@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue, useResetRecoilState } from "recoil";
-import { activeMarkerState } from "@store/map/atoms";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { radiusActiveIdState } from "@store/map/atoms";
 import {
   musicPickStatusState,
   musicPickMusicInfoState,
@@ -14,14 +14,14 @@ import "@styles/music/pick/MusicPickDetailBottom.scss";
 const MusicPickDetailBottom = () => {
   const { throwId, pickupStatus } = useRecoilValue(musicPickStatusState);
   const { title, artist } = useRecoilValue(musicPickMusicInfoState);
-  const resetActiveMarkerId = useResetRecoilState(activeMarkerState);
+  const setRadiusActiveId = useSetRecoilState(radiusActiveIdState);
 
   const navigate = useNavigate();
 
   const pickMusic = async () => {
     try {
       await postMusicPick(throwId);
-      resetActiveMarkerId();
+      setRadiusActiveId(null);
       navigate("/");
     } catch (err) {
       console.error(err);
