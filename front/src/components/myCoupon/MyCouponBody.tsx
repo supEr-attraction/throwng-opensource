@@ -71,8 +71,8 @@ const MyCouponBody = () => {
       ) 
       : coupons.length > 0 ? (
           coupons.map((coupon) => {
-            const daysLeft = dayjs(coupon.couponEndDate).diff(dayjs(), 'day');
-            const isExpiring = daysLeft <= 5;
+            const daysLeft = Math.ceil(dayjs(coupon.couponEndDate).diff(dayjs(), 'day', true));
+            const isExpiring = daysLeft <= 1;
             return (
               <div key={coupon.couponId} className="coupon-body">
                 <div className="coupon-header">
