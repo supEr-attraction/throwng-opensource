@@ -1,0 +1,10 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /quizzes
+
+spring:
+  config:
+    import: optional:configserver:http://throwng:458859@back-config:8088
+  application:
+    name: quiz
