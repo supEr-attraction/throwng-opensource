@@ -87,7 +87,7 @@ const ContentPage = () => {
           <div className="game2-title">
             <p>기억력 측정</p>
             <div className="participation">
-              <p>준비중</p>
+              <p>ON</p>
             </div>
           </div>
           <div>
