@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  back-quiz:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROFILE: prod
+    ports:
+      - '8095:8095'
+
+networks:
+  default:
+    external:
+      name: connect-default
