@@ -2,14 +2,14 @@ import { axiosApi } from "@/utils/common";
 
 const api = axiosApi();
 
-const getMyOtp = async (): Promise<string> => {
+const getMyOtp = async () => {
   try {
     const { data } = await api.get<string>(`/users/watch/otp`);
-    return data;
+    return { data };
   } catch (e) {
-    console.log(e);
     throw e;
   }
 };
+
 
 export { getMyOtp };
