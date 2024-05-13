@@ -7,6 +7,7 @@ import MemoryInfoPage from "@pages/game/MemoryInfoPage";
 import MemoryMainPage from "@pages/game/MemoryMainPage";
 import MemoryCouponPage from "@pages/game/MemoryCouponPage";
 import MemorySuccessPage from "@pages/game/MemorySuccessPage";
+import MoleGamePage from "@pages/game/MoleGamePage";
 const HomePage = lazy(() => import("@pages/HomePage"));
 const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
@@ -140,11 +141,11 @@ export default {
       ],
     },
     {
-      path: "hammer",
+      path: "mole",
       children: [
         {
-          path: "main",
-          
+          path: "game",
+          element: <MoleGamePage />
         },
       ]
     },

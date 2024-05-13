@@ -36,6 +36,10 @@ const ContentPage = () => {
     navigate("/quiz/main");
   };
 
+  const handleGoMole = () => {
+    navigate("/mole/game")
+  }
+
   const handleGoMemory = () => {
     navigate("/memory/main")
   }
@@ -72,7 +76,7 @@ const ContentPage = () => {
               </div>
             )
         )}
-        <div className="game1-border" >
+        <div className="game1-border" onClick={handleGoMole}>
           <div className="game1-title">
             <p>리듬게임</p>
             <div className="participation">
