@@ -12,20 +12,6 @@ interface Props {
 const PlayListDirectListenModal = ({ song }: Props) => {
   const setSpeedModal = useSetRecoilState(speedListenModal);
 
-  // const listenSong = (song: Content) => {
-  //   const musicName = encodeURIComponent(song.title);
-  //   const artistName = encodeURIComponent(song.artist);
-  //   const youtubeMusicAppURL = `youtubemusic://search?q=${musicName}-${artistName}`;
-  //   const youtubeMusicWebURL = `https://music.youtube.com/search?q=${musicName}-${artistName}`;
-
-  //   console.log(1);
-  //   window.location.href = youtubeMusicAppURL;
-
-  //   setTimeout(() => {
-  //     console.log(2);
-  //     window.location.href = youtubeMusicWebURL;
-  //   }, 1500);
-  // };
 
   return (
     <div className="PlayListDirectListenModal">
