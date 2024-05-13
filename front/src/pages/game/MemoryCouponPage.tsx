@@ -19,6 +19,12 @@ const MemoryCouponPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const memoryCompleted = sessionStorage.getItem("cleared");
+    if (!memoryCompleted) {
+      navigate("/content", { replace: true });
+      return;
+    }
+
     const fetchCoupon = async () => {
       setLoading(true);
       try {

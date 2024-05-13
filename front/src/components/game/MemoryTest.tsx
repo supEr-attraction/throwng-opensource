@@ -55,6 +55,7 @@ function MemoryTest() {
     setGameClear(true);
     setStart(false);
     setRoundRunning(false);
+    sessionStorage.setItem('cleared', 'true');
     navigate("/memory/success", { replace: true });
   }, [navigate]);
 
