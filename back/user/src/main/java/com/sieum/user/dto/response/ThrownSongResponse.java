@@ -30,4 +30,7 @@ public class ThrownSongResponse {
 
     @Schema(description = "location")
     private String location;
+
+    @Schema(description = "otherPickedCount")
+    private long otherPickedCount;
 }

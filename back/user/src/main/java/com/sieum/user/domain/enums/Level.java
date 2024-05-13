@@ -11,14 +11,15 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum Level {
-    EARPHONES("EARPHONES", 1),
-    BUDS("BUDS", 2),
-    BUDS_PRO("BUDS_PRO", 3),
-    VVIP("VVIP", 4);
+    EARPHONES("EARPHONES", 1, 5),
+    BUDS("BUDS", 2, 10),
+    BUDS_PRO("BUDS_PRO", 3, 20),
+    VVIP("VVIP", 4, 1000);
 
     private String value;
 
     @JsonValue private final int number;
+    private final int count;
 
     public static Level getLevel(String value) {
         return Arrays.stream(Level.values())
@@ -33,5 +34,13 @@ public enum Level {
 
     public int getNumber() {
         return number;
+    }
+
+    public static int getCount(String value) {
+        return getLevel(value).getCount();
+    }
+
+    public int getCount() {
+        return count;
     }
 }

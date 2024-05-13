@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  back-user:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROFILE: dev
+    ports:
+      - '8096:8096'
+
+networks:
+  default:
+    external:
+      name: connect-default
