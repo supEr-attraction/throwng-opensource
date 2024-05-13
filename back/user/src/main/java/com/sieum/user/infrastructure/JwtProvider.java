@@ -1,7 +1,10 @@
 package com.sieum.user.infrastructure;
 
+import static com.sieum.user.common.CustomExceptionStatus.NOT_AUTHENTICATED_ACCOUNT;
+
 import com.sieum.user.dto.MemberTokens;
-import com.sieum.user.exception.UnAuthorizedException;
+import com.sieum.user.exception.BadRequestException;
+import com.sieum.user.util.RedisUtil;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import java.nio.charset.StandardCharsets;
@@ -32,6 +35,7 @@ public class JwtProvider {
     private Long refreshExpirationTime;
 
     private final UserDetailsService userDetailsService;
+    private RedisUtil redisUtil;
 
     public JwtProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -40,6 +44,13 @@ public class JwtProvider {
     public MemberTokens generateLoginToken(final String socialId, final String subject) {
         final String refreshToken = createToken(socialId, "refreshToken", refreshExpirationTime);
         final String accessToken = createToken(socialId, "accessToken", accessExpirationTime);
+        return new MemberTokens(refreshToken, accessToken);
+    }
+
+    public MemberTokens generateTokenForWatch(final String socialId) {
+        final String refreshToken =
+                createToken(socialId, "watchRefreshToken", refreshExpirationTime);
+        final String accessToken = createToken(socialId, "watchAccessToken", accessExpirationTime);
         return new MemberTokens(refreshToken, accessToken);
     }
 
@@ -97,7 +108,7 @@ public class JwtProvider {
                             .parseClaimsJws(authorization);
         } catch (Exception e) {
             log.error(e.getMessage());
-            throw new UnAuthorizedException();
+            throw new BadRequestException(NOT_AUTHENTICATED_ACCOUNT);
         }
         Map<String, Object> value = claims.getBody();
         log.info("value: {}", value);
@@ -107,5 +118,53 @@ public class JwtProvider {
     private Key getSigningKey(String secretKey) {
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    private Claims extractAllClaims(String token) throws ExpiredJwtException {
+        return Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String generateAccessToken(String socialId, String platform) {
+        return createToken(socialId, platform, accessExpirationTime);
+    }
+
+    public String generateRefreshToken(String socialId, String platform) {
+        return createToken(socialId, platform, refreshExpirationTime);
+    }
+
+    public Date getExpiredTime(String token) {
+        return extractAllClaims(token).getExpiration();
+    }
+
+    private void storeRefreshToken(String key, String value) {
+        redisUtil.setDataExpire(key, value, refreshExpirationTime.intValue());
+    }
+
+    public String issueRefreshToken(String id, String platform) {
+        String refreshToken = generateRefreshToken(id, platform);
+        storeRefreshToken(id, refreshToken);
+        return refreshToken;
+    }
+
+    public MemberTokens reissue(String id, String platform, String refreshToken) {
+        String accessToken = generateAccessToken(id, platform);
+
+        Date expiredTime = getExpiredTime(refreshToken);
+        Date currentTime = new Date();
+        if (expiredTime.getTime() - currentTime.getTime() < (refreshExpirationTime / 2)) {
+            refreshToken = issueRefreshToken(id, platform);
+        } else {
+            refreshToken = null;
+        }
+
+        return new MemberTokens(refreshToken, accessToken);
+    }
+
+    public int getRefreshTokenExpiryDate() {
+        return Integer.parseInt(String.valueOf(refreshExpirationTime));
     }
 }
