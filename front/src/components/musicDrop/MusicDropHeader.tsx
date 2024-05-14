@@ -96,7 +96,12 @@ const MusicDropHeader = () => {
             return;
           }
         }
-        const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jpg'];
+        const allowedTypes = [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/jpg",
+        ];
         if (!allowedTypes.includes(file.type)) {
           toastMsg("이미지만 업로드 할 수 있어요.");
           setIsLoading(false);
@@ -109,61 +114,68 @@ const MusicDropHeader = () => {
       setIsLoading(false);
     }
   };
-  
+
   return (
     <div className="MusicDropHeader">
       <img className="album-image" src={songInfo.albumImage} alt="" />
       <div className="cover">
         <div className="black-cover" />
         <div className="black-gradient" />
-        <div className="content">
-          <div className="header">
-            <Header />
-            {songInfo.previewUrl && (
-              <div className="volume" onClick={handleChangeBgm}>
-                {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
-                <audio ref={audioRef} src={songInfo.previewUrl}></audio>
-              </div>
-            )}
-          </div>
-          <div className="content-bottom">
-            <div className="info">
-              <div className={`title`}>
-                <div
-                  ref={textRef}
-                  className={`scrolling-text ${
-                    isScrollNeeded ? "animated" : ""
-                  }`}
-                >
-                  {songInfo.title}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="content">
+            <div className="header">
+              <Header />
+              {songInfo.previewUrl && (
+                <div className="volume" onClick={handleChangeBgm}>
+                  {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
+                  <audio ref={audioRef} src={songInfo.previewUrl}></audio>
                 </div>
-              </div>
-              <div className="artist">{songInfo.artist}</div>
+              )}
             </div>
-            {isLoading ? (
-              <Loading />
-            ) : (
-              <div className="upload-image-div" onClick={handleFileButtonClick}>
-                <img
-                  src={imagePreview || whiteBox}
-                  alt=""
-                  className="upload-image"
-                  onError={(e) => {
-                    e.currentTarget.src = whiteBox;
-                  }}
-                />
-                {!imagePreview && <IoCloudUploadOutline />}
+            <div className="content-bottom">
+              <div className="info">
+                <div className={`title`}>
+                  <div
+                    ref={textRef}
+                    className={`scrolling-text ${
+                      isScrollNeeded ? "animated" : ""
+                    }`}
+                  >
+                    {songInfo.title}
+                  </div>
+                </div>
+                <div className="artist">{songInfo.artist}</div>
               </div>
-            )}
-            <input
-              type="file"
-              ref={fileRef}
-              hidden={true}
-              onChange={handleFileChange}
-              className="image-input"
-            />
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <div
+                  className="upload-image-div"
+                  onClick={handleFileButtonClick}
+                >
+                  <img
+                    src={imagePreview || whiteBox}
+                    alt=""
+                    className="upload-image"
+                    onError={(e) => {
+                      e.currentTarget.src = whiteBox;
+                    }}
+                  />
+                  {!imagePreview && <IoCloudUploadOutline />}
+                </div>
+              )}
+              <input
+                type="file"
+                ref={fileRef}
+                hidden={true}
+                onChange={handleFileChange}
+                className="image-input"
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

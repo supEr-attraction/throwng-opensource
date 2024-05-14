@@ -13,5 +13,4 @@ const postFcmToken = async (fcmToken: string) => {
   }
 };
 
-
 export { postFcmToken };

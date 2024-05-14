@@ -55,4 +55,7 @@ public class ThrownItemRequest {
     @Schema(description = "albumImage")
     @NotNull(message = "albumImageUrl is required")
     private String albumImageUrl;
+
+    @Schema(description = "previewUrl")
+    private String previewUrl;
 }

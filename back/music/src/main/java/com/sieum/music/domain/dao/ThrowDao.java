@@ -23,14 +23,17 @@ public class ThrowDao {
 
     private Boolean isInnerDistance;
 
+    private Boolean isPopular;
+
     public ThrowDao(
             Point locationPoint,
             Long id,
             String albumImage,
             String title,
             String name,
-            boolean isInnerDistance,
-            ThrowStatus status) {
+            Boolean isInnerDistance,
+            ThrowStatus status,
+            Boolean isPopular) {
         this.locationPoint = locationPoint;
         this.id = id;
         this.albumImage = albumImage;
@@ -38,5 +41,6 @@ public class ThrowDao {
         this.name = name;
         this.isInnerDistance = isInnerDistance;
         this.status = status;
+        this.isPopular = isPopular;
     }
 }

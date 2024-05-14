@@ -2,17 +2,16 @@ package com.sieum.music.service;
 
 import static com.sieum.music.exception.CustomExceptionStatus.*;
 
+import com.sieum.music.controller.feign.CouponFeignClient;
 import com.sieum.music.controller.feign.TokenAuthClient;
 import com.sieum.music.domain.*;
 import com.sieum.music.domain.ThrowItem;
+import com.sieum.music.domain.dao.ThrowCurrentDao;
 import com.sieum.music.domain.enums.ThrowStatus;
-import com.sieum.music.dto.request.NearItemPointRequest;
-import com.sieum.music.dto.request.ReverseGeoCodeRequest;
-import com.sieum.music.dto.request.ThrownItemRequest;
+import com.sieum.music.dto.request.*;
 import com.sieum.music.dto.response.*;
 import com.sieum.music.dto.response.PlaylistItemResponse;
 import com.sieum.music.dto.response.PoiResponse;
-import com.sieum.music.dto.response.ThrowItemResponse;
 import com.sieum.music.dto.response.ThrownMusicDetailResponse;
 import com.sieum.music.exception.BadRequestException;
 import com.sieum.music.repository.*;
@@ -51,6 +50,9 @@ public class MusicService {
     private final ArtistRepository artistRepository;
     private final S3FileUploadService s3FileUploadService;
     private final KakaoMapReverseGeoUtil kakaoMapReverseGeoUtil;
+    private final String THROWNG_TYPE = "THROWNG";
+    private final String PICKUP_TYPE = "PICKUP";
+    private final CouponFeignClient couponFeignClient;
 
     public long getCurrentUserId(String authorization) {
         return tokenAuthClient.getUserId(authorization);
@@ -61,7 +63,11 @@ public class MusicService {
                 musicRepository
                         .findById(throwId)
                         .orElseThrow(() -> new BadRequestException(NOT_FOUND_THROW_ITEM_ID));
-        return ThrownMusicDetailResponse.of(throwItem, userId);
+
+        return ThrownMusicDetailResponse.of(
+                throwItem,
+                userId,
+                throwHistoryRepository.findByThrowItemId(throwItem.getId()).size());
     }
 
     @Transactional
@@ -103,6 +109,10 @@ public class MusicService {
                         ThrowHistory.builder().userId(userId).throwItem(throwItem).build());
 
         throwHistory.setThrowItem(throwItem);
+
+        // upgrade experiencePoint
+        tokenAuthClient.upgradeExperiencePoint(
+                UpdateExperiencePointRequest.of(userId, PICKUP_TYPE));
     }
 
     private Playlist createPlaylist(final long userId, final Song song) {
@@ -160,9 +170,9 @@ public class MusicService {
         return throwHistoryRepository.countByUserId(userId);
     }
 
-    public List<ThrowItemResponse> getThrowItems() {
-        return throwQueryDSLRepository.findThrowHistoryIsNull();
-    }
+    //    public List<ThrowItemResponse> getThrowItems() {
+    //        return throwQueryDSLRepository.findThrowHistoryIsNull();
+    //    }
     //    public long getLimitAccount(String authorization) {
     //        return tokenAuthClient.getLimitAccount(authorization);
     //    }
@@ -177,37 +187,126 @@ public class MusicService {
             final String youtubeId,
             final ThrownItemRequest thrownItemRequest) {
         final long userId = userLevelInfoResponse.getUserId();
+        final String nowDate = localDateUtil.GetDate(LocalDate.now());
+        final String key = userId + "_THROWNG";
+        final String couponValue = redisUtil.getData(key);
 
-        final String key = "user_throw_" + userId + "_" + localDateUtil.GetDate(LocalDate.now());
-        final Object value = redisUtil.getData(key);
-
-        int thrownCount = 0;
-
-        if (value == null) {
-            thrownCount = userLevelInfoResponse.getLevelCount();
-        } else {
-            if (Integer.valueOf((String) value) == 0) {
-                throw new BadRequestException(NOT_THROW_SONG);
+        if (couponValue != null) {
+            if (couponValue.equals("THROWNG_INF")) {
+                throwngUtil(userId, youtubeId, thrownItemRequest, nowDate);
             } else {
-                thrownCount = Integer.valueOf((String) value);
+                final String detailKey = userId + "_" + couponValue;
+                final Object value = redisUtil.getObject(detailKey);
+                int countByCoupon = (int) value;
+
+                if (countByCoupon == 0) {
+                    basicThrowng(userLevelInfoResponse, nowDate, youtubeId, thrownItemRequest);
+                }
+
+                throwngUtil(userId, youtubeId, thrownItemRequest, nowDate);
+                countByCoupon--;
+                redisUtil.setObject(detailKey, countByCoupon);
+                if (countByCoupon == 0) {
+                    final Object idValue = redisUtil.getObject(userId + "_COUPON_ID_THROWNG");
+                    final long couponId = (long) idValue;
+
+                    CouponStatusRequest couponStatusRequest =
+                            CouponStatusRequest.of(couponId, userId, "THROWNG");
+                    couponFeignClient.modifyCouponStatus(couponStatusRequest);
+                }
             }
+
+        } else {
+            basicThrowng(userLevelInfoResponse, nowDate, youtubeId, thrownItemRequest);
         }
 
+        // upgrade experiencePoint
+        tokenAuthClient.upgradeExperiencePoint(
+                UpdateExperiencePointRequest.of(userId, THROWNG_TYPE));
+    }
+
+    public List<ThrownSongResponse> getThrownSong(final long userId) {
+        List<ThrowItem> throwItems = musicRepository.findByUserId(userId);
+        final List<ThrownSongResponse> thrwonSongResponse =
+                throwItems.stream()
+                        .map(
+                                throwItem ->
+                                        ThrownSongResponse.of(
+                                                throwItem,
+                                                throwHistoryRepository.findByThrowItemId(
+                                                        throwItem.getId())))
+                        .collect(Collectors.toList());
+
+        return thrwonSongResponse;
+    }
+
+    public List<PickedUpSongResponse> getPickedUpSong(final long userId) {
+        List<ThrowHistory> throwHistories = throwHistoryRepository.findByUserId(userId);
+        List<PickedUpSongResponse> pickedUpSongResponse =
+                throwHistories.stream()
+                        .map(throwHistory -> PickedUpSongResponse.of(throwHistory))
+                        .collect(Collectors.toList());
+
+        return pickedUpSongResponse;
+    }
+
+    public ReverseGeoResponse getReverseGeo(final ReverseGeoCodeRequest reverseGeoCodeRequest) {
+        KakaoMapReverseGeoResponse kakaoMapReverseGeoResponse =
+                kakaoMapReverseGeoUtil.getReverseGeo(
+                        reverseGeoCodeRequest.getLatitude(), reverseGeoCodeRequest.getLongitude());
+        return ReverseGeoResponse.of(kakaoMapReverseGeoResponse);
+    }
+
+    @Transactional
+    public long deleteNotFamousMusic() {
+        List<ThrowItem> throwItems = throwQueryDSLRepository.findThrowHistoryIsNull();
+        throwItems.forEach(throwItem -> throwItem.changeThrowStatus(ThrowStatus.HIDDEN.getValue()));
+        return throwItems.size();
+    }
+
+    public MusicExperienceCountResponse getMusicExperienceCount(
+            final MusicExperienceCountReqeust musicExperienceCountReqeust) {
+        List<ThrowItem> throwItems =
+                musicRepository.findByUserIdAndCreatedAtAfter(
+                        musicExperienceCountReqeust.getUserId(),
+                        musicExperienceCountReqeust.getCreatedAt());
+
+        List<ThrowHistory> pickedupItems =
+                throwHistoryRepository.findByUserIdAndCreatedAtAfter(
+                        musicExperienceCountReqeust.getUserId(),
+                        musicExperienceCountReqeust.getCreatedAt());
+
+        return MusicExperienceCountResponse.of(throwItems.size(), pickedupItems.size());
+    }
+
+    public boolean checkUsingUnlimitedRadiusCoupon(final long userId) {
+        String value = redisUtil.getData(userId + "_radius");
+        if (value == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public void throwngUtil(
+            final long userId,
+            final String youtubeId,
+            final ThrownItemRequest thrownItemRequest,
+            final String nowDate) {
         final Point point =
                 GeomUtil.createPoint(
                         thrownItemRequest.getLongitude(), thrownItemRequest.getLatitude());
 
-        // **Not temporarily applied for initial data collection**
-        //        List<PoiResponse> poiResponses =
-        //                throwQueryDSLRepository.findNearItemsPointsByDistance(point, 1000.0,
-        // 100.0).stream()
-        //                        .filter(item ->
-        // item.getStatus().equals(ThrowStatus.valueOf("VISIBLE")))
-        //                        .map(PoiResponse::fromItemPoint)
-        //                        .collect(Collectors.toList());
-        //        if (poiResponses.size() > 0) {
-        //            throw new BadRequestException(NOT_THROW_ITEM_IN_LIMITED_RADIUS);
-        //        }
+        // Verification: The same user cannot throw the same song again within 100m
+        ThrowCurrentDao throwDao =
+                throwQueryDSLRepository
+                        .findNearItemsPointsByDistanceAndUserIdAndCreatedAtAndYoutubeId(
+                                point, 100.0, userId, nowDate, youtubeId);
+
+        if (throwDao != null) {
+            if (throwDao.getStatus().equals(ThrowStatus.valueOf("VISIBLE"))) {
+                throw new BadRequestException(NOT_THROW_ITEM_IN_LIMITED_RADIUS);
+            }
+        }
 
         // String[] zipArray = thrownItemRequest.getLocation().split("\\s");
         Zipcode zipcode =
@@ -229,6 +328,7 @@ public class MusicService {
                             .title(thrownItemRequest.getTitle())
                             .albumImage(thrownItemRequest.getAlbumImageUrl())
                             .artist(artist)
+                            .previewUrl(thrownItemRequest.getPreviewUrl())
                             .build());
         }
 
@@ -242,41 +342,37 @@ public class MusicService {
                         .content(thrownItemRequest.getComment())
                         .itemImage(thrownItemRequest.getImageUrl())
                         .status(ThrowStatus.valueOf("VISIBLE"))
+                        .isPopular(false)
                         .locationPoint(point)
                         .userId(userId)
                         .zipcode(zipcode)
-                        .song(songRepository.findByTitle(thrownItemRequest.getTitle()))
+                        .song(song)
                         .build());
+    }
 
+    public void basicThrowng(
+            final UserLevelInfoResponse userLevelInfoResponse,
+            final String nowDate,
+            final String youtubeId,
+            final ThrownItemRequest thrownItemRequest) {
+
+        final String key = "user_throw_" + userLevelInfoResponse.getUserId() + "_" + nowDate;
+        final Object value = redisUtil.getData(key);
+
+        int thrownCount = 0;
+
+        if (value == null) {
+            thrownCount = userLevelInfoResponse.getLevelCount();
+        } else {
+            if (Integer.valueOf((String) value) == 0) {
+                throw new BadRequestException(NOT_THROW_SONG);
+            } else {
+                thrownCount = Integer.valueOf((String) value);
+            }
+        }
+        throwngUtil(userLevelInfoResponse.getUserId(), youtubeId, thrownItemRequest, nowDate);
         thrownCount--;
 
         redisUtil.setData(key, String.valueOf(thrownCount));
-    }
-
-    public List<ThrownSongResponse> getThrownSong(final long userId) {
-        List<ThrowItem> throwItems = musicRepository.findByUserId(userId);
-        final List<ThrownSongResponse> thrwonSongResponse =
-                throwItems.stream()
-                        .map(throwItem -> ThrownSongResponse.of(throwItem))
-                        .collect(Collectors.toList());
-
-        return thrwonSongResponse;
-    }
-
-    public List<PickedUpSongResponse> getPickedUpSong(final long userId) {
-        List<ThrowHistory> throwHistories = throwHistoryRepository.findByUserId(userId);
-        List<PickedUpSongResponse> pickedUpSongResponse =
-                throwHistories.stream()
-                        .map(throwHistory -> PickedUpSongResponse.of(throwHistory))
-                        .collect(Collectors.toList());
-
-        return pickedUpSongResponse;
-    }
-
-    public ReverseGeoResponse getReverseGeo(final ReverseGeoCodeRequest reverseGeoCodeRequest) {
-        KakaoMapReverseGeoResponse kakaoMapReverseGeoResponse =
-                kakaoMapReverseGeoUtil.getReverseGeo(
-                        reverseGeoCodeRequest.getLatitude(), reverseGeoCodeRequest.getLongitude());
-        return ReverseGeoResponse.of(kakaoMapReverseGeoResponse);
     }
 }

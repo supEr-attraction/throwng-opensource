@@ -64,6 +64,7 @@ public class SpotifyUtil {
             final List<Track> trackPaging = Arrays.asList(searchTracksRequest.execute().getItems());
 
             trackPaging.stream()
+                    .filter(track -> track.getAlbum().getImages().length > 0)
                     .map(
                             track -> {
                                 return SearchSongResponse.builder()
@@ -75,6 +76,7 @@ public class SpotifyUtil {
                                                         + ":"
                                                         + (track.getDurationMs() % 60000) / 1000)
                                         .youtubeId(track.getId())
+                                        .previewUrl(track.getPreviewUrl())
                                         .build();
                             })
                     .forEach(musicList::add);

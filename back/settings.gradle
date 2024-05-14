@@ -1,2 +1,2 @@
 rootProject.name = 'back'
-include 'batch', 'discovery', 'gateway', 'music', 'user', 'notification'
+include 'batch', 'discovery', 'gateway', 'music', 'user', 'notification', 'quiz'

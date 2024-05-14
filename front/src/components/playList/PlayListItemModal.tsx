@@ -4,7 +4,11 @@ import { IoSearch } from "react-icons/io5";
 import { GiMicrophone } from "react-icons/gi";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
-import { detailModal, scrollSongIndex, speedListenModal } from "@store/playList/atoms";
+import {
+  detailModal,
+  scrollSongIndex,
+  speedListenModal,
+} from "@store/playList/atoms";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { searchedWords } from "@store/musicSearch/atoms";
@@ -22,7 +26,7 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
   const setSpeedModal = useResetRecoilState(speedListenModal);
   const setSelectMusic = useSetRecoilState(selectMusic);
   const setWords = useSetRecoilState<SearchedWordsList[]>(searchedWords);
-  const setScrollSongIndex = useSetRecoilState(scrollSongIndex)
+  const setScrollSongIndex = useSetRecoilState(scrollSongIndex);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,16 +34,18 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
   }, []);
 
   const goSearch = (keyword: string) => {
-    setScrollSongIndex(song.youtubeId)
+    setScrollSongIndex(song.youtubeId);
     const trimmedKeyword = keyword.trim();
     const encodedSearchKeyword = encodeURIComponent(trimmedKeyword);
 
     if (encodedSearchKeyword !== "") {
-      navigate(`/music/search/results?query=${encodedSearchKeyword}`)
+      navigate(`/music/search/results?query=${encodedSearchKeyword}`);
     }
     setWords((prevWords) => {
       const newId = prevWords.length ? prevWords[0].id + 1 : 0;
-      const updatedWords = prevWords.filter((word) => word.title !== trimmedKeyword);
+      const updatedWords = prevWords.filter(
+        (word) => word.title !== trimmedKeyword
+      );
       return [{ id: newId, title: trimmedKeyword }, ...updatedWords];
     });
   };
@@ -58,10 +64,10 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
       artist: song.artist,
       title: song.title,
       playTime: "",
-      previewUrl:song.previewUrl
+      previewUrl: song.previewUrl,
     };
     setSelectMusic(songForSelectMusic);
-    setScrollSongIndex(song.youtubeId)
+    setScrollSongIndex(song.youtubeId);
     navigate(`/music/drop/${song.youtubeId}`);
   };
 

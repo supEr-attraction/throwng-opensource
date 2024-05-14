@@ -30,6 +30,9 @@ public class PoiResponse {
     @Schema(description = "is inner distance", example = "true")
     boolean isInnerDistance;
 
+    @Schema(description = "Music that's only available on watch", example = "true")
+    boolean isSecret;
+
     public static PoiResponse fromItemPoint(ThrowDao itemPointDao) {
         return builder()
                 .itemId(itemPointDao.getId())
@@ -39,6 +42,7 @@ public class PoiResponse {
                 .latitude(itemPointDao.getLocationPoint().getY())
                 .longitude(itemPointDao.getLocationPoint().getX())
                 .isInnerDistance(itemPointDao.getIsInnerDistance())
+                .isSecret(itemPointDao.getIsPopular())
                 .build();
     }
 }

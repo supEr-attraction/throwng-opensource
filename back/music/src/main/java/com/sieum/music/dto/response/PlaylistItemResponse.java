@@ -28,4 +28,7 @@ public class PlaylistItemResponse {
 
     @Schema(description = "youtubeId")
     private String youtubeId;
+
+    @Schema(description = "previewUrl")
+    private String previewUrl;
 }

@@ -5,6 +5,6 @@ server:
 
 spring:
   config:
-    import: optional:configserver:http://throwng:458859@localhost:8088
+    import: optional:configserver:http://throwng:458859@back-config:8088
   application:
     name: notification

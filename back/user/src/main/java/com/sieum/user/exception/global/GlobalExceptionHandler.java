@@ -3,6 +3,7 @@ package com.sieum.user.exception.global;
 import static com.sieum.user.common.CustomExceptionStatus.*;
 
 import com.sieum.user.exception.BadRequestException;
+import com.sieum.user.exception.FeignClientException;
 import com.sieum.user.util.NotificationManagerUtil;
 import java.util.Enumeration;
 import java.util.Objects;
@@ -91,5 +92,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         return params.toString();
+    }
+
+    @ExceptionHandler(FeignClientException.class)
+    public ResponseEntity<ExceptionResponse> handleBadRequestException(
+            final FeignClientException e, HttpServletRequest req) {
+        log.warn(e.getMessage(), e);
+        return ResponseEntity.badRequest().body(new ExceptionResponse(e.getCode(), e.getMessage()));
     }
 }

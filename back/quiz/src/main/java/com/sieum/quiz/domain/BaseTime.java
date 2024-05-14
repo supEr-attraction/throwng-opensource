@@ -1,4 +1,4 @@
-package com.sieum.music.domain;
+package com.sieum.quiz.domain;
 
 import java.time.LocalDateTime;
 import javax.persistence.Column;

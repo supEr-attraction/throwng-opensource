@@ -34,9 +34,17 @@ public class User extends BaseTime {
     @Column(length = 10)
     private String violation;
 
-    @Column(name = "fcm_token", length = 50)
+    @Column(name = "fcm_token", length = 200)
     private String fcmToken;
 
     @Column(name = "is_sign_in")
     private boolean isSignIn;
+
+    public void setFcmToken(final String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    public void updateNickName(final String nickName) {
+        this.nickName = nickName;
+    }
 }
