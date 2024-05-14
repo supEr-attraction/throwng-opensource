@@ -7,7 +7,9 @@ import MemoryInfoPage from "@pages/game/MemoryInfoPage";
 import MemoryMainPage from "@pages/game/MemoryMainPage";
 import MemoryCouponPage from "@pages/game/MemoryCouponPage";
 import MemorySuccessPage from "@pages/game/MemorySuccessPage";
-import MoleGamePage from "@pages/game/MoleGamePage";
+import RhythmGamePage from "@pages/game/RhythmGamePage";
+import RhythmMainPage from "@pages/game/RhythmMainPage";
+import RhythmInfoPage from "@pages/game/RhythmInfoPage";
 const HomePage = lazy(() => import("@pages/HomePage"));
 const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
@@ -141,38 +143,46 @@ export default {
       ],
     },
     {
-      path: "mole",
+      path: "rhythm",
       children: [
         {
-          path: "game",
-          element: <MoleGamePage />
+          path: "main",
+          element: <RhythmMainPage />,
         },
-      ]
+        {
+          path: "info",
+          element: <RhythmInfoPage />,
+        },
+        {
+          path: "game",
+          element: <RhythmGamePage />,
+        },
+      ],
     },
     {
       path: "memory",
       children: [
         {
           path: "main",
-          element: <MemoryMainPage />
+          element: <MemoryMainPage />,
         },
         {
           path: "info",
-          element: <MemoryInfoPage />
+          element: <MemoryInfoPage />,
         },
         {
           path: "game",
-          element: <MemoryTestPage />
+          element: <MemoryTestPage />,
         },
         {
           path: "success",
-          element: <MemorySuccessPage />
+          element: <MemorySuccessPage />,
         },
         {
           path: "coupon",
-          element: <MemoryCouponPage />
+          element: <MemoryCouponPage />,
         },
-      ]
+      ],
     },
     { path: "none-permission", element: <NonePermissionPage /> },
   ],
