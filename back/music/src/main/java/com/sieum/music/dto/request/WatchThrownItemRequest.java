@@ -15,8 +15,7 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 @NoArgsConstructor
 @AllArgsConstructor
-public class ThrownItemRequest {
-
+public class WatchThrownItemRequest {
     @Schema(description = "the distance of a place east or west", example = "127.123456")
     @IsLongitude
     @NotNull(message = "Longitude is required")
@@ -29,33 +28,11 @@ public class ThrownItemRequest {
     @NotNull(message = "Latitude is required")
     private Double latitude;
 
-    @NotNull(message = "location is required")
-    @Schema(description = "the address to which music will be thrown")
-    private String location;
-
-    @Schema(description = "legal motion code")
-    @NotNull(message = "code is required")
-    private String code;
-
     @Schema(description = "comment")
     @NotNull(message = "comment is required")
     private String comment;
 
-    @Schema(description = "imageUrl")
-    private String imageUrl;
-
-    @Schema(description = "title")
-    @NotNull(message = "title is required")
-    private String title;
-
-    @Schema(description = "artist")
-    @NotNull(message = "artist is required")
-    private String artist;
-
-    @Schema(description = "albumImage")
-    @NotNull(message = "albumImageUrl is required")
-    private String albumImageUrl;
-
-    @Schema(description = "previewUrl")
-    private String previewUrl;
+    @Schema(description = "song ID")
+    @NotNull(message = "song ID is required")
+    private Integer songId;
 }

@@ -1,5 +1,6 @@
 package com.sieum.music.controller;
 
+import com.sieum.music.dto.request.MusicExperienceCountReqeust;
 import com.sieum.music.dto.request.NearItemPointRequest;
 import com.sieum.music.dto.request.ReverseGeoCodeRequest;
 import com.sieum.music.dto.request.ThrownItemRequest;
@@ -62,8 +63,8 @@ public class MusicController {
     //    }
 
     @Operation(summary = "Search for songs on Spotify")
-    @GetMapping("/search/{keyword}")
-    public ResponseEntity<?> searchSong2(@PathVariable("keyword") final String keyword) {
+    @GetMapping("/search")
+    public ResponseEntity<?> searchSong2(@RequestParam("keyword") final String keyword) {
         return ResponseEntity.ok().body(spotifyUtil.searchSongInSpotify(keyword));
     }
 
@@ -96,11 +97,11 @@ public class MusicController {
         return ResponseEntity.ok(musicService.countPickUpSong(userId));
     }
 
-    @GetMapping("/throw-items")
-    @Operation(summary = "Look up music that has no record of picking up")
-    public ResponseEntity<?> getThrowItems() {
-        return ResponseEntity.ok(musicService.getThrowItems());
-    }
+    //    @GetMapping("/throw-items")
+    //    @Operation(summary = "Look up music that has no record of picking up")
+    //    public ResponseEntity<?> getThrowItems() {
+    //        return ResponseEntity.ok(musicService.getThrowItems());
+    //    }
 
     @Operation(summary = "Throw song")
     @PostMapping("/thrown-song/{youtubeId}")
@@ -131,5 +132,27 @@ public class MusicController {
     public ResponseEntity<?> reverseGeoCode(
             @Valid @RequestBody ReverseGeoCodeRequest reverseGeoCodeRequest) {
         return ResponseEntity.ok().body(musicService.getReverseGeo(reverseGeoCodeRequest));
+    }
+
+    @DeleteMapping("/throw-items")
+    @Operation(summary = "Feign Client - update status to HIDDEN")
+    public ResponseEntity<?> deleteNotFamousMusic() {
+        return ResponseEntity.ok().body(musicService.deleteNotFamousMusic());
+    }
+
+    @Operation(summary = "Feign Client")
+    @PostMapping("/music-experience")
+    public ResponseEntity<?> getMusicExperienceCount(
+            @RequestBody MusicExperienceCountReqeust musicExperienceCountReqeust) {
+        return ResponseEntity.ok()
+                .body(musicService.getMusicExperienceCount(musicExperienceCountReqeust));
+    }
+
+    @Operation(summary = "Check unlimited radius coupon usage")
+    @GetMapping("/check-radius-coupon")
+    public ResponseEntity<?> isUsingUnlimitedRadiusCoupon(
+            @RequestHeader("Authorization") final String authorization) {
+        final long userId = musicService.getCurrentUserId(authorization);
+        return ResponseEntity.ok().body(musicService.checkUsingUnlimitedRadiusCoupon(userId));
     }
 }

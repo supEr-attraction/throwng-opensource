@@ -24,4 +24,7 @@ public class SearchSongResponse {
 
     @Schema(description = "playTime")
     private String playTime;
+
+    @Schema(description = "previewUrl")
+    private String previewUrl;
 }

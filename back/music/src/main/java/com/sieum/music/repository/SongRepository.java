@@ -4,7 +4,7 @@ import com.sieum.music.domain.Song;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SongRepository extends JpaRepository<Song, String> {
+public interface SongRepository extends JpaRepository<Song, Integer> {
     boolean existsByYoutubeId(String youtubeId);
 
     Song findByTitle(String title);
