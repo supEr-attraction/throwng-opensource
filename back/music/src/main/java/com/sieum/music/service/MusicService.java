@@ -189,9 +189,11 @@ public class MusicService {
         final long userId = userLevelInfoResponse.getUserId();
         final String nowDate = localDateUtil.GetDate(LocalDate.now());
         final String key = userId + "_THROWNG";
-        final String couponValue = redisUtil.getData(key);
+        //        final String couponValue = redisUtil.getData(key);
 
-        if (couponValue != null) {
+        if (redisUtil.getData(key) != null) {
+            final String couponValue = redisUtil.getData(key);
+
             if (couponValue.equals("THROWNG_INF")) {
                 throwngUtil(userId, youtubeId, thrownItemRequest, nowDate);
             } else {

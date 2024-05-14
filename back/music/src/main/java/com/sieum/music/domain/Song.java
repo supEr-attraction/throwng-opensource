@@ -16,7 +16,7 @@ public class Song {
 
     @Id
     @Column(name = "song_id")
-    private String id;
+    private Integer id;
 
     @Column(name = "youtube_id", length = 100)
     @NotNull
