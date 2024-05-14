@@ -1,18 +1,19 @@
 import Header from "@components/Header";
-import MoleGame from "@components/game/MoleGame";
 import "@/styles/game/MoleGamePage.scss";
+import RhythmGame from "@components/game/RhythmGame";
 
-const MoleGamePage = () => {
+
+const RhythmGamePage = () => {
   return (
     <div className="MoleGamePage">
       <Header />
       <div className="mole-header">
         <div className="mole-game">
-          <MoleGame />
+          <RhythmGame />
         </div>
       </div>
     </div>
   );
 };
 
-export default MoleGamePage;
+export default RhythmGamePage;
