@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+  back-music:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        PROFILE: prod
+    ports:
+      - '8092:8092'
+
+networks:
+  default:
+    external:
+      name: connect-default
