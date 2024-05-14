@@ -18,6 +18,7 @@ public enum CustomExceptionStatus implements BaseErrorCode {
     NOT_FOUND_PLAYLIST_ID("PLAYLIST_400_1", "No playlist with the requested id"),
     NOT_FOUND_YOUTUBE_ID("Song_400_1", "No Song with the requested id"),
     NOT_THROW_SONG("Song_400_2", "The number of songs assigned per day is over"),
+    NOT_FOUND_SONG_ID("Song_400_3", "No Song with the requested song id"),
     NOT_FOUND_ZIP_CODE("Zip_code_400_1", "This location doesn't exist"),
     NOT_FOUND_ARTIST("Artist_400_1", "The artist does not exist"),
     NOT_THROW_ITEM_IN_LIMITED_RADIUS(

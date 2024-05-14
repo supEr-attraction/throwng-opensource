@@ -1,0 +1,28 @@
+package com.sieum.music.domain;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Builder
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+public class PopularMusicHistory extends CreatedTime {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "popular_music_history_id")
+    private Long id;
+
+    @NotNull private boolean status;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "throw_item_id")
+    private ThrowItem throwItem;
+}

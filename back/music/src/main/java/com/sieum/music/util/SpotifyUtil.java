@@ -76,6 +76,7 @@ public class SpotifyUtil {
                                                         + ":"
                                                         + (track.getDurationMs() % 60000) / 1000)
                                         .youtubeId(track.getId())
+                                        .previewUrl(track.getPreviewUrl())
                                         .build();
                             })
                     .forEach(musicList::add);

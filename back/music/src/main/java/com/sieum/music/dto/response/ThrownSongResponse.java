@@ -1,8 +1,10 @@
 package com.sieum.music.dto.response;
 
+import com.sieum.music.domain.ThrowHistory;
 import com.sieum.music.domain.ThrowItem;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -32,7 +34,10 @@ public class ThrownSongResponse {
     @Schema(description = "location")
     private String location;
 
-    public static ThrownSongResponse of(ThrowItem throwItem) {
+    @Schema(description = "otherPickedCount")
+    private long otherPickedCount;
+
+    public static ThrownSongResponse of(ThrowItem throwItem, List<ThrowHistory> throwHistories) {
         return new ThrownSongResponse(
                 throwItem.getId(),
                 throwItem.getSong().getTitle(),
@@ -40,6 +45,7 @@ public class ThrownSongResponse {
                 throwItem.getSong().getAlbumImage(),
                 throwItem.getContent(),
                 throwItem.getCreatedAt(),
-                (throwItem.getZipcode().getSigungu() + " " + throwItem.getZipcode().getDong()));
+                (throwItem.getZipcode().getSigungu() + " " + throwItem.getZipcode().getDong()),
+                throwHistories.size());
     }
 }

@@ -34,4 +34,7 @@ public class Song {
     @JoinColumn(name = "artist_id")
     @NotNull
     private Artist artist;
+
+    @Column(length = 200)
+    private String previewUrl;
 }

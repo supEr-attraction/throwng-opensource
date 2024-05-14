@@ -35,6 +35,8 @@ public class ThrowItem extends CreatedTime {
     @NotNull
     private ThrowStatus status;
 
+    private Boolean isPopular;
+
     @NotNull private Point locationPoint;
 
     @NotNull private Long userId;
