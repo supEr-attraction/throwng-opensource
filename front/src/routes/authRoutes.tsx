@@ -1,9 +1,8 @@
 import { lazy } from "react";
-
-const PublicRoute = lazy(() => import("@components/PublicRoute"));
+import PublicRoute from "@components/PublicRoute";
+import Error404 from "@pages/Error404";
 const LoginPage = lazy(() => import("@pages/login/LoginPage"));
 const AuthPage = lazy(() => import("@pages/login/AuthPage"));
-// const Error404 = loadable(() => import('./Error404'))
 
 export default {
   path: "/",
@@ -17,5 +16,5 @@ export default {
       ],
     },
   ],
-  // errorElement: <Error404 />
+  errorElement: <Error404 />,
 };

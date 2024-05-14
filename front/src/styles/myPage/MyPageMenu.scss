@@ -1,25 +1,21 @@
 .MyPageMenu {
-
   .menu-body {
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    
+
     .menu-item {
       display: flex;
+      gap: 0.5dvh;
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      width: 13dvh;
-      height: 10dvh;
-      
+      flex: 1;
+
       svg {
-        margin: 1dvh;
-        font-size: 3.5dvh;
+        font-size: 3dvh;
       }
 
       .desc {
-        font-size: 1.7dvh;
+        font-size: 1.5dvh;
       }
 
       &:active {

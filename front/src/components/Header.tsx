@@ -1,17 +1,18 @@
+import { memo } from "react";
 import { useNavigate } from "react-router-dom";
-import { IoIosArrowBack } from "react-icons/io";
 import { useSetRecoilState } from "recoil";
-import { FiLogOut } from "react-icons/fi";
 import { logoutModalState } from "@store/auth/atom";
-import ping from "@assets/images/ping.webp";
+import { IoIosArrowBack } from "react-icons/io";
+import { FiLogOut } from "react-icons/fi";
+import AddressContent from "./map/AddressContent";
 import "@styles/Header.scss";
 
 interface Props {
   centerText?: string;
-  type?: string;
+  type?: "address" | "logout";
 }
 
-const Header = ({ centerText, type }: Props) => {
+const Header = ({ centerText = "", type }: Props) => {
   const navigate = useNavigate();
   const setLogoutModal = useSetRecoilState(logoutModalState);
 
@@ -20,17 +21,17 @@ const Header = ({ centerText, type }: Props) => {
   };
 
   const handleOpenModal = () => {
-    // document.body.style.overflow = "hidden";
     setLogoutModal(true);
   };
 
   return (
     <header className="Header">
       <IoIosArrowBack onClick={handleBackNavigation} />
-      <div className="center">
-        {type === "address" && <img src={ping} />}
-        <div>{centerText}</div>
-      </div>
+      {type === "address" ? (
+        <AddressContent address={centerText} />
+      ) : (
+        <div className="center">{centerText}</div>
+      )}
       {type === "logout" ? (
         <FiLogOut className="logout" onClick={handleOpenModal} />
       ) : (
@@ -40,4 +41,4 @@ const Header = ({ centerText, type }: Props) => {
   );
 };
 
-export default Header;
+export default memo(Header);

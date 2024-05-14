@@ -1,36 +1,42 @@
-import fetchLocationPermissionStatus from "@/utils/fetchLocationPermissionStatus";
+import { useEffect, useState } from "react";
+import { Navigate, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { getIsLogin } from "@/utils/getIsLogin";
-import { useEffect } from "react";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import checkPermission from "@/utils/permission/checkPermission";
 
 function PrivateRoutes() {
   const isLogin = getIsLogin();
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const [isCheck, setIsCheck] = useState(false);
 
   useEffect(() => {
-    if (!isLogin) return;
-
-    const checkPermissions = async () => {
-      const status = await fetchLocationPermissionStatus();
-      if (!["granted", "prompt"].includes(status)) {
-        navigate("none-permission", { replace: true });
+    const verifyPermission = async () => {
+      try {
+        const isPermission = await checkPermission();
+        if (pathname === "/none-permission" && isPermission) {
+          navigate("/", { replace: true });
+        } else if (pathname !== "/none-permission" && !isPermission) {
+          navigate("/none-permission", { replace: true });
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsCheck(true);
       }
     };
 
-    checkPermissions();
-
-    const handleFocus = () => {
-      checkPermissions(); // 윈도우 포커스를 다시 얻으면 권한 재확인
-    };
-
-    window.addEventListener("focus", handleFocus);
-
-    return () => {
-      window.removeEventListener("focus", handleFocus);
-    };
+    if (isLogin) {
+      verifyPermission();
+    }
   }, []);
 
-  return isLogin ? <Outlet /> : <Navigate to="/login" replace />;
+  return isLogin ? (
+    isCheck ? (
+      <Outlet />
+    ) : null
+  ) : (
+    <Navigate to="/login" replace />
+  );
 }
 
 export default PrivateRoutes;

@@ -1,5 +1,5 @@
 import "@styles/quiz/QuizInfo.scss";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface QuizItem {
@@ -10,6 +10,7 @@ interface QuizItem {
 
 const QuizInfo = () => {
   const navigate = useNavigate();
+
   const [items, setItems] = useState<QuizItem[]>([
     {
       id: 1,
@@ -32,19 +33,9 @@ const QuizInfo = () => {
       checked: false,
     },
     {
-      id: 3,
-      text: (
-        <>
-          문제당 제한 시간은 <span className="highlight">20초</span>입니다.
-        </>
-      ),
-      checked: false,
-    },
-    {
       id: 4,
       text: (
         <>
-          한 문제라도 틀리면 <span className="highlight-red">끝!</span> <br />
           3문제 <span className="highlight">모두 맞춰야</span> 정답으로
           인정됩니다.
         </>
@@ -55,7 +46,16 @@ const QuizInfo = () => {
       id: 5,
       text: (
         <>
-          매일 <span className="highlight">기회는 한 번</span>입니다.
+          쿠폰을 얻을 때 까지 <br /><span className="highlight">재도전</span> 가능합니다
+        </>
+      ),
+      checked: false,
+    },
+    {
+      id: 6,
+      text: (
+        <>
+          매일 쿠폰 발급은<span className="highlight"><br /> 한 번</span>입니다.
         </>
       ),
       checked: false,
@@ -63,9 +63,10 @@ const QuizInfo = () => {
   ]);
 
   const [buttonVisible, setButtonVisible] = useState(false);
-  const areAllChecked = () => {
-    return items.every((item) => item.checked);
-  };
+  const areAllChecked = useMemo(
+    () => items.every((item) => item.checked),
+    [items]
+  );
 
   const handleCheck = (id: number) => {
     setItems(
@@ -75,22 +76,16 @@ const QuizInfo = () => {
     );
   };
 
-  const handleCheckkAll = () => {
-    const allChecked = areAllChecked();
-
-    const updatedItems = items.map((item) => ({
-      ...item,
-      checked: !allChecked,
-    }));
-    setItems(updatedItems);
+  const handleCheckAll = () => {
+    setItems(items.map((item) => ({ ...item, checked: !areAllChecked })));
   };
 
   useEffect(() => {
-    setButtonVisible(areAllChecked());
-  }, [items]);
+    setButtonVisible(areAllChecked);
+  }, [areAllChecked]);
 
   const handleQuizStart = () => {
-    navigate("/quiz/count");
+    navigate("/quiz/count", { replace: true });
   };
 
   return (
@@ -114,10 +109,10 @@ const QuizInfo = () => {
         <input
           type="checkbox"
           id="checkbox-all"
-          checked={areAllChecked()}
-          onClick={handleCheckkAll}
+          checked={areAllChecked}
+          onChange={handleCheckAll}
         />
-        <label htmlFor="checkbox-all">다 알아요 ㅋ</label>
+        <label htmlFor="checkbox-all">전체 확인</label>
       </div>
 
       <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>

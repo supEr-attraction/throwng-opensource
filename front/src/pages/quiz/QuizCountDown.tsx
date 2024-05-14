@@ -7,7 +7,7 @@ const QuizCountDown = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/quiz/solve')
+      navigate('/quiz/solve', { replace: true })
     }, 5000)
 
     return () => clearTimeout(timer)

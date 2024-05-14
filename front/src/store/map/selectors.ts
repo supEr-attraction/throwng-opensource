@@ -1,9 +1,14 @@
 import fetchDistance from "@/utils/map/fetchDistance";
-import { locationState, markersState } from "@store/map/atoms";
-import { selector } from "recoil";
+import {
+  radiusActiveIdState,
+  couponUsageActiveIdState,
+  locationState,
+  markersState,
+} from "@store/map/atoms";
+import { selector, selectorFamily } from "recoil";
 
-export const markerRadiusState = selector({
-  key: "markerRadiusState", // atom의 key와 동일하며 프로젝트 전체에서 고유한 문자열
+export const insideRadiusMarkerState = selector({
+  key: "insideRadiusMarkerState",
   get: ({ get }) => {
     const markers = get(markersState);
     const location = get(locationState);
@@ -16,4 +21,46 @@ export const markerRadiusState = selector({
         ) <= 600
     );
   },
+});
+
+export const outsideRadiusMarkerState = selector({
+  key: "outsideRadiusMarkerState",
+  get: ({ get }) => {
+    const markers = get(markersState);
+    const couponUsageActiveId = get(couponUsageActiveIdState);
+
+    return markers.filter((marker) => marker.itemId === couponUsageActiveId);
+  },
+});
+
+export const initialSlideState = selector({
+  key: "initialSlideState",
+  get: ({ get }) => {
+    const markers = get(insideRadiusMarkerState);
+    const activeId = get(radiusActiveIdState);
+
+    return markers.findIndex((marker) => marker.itemId === activeId);
+  },
+});
+
+export const isActiveInsideState = selectorFamily({
+  key: "isActiveInsideState",
+  get:
+    (id) =>
+    ({ get }) => {
+      const activeId = get(radiusActiveIdState);
+
+      return activeId === id;
+    },
+});
+
+export const isActiveOutsideState = selectorFamily({
+  key: "isActiveOutsideState",
+  get:
+    (id) =>
+    ({ get }) => {
+      const activeId = get(couponUsageActiveIdState);
+
+      return activeId === id;
+    },
 });

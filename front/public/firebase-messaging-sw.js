@@ -8,25 +8,37 @@ self.addEventListener("activate", function (e) {
 });
 
 self.addEventListener("push", function (e) {
-  // console.log("push: ", e.data.json());
-  if (!e.data.json()) return;
+  const data = e.data.json();
+  // console.log("Received push data:", data);
 
-  const resultData = e.data.json().notification;
-  const notificationTitle = resultData.title;
+  if (!data) return;
+
+  if (!data.notification) return;
+
+  const notificationTitle = data.notification.title;
+  const notificationData = data.notification;
+  const notificationRoute = data.data;
   const notificationOptions = {
-    body: resultData.body,
-    icon: resultData.image,
-    tag: resultData.tag,
-    ...resultData,
+    body: notificationData.body,
+    icon: notificationData.image,
+    tag: notificationData.tag,
+    data: {
+      link: notificationRoute.link,
+      time: notificationRoute.time,
+    },
   };
-  // console.log("push: ", { resultData, notificationTitle, notificationOptions });
+
+  // console.log("Notification details:", {
+  //   notificationTitle,
+  //   notificationOptions,
+  // });
 
   self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 self.addEventListener("notificationclick", function (event) {
-  // console.log("notification click");
-  const url = "/quiz/main";
+  const urlToOpen = event.notification.data.link;
+  // console.log(event.notification.data.time);
   event.notification.close();
-  event.waitUntil(clients.openWindow(url)); 
+  event.waitUntil(clients.openWindow(urlToOpen));
 });

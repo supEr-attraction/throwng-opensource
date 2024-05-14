@@ -12,6 +12,7 @@ import { ImVolumeMedium } from "react-icons/im";
 import { ImVolumeMute2 } from "react-icons/im";
 import heic2any from "heic2any";
 import Loading from "@components/Loading";
+import { toastMsg } from "@/utils/toastMsg";
 
 const MusicDropHeader = () => {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -22,10 +23,10 @@ const MusicDropHeader = () => {
   const setUserImageUrl = useSetRecoilState(userImageURL);
   const resetSetImagePreview = useResetRecoilState(musicDropImage);
   const resetSetUserImageUrl = useResetRecoilState(userImageURL);
-  const [isBgmPlay, setIsBgmPlay] = useState(true)
+  const [isBgmPlay, setIsBgmPlay] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isLoading, setIsLoading] = useState(false);
-  
+
   useEffect(() => {
     if (textRef.current) {
       const textWidth = textRef.current.scrollWidth;
@@ -67,27 +68,44 @@ const MusicDropHeader = () => {
       setIsLoading(true);
       let file = e.target.files[0];
       if (file.size > 5000000) {
-        alert("사진의 용량이 너무 커요. 다른 사진을 사용해 주세요.");
-        resetSetImagePreview();
-        resetSetUserImageUrl();
+        toastMsg("사진의 용량이 너무 커요. 다른 사진을 사용해 주세요.");
+        setIsLoading(false);
         return;
       } else {
-        if (file.type === "") {
+        if (/image\/heic/.test(file.type) || /image\/heif/.test(file.type)) {
           try {
             const convertedBlob = await heic2any({
               blob: file,
               toType: "image/jpeg",
             });
             if (convertedBlob instanceof Blob) {
-              file = new File([convertedBlob], file.name.replace(/^data:image\/jpeg;base64,/, ""), {
-                type: "image/jpeg",
-                lastModified: Date.now(),
-              });  
+              file = new File(
+                [convertedBlob],
+                file.name.replace(/\.(heic|HEIC|heif|HEIF)$/, ".jpeg"),
+                {
+                  type: "image/jpeg",
+                  lastModified: Date.now(),
+                }
+              );
             }
           } catch (error) {
-            alert("사진의 유형이 올바르지 않습니다. 다른 사진을 사용해 주세요.");
+            toastMsg(
+              "사진의 유형이 올바르지 않습니다. 다른 사진을 사용해 주세요."
+            );
+            setIsLoading(false);
             return;
           }
+        }
+        const allowedTypes = [
+          "image/jpeg",
+          "image/png",
+          "image/gif",
+          "image/jpg",
+        ];
+        if (!allowedTypes.includes(file.type)) {
+          toastMsg("이미지만 업로드 할 수 있어요.");
+          setIsLoading(false);
+          return;
         }
         setImagePreview(URL.createObjectURL(file));
         const data = await postImageUpload(file);
@@ -103,55 +121,61 @@ const MusicDropHeader = () => {
       <div className="cover">
         <div className="black-cover" />
         <div className="black-gradient" />
-        {isLoading ? <Loading/>
-        :<div className="content">
-          <div className="header">
-            <Header />
-            {songInfo.previewUrl &&
-              <div className="volume" onClick={handleChangeBgm}>
-                {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
-                <audio 
-                  ref={audioRef} 
-                  src={songInfo.previewUrl}
-                ></audio>
-              </div>
-            }
-          </div>
-          <div className="content-bottom">
-            <div className="info">
-              <div className={`title`}>
-                <div
-                  ref={textRef}
-                  className={`scrolling-text ${
-                    isScrollNeeded ? "animated" : ""
-                  }`}
-                >
-                  {songInfo.title}
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <div className="content">
+            <div className="header">
+              <Header />
+              {songInfo.previewUrl && (
+                <div className="volume" onClick={handleChangeBgm}>
+                  {isBgmPlay ? <ImVolumeMedium /> : <ImVolumeMute2 />}
+                  <audio ref={audioRef} src={songInfo.previewUrl}></audio>
                 </div>
+              )}
+            </div>
+            <div className="content-bottom">
+              <div className="info">
+                <div className={`title`}>
+                  <div
+                    ref={textRef}
+                    className={`scrolling-text ${
+                      isScrollNeeded ? "animated" : ""
+                    }`}
+                  >
+                    {songInfo.title}
+                  </div>
+                </div>
+                <div className="artist">{songInfo.artist}</div>
               </div>
-              <div className="artist">{songInfo.artist}</div>
-            </div>
-            <div className="upload-image-div" onClick={handleFileButtonClick}>
-              <img
-                src={imagePreview || whiteBox}
-                alt=""
-                className="upload-image"
-                onError={(e) => {
-                  e.currentTarget.src = whiteBox;
-                }}
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <div
+                  className="upload-image-div"
+                  onClick={handleFileButtonClick}
+                >
+                  <img
+                    src={imagePreview || whiteBox}
+                    alt=""
+                    className="upload-image"
+                    onError={(e) => {
+                      e.currentTarget.src = whiteBox;
+                    }}
+                  />
+                  {!imagePreview && <IoCloudUploadOutline />}
+                </div>
+              )}
+              <input
+                type="file"
+                ref={fileRef}
+                hidden={true}
+                onChange={handleFileChange}
+                className="image-input"
               />
-              {!imagePreview && <IoCloudUploadOutline />}
             </div>
-            <input
-              type="file"
-              ref={fileRef}
-              hidden={true}
-              onChange={handleFileChange}
-              className="image-input"
-            />
           </div>
-        </div>
-        }
+        )}
       </div>
     </div>
   );

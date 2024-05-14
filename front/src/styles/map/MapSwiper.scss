@@ -5,8 +5,14 @@
   flex-direction: column;
   z-index: 1;
 
+  .black-bottom-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(23, 25, 31, 0) 50%, #0f1114 100%);
+  }
+
   .close {
-    flex: 1;
+    flex-grow: 1;
     z-index: 1;
   }
 
@@ -29,12 +35,9 @@
 
       .content {
         display: none;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5dvh;
 
         .title {
-          font-size: 2.3dvh;
+          font-size: 2dvh;
           font-weight: bold;
           white-space: nowrap;
           overflow: hidden;
@@ -57,25 +60,16 @@
       &.swiper-slide-active {
         img {
           filter: blur(0px);
-          // padding: 1dvh;
           transform: scale(1.2);
           transition: transform 0.5s;
-          // transform: scale(1.5);
         }
         .content {
           display: flex;
+          flex-direction: column;
+          gap: 0.5dvh;
         }
       }
     }
-  }
-
-  .black-bottom-gradient {
-    margin: 0 auto;
-    background: linear-gradient(180deg, rgba(23, 25, 31, 0) 50%, #0f1114 100%);
-    position: fixed;
-    // bottom: 0;
-    inset: 0;
-    // height: 20dvh;
   }
 }
 

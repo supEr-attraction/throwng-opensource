@@ -1,0 +1,82 @@
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+.MoleGamePage {
+  .wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+
+    .moleTit {
+      h1 {
+        text-align: center;
+        color: var(--centerText-color);
+
+        img {
+          width: 10%;
+        }
+      }
+
+      .startEnd {
+        padding-top: 3%;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+
+        button {
+          border: 0;
+          color: #fff;
+          width: 45%;
+          font-size: 2dvh;
+          border-radius: 10px;
+          height: 40px;
+          background: var(--main-color);
+        }
+      }
+
+      .moleScoreTime {
+        padding-top: 4%;
+        display: flex;
+        justify-content: space-around;
+
+        p {
+          color: var(--centerText-color);
+          font-size: 2dvh;
+        }
+      }
+    }
+
+    .moleList {
+      margin: 5dvh;
+      border-radius: 10px;
+      background: #9ec15e;
+
+      ol {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        list-style: none;
+
+        li {
+          width: 10dvw;
+          height: 10dvh;
+        }
+      }
+    }
+
+    .mole {
+      height: 0;
+      cursor: pointer;
+      transition: transform 0.2s ease-in;
+      transform: translateY(50%);
+
+      &.show {
+        transform: translateY(0);
+        height: 5dvh;
+      }
+    }
+  }
+}

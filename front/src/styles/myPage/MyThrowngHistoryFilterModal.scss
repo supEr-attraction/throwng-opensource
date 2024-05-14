@@ -3,7 +3,7 @@
   inset: 0;
 
   .background {
-    background-color: #0f111480;
+    background-color: rgba($color: #0f1114, $alpha: 0.6);
     width: 100%;
     height: 100%;
   }
@@ -16,14 +16,13 @@
     inset-inline: 0;
     border-radius: 2dvh 2dvh 0 0;
     margin: 0 auto;
-    padding: 2dvh;
 
     .header {
+      padding: 2dvh;
       display: flex;
       justify-content: center;
-      font-size: 1.8dvh;
-      font-weight: 600;
-      padding-bottom: 1dvh;
+      font-size: 2dvh;
+      font-weight: bold;
     }
 
     hr {
@@ -32,23 +31,26 @@
     }
 
     .body {
+      padding: 3dvh;
+      display: flex;
+      flex-direction: column;
+      gap: 3dvh;
       .body-header {
-        font-size: 1.5dvh;
-        font-weight: 600;
+        font-size: 1.7dvh;
+        font-weight: bold;
       }
 
       .filter-list {
         display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-around;
         align-items: center;
 
         .filter-item {
-          font-size: 1.8dvh;
+          cursor: pointer;
+          font-size: 1.7dvh;
           padding: 1dvh;
           border-radius: 1dvh;
           border: transparent 2px solid;
-
 
           &.selected {
             border: var(--main-color) 2px solid;

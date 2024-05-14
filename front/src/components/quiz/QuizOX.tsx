@@ -1,31 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "@styles/quiz/QuizOX.scss";
 
 import oImage from "@assets/images/o.webp";
 import xImage from "@assets/images/x.webp";
 
 interface QuizOXProps {
-  setIsCorrect: (value: boolean | null) => void;
   setCanSubmit: (canSubmit: boolean) => void;
+  question: string;
+  index: number;
+  onUserInput: (input: string) => void;
 }
 
-const QuizOX = ({ setIsCorrect, setCanSubmit }: QuizOXProps) => {
+const QuizOX = ({
+  onUserInput,
+  setCanSubmit,
+  question,
+  index,
+}: QuizOXProps) => {
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
-  // API
-  const question = "여기에 OX문제 뿌려~~";
-  const correctAnswer = "O";
+  useEffect(() => {
+    setSelectedAnswer("");
+    setCanSubmit(false);
+  }, [index]);
 
   const handleAnswerClick = (answer: string) => {
     setSelectedAnswer(answer);
-    setIsCorrect(answer === correctAnswer);
-    setCanSubmit(true)
+    setCanSubmit(true);
+    onUserInput(answer)
   };
 
   return (
     <div className="QuizOX">
-      <h2>Q3.</h2>
-      <div className="ox-question">{question}</div>
+      <h2>Q{index + 1}.</h2>
+      <div className="ox-question">
+        <p>{question}</p>
+      </div>
       <div className="ox-answers">
         <div
           className={`o-answer ${selectedAnswer === "O" ? "selected" : ""}`}

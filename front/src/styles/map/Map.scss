@@ -1,30 +1,4 @@
 .Map {
-  position: relative;
-
-  // .header {
-  //   background: linear-gradient(180deg, #0f1114 10%, rgba(23, 25, 31, 0) 100%);
-  //   position: absolute;
-  //   z-index: 1;
-  //   width: 100dvw;
-  //   height: 20dvh;
-
-  //   .title {
-  //     padding: 2dvh;
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-  //     gap: 1vh;
-
-  //     img {
-  //       width: 2vh;
-  //       height: 2.5vh;
-  //     }
-
-  //     div {
-  //       font-size: 2vh;
-  //     }
-  //   }
-  // }
   div {
     border: none !important;
   }
@@ -43,8 +17,27 @@
       height: 27px;
     }
   }
-}
 
-.aaaaaaaaaaa {
-  z-index: 100;
+  .common_cluster {
+    border-radius: 50%;
+    backdrop-filter: blur(2px);
+    background-image: none;
+
+    &.clusterer1 {
+      background-color: rgba(123, 102, 255, 0.5);
+      z-index: 2;
+    }
+    &.clusterer2 {
+      background: rgba(72, 199, 183, 0.5);
+      z-index: 3;
+    }
+    &.clusterer3 {
+      background-color: rgba(41, 182, 243, 0.5);
+      z-index: 4;
+    }
+
+    > img {
+      display: none;
+    }
+  }
 }

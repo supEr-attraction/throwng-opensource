@@ -1,0 +1,50 @@
+.content-item {
+  padding: 2dvh;
+  height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  img {
+    width: 13dvh;
+  }
+
+  .quiz-border,
+  .game1-border,
+  .game2-border {
+    display: flex;
+    justify-content: space-between;
+    background-color: rgb(123, 102, 255, 0.2);
+    border-radius: 2dvh;
+    padding: 3dvh;
+    width: 75%;
+    height: 20dvh;
+
+    .quiz-title,
+    .game1-title,
+    .game2-title {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      width: 100%;
+      font-size: 2.1dvh;
+      font-weight: bold;
+
+      .participation {
+        font-size: 1.8dvh;
+        text-align: center;
+        width: 7dvh;
+        border-radius: 1dvh;
+        background-color: #7b66ff;
+        color: white;
+      }
+
+      
+
+      .participation.inactive {
+        background-color: #808080;
+      }
+    }
+  }
+}

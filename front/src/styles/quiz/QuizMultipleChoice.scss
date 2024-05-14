@@ -1,14 +1,25 @@
 .QuizMultipleChoice {
-  h2 {
-    margin-top: 5dvh;
-    margin-bottom: 1dvh;
+  .quiz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    h2 {
+      margin-top: 5dvh;
+      margin-bottom: 1dvh;
+    }
+    svg {
+      font-size: 3dvh;
+      margin-bottom: 0.5dvh;
+    }
   }
+
   .mc-question {
     display: flex;
     padding: 2dvh;
     border-radius: 2dvh;
     background-color: rgba(123, 102, 255, 0.1);
     word-break: keep-all;
+    white-space: pre-wrap;
     font-size: 2.5dvh;
     font-weight: bold;
     p {

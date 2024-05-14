@@ -14,7 +14,6 @@
     position: fixed;
     bottom: 0;
     inset-inline: 0;
-    // padding: 4dvh;
     border-radius: 2dvh 2dvh 0 0;
     // display: flex;
     // flex-direction: column;
@@ -23,7 +22,7 @@
 
     .report {
       padding: 2dvh;
-      font-size: 2.3dvh;
+      font-size: 2dvh;
       font-weight: bold;
       text-align: center;
     }
@@ -35,10 +34,10 @@
 
     .content {
       padding: 3dvh;
-      font-size: 2dvh;
+      font-size: 1.7dvh;
       display: flex;
       flex-direction: column;
-      gap: 4dvh;
+      gap: 3dvh;
 
       .title {
         display: flex;

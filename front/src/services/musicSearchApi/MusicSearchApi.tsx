@@ -7,7 +7,7 @@ const apiFile = axiosFileApi();
 
 const getSearchMusic = async (title: string): Promise<Song[]> => {
   try {
-    const { data } = await api.get<Song[]>(`/music/search/${title}`);
+    const { data } = await api.get<Song[]>(`/music/search?keyword=${title}`);
     return data;
   } catch (e) {
     console.log(e);

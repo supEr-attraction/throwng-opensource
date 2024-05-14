@@ -1,12 +1,15 @@
 .NotificationBody {
+  display: flex;
+  flex-direction: column;
+  gap: 1dvh;
 
-  .body {
+  .notice-body {
     display: flex;
     flex-direction: column;
     gap: 1dvh;
-    padding: 1dvh 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     overflow: hidden;
+    padding-bottom: 1dvh;
 
     .header {
       display: flex;
@@ -15,7 +18,7 @@
       color: var(--placeholder-color);
       
       .category {
-        font-size: 1.7dvh;
+        font-size: 1.5dvh;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
@@ -31,22 +34,43 @@
     }
 
     .title {
-      font-size: 2dvh;
+      font-size: 1.7dvh;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
     }
 
     .sub-title {
-      font-size: 1.8dvh;
+      font-size: 1.5dvh;
       text-overflow: ellipsis;
       overflow: hidden;
       color: #CDCDCD;
     }
 
-    &:active {
-      background-color: var(--input-box-color);
-      border-radius: 1dvh;
+    &:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  .no-word-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 2dvh;
+      color: var(--placeholder-color);
     }
   }
 }

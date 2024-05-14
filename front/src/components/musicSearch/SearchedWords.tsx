@@ -12,8 +12,13 @@ const SearchedWords = () => {
   const setTitle = useSetRecoilState(inputSearchKeyWord);
 
   const onWordClick = (searchKeyWord: string) => {
+    const trimmedKeyword = searchKeyWord.trim();
+    const encodedSearchKeyword = encodeURIComponent(trimmedKeyword);
+
     setTitle(searchKeyWord);
-    navigate(`/music/search/${searchKeyWord}`, { replace: true });
+    navigate(`/music/search/results?query=${encodedSearchKeyword}`, {
+      replace: true,
+    });
   };
 
   const deleteWord = (id: number) => {

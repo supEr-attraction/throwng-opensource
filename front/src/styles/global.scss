@@ -4,16 +4,12 @@
   box-sizing: border-box;
   max-width: 450px;
   -webkit-tap-highlight-color: transparent;
-
-  // font-family: 'NanumSquareNeo-Variable', sans-serif;
-  // font-family: 'Pretendard-Regular', sans-serif;
-  // font-family: 'SUIT-Regular', sans-serif;
-  // font-family: 'SpoqaHanSansNeo-Regular', sans-serif;
-
-  // -ms-overflow-style: none;
-  // ::-webkit-scrollbar {
-  //   display: none;
-  // }
+  font-family: "SUIT-Regular", sans-serif;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html {
@@ -38,31 +34,10 @@ a {
   }
 }
 
-.none-scroll::-webkit-scrollbar {
-  display: none;
+@font-face {
+  font-family: "SUIT-Regular";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
-
-// @font-face {
-//   font-family: 'Pretendard-Regular';
-//   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-//   font-weight: 400;
-//   font-style: normal;
-// }
-// @font-face {
-//   font-family: 'SUIT-Regular';
-//   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
-//   font-weight: normal;
-//   font-style: normal;
-// }
-// @font-face {
-//   font-family: 'NanumSquareNeo-Variable';
-//   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
-//   font-weight: normal;
-//   font-style: normal;
-// }
-// @font-face {
-//   font-family: 'SpoqaHanSansNeo-Regular';
-//   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
-//   font-weight: normal;
-//   font-style: normal;
-// }

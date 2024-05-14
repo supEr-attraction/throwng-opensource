@@ -1,11 +1,13 @@
-.MyCouponPage {
+.NotificationPage {
   height: 100dvh;
   display: flex;
   flex-direction: column;
 
   .body {
     flex: 1;
-    padding: 3dvh;
+    padding-inline: 3dvh;
+    padding-top: 1dvh;
+    padding-bottom: 3dvh;
     overflow: auto;
   }
 }

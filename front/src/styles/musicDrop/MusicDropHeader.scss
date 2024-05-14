@@ -63,7 +63,7 @@
           align-items: center;
 
           .title {
-            font-size: 2.3dvh;
+            font-size: 2.2dvh;
             font-weight: bold;
             width: calc(100vw - 6vh);
             overflow: hidden;
@@ -74,13 +74,13 @@
               text-align: center;
 
               &.animated {
-                animation: scroll 5s linear infinite;
+                animation: scroll 15s linear infinite;
               }
             }
           }
 
           .artist {
-            font-size: 1.8dvh;
+            font-size: 1.7dvh;
             color: #a5b2c5;
             font-weight: bold;
           }
@@ -104,7 +104,7 @@
           }
 
           svg {
-            font-size: 5dvh;
+            font-size: 4dvh;
             color: #5d6470;
             cursor: pointer;
             position: absolute;
@@ -120,6 +120,6 @@
     transform: translateX(100%);
   }
   100% {
-    transform: translateX(-250%);
+    transform: translateX(-220%);
   }
 }
