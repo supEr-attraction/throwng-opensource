@@ -1,15 +1,15 @@
 .MyCouponBody {
   display: flex;
   flex-direction: column;
-  gap: 3dvh;
+  gap: 2dvh;
 
   .coupon-body {
     display: flex;
     flex-direction: column;
-    padding: 2dvh;
+    padding: 2.5dvh;
     border: 2px solid var(--placeholder-color);
     border-radius: 1dvh;
-    gap: 1.8dvh;
+    gap: 1dvh;
 
     .coupon-header {
       display: flex;
@@ -17,11 +17,11 @@
       gap: 1dvh;
       
       .coupon-title {
-        font-size: 2dvh;
+        font-size: 1.7dvh;
       }
   
       .coupon-desc {
-        font-size: 1.4dvh;
+        font-size: 1.5dvh;
         color: var(--placeholder-color);
       }
     }
@@ -31,9 +31,9 @@
       justify-content: flex-end;
 
       .coupon-apply-btn {
-        font-size: 1.4dvh;
-        padding: 0.8dvh;
-        border: 1px solid var(--placeholder-color);
+        font-size: 1.5dvh;
+        padding: 1dvh;
+        border: 1px solid var(--main-color);
         border-radius: 1dvh;
 
         &:active {
@@ -42,7 +42,7 @@
       }
 
       .coupon-apply-active {
-        background-color: var(--placeholder-color);
+        background-color: var(--main-color);;
       }
     }
 
@@ -53,16 +53,39 @@
     .coupon-end-date {
       display: flex;
       flex-direction: row;
+      align-items: center;
       gap: 1dvh;
-      font-size: 1.6dvh;
+      font-size: 1.5dvh;
 
       .coupon-end-date-how-imminent {
         color: #FF8A8A;
+        font-size: 1.7dvh;
       }
 
       .coupon-end-date-when {
         color: var(--placeholder-color);
       }
+    }
+  }
+  
+  .no-word-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 2dvh;
+      color: var(--placeholder-color);
     }
   }
 }

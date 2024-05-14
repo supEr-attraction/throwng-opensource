@@ -1,91 +1,108 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import "@styles/myCoupon/MyCouponBody.scss";
 import dayjs from 'dayjs';
+import { Coupon } from '../../types/couponType';
+import { getMyCoupon, postMyCoupon } from '@services/myCouponApi/MyCouponAPi';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
+import { changeNickNameCouponId } from '@store/myPage/atoms';
+import Loading from '@components/Loading';
+import ToasterMsg from '@components/ToasterMsg';
+import { toastMsg } from '@/utils/toastMsg';
 
 const MyCouponBody = () => {
-  const [coupons, setCoupons] = useState([
-    {
-      couponId:1,
-      couponName:"무제한 Throw",
-      couponDesc:"1시간 동안 무제한으로 음악을 Throw가 가능해요!",
-      couponEndDate:"2024-05-06T00:00:00",
-      couponApply: false,
-    },
-    {
-      couponId:2,
-      couponName:"무제한 Throw",
-      couponDesc:"1시간 동안 무제한으로 음악을 Throw가 가능해요!",
-      couponEndDate:"2024-05-10T00:00:00",
-      couponApply: false,
-    },
-    {
-      couponId:3,
-      couponName:"범위 밖 노래 정보 조회",
-      couponDesc:"내 범위구역 밖에 있는 노래들의 상세 정보를 조회할 수 있어요!",
-      couponEndDate:"2024-05-06T00:00:00",
-      couponApply: false,
-    },
-    {
-      couponId:4,
-      couponName:"범위 밖 노래 정보 조회",
-      couponDesc:"내 범위구역 밖에 있는 노래들의 상세 정보를 조회할 수 있어요!",
-      couponEndDate:"2024-05-05T00:00:00",
-      couponApply: true,
-    },
-  ]);
+  const [coupons, setCoupons] = useState<Coupon[]>([]);
+  const navigate = useNavigate()
+  const setChangeNickNameCouponId = useSetRecoilState(changeNickNameCouponId)
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleChangeApply = (couponId:number) => {
-    const isConfirmed = window.confirm("쿠폰을 적용하겠습니까?");
+  useEffect(() => {
+    setIsLoading(true);
+    fetchGetMyCoupon();
+  }, [])
+
+  const fetchGetMyCoupon = async () => {
+    const res = await getMyCoupon();
+    setCoupons(res)
+    setIsLoading(false);
+  }
+
+  const handleChangeApply = async (couponId: number) => {
+    const selectedCoupon = coupons.find(coupon => coupon.couponId === couponId);
+    if (!selectedCoupon) return;
+
+    const isConfirmed = window.confirm(`${selectedCoupon.couponName}을 적용하시겠어요?`);
     if (isConfirmed) {
-      setCoupons((prevCoupons) => {
-        const newCoupons = prevCoupons.map((coupon) => {
-          if (coupon.couponId === couponId) {
-            if (!prevCoupons.some(c => c.couponName === coupon.couponName && c.couponApply)) {
-              return { ...coupon, couponApply: true };
-            } else {
-              alert('이미 동일한 쿠폰이 적용 중입니다.');
-            }
-          }
-          return coupon;
-        });
-        return newCoupons;
-      });
+      if (selectedCoupon.couponName === "닉네임 변경 쿠폰") {
+        setChangeNickNameCouponId(selectedCoupon.couponId);
+        navigate('/user/mypage/change-nickname');
+        return;
+      }
+  
+      const isCouponInUse = coupons.some(coupon => coupon.couponName === selectedCoupon.couponName && coupon.couponStatus === "사용 중");
+      if (isCouponInUse) {
+        toastMsg("동일한 쿠폰을 사용중이에요");
+        return;
+      }
+  
+      const throwngTypes = ['THROWNG_INF', 'THROWNG_TWICE', 'THROWNG_LEVEL', 'THROWNG_FIVE'];
+      if (throwngTypes.includes(selectedCoupon.couponType)) {
+        const isSameTypeCouponInUse = coupons.some(coupon => throwngTypes.includes(coupon.couponType) && coupon.couponStatus === "사용 중");
+        if (isSameTypeCouponInUse) {
+          toastMsg("같은 유형의 쿠폰을 사용중이에요");
+          return;
+        }
+      }
+  
+      const requestBody = {
+        'couponId': couponId,
+        'couponType': selectedCoupon.couponType,
+      }
+  
+      await postMyCoupon(requestBody);
+      fetchGetMyCoupon();
     }
   };
-
+  
   return (
     <div className="MyCouponBody">
-      {coupons.length > 0 ? (
-        coupons.map((coupon) => {
-          const daysLeft = dayjs(coupon.couponEndDate).diff(dayjs(), 'day');
-          const isExpiring = daysLeft <= 3;
-          return (
-            <div key={coupon.couponId} className="coupon-body">
-              <div className="coupon-header">
-                <div className="coupon-title">{coupon.couponName}</div>
-                <div className="coupon-desc">{coupon.couponDesc}</div>
-              </div>
-              <div className="coupon-apply" onClick={() => !coupon.couponApply && handleChangeApply(coupon.couponId)}>
-                <div className={`coupon-apply-btn ${coupon.couponApply && 'coupon-apply-active'}`}>
-                  {coupon.couponApply ? "사용 중" : "적용 안됨"}
+      {isLoading ? (
+      <Loading/>
+      ) 
+      : coupons.length > 0 ? (
+          coupons.map((coupon) => {
+            const daysLeft = Math.ceil(dayjs(coupon.couponEndDate).diff(dayjs(), 'day', true));
+            const isExpiring = daysLeft <= 1;
+            return (
+              <div key={coupon.couponId} className="coupon-body">
+                <div className="coupon-header">
+                  <div className="coupon-title">{coupon.couponName}</div>
+                  <div className="coupon-desc">{coupon.couponDescription}</div>
+                </div>
+                <div className={`coupon-apply ${coupon.couponStatus === "사용 전" ? '' : 'inactive'}`} onClick={() => coupon.couponStatus === "사용 전" && handleChangeApply(coupon.couponId)}>
+                  <div className={`coupon-apply-btn ${coupon.couponStatus !== "사용 전" && 'coupon-apply-active'}`}>
+                    {coupon.couponStatus}
+                  </div>
+                </div>
+                <hr />
+                <div className="coupon-end-date">
+                  <div className={`${isExpiring && 'coupon-end-date-how-imminent'}`}>
+                    {`D-${daysLeft}`}
+                  </div>
+                  <div className="coupon-end-date-when">{dayjs(coupon.couponEndDate).format('YY/MM/DD HH:mm:ss')}까지</div>
                 </div>
               </div>
-              <hr />
-              <div className="coupon-end-date">
-                <div className={`${isExpiring && 'coupon-end-date-how-imminent'}`}>
-                  {`D-${daysLeft}`}
-                </div>
-                <div className="coupon-end-date-when">{dayjs(coupon.couponEndDate).format('YY/MM/DD')} 00:00:00까지</div>
-              </div>
+            );
+          })
+        ) : (
+          <div className="SearchedWords">
+            <div className="no-word-container">
+              <div className="title">앗!</div>
+              <div className="subtitle">사용 가능한 쿠폰이 없습니다.</div>
             </div>
-          );
-        })
-      ) : (
-        <div>
-          <div>앗</div>
-          <div>사용 가능한 쿠폰이 없습니다.</div>
-        </div>
-      )}
+          </div>
+        )}
+      <ToasterMsg/>
     </div>
   );
 };

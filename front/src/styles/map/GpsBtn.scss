@@ -1,0 +1,22 @@
+.GpsBtn {
+  background-color: var(--input-box-color);
+  width: 5vh;
+  height: 5vh;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    font-size: 3vh;
+
+    &.centered {
+      color: #7b66ff;
+    }
+
+    &.not-centered {
+      color: #7b8696;
+    }
+  }
+}

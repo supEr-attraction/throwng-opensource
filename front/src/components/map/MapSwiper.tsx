@@ -1,61 +1,87 @@
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { activeMarkerState } from "@store/map/atoms";
-import { markerRadiusState } from "@store/map/selectors";
+import { memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  radiusActiveIdState,
+  couponUsageActiveIdState,
+} from "@store/map/atoms";
+import {
+  initialSlideState,
+  insideRadiusMarkerState,
+  outsideRadiusMarkerState,
+} from "@store/map/selectors";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "@styles/map/MapSwiper.scss";
 
 const MapSwiper = () => {
-  const markerRadius = useRecoilValue(markerRadiusState);
-  const [activeMarkerId, setActiveMarkerId] = useRecoilState(activeMarkerState);
-
+  const insideRadiusMarker = useRecoilValue(insideRadiusMarkerState);
+  const outsideRadiusMarker = useRecoilValue(outsideRadiusMarkerState);
+  const initialSlide = useRecoilValue(initialSlideState);
+  const setCouponUsageActiveId = useSetRecoilState(couponUsageActiveIdState);
+  const setRadiusActiveId = useSetRecoilState(radiusActiveIdState);
   const navigate = useNavigate();
+
+  const initialize = useCallback(() => {
+    if (initialSlide !== -1) {
+      setRadiusActiveId(null);
+    } else {
+      setCouponUsageActiveId(null);
+    }
+  }, []);
 
   return (
     <div className="MapSwiper">
       <div className="black-bottom-gradient"></div>
-      <div
-        className="close"
-        onClick={() => {
-          setActiveMarkerId(null);
-        }}
-      />
+      <div className="close" onClick={initialize} />
       <Swiper
-        initialSlide={markerRadius.findIndex(
-          (marker) => marker.itemId === activeMarkerId
-        )}
+        initialSlide={initialSlide !== -1 ? initialSlide : 0}
         slidesPerView={3}
         centeredSlides={true}
         grabCursor={true}
-        // spaceBetween={30}
         onSlideChange={(e) => {
-          setActiveMarkerId(markerRadius[e.activeIndex].itemId);
+          setRadiusActiveId(insideRadiusMarker[e.activeIndex].itemId);
         }}
         slideToClickedSlide={true}
         className="mySwiper"
       >
-        {markerRadius.map((marker) => {
-          return (
-            <SwiperSlide
-              key={marker.itemId}
-              onClick={() => {
-                navigate(`/music/pick/${marker.itemId}`);
-              }}
-            >
-              <img src={marker.albumImage} />
-              <div className="content">
-                <div className="title">{marker.songTitle}</div>
-                <div className="singer">{marker.artistName}</div>
-              </div>
-            </SwiperSlide>
-          );
-        })}
+        {initialSlide !== -1
+          ? insideRadiusMarker.map((marker) => {
+              return (
+                <SwiperSlide
+                  key={marker.itemId}
+                  onClick={() => {
+                    navigate(`/music/pick/${marker.itemId}`);
+                  }}
+                >
+                  <img src={marker.albumImage} loading="lazy" />
+                  <div className="content">
+                    <div className="title">{marker.songTitle}</div>
+                    <div className="singer">{marker.artistName}</div>
+                  </div>
+                </SwiperSlide>
+              );
+            })
+          : outsideRadiusMarker.map((marker) => {
+              return (
+                <SwiperSlide
+                  key={marker.itemId}
+                  onClick={() => {
+                    navigate(`/music/pick/${marker.itemId}`);
+                  }}
+                >
+                  <img src={marker.albumImage} loading="lazy" />
+                  <div className="content">
+                    <div className="title">{marker.songTitle}</div>
+                    <div className="singer">{marker.artistName}</div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
       </Swiper>
     </div>
   );
 };
 
-export default MapSwiper;
+export default memo(MapSwiper);

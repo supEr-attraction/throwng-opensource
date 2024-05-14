@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { FaRegUser, FaRegBell } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 import { LuHome } from "react-icons/lu";
 import { FaRegCirclePlay } from "react-icons/fa6";
-// import { BsMusicPlayer } from "react-icons/bs";
 import circle from "@assets/images/Cone.webp";
 import logo from "@assets/images/logo.png";
 import "@styles/Navbar.scss";
+import { IoGameControllerOutline } from "react-icons/io5";
 
 const Navbar = () => {
   return (
@@ -22,13 +22,12 @@ const Navbar = () => {
         <div className="menu__item disable">
           <NavLink to={"/music/search"} className="center">
             <img className="circle" src={circle} alt="" />
-            {/* <BsMusicPlayer /> */}
             <img className="logo" src={logo} alt="" />
           </NavLink>
         </div>
-        <NavLink to={"/user/notification"} className="menu__item">
-          <FaRegBell />
-          <div>알림</div>
+        <NavLink to={"/content"} className="menu__item">
+          <IoGameControllerOutline />
+          <div>컨텐츠</div>
         </NavLink>
         <NavLink to={"/user/mypage"} className="menu__item">
           <FaRegUser />

@@ -1,41 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Titan+One&display=swap");
+
 .Loading {
-  position: fixed;
+  position: absolute;
   inset: 0;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
-  letter-spacing: 2dvh;
-  background-color: rgba(15, 17, 20, 0.3);
+  background-color: rgba(15, 17, 20, 0.6);
+  z-index: 2;
 
-  .spinner {
-    font-size: 3dvh;
-    font-weight: bold;
-    color: #878c91;
+  > div {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    filter: drop-shadow(0 0 10px);
+    gap: 1.5dvh;
+    padding-bottom: 5dvh;
 
     span {
-      animation: loading6454 1s ease infinite;
+      position: relative;
+      top: 10px;
+      display: inline-block;
+      animation: bounce 0.3s ease infinite alternate;
+      font-family: "Titan One", cursive;
+      font-size: 5.5dvh;
+      color: #fff;
+      text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+        0 5px 0 #ccc, 0 6px 0 transparent, 0 7px 0 transparent,
+        0 8px 0 transparent, 0 9px 0 transparent, 0 10px 10px rgba(0, 0, 0, 0.4);
     }
 
     @for $i from 2 through 7 {
       span:nth-child(#{$i}) {
-        animation-delay: 0.15s * ($i - 1);
+        animation-delay: 0.1s * ($i - 1);
       }
     }
   }
+}
 
-  @keyframes loading6454 {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-
-    50% {
-      transform: translateY(-30px);
-    }
+@keyframes bounce {
+  100% {
+    top: -10px;
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+      0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px 0 #ccc, 0 9px 0 #ccc,
+      0 50px 25px rgba(0, 0, 0, 0.2);
   }
 }

@@ -1,4 +1,7 @@
 export interface NoticeType {
-  quizId:number,
-  date:string,
+  category: string;
+  date: string;
+  title: string;
+  body: string;
+  link: string;
 }

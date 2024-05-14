@@ -1,60 +1,66 @@
-import { useNavigate, useParams } from "react-router-dom"
-import {Song} from "../../types/songType.ts"
-import "@styles/musicSearch/MusicList.scss"
-import { useResetRecoilState, useSetRecoilState } from "recoil"
-import { inputSearchKeyWord } from "@store/musicSearch/atoms.ts"
-import Header from "@components/Header.tsx"
-import MusicSearchInput from "./MusicSearchInput.tsx"
-import { useEffect, useState } from "react"
-import { getSearchMusic } from "@services/musicSearchApi/MusicSearchApi.tsx"
-import { selectMusic } from "@store/music/drop/atoms.ts"
-import Loading from "@components/Loading.tsx"
+import { useNavigate } from "react-router-dom";
+import { Song } from "../../types/songType.ts";
+import "@styles/musicSearch/MusicList.scss";
+import { useResetRecoilState, useSetRecoilState } from "recoil";
+import { inputSearchKeyWord } from "@store/musicSearch/atoms.ts";
+import Header from "@components/Header.tsx";
+import MusicSearchInput from "./MusicSearchInput.tsx";
+import { useEffect, useState } from "react";
+import { getSearchMusic } from "@services/musicSearchApi/MusicSearchApi.tsx";
+import { selectMusic } from "@store/music/drop/atoms.ts";
+import Loading from "@components/Loading.tsx";
 
 const MusicList = () => {
   const navigate = useNavigate();
   const setTitle = useSetRecoilState(inputSearchKeyWord);
   const [searchResults, setSearchResults] = useState<Song[]>([]);
-  const setSelectMusic = useSetRecoilState(selectMusic)
-  const resetSelectMusic = useResetRecoilState(selectMusic)
-  const params = useParams();
-  const searchKeyword = params.id;
+  const setSelectMusic = useSetRecoilState(selectMusic);
+  const resetSelectMusic = useResetRecoilState(selectMusic);
+  const searchParams = new URLSearchParams(location.search);
+  const searchKeyword = searchParams.get("query");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    resetSelectMusic()
-    if(searchKeyword) {
-      onSearch(searchKeyword);
+    resetSelectMusic();
+    if (searchKeyword) {
+      onSearch(decodeURIComponent(searchKeyword));
     }
-  }, [searchKeyword])
+  }, [searchKeyword]);
 
   const onSearch = async (searchKeyWord: string) => {
-    setIsLoading(true)
-    setTitle(searchKeyWord);
-    const res = await getSearchMusic(searchKeyWord);
+    setIsLoading(true);
+    const decodedKeyword = decodeURIComponent(searchKeyWord);
+    setTitle(decodedKeyword);
+    const res = await getSearchMusic(decodedKeyword);
     if (res) {
       setSearchResults(res);
     }
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
-  const handleGoNavigation = (song : Song) => {
-    setSelectMusic(song)
-    navigate(`/music/drop/${song.youtubeId}`)
-  }
+  const handleGoNavigation = (song: Song) => {
+    setSelectMusic(song);
+    navigate(`/music/drop/${song.youtubeId}`);
+  };
 
   return (
     <div className="MusicList">
       <div className="MusicList-header">
-        <Header/>
-        <MusicSearchInput/>
+        <Header />
+        <MusicSearchInput />
       </div>
-      {isLoading ? ( <Loading /> ) 
-      : searchResults && searchResults.length > 0 ? (
+      {isLoading ? (
+        <Loading />
+      ) : searchResults && searchResults.length > 0 ? (
         <div className="searchResults none-scroll">
-          {searchResults.map((song, index:number) => (
-            <div key={index} className="result-item" onClick={() => handleGoNavigation(song)}>
+          {searchResults.map((song, index: number) => (
+            <div
+              key={index}
+              className="result-item"
+              onClick={() => handleGoNavigation(song)}
+            >
               <div className="image-container">
-                <img src={song.albumImage} loading="lazy"/>
+                <img src={song.albumImage} loading="lazy" />
               </div>
               <div className="item-wide">
                 <div className="item-detail">
@@ -66,15 +72,15 @@ const MusicList = () => {
           ))}
         </div>
       ) : (
-      <div className="SearchedWords">
-        <div className="no-word-container">
-          <div className="title">앗!</div>
-          <div className="subtitle">검색결과가 없어요.</div>
+        <div className="SearchedWords">
+          <div className="no-word-container">
+            <div className="title">앗!</div>
+            <div className="subtitle">검색결과가 없어요.</div>
+          </div>
         </div>
-      </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default MusicList
+export default MusicList;

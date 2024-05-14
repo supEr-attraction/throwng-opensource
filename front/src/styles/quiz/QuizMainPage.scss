@@ -14,7 +14,7 @@
 
 .QuizMainPage {
   padding: 2vh;
-  height: 100vh;
+  height: 93vh;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -43,18 +43,18 @@
     background-color: rgba(123, 102, 255, 0.1);
     width: 90%;
     height: 30vh;
+    margin-top: 3dvh;
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
+    animation: popIn 0.6s ease-out forwards;
+    animation-delay: 0.9s;
     p {
       word-break: keep-all;
       text-align: center;
-      margin-top: 3vh;
       padding: 2vh;
       font-size: 3vh;
-      opacity: 0;
-      animation: popIn 0.6s ease-out forwards;
-      animation-delay: 0.9s;
     }
   }
 

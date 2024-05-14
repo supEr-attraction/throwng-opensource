@@ -1,22 +1,25 @@
-import { useRef } from "react";
 import { MdOutlineClear } from "react-icons/md";
 import "@/styles/musicSearch/MusicSearchInput.scss";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { SearchedWordsList } from "../../types/songType";
 import { inputSearchKeyWord, searchedWords } from "@store/musicSearch/atoms";
 import { useNavigate } from "react-router-dom";
-import { ToasterMsg } from "@components/ToasterMsg";
+import ToasterMsg from "@components/ToasterMsg";
 import { toastMsg } from "@/utils/toastMsg";
 
 const MusicSearchInput = () => {
-  const inputEl = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
   const setWords = useSetRecoilState<SearchedWordsList[]>(searchedWords);
   const [title, setTitle] = useRecoilState(inputSearchKeyWord);
 
   const onSearch = async (searchKeyWord: string) => {
-    if (searchKeyWord.trim() !== "") {
-      navigate(`/music/search/${searchKeyWord}`, { replace: true });
+    const trimmedKeyword = searchKeyWord.trim();
+    const encodedSearchKeyword = encodeURIComponent(trimmedKeyword);
+
+    if (encodedSearchKeyword !== "") {
+      navigate(`/music/search/results?query=${encodedSearchKeyword}`, {
+        replace: true,
+      });
     } else {
       navigate("/music/search", { replace: true });
     }
@@ -57,9 +60,8 @@ const MusicSearchInput = () => {
         <div className="input-div">
           <input
             className="input"
-            ref={inputEl}
             type="text"
-            placeholder="검색어를 입력하세요."
+            placeholder="쓰롱 할 음악을 검색하세요"
             value={title}
             onChange={titleOnChange}
             maxLength={30}

@@ -1,52 +1,79 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "@styles/quiz/QuizMultipleChoice.scss";
-
-interface Choice {
-  id: number;
-  text: string;
-}
+import { ImVolumeMedium, ImVolumeMute2 } from "react-icons/im";
 
 interface QuizMultipleChoiceProps {
-  setIsCorrect: (isCorrect: boolean) => void;
   setCanSubmit: (canSubmit: boolean) => void;
-  
+  question: string;
+  choices: { [key: string]: string };
+  index: number;
+  previewUrl?: string;
+  onUserInput: (input: string) => void;
 }
 
-const QuizMultipleChoice = ({ setIsCorrect, setCanSubmit }: QuizMultipleChoiceProps) => {
-  const [selectedChoice, setSelectedChoice] = useState<number | null>(null);
+const QuizMultipleChoice = ({
+  onUserInput,
+  setCanSubmit,
+  question,
+  choices,
+  index,
+  previewUrl,
+}: QuizMultipleChoiceProps) => {
+  const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  // API
-  const question: string = "여기에 객관식 문제 뿌려~~~";
-  const choices: Choice[] = [
-    { id: 1, text: "보기1" },
-    { id: 2, text: "보기2" },
-    { id: 3, text: "보기3" },
-    { id: 4, text: "보기4" },
-  ];
-  const correctAnswer = 3;
+  useEffect(() => {}, [choices]);
 
-  const handleChoiceClick = (id: number) => {
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  }, [isMuted]);
+
+  useEffect(() => {
+    setSelectedChoice(null);
+  }, [question]);
+
+  const handleChoiceClick = (id: string) => {
     setSelectedChoice(id);
-    setIsCorrect(id === correctAnswer);
-    setCanSubmit(true)
+    onUserInput(id);
+    setCanSubmit(true);
+  };
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsMuted(!isMuted);
+    }
   };
 
   return (
     <div className="QuizMultipleChoice">
-      <h2>Q1.</h2>
+      <div className="quiz-header">
+        <h2>Q{index + 1}.</h2>
+        {previewUrl && (
+          <div className="quiz-audio" onClick={toggleMute}>
+            {isMuted ? <ImVolumeMute2 /> : <ImVolumeMedium />}
+            <audio ref={audioRef} muted={isMuted} src={previewUrl}></audio>
+          </div>
+        )}
+      </div>
       <div className="mc-question">
         <p>{question}</p>
       </div>
       <div className="mc-choice">
-        {choices.map((choice) => (
+        {Object.entries(choices).map(([id, text]) => (
           <div
-            key={choice.id}
-            className={`choice ${
-              selectedChoice === choice.id ? "selected" : ""
-            }`}
-            onClick={() => handleChoiceClick(choice.id)}
+            key={id}
+            className={`choice ${selectedChoice === id ? "selected" : ""}`}
+            onClick={() => handleChoiceClick(id)}
           >
-            {choice.id}. {choice.text}
+            {text}
           </div>
         ))}
       </div>

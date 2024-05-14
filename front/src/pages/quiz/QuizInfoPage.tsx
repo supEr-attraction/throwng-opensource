@@ -1,3 +1,4 @@
+
 import QuizCautionLottie from "@components/lottie/QuizCautionLottie";
 import QuizInfo from "@components/quiz/QuizInfo";
 import "@styles/quiz/QuizInfoPage.scss";

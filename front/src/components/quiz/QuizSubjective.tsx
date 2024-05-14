@@ -1,36 +1,68 @@
-import { useState, ChangeEvent } from "react";
+import { useState, useRef, useEffect, ChangeEvent } from "react";
 import "@styles/quiz/QuizSubjective.scss";
+import { ImVolumeMedium, ImVolumeMute2 } from "react-icons/im";
 
 interface QuizSubjectiveProps {
-  setIsCorrect: (value: boolean | null) => void;
   setCanSubmit: (canSubmit: boolean) => void;
+  question: string;
+  index: number;
+  previewUrl?: string;
+  quizImage?: string;
+  onUserInput: (input: string) => void;
 }
 
 const QuizSubjective = ({
-  setIsCorrect,
+  onUserInput,
   setCanSubmit,
+  question,
+  index,
+  previewUrl,
+  quizImage,
 }: QuizSubjectiveProps) => {
   const [userAnswer, setUserAnswer] = useState<string>("");
+  const [isMuted, setIsMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
-  //API
-  const question = "여기에 주관식 문제 뿌려뿌려~";
-  const correctAnswer = "정답";
+  useEffect(() => {
+    setUserAnswer("");
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
+  }, [index, isMuted]);
 
   const handleAnswerChange = (event: ChangeEvent<HTMLInputElement>) => {
     const answer = event.target.value;
     setUserAnswer(answer);
     setCanSubmit(answer.trim() !== "");
+    onUserInput(answer.trim());
   };
 
-  const checkAnswer = () => {
-    const isValid = userAnswer.trim() === correctAnswer;
-    setIsCorrect(isValid);
+  const toggleMute = () => {
+    if (audioRef.current) {
+      if (isMuted) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+      setIsMuted(!isMuted);
+    }
   };
 
   return (
     <div className="QuizSubjective">
-      <h2>Q2.</h2>
-      <div className="sub-question">{question}</div>
+      <div className="quiz-header">
+        <h2>Q{index + 1}.</h2>
+        {previewUrl && (
+          <div className="quiz-audio" onClick={toggleMute}>
+            {isMuted ? <ImVolumeMute2 /> : <ImVolumeMedium />}
+            <audio ref={audioRef} muted={isMuted} src={previewUrl}></audio>
+          </div>
+        )}
+      </div>
+      <div className="sub-question">
+        <p>{question}</p>
+        {quizImage && <img src={quizImage} alt="Quiz related image" />}
+      </div>
       <h2>정답 입력</h2>
       <input
         type="text"
@@ -38,7 +70,6 @@ const QuizSubjective = ({
         className="sub-answer"
         value={userAnswer}
         onChange={handleAnswerChange}
-        onBlur={checkAnswer}
       />
     </div>
   );

@@ -1,6 +1,7 @@
-import { throwngFilter, throwngFilterModal } from "@store/myPage/atoms"
-import { useRecoilState, useSetRecoilState } from "recoil"
-import "@styles/myPage/MyThrowngHistoryFilterModal.scss"
+import { useEffect } from "react";
+import { throwngFilter, throwngFilterModal } from "@store/myPage/atoms";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import "@styles/myPage/MyThrowngHistoryFilterModal.scss";
 
 const MyThrowngHistoryFilterModal = () => {
   const setIsModal = useSetRecoilState(throwngFilterModal);
@@ -9,6 +10,14 @@ const MyThrowngHistoryFilterModal = () => {
   const handleFilterClick = (filter: string) => {
     setIsFilter(filter);
   };
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
 
   return (
     <div className="MyThrowngHistoryFilterModal">
@@ -19,10 +28,12 @@ const MyThrowngHistoryFilterModal = () => {
         <div className="body">
           <div className="body-header">조회기간</div>
           <div className="filter-list">
-            {["오늘", "이번 주", "이번 달", "전체"].map(filter => (
+            {["오늘", "이번 주", "이번 달", "전체"].map((filter) => (
               <div
                 key={filter}
-                className={`filter-item ${isFilter === filter ? 'selected' : ''}`}
+                className={`filter-item ${
+                  isFilter === filter ? "selected" : ""
+                }`}
                 onClick={() => handleFilterClick(filter)}
               >
                 {filter}
@@ -35,5 +46,4 @@ const MyThrowngHistoryFilterModal = () => {
   );
 };
 
-
-export default MyThrowngHistoryFilterModal
+export default MyThrowngHistoryFilterModal;

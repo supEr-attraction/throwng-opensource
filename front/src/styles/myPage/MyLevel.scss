@@ -1,14 +1,12 @@
 .MyLevel {
-
   .level-div {
     display: flex;
     flex-direction: column;
+    gap: 1dvh;
 
     .level-info {
       display: flex;
-      flex-direction: row;
       justify-content: space-between;
-      padding-bottom: 2dvh;
 
       .level-color {
         color: var(--level-gold);
@@ -21,26 +19,36 @@
       .drop-pick {
         display: flex;
         align-items: flex-end;
+        gap: 0.5dvh;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
 
-        span {
-          font-size: 1.5dvh;
-          color: var(--placeholder-color);
+        > div {
+          font-size: 1.7dvh;
+        }
+
+        svg {
+          font-size: 2dvh;
+          cursor: pointer;
+          color: var(--main-color);
+
+          &:active {
+            color: var(--placeholder-color);
+          }
         }
       }
     }
 
     .level-bar {
       height: 3dvh;
-      background-color: #2A2F38;
+      background-color: #2a2f38;
       border-radius: 1dvh;
       overflow: hidden;
 
       .level-bar-fill {
         height: inherit;
-        background-color: linear-gradient(var(--main-color),);
+        background-color: linear-gradient(var(--main-color));
         border-radius: 1dvh;
         animation: fillLevelBar 0.8s ease-in-out forwards;
       }

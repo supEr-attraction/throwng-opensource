@@ -1,6 +1,7 @@
 import { axiosApi } from "@/utils/common";
 import { MyHistory } from "../../types/songType";
 import { MyLevel } from "../../types/myPage";
+import { NoticeType } from "../../types/noticeType";
 
 const api = axiosApi();
 
@@ -34,4 +35,14 @@ const getMyLevel = async (): Promise<MyLevel> => {
   }
 };
 
-export { getMyDropHistory, getMyPickHistory, getMyLevel };
+const getMyNotice = async (): Promise<NoticeType[]> => {
+  try {
+    const { data } = await api.get<NoticeType[]>(`/users/user/notification`);
+    return data;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+};
+
+export { getMyDropHistory, getMyPickHistory, getMyLevel, getMyNotice, };

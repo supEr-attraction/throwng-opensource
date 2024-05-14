@@ -1,0 +1,81 @@
+.ChangeNickNamePage {
+
+  .content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  
+    .onSubmit {
+      align-items: center;
+      padding: 2dvh;
+      position: absolute;
+      font-size: 2dvh;
+      right: 0;
+  
+      &:active {
+        color: var(--placeholder-color);
+      }
+    }
+    
+    .onSubmitClose {
+      align-items: center;
+      padding: 2dvh;
+      position: absolute;
+      font-size: 2dvh;
+      right: 0;
+      color: var(--placeholder-color);
+    }
+
+    .body { 
+      padding: 3dvh;
+      
+      .title {
+        padding: 1dvh;
+      }
+
+      .change-nickname-input-div {
+        padding: 2dvh;
+        display: flex;
+        justify-content: space-between;
+        background-color: var(--input-box-color);
+        border: none;
+        border-radius: 1.5dvh;
+        align-items: center;
+    
+        .input {
+          width: 100%;
+          background-color: transparent;
+          border: none;
+          color: white;
+          font-size: 2vh;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        input::placeholder {
+          color: var(--placeholder-color);
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        :focus {
+          outline: none;
+        }
+      }
+
+      .notice {
+        padding: 1dvh;
+        color: var(--placeholder-color);
+        font-size: 1.6dvh;
+
+        span {
+          color: var(--main-color);
+        }
+      }
+    }
+  }
+}

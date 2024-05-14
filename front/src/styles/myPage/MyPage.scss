@@ -1,13 +1,30 @@
 .MyPage {
-  .body {
-    padding: 3dvh;
+  .top {
+    .Header {
+      position: sticky;
+      top: 0;
+      background: #0f1114;
+    }
+
+    .content {
+      padding-inline: 3dvh;
+      padding-block: 1dvh;
+      display: flex;
+      flex-direction: column;
+      gap: 3dvh;
+
+      .name {
+        font-weight: bold;
+        font-size: 2.5dvh;
+      }
+    }
+  }
+
+  > .body {
+    padding-inline: 3dvh;
+    padding-bottom: 3dvh;
     display: flex;
     flex-direction: column;
     gap: 3dvh;
-
-    .name {
-      font-weight: bold;
-      font-size: 2.5dvh;
-    }
   }
 }

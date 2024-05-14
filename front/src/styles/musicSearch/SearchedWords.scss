@@ -1,13 +1,16 @@
 .SearchedWords {
+  display: flex;
+  flex-direction: column;
+  gap: 3dvh;
+
   .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 2dvh;
 
     .title {
       font-weight: bold;
-      font-size: 2.5dvh;
+      font-size: 2.2dvh;
     }
 
     .all-delete {
@@ -18,20 +21,23 @@
   }
 
   .word-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5dvh;
+
     .word-item {
-      padding: 1.5dvh 1dvh;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1dvh;
 
       .word-title {
-        width: 90%;
+        flex: 1;
         text-overflow: ellipsis;
         overflow: hidden;
         white-space: nowrap;
+        cursor: pointer;
       }
-
-      cursor: pointer;
 
       .word-delete {
         color: var(--placeholder-color);
@@ -52,6 +58,7 @@
     width: 100%;
 
     .title {
+      font-size: 2.2dvh;
       font-weight: bold;
     }
 

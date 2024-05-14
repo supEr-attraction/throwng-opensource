@@ -1,0 +1,39 @@
+.MyOtpBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  width: 100%;
+
+  .otp-title {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1dvh;
+    padding-top: 5dvh;
+
+    .otp-no-result {
+      display: flex;
+      align-items: center;
+      font-size: 2dvh;
+    }
+
+    .otp-number {
+      display: flex;
+      align-items: center;
+      padding: 2dvh;
+      font-size: 4dvh;
+      color: var(--centerText-color);
+    }
+
+    .otp-desc {
+      color: var(--placeholder-color);
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      font-size: 1.5dvh;
+      gap: 1dvh;
+    }
+  }
+}

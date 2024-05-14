@@ -3,7 +3,7 @@
   height: 50dvh;
   display: flex;
   flex-direction: column;
-  gap: 2dvh;
+  gap: 1dvh;
 
   .top {
     flex: 1;
@@ -20,57 +20,24 @@
       svg {
         color: var(--main-color);
         cursor: pointer;
-        font-size: 2dvh;
+        font-size: 1.7dvh;
       }
     }
 
     .content {
       flex: 1;
-      font-size: 1.8dvh;
+      font-size: 1.7dvh;
     }
 
     .date {
       text-align: end;
-      color: var(--placeholder-color);
       font-size: 1.5dvh;
+      color: var(--placeholder-color);
     }
   }
 
   .bottom {
     display: flex;
-    gap: 2dvh;
-
-    button {
-      border: none;
-      color: white;
-      background-color: var(--input-box-color);
-      font-size: 2dvh;
-      padding-block: 2.5dvh;
-      border-radius: 1dvh;
-      cursor: pointer;
-
-      &.listen {
-        flex: 3;
-        display: flex;
-        gap: 1dvh;
-        align-items: center;
-        justify-content: center;
-
-        img {
-          width: 3dvh;
-          height: 3dvh;
-        }
-      }
-
-      &.pick {
-        flex: 2;
-
-        &.disable {
-          color: #7b8696;
-          background-color: #17191f;
-          cursor: not-allowed;
-        }
-      }
-    }
+    gap: 1dvh;
   }
 }

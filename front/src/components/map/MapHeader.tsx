@@ -1,39 +1,36 @@
-import { MdMyLocation } from "react-icons/md";
+import { memo } from "react";
 import { useRecoilValue } from "recoil";
 import {
-  addressState,
+  myAddressState,
   centerState,
   mapCenterAddressState,
 } from "@store/map/atoms";
-import ping from "@assets/images/ping.webp";
+import AddressContent from "./AddressContent";
+import GpsBtn from "./GpsBtn";
 import "@styles/map/MapHeader.scss";
 
 interface Props {
-  returnMyLocation: () => void;
+  map: google.maps.Map | null;
 }
 
-const MapHeader = ({ returnMyLocation }: Props) => {
-  const address = useRecoilValue(addressState);
+const MapHeader = ({ map }: Props) => {
+  const myAddress = useRecoilValue(myAddressState);
   const mapCenterAddress = useRecoilValue(mapCenterAddressState);
   const center = useRecoilValue(centerState);
+
+  const currentAddress = center
+    ? myAddress.regionName
+    : mapCenterAddress.regionName;
 
   return (
     <div className="MapHeader">
       <div className="header">
-        <div className="blank"></div>
-        <div className="title">
-          <img src={ping} alt="" />
-          <div>{center ? address.regionName : mapCenterAddress.regionName}</div>
-        </div>
-        <div className="gps">
-          <MdMyLocation
-            className={`${center ? "true" : "false"}`}
-            onClick={returnMyLocation}
-          />
-        </div>
+        <div className="blank" />
+        <AddressContent address={currentAddress} />
+        <GpsBtn map={map} />
       </div>
     </div>
   );
 };
 
-export default MapHeader;
+export default memo(MapHeader);

@@ -3,7 +3,7 @@ import { Address, Location, Marker } from "../../types/mapType";
 import { atom } from "recoil";
 
 const { persistAtom } = recoilPersist({
-  key: "mapStorage", // 고유한 key 값
+  key: "mapStorage",
   storage: sessionStorage,
 });
 
@@ -12,13 +12,18 @@ export const markersState = atom<Marker[]>({
   default: [],
 });
 
-export const activeMarkerState = atom<number | null>({
-  key: "activeMarkerState",
+export const radiusActiveIdState = atom<number | null>({
+  key: "radiusActiveIdState",
   default: null,
 });
 
-export const addressState = atom<Address>({
-  key: "addressState",
+export const couponUsageActiveIdState = atom<number | null>({
+  key: "couponUsageActiveIdState",
+  default: null,
+});
+
+export const myAddressState = atom<Address>({
+  key: "myAddressState",
   default: { code: "", regionName: "" },
   effects_UNSTABLE: [persistAtom],
 });
@@ -42,4 +47,9 @@ export const prevLocationState = atom<Location>({
 export const centerState = atom({
   key: "centerState",
   default: true,
+});
+
+export const zoomLevelState = atom({
+  key: "zoomLevelState",
+  default: 15,
 });

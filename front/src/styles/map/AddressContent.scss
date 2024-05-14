@@ -1,0 +1,16 @@
+.AddressContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vh;
+  flex: 1;
+
+  img {
+    width: 1.7dvh;
+    height: 2.2dvh;
+  }
+
+  div {
+    font-size: 2dvh;
+  }
+}

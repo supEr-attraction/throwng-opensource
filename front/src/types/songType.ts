@@ -5,8 +5,7 @@ export interface Content {
   artist: string;
   albumImage: string;
   modifiedAt: string;
-  // 여기가 문제...
-  // previewUrl: string;
+  previewUrl: string | null;
 }
 
 export interface Pageable {
@@ -47,7 +46,7 @@ export interface SongInfo {
 
 export interface Song extends SongInfo {
   playTime: string;
-  previewUrl: string;
+  previewUrl: string | null;
 }
 
 export interface DropSong extends Omit<SongInfo, "youtubeId" | "albumImage"> {
@@ -58,6 +57,7 @@ export interface DropSong extends Omit<SongInfo, "youtubeId" | "albumImage"> {
   latitude: number;
   location: string;
   longitude: number;
+  previewUrl: string | null;
 }
 
 export interface SongHistory extends SongInfo {
@@ -76,4 +76,5 @@ export interface MyHistory extends Omit<SongHistory, "youtubeId"> {
   dropDate?: string;
   pickDate?: string;
   throwId?: string;
+  otherPickedCount?: number;
 }

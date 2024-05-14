@@ -5,55 +5,109 @@ import QuizOX from "@components/quiz/QuizOX";
 import QuizSubjective from "@components/quiz/QuizSubjective";
 import QuizTimeBar from "@components/quiz/QuizTimeBar";
 import "@styles/quiz/QuizSolvePage.scss";
+import { QuizData, QuizResult } from "@/types/quizType";
+import { getQuizSolve, postQuizSolve } from "@services/quizApi/QuizSolveApi";
 
-const QuizSolvePage = () => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
-  const [questionType, setQuestionType] = useState<string>("");
-  const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
+function QuizSolvePage() {
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [quizData, setQuizData] = useState<QuizData[]>([]);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<any>(20);
+  const [timeLeft, setTimeLeft] = useState<number>(20);
+  const [userInput, setUserInput] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // API
-  const questionTypes = ["객관식", "주관식", "OX"];
+  const handleUserInput = (input: string) => {
+    setUserInput(input);
+  };
 
   useEffect(() => {
-    if (currentQuestionIndex >= questionTypes.length) {
-      navigate("/quiz/success");
-    } else {
-      setQuestionType(questionTypes[currentQuestionIndex]);
+    const fetchQuiz = async () => {
+      const data = await getQuizSolve();
+      // console.log(data);
+      setQuizData(data);
+    };
+    fetchQuiz();
+  }, []);
+
+  useEffect(() => {
+    if (quizData.length > 0 && currentQuestionIndex >= quizData.length) {
+      navigate("/quiz/success", { replace: true });
     }
-  }, [currentQuestionIndex, navigate]);
+  }, [currentQuestionIndex, navigate, quizData]);
 
   useEffect(() => {
     if (timeLeft === 0) {
-      navigate("/quiz/fail");
+      handleSubmission(null);
+      navigate("/quiz/fail", { replace: true });
     }
   }, [timeLeft, navigate]);
 
-  const handleSubmission = () => {
-    if (isCorrect === null) {
-      navigate("/quiz/fail");
-      return;
+  useEffect(() => {
+    setCanSubmit(userInput !== null);
+  }, [userInput]);
+
+  const handleSubmission = async (submission = userInput) => {
+    if (submission === null) {
+      submission = null;
     }
 
-    if (!isCorrect) {
-      navigate("/quiz/fail");
-    } else {
-      goToNextQuestion();
+    const currentQuiz = quizData[currentQuestionIndex];
+    const resultData: QuizResult = {
+      quizId: currentQuiz.quizId,
+      submit: submission,
+    };
+
+    try {
+      const response = await postQuizSolve(resultData);
+      if (currentQuestionIndex === quizData.length - 1) {
+        sessionStorage.setItem("quizCompleted", "true");
+      }
+
+      if (response.data.status) {
+        if (currentQuestionIndex === quizData.length - 1) {
+          sessionStorage.setItem("quizCompleted", "true");
+        }
+        goToNextQuestion();
+      } else {
+        handleFailNavigation();
+      }
+    } catch (error) {
+      console.error("Failed to submit the quiz:", error);
+      handleFailNavigation();
     }
+  };
+
+  const handleFailNavigation = () => {
+    navigate("/quiz/fail", { replace: true });
   };
 
   const goToNextQuestion = () => {
     setTimeLeft(20);
+    setUserInput(null);
     setCanSubmit(false);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
   };
 
   const renderQuestionComponent = () => {
-    const props = { setIsCorrect, setTimeLeft, setCanSubmit };
-    switch (questionType) {
+    if (!quizData.length || currentQuestionIndex >= quizData.length) {
+      return <div></div>;
+    }
+
+    const currentQuiz = quizData[currentQuestionIndex];
+    const props = {
+      onUserInput: handleUserInput,
+      setTimeLeft,
+      setCanSubmit,
+      question: currentQuiz.question,
+      choices: currentQuiz.choice,
+      index: currentQuestionIndex,
+      previewUrl: currentQuiz.previewUrl,
+      quizImage: currentQuiz.quizImage,
+    };
+
+    switch (currentQuiz.quizType) {
       case "객관식":
+        // @ts-ignore
         return <QuizMultipleChoice {...props} />;
       case "주관식":
         return <QuizSubjective {...props} />;
@@ -73,12 +127,15 @@ const QuizSolvePage = () => {
       />
       {renderQuestionComponent()}
       {canSubmit && (
-        <button onClick={handleSubmission} className="submission-button">
+        <button
+          onClick={() => handleSubmission()}
+          className="submission-button"
+        >
           제출
         </button>
       )}
     </div>
   );
-};
+}
 
 export default QuizSolvePage;

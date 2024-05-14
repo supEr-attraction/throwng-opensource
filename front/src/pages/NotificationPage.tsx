@@ -1,6 +1,6 @@
 import Header from "@components/Header";
 import NotificationBody from "@components/notification/NotificationBody";
-import "@styles/notification/NotificationPage.scss"
+import "@styles/notification/NotificationPage.scss";
 
 const NotificationPage = () => {
   return (
