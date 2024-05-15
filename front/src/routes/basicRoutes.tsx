@@ -1,18 +1,8 @@
 import { lazy } from "react";
 import PrivateRoute from "@components/PrivateRoute";
 import Error404 from "@pages/Error404";
-import MemoryTestPage from "@pages/game/MemoryTestPage";
 
-import MemoryInfoPage from "@pages/game/MemoryInfoPage";
-import MemoryMainPage from "@pages/game/MemoryMainPage";
-import MemoryCouponPage from "@pages/game/MemoryCouponPage";
-import MemorySuccessPage from "@pages/game/MemorySuccessPage";
-import RhythmGamePage from "@pages/game/RhythmGamePage";
-import RhythmMainPage from "@pages/game/RhythmMainPage";
-import RhythmInfoPage from "@pages/game/RhythmInfoPage";
-import RhythmResultPage from "@pages/game/RhythmResultPage";
-import RhythmSuccessPage from "@pages/game/RhythmSuccessPage";
-import RhythmCouponPage from "@pages/game/RhythmCouponPage";
+
 const HomePage = lazy(() => import("@pages/HomePage"));
 const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
@@ -34,6 +24,17 @@ const QuizFailPage = lazy(() => import("@pages/quiz/QuizFailPage"));
 const QuizInfoPage = lazy(() => import("@pages/quiz/QuizInfoPage"));
 const QuizSolvePage = lazy(() => import("@pages/quiz/QuizSolvePage"));
 const QuizSuccessPage = lazy(() => import("@pages/quiz/QuizSuccessPage"));
+const MemoryTestPage = lazy(() => import("@pages/game/MemoryTestPage"));
+const MemoryInfoPage = lazy(() => import("@pages/game/MemoryInfoPage"));
+const MemoryMainPage = lazy(() => import("@pages/game/MemoryMainPage"));
+const MemoryCouponPage = lazy(() => import("@pages/game/MemoryCouponPage"));
+const MemorySuccessPage = lazy(() => import("@pages/game/MemorySuccessPage"));
+const RhythmGamePage = lazy(() => import("@pages/game/RhythmGamePage"));
+const RhythmMainPage = lazy(() => import("@pages/game/RhythmMainPage"));
+const RhythmInfoPage = lazy(() => import("@pages/game/RhythmInfoPage"));
+const RhythmResultPage = lazy(() => import("@pages/game/RhythmResultPage"));
+const RhythmSuccessPage = lazy(() => import("@pages/game/RhythmSuccessPage"));
+const RhythmCouponPage = lazy(() => import("@pages/game/RhythmCouponPage"));
 
 export default {
   path: "/",
@@ -109,6 +110,10 @@ export default {
       element: <ContentPage />,
     },
     {
+      path: "close",
+      element: <QuizClosePage />
+    },
+    {
       path: "quiz",
       children: [
         {
@@ -138,10 +143,6 @@ export default {
         {
           path: "fail",
           element: <QuizFailPage />,
-        },
-        {
-          path: "*",
-          element: <QuizClosePage />,
         },
       ],
     },

@@ -65,7 +65,7 @@ const ContentPage = () => {
                 onClick={() => handleGoQuiz()}
               >
                 <div className="quiz-title">
-                  <p>쓰롱-퀴즈</p>
+                  <p>퀴즈-쓰롱</p>
                   <div className={`participation`}>
                     <p>ON</p>
                   </div>
@@ -80,7 +80,7 @@ const ContentPage = () => {
           <div className="game1-title">
             <p>리듬-쓰롱</p>
             <div className="participation">
-              <p>준비중</p>
+              <p>ON</p>
             </div>
           </div>
           <div>

@@ -22,7 +22,7 @@ const QuizSuccessPage = () => {
       try {
         const couponData = await getIsCoupon("quiz");
         if (couponData.couponStatus) {
-          navigate("/quiz/close", { replace: true });
+          navigate("/close", { replace: true });
         } else {
           navigate("/quiz/coupon", { replace: true });
         }

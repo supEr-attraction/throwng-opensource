@@ -1,8 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import "@/styles/game/RhythmGame.scss";
+import { fetchSongPreviewUrls } from "@services/rhythmApi/RhythmApi";
+import Loading from "@components/Loading";
 
-const RhythmGame: React.FC = () => {
+const RhythmGame = () => {
   const [score, setScore] = useState<number>(0);
   const [combo, setCombo] = useState<number>(0);
   const [comboVisible, setComboVisible] = useState<boolean>(false);
@@ -11,10 +13,31 @@ const RhythmGame: React.FC = () => {
     Array<{ id: number; top: number; lane: number; exploding?: boolean }>
   >([]);
   const [gameActive, setGameActive] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false); 
   const [laneEffect, setLaneEffect] = useState<number | null>(null);
   const noteIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
   const comboTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [audioUrls, setAudioUrls] = useState<string[]>([]);
+  const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
+
+  useEffect(() => {
+    const loadAudioUrls = async () => {
+      const urls = await fetchSongPreviewUrls();
+      if (urls && urls.length > 0) {
+        setAudioUrls(urls);
+        audioRefs.current = new Array(urls.length).fill(null);
+      }
+    };
+    loadAudioUrls();
+  }, []);
+
+  useEffect(() => {
+    if (audioUrls.length > 0) {
+      audioRefs.current = audioRefs.current.slice(0, audioUrls.length);
+    }
+  }, [audioUrls]);
+
   const navigate = useNavigate();
 
   const lanes = [0, 1, 2, 3, 4, 5];
@@ -44,9 +67,10 @@ const RhythmGame: React.FC = () => {
   useEffect(() => {
     if (timer === 0) {
       setGameActive(false);
+      setLoading(true); 
       if (noteIntervalRef.current) clearInterval(noteIntervalRef.current);
       setTimeout(() => {
-        navigate("/rhythm/result", { state: { score } });
+        navigate("/rhythm/result", { state: { score }, replace: true });
         resetGame();
       }, 1000);
     }
@@ -57,11 +81,28 @@ const RhythmGame: React.FC = () => {
     setCombo(0);
     setTimer(120);
     setNotes([]);
+    setLoading(false); 
+    audioRefs.current.forEach((audio) => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    });
   };
 
   const startGame = () => {
     resetGame();
     setGameActive(true);
+    if (audioRefs.current[0]) {
+      audioRefs.current[0].play();
+    }
+  };
+
+  const handleAudioEnded = (index: number) => {
+    if (index < audioRefs.current.length - 1 && audioRefs.current[index + 1]) {
+      //@ts-ignore
+      audioRefs.current[index + 1].play();
+    }
   };
 
   const handleTouch = (lane: number) => {
@@ -121,6 +162,21 @@ const RhythmGame: React.FC = () => {
 
   return (
     <div className="RhythmGame">
+      {loading && (
+        <div className="loadingSpinner">
+          <Loading />
+        </div>
+      )}{" "}
+      {audioUrls.map((url, index) => (
+        <audio
+          key={index}
+          ref={(el) => {
+            audioRefs.current[index] = el;
+          }}
+          src={url}
+          onEnded={() => handleAudioEnded(index)}
+        />
+      ))}
       <div className="gameHeader">
         <div className="gameStart">
           <button onClick={startGame} disabled={gameActive}>
@@ -129,7 +185,6 @@ const RhythmGame: React.FC = () => {
         </div>
         <div className="gameScoreTime">
           <p>Score: {score}</p>
-          {/* <p>Timer: {timer}</p> */}
         </div>
       </div>
       <div className="gameBoard">
@@ -155,7 +210,6 @@ const RhythmGame: React.FC = () => {
           />
         ))}
       </div>
-
       {comboVisible && (
         <div className="comboDisplay">
           Combo <br /> {combo}
