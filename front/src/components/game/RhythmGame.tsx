@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import "@/styles/game/RhythmGame.scss";
 
 const RhythmGame: React.FC = () => {
   const [score, setScore] = useState<number>(0);
   const [combo, setCombo] = useState<number>(0);
   const [comboVisible, setComboVisible] = useState<boolean>(false);
-  const [timer, setTimer] = useState<number>(60);
+  const [timer, setTimer] = useState<number>(120);
   const [notes, setNotes] = useState<
     Array<{ id: number; top: number; lane: number; exploding?: boolean }>
   >([]);
   const [gameActive, setGameActive] = useState<boolean>(false);
-  const [laneEffect, setLaneEffect] = useState<number | null>(null); 
+  const [laneEffect, setLaneEffect] = useState<number | null>(null);
   const noteIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
   const comboTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const navigate = useNavigate();
 
-  const lanes = [0, 1, 2, 3, 4, 5]; 
+  const lanes = [0, 1, 2, 3, 4, 5];
 
   useEffect(() => {
     if (gameActive) {
@@ -24,11 +26,10 @@ const RhythmGame: React.FC = () => {
       }, 1000);
 
       noteIntervalRef.current = setInterval(() => {
-        const noteCount = Math.floor(Math.random() * 2) + 1; 
-        const newNotes = Array.from({ length: noteCount }, () => ({
+        const newNotes = Array.from({ length: 1 }, () => ({
           id: Date.now() + Math.random(),
           top: 0,
-          lane: lanes[Math.floor(Math.random() * lanes.length)], 
+          lane: lanes[Math.floor(Math.random() * lanes.length)],
         }));
         setNotes((prevNotes) => [...prevNotes, ...newNotes]);
       }, 500);
@@ -44,20 +45,28 @@ const RhythmGame: React.FC = () => {
     if (timer === 0) {
       setGameActive(false);
       if (noteIntervalRef.current) clearInterval(noteIntervalRef.current);
+      setTimeout(() => {
+        navigate("/rhythm/result", { state: { score } });
+        resetGame();
+      }, 1000);
     }
-  }, [timer]);
+  }, [timer, navigate, score]);
 
-  const startGame = () => {
+  const resetGame = () => {
     setScore(0);
     setCombo(0);
-    setTimer(60);
+    setTimer(120);
     setNotes([]);
+  };
+
+  const startGame = () => {
+    resetGame();
     setGameActive(true);
   };
 
   const handleTouch = (lane: number) => {
-    setLaneEffect(lane); 
-    setTimeout(() => setLaneEffect(null), 300); 
+    setLaneEffect(lane);
+    setTimeout(() => setLaneEffect(null), 300);
 
     const closestNoteIndex = notes.findIndex(
       (note) => note.lane === lane && Math.abs(note.top - 90) < 10
@@ -78,7 +87,7 @@ const RhythmGame: React.FC = () => {
         setNotes((prevNotes) =>
           prevNotes.filter((note) => note.id !== closestNote.id)
         );
-      }, 200); 
+      }, 200);
     } else {
       setCombo(0);
     }
@@ -97,7 +106,7 @@ const RhythmGame: React.FC = () => {
       const intervalId = setInterval(updateNotes, 100);
       return () => clearInterval(intervalId);
     }
-  }, [notes, gameActive]);
+  }, [gameActive]);
 
   const updateNotes = () => {
     setNotes((prevNotes) =>
@@ -112,9 +121,16 @@ const RhythmGame: React.FC = () => {
 
   return (
     <div className="RhythmGame">
-      <div className="gameScoreTime">
-        <p>Score: {score}</p>
-        {/* <p>Timer: {timer}</p> */}
+      <div className="gameHeader">
+        <div className="gameStart">
+          <button onClick={startGame} disabled={gameActive}>
+            Start
+          </button>
+        </div>
+        <div className="gameScoreTime">
+          <p>Score: {score}</p>
+          {/* <p>Timer: {timer}</p> */}
+        </div>
       </div>
       <div className="gameBoard">
         {lanes.map((_, index) => (
@@ -145,11 +161,6 @@ const RhythmGame: React.FC = () => {
           Combo <br /> {combo}
         </div>
       )}
-      <div className="gameStart">
-        <button onClick={startGame} disabled={gameActive}>
-          Start
-        </button>
-      </div>
     </div>
   );
 };
