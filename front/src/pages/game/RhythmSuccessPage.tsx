@@ -30,7 +30,7 @@ const RhythmSuccessPage = () => {
       try {
         const couponData = await getIsCoupon("game");
         if (couponData.couponStatus) {
-          navigate("/quiz/close", { replace: true });
+          navigate("/close", { replace: true });
         } else {
           navigate("/rhythm/coupon", { replace: true });
         }

@@ -32,13 +32,17 @@ const RhythmCouponPage = () => {
         setCoupon(couponData);
       } catch (error) {
         console.error("Failed to fetch coupon:", error);
-        alert("쿠폰을 불러오는 중 오류가 발생했습니다."); 
       }
       setLoading(false);
     };
 
     fetchCoupon();
   }, [navigate]);
+
+  if (!coupon) {
+    navigate("/content", { replace: true });
+    return;
+  }
 
   if (loading) {
     return (

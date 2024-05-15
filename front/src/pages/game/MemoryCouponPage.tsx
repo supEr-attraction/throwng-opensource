@@ -39,6 +39,7 @@ const MemoryCouponPage = () => {
     fetchCoupon();
   }, [navigate]);
 
+  
   if (loading) {
     return (
       <div>

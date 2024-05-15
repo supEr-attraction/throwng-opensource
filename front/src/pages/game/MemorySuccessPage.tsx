@@ -22,7 +22,7 @@ const MemorySuccessPage = () => {
       try {
         const couponData = await getIsCoupon("memory");
         if (couponData.couponStatus) {
-          navigate("/quiz/close", { replace: true });
+          navigate("/close", { replace: true });
         } else {
           navigate("/memory/coupon", { replace: true });
         }
