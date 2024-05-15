@@ -17,6 +17,10 @@ const MyLocation = () => {
     []
   );
 
+  if (location.lat === 0 || location.lng === 0) {
+    return null;
+  }
+
   return (
     <>
       <CircleF center={location} options={CIRCLE_OPTIONS} />
