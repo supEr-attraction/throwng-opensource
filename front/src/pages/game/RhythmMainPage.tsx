@@ -18,8 +18,8 @@ const RhythmMainPage = () => {
         </div>
         <div className="quiz-main-border">
           <p>
-            도전 하지마세요 <br />
-            당신의 하루가 날아갈 수 있습니다.
+            리듬-쓰롱을 통해서 <br />
+            당신의 리듬감을 테스트 해보세요!
           </p>
         </div>
         <div className="quiz-button">

@@ -16,7 +16,7 @@ const RhythmInfo = () => {
       id: 1,
       text: (
         <>
-          총 <span className="highlight"> 20라운드</span>입니다.
+          플레이 타임은 <span className="highlight"> 2분</span> 입니다.
         </>
       ),
       checked: false,
@@ -25,14 +25,22 @@ const RhythmInfo = () => {
       id: 2,
       text: (
         <>
-          <span className="highlight">2개 이상 틀리면 </span> 라운드가 <br />종료
-          됩니다.
+          <span className="highlight">1200점 이상</span> 점수를 얻어야 <br />성공 입니다.
         </>
       ),
       checked: false,
     },
     {
       id: 3,
+      text: (
+        <>
+          가수의 <span className="highlight">하이라이트 메들리</span>가 <br />매일 바뀝니다
+        </>
+      ),
+      checked: false,
+    },
+    {
+      id: 4,
       text: (
         <>
           쿠폰을 얻을 때 까지
@@ -42,7 +50,7 @@ const RhythmInfo = () => {
       checked: false,
     },
     {
-      id: 4,
+      id: 5,
       text: (
         <>
           매일 쿠폰 발급은
@@ -108,7 +116,7 @@ const RhythmInfo = () => {
       </div>
 
       <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>
-        <button onClick={handleGoMemoryGame}>게임시작</button>
+        <button onClick={handleGoMemoryGame} disabled={!areAllChecked}>게임시작</button>
       </div>
     </div>
   );
