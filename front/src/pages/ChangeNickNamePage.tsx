@@ -1,5 +1,5 @@
 import Header from "@components/Header"
-import { changeNickNameCouponId, myNickName } from "@store/myPage/atoms";
+import { changeNickNameCouponId, myLevel } from "@store/myPage/atoms";
 import { useRef, useState } from "react"
 import { useRecoilValue } from "recoil";
 import "@styles/ChangeNickName/ChangeNickName.scss"
@@ -10,7 +10,7 @@ import { toastMsg } from "@/utils/toastMsg";
 
 const ChangeNickNamePage = () => {
   const inputEl = useRef<HTMLInputElement>(null);
-  const myName = useRecoilValue(myNickName);
+  const myName = useRecoilValue(myLevel);
   const [nickName, setNickName] = useState('');
   const navigate = useNavigate();
   const changeNickNameCouponIdValue = useRecoilValue(changeNickNameCouponId)
@@ -55,7 +55,7 @@ const ChangeNickNamePage = () => {
               className="input"
               ref={inputEl}
               type="text"
-              placeholder={myName}
+              placeholder={myName.nickName}
               value={nickName}
               onChange={(e)=> nickNameOnChange(e)}
               maxLength={15}
