@@ -5,7 +5,9 @@
       top: 0;
       background: #0f1114;
     }
+  }
 
+  .bottom {
     .content {
       padding-inline: 3dvh;
       padding-block: 1dvh;
@@ -18,13 +20,13 @@
         font-size: 2.5dvh;
       }
     }
-  }
 
-  > .body {
-    padding-inline: 3dvh;
-    padding-bottom: 3dvh;
-    display: flex;
-    flex-direction: column;
-    gap: 3dvh;
+    .body {
+      padding-inline: 3dvh;
+      padding-bottom: 3dvh;
+      display: flex;
+      flex-direction: column;
+      gap: 3dvh;
+    }
   }
 }

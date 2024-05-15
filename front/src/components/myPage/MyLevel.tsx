@@ -1,29 +1,12 @@
-import { useState, useEffect } from "react";
 import "@styles/myPage/MyLevel.scss";
-import { getMyLevel } from "@services/myPageHistoryApi/MyPageHistoryApi";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { levelInfoModal, myNickName } from "@store/myPage/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { levelInfoModal, myLevel } from "@store/myPage/atoms";
 import { IoMdInformationCircleOutline } from "react-icons/io";
 import LevelInfoModal from "./LevelInfoModal";
 
 const MyLevel = () => {
-  const [level, setLevel] = useState(0);
-  const [experiencePoint, setExperiencePoint] = useState(0);
-  const [isBlock, setIsBlock] = useState("NONE");
-  const setMyNickName = useSetRecoilState(myNickName);
   const [infoModal, setInfoModal] = useRecoilState(levelInfoModal);
-
-  useEffect(() => {
-    apiGetMyLevel();
-  }, []);
-
-  const apiGetMyLevel = async () => {
-    const data = await getMyLevel();
-    setLevel(data.level);
-    setExperiencePoint(data.experiencePoint);
-    setIsBlock(data.isBlock);
-    setMyNickName(data.nickName);
-  };
+  const myLevelValue = useRecoilValue(myLevel);
 
   const getLevelBarColor = (level: number) => {
     switch (level) {
@@ -100,7 +83,7 @@ const MyLevel = () => {
 
   return (
     <div className="MyLevel">
-      {isBlock !== "NONE" ? (
+      {myLevelValue.isBlock !== "NONE" ? (
         <div className="block-message">
           <p>7일 동안 음악 두기 기능이 정지됩니다.</p>
         </div>
@@ -110,16 +93,16 @@ const MyLevel = () => {
             <div
               className="level-color"
               style={{
-                color: getLevelDiv(level),
-                border: `2px solid ${getLevelDiv(level)}`,
+                color: getLevelDiv(myLevelValue.level),
+                border: `2px solid ${getLevelDiv(myLevelValue.level)}`,
               }}
             >
-              Lv.{level} {getProductName(level)}
+              Lv.{myLevelValue.level} {getProductName(myLevelValue.level)}
             </div>
             <div className="drop-pick">
-              <div>{experiencePoint}%</div>
+              <div>{myLevelValue.experiencePoint}%</div>
               <IoMdInformationCircleOutline
-                style={{ color: getLevelDiv(level) }}
+                style={{ color: getLevelDiv(myLevelValue.level) }}
                 onClick={openInfoModal}
               />
             </div>
@@ -128,8 +111,8 @@ const MyLevel = () => {
             <div
               className="level-bar-fill"
               style={{
-                width: `${experiencePoint}%`,
-                background: getLevelBarColor(level),
+                width: `${myLevelValue.experiencePoint}%`,
+                background: getLevelBarColor(myLevelValue.level),
               }}
             ></div>
           </div>
