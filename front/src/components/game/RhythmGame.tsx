@@ -105,7 +105,7 @@ const RhythmGame = () => {
     }
   };
 
-  const handleTouch = (lane: number) => {
+  const handleTouchOrClick = (lane: number) => {
     setLaneEffect(lane);
     setTimeout(() => setLaneEffect(null), 300);
 
@@ -194,7 +194,8 @@ const RhythmGame = () => {
             className={`lane lane${index} ${
               laneEffect === index ? "lightingEffect" : ""
             }`}
-            onTouchStart={() => handleTouch(index)}
+            onTouchStart={() => handleTouchOrClick(index)}
+            onMouseDown={() => handleTouchOrClick(index)}
           >
             <div className="hitArea secondary" />
             <div className="hitArea primary" />

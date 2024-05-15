@@ -3,6 +3,7 @@ import styles from "@/styles/game/App.module.scss";
 import "@/styles/game/App.module.scss";
 import gsap from "gsap";
 import { useNavigate } from "react-router-dom";
+import { postContentResult } from "@services/contentResultApi/ContentResultApi";
 
 function MemoryTest() {
   const navigate = useNavigate();
@@ -51,10 +52,12 @@ function MemoryTest() {
   const [animations, setAnimations] = useState<Array<any>>([]);
 
   // 게임 클리어
-  const clear = useCallback(() => {
+  const clear = useCallback(async () => {
     setGameClear(true);
     setStart(false);
+    postContentResult('memory');
     setRoundRunning(false);
+    await postContentResult('memory');
     sessionStorage.setItem('cleared', 'true');
     navigate("/memory/success", { replace: true });
   }, [navigate]);
@@ -92,7 +95,7 @@ function MemoryTest() {
   }, [endCountdownClear]);
 
   // 게임오버
-  const gameover = useCallback(() => {
+  const gameover = useCallback(async () => {
     cardEls.forEach((el: any) => {
       if (answer.indexOf(el.id) !== -1 && clickedCards.indexOf(el.id) === -1) {
         el.style.backgroundColor = "whitesmoke";
@@ -114,6 +117,7 @@ function MemoryTest() {
     setIsFail(true);
     setRoundRunning(false);
     setClickCount(0);
+    await postContentResult('memory');
   }, [answer, cardEls, clickedCards]);
 
   // 카드 클릭 함수

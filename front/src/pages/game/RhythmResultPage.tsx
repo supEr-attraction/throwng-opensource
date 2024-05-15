@@ -2,18 +2,23 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "@/styles/game/RhythmResultPage.scss";
 import rhythm from "@/assets/images/rhythm.webp";
 import QuizCryLottie from "@components/lottie/QuizCryLottie";
+import { postContentResult } from "@services/contentResultApi/ContentResultApi";
 
 const RhythmResultPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const score = location.state?.score;
 
-  const handleSuccessClick = () => {
+  
+
+  const handleSuccessClick = async () => {
     sessionStorage.setItem("scoreAchieved", "true");
+    await postContentResult('game'); 
     navigate("/rhythm/success", { replace: true });
   };
 
-  const handleFailureClick = () => {
+  const handleFailureClick = async () => {
+    await postContentResult('game'); 
     navigate("/rhythm/game", { replace: true });
   };
 
