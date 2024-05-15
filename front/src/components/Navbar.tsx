@@ -3,7 +3,7 @@ import { FaRegUser } from "react-icons/fa";
 import { LuHome } from "react-icons/lu";
 import { FaRegCirclePlay } from "react-icons/fa6";
 import circle from "@assets/images/Cone.webp";
-import logo from "@assets/images/logo.png";
+import logo from "@assets/images/logo.webp";
 import "@styles/Navbar.scss";
 import { IoGameControllerOutline } from "react-icons/io5";
 
@@ -21,8 +21,13 @@ const Navbar = () => {
         </NavLink>
         <div className="menu__item disable">
           <NavLink to={"/music/search"} className="center">
-            <img className="circle" src={circle} alt="" />
-            <img className="logo" src={logo} alt="" />
+            <img
+              className="circle"
+              src={circle}
+              loading="lazy"
+              decoding="async"
+            />
+            <img className="logo" src={logo} loading="lazy" decoding="async" />
           </NavLink>
         </div>
         <NavLink to={"/content"} className="menu__item">

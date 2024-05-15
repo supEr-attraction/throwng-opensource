@@ -7,19 +7,24 @@ import "@styles/map/Map.scss";
 
 const Map = () => {
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [tilesLoaded, setTilesLoaded] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   return (
     <div className="Map">
-      {tilesLoaded && <MapHeader map={map} />}
+      {!initialLoad && <MapHeader map={map} />}
       <LoadMap
         map={map}
         setMap={setMap}
-        tilesLoaded={tilesLoaded}
-        setTilesLoaded={setTilesLoaded}
+        initialLoad={initialLoad}
+        setInitialLoad={setInitialLoad}
       />
       <ToasterMsg />
-      {!tilesLoaded && <Loading />}
+      {initialLoad && (
+        <>
+          <div className="bgc" />
+          <Loading />
+        </>
+      )}
     </div>
   );
 };
