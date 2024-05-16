@@ -18,7 +18,7 @@ export const insideRadiusMarkerState = selector({
         fetchDistance(
           { lat: marker.latitude, lng: marker.longitude },
           location
-        ) <= 600
+        ) <= 600 && !marker.secret
     );
   },
 });

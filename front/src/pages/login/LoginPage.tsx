@@ -1,4 +1,4 @@
-import logo from "@assets/images/logo.png";
+import logo from "@assets/images/logo.webp";
 import SocialKakao from "@components/auth/SocialKakao";
 import "@styles/LoginPage.scss";
 

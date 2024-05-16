@@ -5,66 +5,28 @@ import { LuListFilter } from "react-icons/lu";
 import MyThrowngHistoryFilterModal from "./MyThrowngHistoryFilterModal";
 import {
   useRecoilState,
-  useRecoilValue,
   useResetRecoilState,
-  useSetRecoilState,
 } from "recoil";
 import {
-  myPickHistoryList,
-  myThrowHistoryList,
   pageIdx,
-  scrollHistoryIndex,
   throwngFilterModal,
 } from "@store/myPage/atoms";
-import {
-  getMyDropHistory,
-  getMyPickHistory,
-} from "@services/myPageHistoryApi/MyPageHistoryApi";
-import Loading from "@components/Loading";
 
 const MyThrowngHistoryMenu = () => {
   const [page, setPageIdx] = useRecoilState(pageIdx);
   const [histoyCnt, setHistoryCnt] = useState(0);
   const [filterModal, setFilterModal] = useRecoilState(throwngFilterModal);
   const resetThrowngFilterState = useResetRecoilState(throwngFilterModal);
-  const setThrownHistoryList = useSetRecoilState(myThrowHistoryList);
-  const setPickHistoryList = useSetRecoilState(myPickHistoryList);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const scrollIndex = useRecoilValue(scrollHistoryIndex);
 
   useEffect(() => {
     resetThrowngFilterState();
-    fetchData();
   }, [page]);
-
-  const fetchData = async () => {
-    setIsLoading(true);
-    if (scrollIndex) {
-      setIsLoading(false);
-    } else {
-      if (page) {
-        if (myThrowHistoryList) {
-          const pickData = await getMyPickHistory();
-          setPickHistoryList(pickData);
-          setIsLoading(false);
-        }
-      } else {
-        if (myPickHistoryList) {
-          const thownData = await getMyDropHistory();
-          setThrownHistoryList(thownData);
-          setIsLoading(false);
-        }
-      }
-    }
-  };
 
   const filterModalHandler = () => {
     setFilterModal(!filterModal);
   };
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <div className="MyThrowngHistoryMenu">
       <div className="menu-header">
         <div className="header-btn-div">
@@ -92,6 +54,6 @@ const MyThrowngHistoryMenu = () => {
       <MyThrowngHistroyList pageIdx={page} setHistoryCnt={setHistoryCnt} />
       {filterModal && <MyThrowngHistoryFilterModal />}
     </div>
-  );
+  )
 };
 export default MyThrowngHistoryMenu;

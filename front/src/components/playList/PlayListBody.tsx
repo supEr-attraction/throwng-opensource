@@ -1,9 +1,6 @@
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import "@styles/playList/PlayListBody.scss";
 import { Content } from "../../types/songType";
-import { IoMdMore } from "react-icons/io";
-import PlayListItemModal from "./PlayListItemModal";
-import PlayListDirectListenModal from "./PlayListDirectListenModal";
 import { useRecoilState, useRecoilValue, useResetRecoilState } from "recoil";
 import {
   detailModal,
@@ -13,16 +10,11 @@ import {
 } from "@store/playList/atoms";
 import { getMyPlayList } from "@services/myPlayListApi/MyPlayListApi";
 import Loading from "@components/Loading";
+import PlayListItem from "./PlayLIstItem";
 
 const PlayListBody = () => {
   const [playList, setPlayList] = useRecoilState<Content[]>(myPlayList);
   const [isLastPage, setIsLastPage] = useState<boolean>(false);
-  const [modalSongIndex, setModalSongIndex] = useRecoilState<number | null>(
-    detailModal
-  );
-  const [speedModal, setSpeedModal] = useRecoilState<number | null>(
-    speedListenModal
-  );
   const resetPlayModal = useResetRecoilState(speedListenModal);
   const resetDetailModal = useResetRecoilState(detailModal);
   const resetPlayList = useResetRecoilState(myPlayList);
@@ -30,15 +22,12 @@ const PlayListBody = () => {
   const resetScrollSongIndex = useResetRecoilState(scrollSongIndex);
   const observer = useRef<IntersectionObserver | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const fetchData = useCallback(async (lastModifiedAt: string = "") => {
-    const data = await getMyPlayList(lastModifiedAt);
-    if (data.last) {
-      setIsLastPage(true);
-    }
-    setPlayList((prev) => [...prev, ...data.content]);
-    setIsLoading(false);
-  }, []);
+  const [modalSongIndex, setModalSongIndex] = useRecoilState<number | null>(
+    detailModal
+  );
+  const [speedModal, setSpeedModal] = useRecoilState<number | null>(
+    speedListenModal
+  );
 
   useEffect(() => {
     setIsLoading(true);
@@ -50,6 +39,15 @@ const PlayListBody = () => {
     }
     resetPlayModal();
     resetDetailModal();
+  }, []);
+
+  const fetchData = useCallback(async (lastModifiedAt: string = "") => {
+    const data = await getMyPlayList(lastModifiedAt);
+    if (data.last) {
+      setIsLastPage(true);
+    }
+    setPlayList((prev) => [...prev, ...data.content]);
+    setIsLoading(false);
   }, []);
 
   const lastElementRef = useCallback(
@@ -79,6 +77,12 @@ const PlayListBody = () => {
     }
   };
 
+  const deleteSongFromPlayList = (playlistId: number) => {
+    setPlayList((prevPlayList) =>
+      prevPlayList.filter((song) => song.playlistId !== playlistId)
+    );
+  };
+
   const modalStateHandler = (index: number) => {
     if (modalSongIndex === index) {
       setModalSongIndex(null);
@@ -97,62 +101,24 @@ const PlayListBody = () => {
     }
   };
 
-  const deleteSongFromPlayList = (playlistId: number) => {
-    setPlayList((prevPlayList) =>
-      prevPlayList.filter((song) => song.playlistId !== playlistId)
-    );
-  };
-
   return (
     <div className="PlayListBody">
       {isLoading ? (
         <Loading />
       ) : playList.length > 0 ? (
-        <>
+        <div className="item-body">
           {playList.map((song, index) => (
-            <div
-              key={`${song.playlistId}-${index}`}
-              id={song.youtubeId}
-              className="result-item"
-            >
-              <div className="content-container">
-                <div
-                  className="image-container"
-                  onClick={() => speedListenModalHandler(index)}
-                >
-                  <img src={song.albumImage} loading="lazy" />
-                </div>
-                <div className="item-wide">
-                  <div
-                    className="item-detail"
-                    onClick={() => speedListenModalHandler(index)}
-                  >
-                    <div className="item-title">{song.title}</div>
-                    <div className="item-artist">{song.artist}</div>
-                  </div>
-                  <div
-                    className="item-detail-btn"
-                    onClick={() => modalStateHandler(index)}
-                  >
-                    <IoMdMore />
-                  </div>
-                </div>
-              </div>
-              {modalSongIndex === index && (
-                <PlayListItemModal
-                  song={song}
-                  deleteSongFromPlayList={deleteSongFromPlayList}
-                />
-              )}
-              {speedModal === index && (
-                <PlayListDirectListenModal song={song} />
-              )}
-              {index === playList.length - 1 ? (
-                <div ref={lastElementRef} />
-              ) : null}
-            </div>
+          <PlayListItem
+            key={song.playlistId}
+            song={song}
+            index={index}
+            modalStateHandler={modalStateHandler}
+            speedListenModalHandler={speedListenModalHandler}
+            deleteSongFromPlayList={deleteSongFromPlayList}
+          />
           ))}
-        </>
+          {playList.length ? <div ref={lastElementRef} /> : null}
+        </div>
       ) : (
         <div className="SearchedWords">
           <div className="no-word-container">
@@ -165,4 +131,4 @@ const PlayListBody = () => {
   );
 };
 
-export default memo(PlayListBody);
+export default PlayListBody;

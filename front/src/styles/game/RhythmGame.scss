@@ -1,0 +1,296 @@
+@font-face {
+  font-family: "DNFBitBitv2";
+  font-style: normal;
+  font-weight: 400;
+  src: url("//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf")
+    format("opentype");
+}
+
+.RhythmGame {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 93vh;
+  background-image: url("../../assets/images/background.webp");
+  background-size: cover;
+  color: #fff;
+  .gameHeader {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .gameBoard {
+    position: relative;
+    width: 80%;
+    height: 70dvh;
+    border: 2px solid #fff;
+    background-color: rgba(5, 5, 5, 0.6);
+    display: flex;
+    justify-content: space-between;
+
+    .lane {
+      flex: 1;
+      border-left: 1px solid #a5b2c5;
+      position: relative;
+      overflow: hidden;
+
+      &:last-child {
+        border-right: 1px solid #a5b2c5;
+      }
+
+      &.lightingEffect::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 100%;
+        height: 90%;
+
+        transform: translateX(-50%);
+        animation: lightingEffectAnim 1s ease-in-out;
+      }
+
+      &.lane0.lightingEffect::before {
+        background: linear-gradient(
+          to top,
+          rgba(255, 99, 71, 0.5),
+          rgba(255, 99, 71, 0)
+        );
+      }
+      &.lane1.lightingEffect::before {
+        background: linear-gradient(
+          to top,
+          rgba(30, 144, 255, 0.5),
+          rgba(30, 144, 255, 0)
+        );
+      }
+      &.lane2.lightingEffect::before {
+        background: linear-gradient(
+          to top,
+          rgba(50, 205, 50, 0.5),
+          rgba(50, 205, 50, 0)
+        );
+      }
+      &.lane3.lightingEffect::before {
+        background: linear-gradient(
+          to top,
+          rgba(255, 165, 0, 0.5),
+          rgba(255, 165, 0, 0)
+        );
+      }
+      &.lane4.lightingEffect::before {
+        background: linear-gradient(
+          to top,
+          rgba(147, 112, 219, 0.5),
+          rgba(147, 112, 219, 0)
+        );
+      }
+      &.lane5.lightingEffect::before {
+        background: linear-gradient(
+          to top,
+          rgba(255, 20, 147, 0.5),
+          rgba(255, 20, 147, 0)
+        );
+      }
+      @keyframes lightingEffectAnim {
+        100% {
+          opacity: 0;
+          transform: translateX(-50%) scale(1);
+        }
+      }
+      .hitArea {
+        position: absolute;
+        width: 100%;
+      }
+
+      .hitArea.primary {
+        bottom: 0;
+        height: 9%;
+        background: linear-gradient(
+          to top,
+          rgba(255, 255, 255, 0.5),
+          rgba(255, 255, 255, 0)
+        );
+        border-top: 1px solid #fff;
+      }
+
+      .hitArea.secondary {
+        bottom: 9%;
+        height: 2%;
+        background: rgb(140, 119, 160);
+        background-image: repeating-linear-gradient(
+          30deg,
+          hsla(0, 0%, 100%, 0.1),
+          hsla(0, 0%, 100%, 0.1) 15px,
+          transparent 0,
+          transparent 30px
+        );
+
+        border-top: 1px solid #fff;
+      }
+    }
+
+    .note {
+      position: absolute;
+      width: 16.66%;
+      height: 13px;
+      border: 1px solid #a5b2c5;
+      border-radius: 15px;
+      // transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    }
+
+    .note.lane0 {
+      background: linear-gradient(
+        to top,
+        rgba(255, 99, 71, 1),
+        rgba(255, 99, 71, 0.3)
+      );
+    }
+    .note.lane1 {
+      background: linear-gradient(
+        to top,
+        rgba(30, 144, 255, 1),
+        rgba(30, 144, 255, 0.3)
+      );
+    }
+    .note.lane2 {
+      background: linear-gradient(
+        to top,
+        rgba(50, 205, 50, 1),
+        rgba(50, 205, 50, 0.3)
+      );
+    }
+    .note.lane3 {
+      background: linear-gradient(
+        to top,
+        rgba(255, 165, 0, 1),
+        rgba(255, 165, 0, 0.3)
+      );
+    }
+    .note.lane4 {
+      background: linear-gradient(
+        to top,
+        rgba(147, 112, 219, 1),
+        rgba(147, 112, 219, 0.3)
+      );
+    }
+    .note.lane5 {
+      background: linear-gradient(
+        to top,
+        rgba(255, 20, 147, 1),
+        rgba(255, 20, 147, 0.3)
+      );
+    }
+
+    @keyframes explode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.5);
+        opacity: 0.7;
+      }
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .note.exploding {
+      animation: explode 0.3s forwards;
+    }
+
+    .lane0 .hitArea.primary {
+      background: linear-gradient(
+        to top,
+        rgba(255, 99, 71, 0.5),
+        rgba(255, 99, 71, 0.3)
+      );
+    }
+    .lane1 .hitArea.primary {
+      background: linear-gradient(
+        to top,
+        rgba(30, 144, 255, 0.5),
+        rgba(30, 144, 255, 0.3)
+      );
+    }
+    .lane2 .hitArea.primary {
+      background: linear-gradient(
+        to top,
+        rgba(50, 205, 50, 0.5),
+        rgba(50, 205, 50, 0.3)
+      );
+    }
+    .lane3 .hitArea.primary {
+      background: linear-gradient(
+        to top,
+        rgba(255, 165, 0, 0.5),
+        rgba(255, 165, 0, 0.3)
+      );
+    }
+    .lane4 .hitArea.primary {
+      background: linear-gradient(
+        to top,
+        rgba(147, 112, 219, 0.5),
+        rgba(147, 112, 219, 0.3)
+      );
+    }
+    .lane5 .hitArea.primary {
+      background: linear-gradient(
+        to top,
+        rgba(255, 20, 147, 0.5),
+        rgba(255, 20, 147, 0.3)
+      );
+    }
+  }
+
+  .comboDisplay {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: #7b66ff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 10;
+    font-family: "DNFBitBitv2";
+  }
+
+  .gameScoreTime {
+    // width: 80%;
+    height: 7dvh;
+    font-size: 3dvh;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    p {
+      font-family: "DNFBitBitv2";
+    }
+  }
+
+  .gameStart {
+    button {
+      display: flex;
+      align-items: center;
+      height: 4dvh;
+      padding: 2dvh;
+      border-radius: 1dvh;
+      border: none;
+      background-color: var(--main-color);
+      color: #ffffff;
+      font-size: 2dvh;
+      font-family: "DNFBitBitv2";
+      cursor: pointer;
+    }
+  }
+}

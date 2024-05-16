@@ -1,0 +1,14 @@
+version: '3.1'
+
+services:
+  fe:
+    build:
+      context: .
+      dockerfile: prod.Dockerfile
+    ports:
+      - '5174:4173'
+
+networks:
+  default:
+    external:
+      name: connect-default

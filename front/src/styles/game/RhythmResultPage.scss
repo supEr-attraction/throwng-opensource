@@ -1,0 +1,73 @@
+@font-face {
+  font-family: "DNFBitBitv2";
+  font-style: normal;
+  font-weight: 400;
+  src: url("//cdn.df.nexon.com/img/common/font/DNFBitBitv2.otf")
+    format("opentype");
+}
+
+.resultPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.successContainer,
+.failureContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  height: 80dvh;
+  background-color: rgb(123, 102, 255, 0.2);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  h1 {
+    font-size: 4.5dvh;
+    margin-bottom: 20px;
+    font-family: "DNFBitBitv2";
+  }
+
+  p {
+    font-size: 24px;
+    margin-bottom: 20px;
+    // font-family: "DNFBitBitv2";
+  }
+
+  img {
+    width: 100%;
+  }
+}
+
+.successButton,
+.failureButton {
+  font-size: 24px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.successButton {
+  margin-top: 10dvh;
+  width: 90%;
+  background-color: #7b66ff;
+  color: white;
+  font-family: "DNFBitBitv2";
+}
+
+.failureButton {
+  margin-top: 10dvh;
+  width: 90%;
+  background-color: #f44336;
+  color: white;
+  font-family: "DNFBitBitv2";
+}
