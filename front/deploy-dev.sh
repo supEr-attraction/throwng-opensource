@@ -19,20 +19,20 @@ fi
 echo "${AFTER_COLOR} server up(port:${AFTER_PORT})"
 
 # 2
-for cnt in {1..10}
+for cnt in {1..20}
 do
-    echo "서버 응답 확인중(${cnt}/10)";
+    echo "서버 응답 확인중(${cnt}/20)";
     UP=$(curl -s http://localhost:${AFTER_PORT})
     if [ -z "${UP}" ]
         then
-            sleep 10
+            sleep 20
             continue
         else
             break
     fi
 done
 
-if [ $cnt -eq 10 ]
+if [ $cnt -eq 20 ]
 then
     echo "서버가 정상적으로 구동되지 않았습니다."
     exit 1
