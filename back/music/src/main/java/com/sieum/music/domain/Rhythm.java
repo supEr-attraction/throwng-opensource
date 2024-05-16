@@ -12,30 +12,22 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Song {
-
+public class Rhythm {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "song_id")
+    @Column(name = "rhythm_id")
     private Integer id;
 
-    @Column(name = "youtube_id", length = 100)
-    @NotNull
-    private String youtubeId;
-
-    @Column(length = 400)
+    @Column(name = "title", length = 400)
     @NotNull
     private String title;
 
-    @Column(length = 200)
+    @Column(name = "preview_url", length = 200)
     @NotNull
-    private String albumImage;
+    private String previewUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "artist_id")
     @NotNull
     private Artist artist;
-
-    @Column(length = 200)
-    private String previewUrl;
 }

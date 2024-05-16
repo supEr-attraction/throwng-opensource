@@ -155,4 +155,11 @@ public class MusicController {
         final long userId = musicService.getCurrentUserId(authorization);
         return ResponseEntity.ok().body(musicService.checkUsingUnlimitedRadiusCoupon(userId));
     }
+
+    @Operation(summary = "Feign Client")
+    @GetMapping("/rhythm")
+    public ResponseEntity<?> createRhythmList() {
+        musicService.createRhythmList();
+        return ResponseEntity.noContent().build();
+    }
 }
