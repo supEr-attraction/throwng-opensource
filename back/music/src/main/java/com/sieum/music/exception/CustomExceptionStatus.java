@@ -22,7 +22,10 @@ public enum CustomExceptionStatus implements BaseErrorCode {
     NOT_FOUND_ZIP_CODE("Zip_code_400_1", "This location doesn't exist"),
     NOT_FOUND_ARTIST("Artist_400_1", "The artist does not exist"),
     NOT_THROW_ITEM_IN_LIMITED_RADIUS(
-            "Throw_400_2", "Can't throw the same song in a limited radius");
+            "Throw_400_2", "Can't throw the same song in a limited radius"),
+    NOT_FOUND_QUESTION_COUPON("Coupon_400_1", "Not using a question mark coupon"),
+    NOT_FOUND_THROW_HISTORY_ITEM_ID(
+            "Throw_history_400_1", "No throw history with the requested id");
 
     private String code;
     private String reason;

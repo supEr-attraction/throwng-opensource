@@ -44,6 +44,12 @@ public class RedisUtil {
         valueOperations.set(key, value, expiredDuration);
     }
 
+    public void setObjectExpire(String key, Object object, int duration) {
+        ValueOperations<String, Object> valueOperations = redisTemplate.opsForValue();
+        Duration expiredDuration = Duration.ofSeconds(duration);
+        valueOperations.set(key, object, expiredDuration);
+    }
+
     public void deleteData(String key) {
         redisTemplate.delete(key);
     }
