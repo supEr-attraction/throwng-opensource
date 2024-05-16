@@ -1,5 +1,6 @@
 package com.sieum.quiz.controller;
 
+import com.sieum.quiz.dto.request.GameHistoryCreationRequest;
 import com.sieum.quiz.dto.request.QuizExperienceCountRequest;
 import com.sieum.quiz.dto.request.QuizHistoryCreationRequest;
 import com.sieum.quiz.service.QuizService;
@@ -38,6 +39,23 @@ public class QuizController {
         final long userId = quizService.getCurrentUserId(authorization);
         return ResponseEntity.ok()
                 .body(quizService.createQuizHistory(userId, quizHistoryCreationRequest));
+    }
+
+    @Operation(summary = "Save game history on redis after user submitted the answer")
+    @PostMapping("/contents/result")
+    public ResponseEntity<?> createGameHistory(
+            @RequestHeader("Authorization") final String authorization,
+            @RequestBody final GameHistoryCreationRequest gameHistoryCreationRequest) {
+
+        final long userId = quizService.getCurrentUserId(authorization);
+        quizService.createGameHistory(userId, gameHistoryCreationRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Return daily rhythm game list")
+    @GetMapping("/contents/rhythm")
+    public ResponseEntity<?> getRhythmList() {
+        return ResponseEntity.ok().body(quizService.getRhythmList());
     }
 
     @Operation(summary = "Feign Client - Number of quizzes experienced by the user")

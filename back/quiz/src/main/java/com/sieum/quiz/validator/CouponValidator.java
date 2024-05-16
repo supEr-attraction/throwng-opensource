@@ -96,6 +96,12 @@ public class CouponValidator {
             final String couponKey = userId + "_COUPON_ID_WIDE";
             redisUtil.setObjectExpire(couponKey, coupon.getId(), FOR_A_DAY);
 
+        } else if (coupon.getCouponType().equals("QUESTION")) {
+            final String key = userId + "_QUESTION";
+            redisUtil.setDataExpire(key, coupon.getCouponType(), FOR_A_DAY);
+
+            final String couponKey = userId + "_COUPON_ID_QUESTION";
+            redisUtil.setObjectExpire(couponKey, coupon.getId(), FOR_A_DAY);
         } else {
             final String key = userId + "_" + "THROWNG";
             //            redisUtil.setObject(key, coupon.getCouponType());
