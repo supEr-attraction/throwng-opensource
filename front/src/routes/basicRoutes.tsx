@@ -145,34 +145,34 @@ export default {
       children: [
         {
           path: "game",
-          element: <MoleGamePage />
+          element: <MoleGamePage />,
         },
-      ]
+      ],
     },
     {
       path: "memory",
       children: [
         {
           path: "main",
-          element: <MemoryMainPage />
+          element: <MemoryMainPage />,
         },
         {
           path: "info",
-          element: <MemoryInfoPage />
+          element: <MemoryInfoPage />,
         },
         {
           path: "game",
-          element: <MemoryTestPage />
+          element: <MemoryTestPage />,
         },
         {
           path: "success",
-          element: <MemorySuccessPage />
+          element: <MemorySuccessPage />,
         },
         {
           path: "coupon",
-          element: <MemoryCouponPage />
+          element: <MemoryCouponPage />,
         },
-      ]
+      ],
     },
     { path: "none-permission", element: <NonePermissionPage /> },
   ],
