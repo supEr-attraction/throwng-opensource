@@ -6,7 +6,6 @@ export const GOOGLE_MAPS_LIBRARIES: ("places" | "geometry")[] = [
 export const CONTAINER_STYLE = {
   width: "100dvw",
   height: "100dvh",
-  // outline: "none",
 };
 
 export const MARKER_VISIBLE_OPTIONS = [

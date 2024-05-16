@@ -38,4 +38,18 @@ const getCheckRadiusCoupon = async (): Promise<boolean> => {
   }
 };
 
-export { postMusicRadius, postAddress, getCheckRadiusCoupon };
+const getCheckQuestionCoupon = async (): Promise<boolean> => {
+  try {
+    const { data } = await axiosApi().get<boolean>(`music/usage/radius`);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export {
+  postMusicRadius,
+  postAddress,
+  getCheckRadiusCoupon,
+  getCheckQuestionCoupon,
+};

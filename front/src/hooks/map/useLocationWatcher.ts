@@ -46,7 +46,6 @@ const useLocationWatcher = (
           };
 
           if (initialLoadRef.current) {
-            map.setZoom(15);
             setZoomLevel(15);
             map.setCenter(currentLocation);
             setCenter(true);
