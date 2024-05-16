@@ -1,6 +1,6 @@
-FROM node:latest
+FROM node:lts-slim
 WORKDIR /app
-COPY package*.json .
+COPY package.json .
 RUN npm install
 COPY . .
 RUN npm run build:dev
