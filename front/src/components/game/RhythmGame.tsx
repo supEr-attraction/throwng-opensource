@@ -15,6 +15,7 @@ const RhythmGame = () => {
   const [gameActive, setGameActive] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false); 
   const [laneEffect, setLaneEffect] = useState<number | null>(null);
+  const [clickedNotes, setClickedNotes] = useState<number[]>([]); // 클릭된 노트 상태 추가
   const noteIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const gameTimerRef = useRef<NodeJS.Timeout | null>(null);
   const comboTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -83,6 +84,7 @@ const RhythmGame = () => {
     setTimer(120);
     setNotes([]);
     setLoading(false); 
+    setClickedNotes([]); // 리셋 시 클릭된 노트 초기화
     audioRefs.current.forEach((audio) => {
       if (audio) {
         audio.pause();
@@ -118,8 +120,15 @@ const RhythmGame = () => {
     const closestNoteIndex = notes.findIndex(
       (note) => note.lane === lane && Math.abs(note.top - 90) < 10
     );
+
     if (closestNoteIndex !== -1) {
       const closestNote = notes[closestNoteIndex];
+
+      // 이미 클릭된 노트인지 확인
+      if (clickedNotes.includes(closestNote.id)) {
+        return;
+      }
+
       setScore((prevScore) => prevScore + 10);
       setCombo((prevCombo) => prevCombo + 1);
       showCombo();
@@ -129,6 +138,14 @@ const RhythmGame = () => {
         newNotes[closestNoteIndex] = { ...closestNote, exploding: true };
         return newNotes;
       });
+
+      // 클릭된 노트 추가 후 일정 시간 후 제거
+      setClickedNotes((prevClickedNotes) => [...prevClickedNotes, closestNote.id]);
+      setTimeout(() => {
+        setClickedNotes((prevClickedNotes) => 
+          prevClickedNotes.filter((id) => id !== closestNote.id)
+        );
+      }, 300);
 
       setTimeout(() => {
         setNotes((prevNotes) =>
