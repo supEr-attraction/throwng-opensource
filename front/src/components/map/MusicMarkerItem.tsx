@@ -4,6 +4,7 @@ import { useRecoilValue } from "recoil";
 import { Marker } from "../../types/mapType";
 import whitePin from "@assets/images/whitePin.webp";
 import purplePin from "@assets/images/purplePin.webp";
+import question from "@assets/images/question.webp";
 import {
   isActiveOutsideState,
   isActiveInsideState,
@@ -38,26 +39,21 @@ const MusicMarkerItem = ({ marker }: Props) => {
         <img
           src={isActiveInside || isActiveOutside ? purplePin : whitePin}
           alt="Custom Overlay"
-          style={{ width: "30px", height: "35px" }}
           loading="lazy"
           decoding="async"
+          className="marker"
         />
         <div className="cover-img">
           <img
-            src={marker.albumImage}
+            src={marker.secret ? question : marker.albumImage}
             alt="Custom Overlay"
             loading="lazy"
             decoding="async"
+            className="album"
           />
         </div>
       </div>
     </OverlayViewF>
   );
 };
-
-// export default memo(MusicMarkerItem, (prevProps, nextProps) => {
-//   console.log(prevProps.marker.itemId);
-//   console.log(nextProps.marker.itemId);
-//   return prevProps.marker.itemId === nextProps.marker.itemId;
-// });
 export default memo(MusicMarkerItem);

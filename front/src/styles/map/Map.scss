@@ -3,18 +3,21 @@
     border: none !important;
   }
 
+  .marker {
+    width: 4dvh;
+    height: 5dvh;
+  }
+
   .cover-img {
     position: absolute;
-    inset: 0;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    img {
+    .album {
       border-radius: 50%;
-      width: 27px;
-      height: 27px;
+      width: 3.5dvh;
+      height: 3.5dvh;
     }
   }
 
@@ -46,8 +49,4 @@
     position: absolute;
     inset: 0;
   }
-
-  // .Loading {
-  //   background-color: #0f1114;
-  // }
 }

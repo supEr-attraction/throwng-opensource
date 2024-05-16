@@ -6,6 +6,7 @@ const getMusicDetails = async (throwId: string): Promise<MusicInfo> => {
     const { data } = await axiosApi().get<MusicInfo>(
       `/music/thrown/${throwId}`
     );
+    console.log(data);
     return data;
   } catch (err) {
     console.error(err);
