@@ -26,23 +26,25 @@
       }
     }
 
-    .coupon-apply {
+    .btn-div {
       display: flex;
       justify-content: flex-end;
 
-      .coupon-apply-btn {
-        font-size: 1.5dvh;
-        padding: 1dvh;
-        border: 1px solid var(--main-color);
-        border-radius: 1dvh;
-
-        &:active {
-          background-color: var(--input-box-color);
+      .coupon-apply {
+        .coupon-apply-btn {
+          font-size: 1.5dvh;
+          padding: 1dvh;
+          border: 1px solid var(--main-color);
+          border-radius: 1dvh;
+  
+          &:active {
+            background-color: var(--input-box-color);
+          }
         }
-      }
-
-      .coupon-apply-active {
-        background-color: var(--main-color);;
+  
+        .coupon-apply-active {
+          background-color: var(--main-color);;
+        }
       }
     }
 
