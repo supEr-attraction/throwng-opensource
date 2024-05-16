@@ -108,7 +108,7 @@ const MemoryInfo = () => {
       </div>
 
       <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>
-        <button onClick={handleGoMemoryGame}>게임시작</button>
+        <button onClick={handleGoMemoryGame} disabled={!areAllChecked}>게임시작</button>
       </div>
     </div>
   );

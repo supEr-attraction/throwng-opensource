@@ -3,18 +3,21 @@
     border: none !important;
   }
 
+  .marker {
+    width: 30px;
+    height: 35px;
+  }
+
   .cover-img {
     position: absolute;
-    inset: 0;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    top: 43%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    img {
+    .album {
       border-radius: 50%;
-      width: 27px;
-      height: 27px;
+      width: 26px;
+      height: 26px;
     }
   }
 
@@ -39,5 +42,11 @@
     > img {
       display: none;
     }
+  }
+
+  .bgc {
+    background-color: black;
+    position: absolute;
+    inset: 0;
   }
 }

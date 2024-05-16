@@ -78,3 +78,21 @@ export interface MyHistory extends Omit<SongHistory, "youtubeId"> {
   throwId?: string;
   otherPickedCount?: number;
 }
+
+export interface SongItem {
+  playlistId?: number;
+  youtubeId?: string;
+  title?: string;
+  artist?: string;
+  albumImage?: string;
+  modifiedAt?: string;
+  previewUrl?: string | null;
+  myThrowId?: number;
+  myPickId?: number;
+  dropDate?: string;
+  pickDate?: string;
+  throwId?: string;
+  otherPickedCount?: number;
+  comment?: string;
+  location?: string;
+}

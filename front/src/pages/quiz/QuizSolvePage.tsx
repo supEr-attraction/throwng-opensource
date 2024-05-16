@@ -12,7 +12,6 @@ function QuizSolvePage() {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [quizData, setQuizData] = useState<QuizData[]>([]);
   const [canSubmit, setCanSubmit] = useState<boolean>(false);
-  const [timeLeft, setTimeLeft] = useState<number>(20);
   const [userInput, setUserInput] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -23,7 +22,6 @@ function QuizSolvePage() {
   useEffect(() => {
     const fetchQuiz = async () => {
       const data = await getQuizSolve();
-      // console.log(data);
       setQuizData(data);
     };
     fetchQuiz();
@@ -36,15 +34,13 @@ function QuizSolvePage() {
   }, [currentQuestionIndex, navigate, quizData]);
 
   useEffect(() => {
-    if (timeLeft === 0) {
-      handleSubmission(null);
-      navigate("/quiz/fail", { replace: true });
-    }
-  }, [timeLeft, navigate]);
-
-  useEffect(() => {
     setCanSubmit(userInput !== null);
   }, [userInput]);
+
+  const handleTimeOut = () => {
+    handleSubmission(null);
+    navigate("/quiz/fail", { replace: true });
+  };
 
   const handleSubmission = async (submission = userInput) => {
     if (submission === null) {
@@ -82,7 +78,6 @@ function QuizSolvePage() {
   };
 
   const goToNextQuestion = () => {
-    setTimeLeft(20);
     setUserInput(null);
     setCanSubmit(false);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
@@ -96,7 +91,6 @@ function QuizSolvePage() {
     const currentQuiz = quizData[currentQuestionIndex];
     const props = {
       onUserInput: handleUserInput,
-      setTimeLeft,
       setCanSubmit,
       question: currentQuiz.question,
       choices: currentQuiz.choice,
@@ -120,17 +114,10 @@ function QuizSolvePage() {
 
   return (
     <div className="QuizSolvePage">
-      <QuizTimeBar
-        key={currentQuestionIndex}
-        timeLeft={timeLeft}
-        setTimeLeft={setTimeLeft}
-      />
+      <QuizTimeBar key={currentQuestionIndex} initialTime={20} onTimeOut={handleTimeOut} />
       {renderQuestionComponent()}
       {canSubmit && (
-        <button
-          onClick={() => handleSubmission()}
-          className="submission-button"
-        >
+        <button onClick={() => handleSubmission()} className="submission-button">
           제출
         </button>
       )}

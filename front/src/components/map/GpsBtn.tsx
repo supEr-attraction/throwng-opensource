@@ -1,7 +1,7 @@
-import { centerState, locationState, zoomLevelState } from "@store/map/atoms";
 import { memo, useCallback } from "react";
-import { MdMyLocation } from "react-icons/md";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { centerState, locationState, zoomLevelState } from "@store/map/atoms";
+import { MdMyLocation } from "react-icons/md";
 import "@styles/map/GpsBtn.scss";
 
 interface Props {
@@ -21,7 +21,7 @@ const GpsBtn = ({ map }: Props) => {
         setZoomLevel(15);
       }
       map.panTo(location);
-      setCenter(true);
+      setCenter((prev) => !prev);
     }
   }, [map, location, center]);
 

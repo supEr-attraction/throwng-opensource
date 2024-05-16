@@ -116,7 +116,7 @@ const QuizInfo = () => {
       </div>
 
       <div className={`quiz-button ${buttonVisible ? "visible" : ""}`}>
-        <button onClick={handleQuizStart}>퀴즈 풀기</button>
+        <button onClick={handleQuizStart} disabled={!areAllChecked}>퀴즈 풀기</button>
       </div>
     </div>
   );

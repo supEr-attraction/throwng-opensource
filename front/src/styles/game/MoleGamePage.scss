@@ -1,5 +1,8 @@
 .mole-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  .mole-game {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

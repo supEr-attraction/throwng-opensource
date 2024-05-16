@@ -51,5 +51,10 @@ export const centerState = atom({
 
 export const zoomLevelState = atom({
   key: "zoomLevelState",
-  default: 15,
+  default: 0,
+});
+
+export const prevPathState = atom({
+  key: "prevPathState",
+  default: "",
 });
