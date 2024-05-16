@@ -4,9 +4,9 @@ services:
   fe:
     build:
       context: .
-      dockerfile: dev.Dockerfile
+      dockerfile: prod.Dockerfile
     ports:
-      - '5173:4173'
+      - '5174:4173'
 
 networks:
   default:
