@@ -12,7 +12,7 @@
   }
 }
 
-.QuizMainPage {
+.GameMainPage {
   padding: 2vh;
   height: 93vh;
   display: flex;
@@ -20,7 +20,7 @@
   justify-content: space-around;
   align-items: center;
 
-  .quiz-lottie {
+  .game-lottie {
     opacity: 0;
     animation: popIn 0.6s ease-out forwards;
     animation-delay: 0.2s;
@@ -38,11 +38,11 @@
       animation-delay: 0.2s;
     }
   }
-  .quiz-main-border {
+  .game-main-border {
     border-radius: 2vh;
     background-color: rgba(123, 102, 255, 0.1);
     width: 90%;
-    height: 30vh;
+    height: 20vh;
     margin-top: 3dvh;
     display: flex;
     align-items: center;
@@ -54,11 +54,13 @@
       word-break: keep-all;
       text-align: center;
       padding: 2vh;
-      font-size: 3vh;
+      font-size: 2dvh;
     }
+
+    
   }
 
-  .quiz-button {
+  .game-button {
     margin-top: 3vh;
     width: 90%;
     opacity: 0;

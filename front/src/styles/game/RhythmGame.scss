@@ -1,5 +1,3 @@
-// @import '../global.scss';
-
 @font-face {
   font-family: "DNFBitBitv2";
   font-style: normal;
@@ -51,28 +49,52 @@
         left: 50%;
         width: 100%;
         height: 90%;
-        
+
         transform: translateX(-50%);
         animation: lightingEffectAnim 1s ease-in-out;
       }
 
       &.lane0.lightingEffect::before {
-        background: linear-gradient(to top, rgba(255, 99, 71, 0.5), rgba(255, 99, 71, 0)); /* 빨간색 */
+        background: linear-gradient(
+          to top,
+          rgba(255, 99, 71, 0.5),
+          rgba(255, 99, 71, 0)
+        );
       }
       &.lane1.lightingEffect::before {
-        background: linear-gradient(to top, rgba(30, 144, 255, 0.5), rgba(30, 144, 255, 0)); /* 파란색 */
+        background: linear-gradient(
+          to top,
+          rgba(30, 144, 255, 0.5),
+          rgba(30, 144, 255, 0)
+        );
       }
       &.lane2.lightingEffect::before {
-        background: linear-gradient(to top, rgba(50, 205, 50, 0.5), rgba(50, 205, 50, 0)); /* 초록색 */
+        background: linear-gradient(
+          to top,
+          rgba(50, 205, 50, 0.5),
+          rgba(50, 205, 50, 0)
+        );
       }
       &.lane3.lightingEffect::before {
-        background: linear-gradient(to top, rgba(255, 165, 0, 0.5), rgba(255, 165, 0, 0)); /* 주황색 */
+        background: linear-gradient(
+          to top,
+          rgba(255, 165, 0, 0.5),
+          rgba(255, 165, 0, 0)
+        );
       }
       &.lane4.lightingEffect::before {
-        background: linear-gradient(to top, rgba(147, 112, 219, 0.5), rgba(147, 112, 219, 0)); /* 보라색 */
+        background: linear-gradient(
+          to top,
+          rgba(147, 112, 219, 0.5),
+          rgba(147, 112, 219, 0)
+        );
       }
       &.lane5.lightingEffect::before {
-        background: linear-gradient(to top, rgba(255, 20, 147, 0.5), rgba(255, 20, 147, 0)); /* 핑크색 */
+        background: linear-gradient(
+          to top,
+          rgba(255, 20, 147, 0.5),
+          rgba(255, 20, 147, 0)
+        );
       }
       @keyframes lightingEffectAnim {
         100% {
@@ -87,17 +109,17 @@
 
       .hitArea.primary {
         bottom: 0;
-        height: 9%; /* 칸의 하단 50%를 차지 */
+        height: 9%;
         background: linear-gradient(
           to top,
           rgba(255, 255, 255, 0.5),
           rgba(255, 255, 255, 0)
-        ); /* 그라데이션 효과 */
+        );
         border-top: 1px solid #fff;
       }
 
       .hitArea.secondary {
-        bottom: 9%; /* 기본 히트 영역 위로 조정 */
+        bottom: 9%;
         height: 2%;
         background: rgb(140, 119, 160);
         background-image: repeating-linear-gradient(
@@ -250,14 +272,13 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    
+
     p {
       font-family: "DNFBitBitv2";
     }
   }
 
   .gameStart {
-    
     button {
       display: flex;
       align-items: center;

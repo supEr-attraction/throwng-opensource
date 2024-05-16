@@ -7,62 +7,42 @@ import { postContentResult } from "@services/contentResultApi/ContentResultApi";
 
 function MemoryTest() {
   const navigate = useNavigate();
-  // 최초 시작
   const [start, setStart] = useState<boolean>(false);
-  // 카드 엘리먼트 배열
   const [cardEls, setCardEls] = useState<any>([]);
-  // 각 카드의 key 역할을 할 아이템을 담은 배열
   const cards = useMemo(
     () => Array.from(new Array(cardEls.length), (_, i) => i + 1),
     [cardEls]
   );
-  // 현재 라운드
   const [round, setRound] = useState<number>(1);
-  // 목숨
   const [life, setLife] = useState<number>(1);
-  // 화면에 출력할 라운드
   const [displayRound, setDisplayRound] = useState<number>(0);
-  // 난이도(보드 크기)
   const [difficulty, setDifficulty] = useState<number>(3);
-  // 라운드 시작 여부(클릭 가능 여부 결정)
   const [roundRunning, setRoundRunning] = useState<boolean>(false);
-  // 정답
   const [answer, setAnswer] = useState<Array<string | number>>([""]);
-  // 정답 개수
   const [answerCount, setAnswerCount] = useState<number>(3);
-  // 클릭 횟수
   const [clickCount, setClickCount] = useState<number>(0);
-  // 클릭된 카드
   const [clickedCards, setClickedCards] = useState<Array<string>>([]);
-  // 실패 여부
   const [isFail, setIsFail] = useState<boolean>(false);
-  // 성공 여부
   const [isSuccess, setIsSuccesss] = useState<boolean>(false);
-  // 게임 클리어
   const [gameClear, setGameClear] = useState<boolean>(false);
-  // 라운드 시작 카운트다운
   const [countdown, setCountdown] = useState<number>(4);
-  // 게임오버 카운트다운 클리너
   const [endCountdownClear, setEndCountdownClear] = useState<any>(() => {});
-  // 난이도업 딜레이 타이머 클리너
   const [difficultyUpDelayClear, setDifficultyUpDelayClear] = useState<any>(
     () => {}
   );
-  // gsap
+
   const [animations, setAnimations] = useState<Array<any>>([]);
 
-  // 게임 클리어
   const clear = useCallback(async () => {
     setGameClear(true);
     setStart(false);
-    postContentResult('memory');
+    postContentResult("memory");
     setRoundRunning(false);
-    await postContentResult('memory');
-    sessionStorage.setItem('cleared', 'true');
+    await postContentResult("memory");
+    sessionStorage.setItem("cleared", "true");
     navigate("/memory/success", { replace: true });
   }, [navigate]);
 
-  // 재시작
   const restart = () => {
     cardEls.forEach((el: any) => {
       el.style.backgroundColor = "whitesmoke";
@@ -82,7 +62,6 @@ function MemoryTest() {
     setCountdown(4);
   };
 
-  // 다음 라운드 진행 전 초기화
   const nextRound = useCallback(() => {
     clearTimeout(endCountdownClear);
     setClickCount(0);
@@ -94,7 +73,6 @@ function MemoryTest() {
     setAnswerCount((prev) => prev + 1);
   }, [endCountdownClear]);
 
-  // 게임오버
   const gameover = useCallback(async () => {
     cardEls.forEach((el: any) => {
       if (answer.indexOf(el.id) !== -1 && clickedCards.indexOf(el.id) === -1) {
@@ -117,29 +95,17 @@ function MemoryTest() {
     setIsFail(true);
     setRoundRunning(false);
     setClickCount(0);
-    await postContentResult('memory');
+    await postContentResult("memory");
   }, [answer, cardEls, clickedCards]);
 
-  // 카드 클릭 함수
   const onCardClick = useCallback(
     (e: any) => {
-      // 라운드 시작 전 or 중복 클릭
       if (!roundRunning || clickedCards.indexOf(e.target.id) !== -1) {
         return;
       }
 
       setClickedCards((prev) => [...prev, e.target.id]);
 
-      // 디버그용;
-      // if (e.target.id === "1") {
-      // clear();
-      // setIsSuccesss(true);
-
-      // nextRound();
-      //   return;
-      // }
-
-      // 오답일 경우 & 오답 아닐 경우
       if (answer.indexOf(e.target.id) === -1) {
         e.target.style.backgroundColor = "#7b66ff";
         e.target.style.boxShadow = "0px 0px 15px #bf1f1f, 0px 0px 30px #7b66ff";
@@ -159,11 +125,9 @@ function MemoryTest() {
         e.target.style.borderColor = "#48cae4";
       }
 
-      // 클릭수와 정답개수가 동일하면 다음 라운드, 아닐 경우 계속 클릭 진행
       if (clickCount + 1 === answer.length) {
         setIsSuccesss(true);
 
-        // 난이도 업일 경우 1초 딜레이 후 라운드 진행
         if (round === 4 || round === 12 || round === 24) {
           const difficultyUpDelay = setTimeout(() => {
             nextRound();
@@ -174,7 +138,6 @@ function MemoryTest() {
           return;
         }
 
-        // 클리어
         if (round === 20) {
           clear();
 
@@ -200,17 +163,14 @@ function MemoryTest() {
     ]
   );
 
-  // 라운드 시간제한
   const endCountdown = useCallback((time: number) => {
     const endTimer = setTimeout(() => {
       gameover();
     }, time);
 
     setEndCountdownClear(endTimer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // 난이도 업
   const changeDifficulty = useCallback(
     (num: number) => {
       cardEls.forEach((el: any) => {
@@ -225,16 +185,13 @@ function MemoryTest() {
     [cardEls]
   );
 
-  // 라운드 시작
   const roundStart = useCallback(() => {
     if (!start) {
       return;
     }
 
-    // 난이도 업일 경우 타이머에 시간 추가용 변수
     let delay = 0;
 
-    // 난이도 업
     if (round === 5) {
       delay = 1000;
       setCountdown(5);
@@ -252,24 +209,19 @@ function MemoryTest() {
       setDisplayRound(15);
     }
 
-    // 라운드 준비
     const prepareTimer = setTimeout(() => {
       setIsSuccesss(false);
 
-      // 난이도 업이 아니면 여기서 displayRound 증가.
-      // 난이도 업이면 위에서 직접 증가시키기 때문에 skip
       if (round !== 5 && round !== 10 && round !== 15) {
         setDisplayRound((prev) => prev + 1);
       }
 
-      // 색상 초기화
       cardEls.forEach((el: any) => {
         el.style.backgroundColor = "whitesmoke";
         el.style.boxShadow = "none";
         el.style.borderColor = "whitesmoke";
       });
 
-      // 정답 생성
       const newAnswer = [...cards].map((card) => card.toString());
       for (
         let i = difficulty ** 2 - answerCount, j = difficulty ** 2 - 1;
@@ -282,7 +234,6 @@ function MemoryTest() {
 
       setAnswer(newAnswer);
 
-      // 정답 표시
       cardEls.forEach((el: any) => {
         if (newAnswer.indexOf(el.id) !== -1) {
           el.style.backgroundColor = "whitesmoke";
@@ -295,12 +246,10 @@ function MemoryTest() {
       });
     }, 1000 + delay);
 
-    // 시작 카운트다운(출력용)
     const countdown = setInterval(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
 
-    //  정답 표시 색상 초기화
     const colorTimer = setTimeout(() => {
       cardEls.forEach((el: any) => {
         el.style.backgroundColor = "whitesmoke";
@@ -309,7 +258,6 @@ function MemoryTest() {
       });
     }, 3000 + delay);
 
-    // 시작 카운트다운(계산용)
     const startTimer = setTimeout(() => {
       setRoundRunning(true);
       setCountdown(0);
@@ -332,12 +280,10 @@ function MemoryTest() {
     start,
   ]);
 
-  // 카드 엘리먼트 불러오기
   useEffect(() => {
     setCardEls(document.querySelectorAll(`.${styles.card}`));
   }, [difficulty]);
 
-  // 카드 반짝반짝 효과
   useEffect(() => {
     if (!start && cardEls.length !== 0) {
       const animationArr: Array<any> = [];
@@ -359,7 +305,6 @@ function MemoryTest() {
     }
   }, [cardEls, start]);
 
-  // 게임오버 카운트다운 클리어
   useEffect(() => {
     return () => {
       clearTimeout(endCountdownClear);
@@ -367,7 +312,6 @@ function MemoryTest() {
     };
   });
 
-  // 라운드 시작마다 실행
   useEffect(() => {
     if (!start) {
       return;
@@ -383,12 +327,9 @@ function MemoryTest() {
     };
   }, [roundStart, start]);
 
-  // 카드 생성 함수
-  // n개의 카드를 n줄 생성한다.
   const rowsGenerator = useCallback(() => {
     const rowsReturn: Array<any> = [];
 
-    // 카드 생성기
     const cardsGenerator = (i: number) => {
       const cardsReturn: Array<any> = [];
 
@@ -407,7 +348,6 @@ function MemoryTest() {
       return cardsReturn;
     };
 
-    // 줄 생성기
     for (let i = 1; i <= difficulty; i++) {
       rowsReturn.push(
         <div key={i} className={styles.row}>
