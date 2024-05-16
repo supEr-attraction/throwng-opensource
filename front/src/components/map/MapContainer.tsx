@@ -12,6 +12,7 @@ import { GoogleMap } from "@react-google-maps/api";
 import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
 import useChangeCenter from "@hooks/map/useChangeCenter";
 import Markers from "./Markers";
+import { toastMsg } from "@/utils/toastMsg";
 
 interface Props {
   map: google.maps.Map | null;
@@ -65,8 +66,12 @@ const MapContainer = ({ map, setMap, initialLoad, setInitialLoad }: Props) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       if (loadAttempts !== -1) {
-        setMapKey((prevKey) => prevKey + 1);
-        setLoadAttempts((prev) => prev + 1);
+        if (loadAttempts >= 4) {
+          toastMsg("새로고침을 해주세요");
+        } else {
+          setMapKey((prevKey) => prevKey + 1);
+          setLoadAttempts((prev) => prev + 1);
+        }
       }
     }, 1500);
 
@@ -76,7 +81,9 @@ const MapContainer = ({ map, setMap, initialLoad, setInitialLoad }: Props) => {
   return (
     <GoogleMap
       key={mapKey}
+      // onHeadingChanged={}
       mapContainerStyle={CONTAINER_STYLE}
+      zoom={15}
       onTilesLoaded={onTilesLoaded}
       options={MAP_OPTIONS}
       onLoad={onLoad}

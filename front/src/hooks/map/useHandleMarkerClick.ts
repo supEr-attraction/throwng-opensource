@@ -1,4 +1,4 @@
-import { getCheckRadiusCoupon } from "@services/mapAPi";
+import { getCheckQuestionCoupon, getCheckRadiusCoupon } from "@services/mapAPi";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import {
   couponUsageActiveIdState,
@@ -23,7 +23,12 @@ const useHandleMarkerClick = () => {
 
       if (distance <= 600) {
         if (marker.secret) {
-          toastMsg("갤럭시 워치에서 확인해 보세요!");
+          const data = await getCheckQuestionCoupon();
+          if (data) {
+            setCouponUsageActiveId(marker.itemId);
+          } else {
+            toastMsg("갤럭시 워치에서 확인해 보세요!");
+          }
         } else {
           setRadiusActiveId(marker.itemId);
         }
