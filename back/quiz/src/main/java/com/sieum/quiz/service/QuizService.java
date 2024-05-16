@@ -2,11 +2,13 @@ package com.sieum.quiz.service;
 
 import static com.sieum.quiz.exception.CustomExceptionStatus.INVALID_QUIZ_ID;
 
+import com.sieum.quiz.controller.feign.MusicAuthClient;
 import com.sieum.quiz.controller.feign.UserAuthClient;
 import com.sieum.quiz.domain.Quiz;
 import com.sieum.quiz.domain.QuizHistory;
 import com.sieum.quiz.domain.enums.CouponRoute;
 import com.sieum.quiz.domain.enums.QuizType;
+import com.sieum.quiz.dto.request.GameHistoryCreationRequest;
 import com.sieum.quiz.dto.request.QuizExperienceCountRequest;
 import com.sieum.quiz.dto.request.QuizHistoryCreationRequest;
 import com.sieum.quiz.dto.request.UpdateExperiencePointRequest;
@@ -31,6 +33,7 @@ public class QuizService {
     private final String CONTENT_TYPE = "CONTENTS";
     private final RedisUtil redisUtil;
     private final UserAuthClient userAuthClient;
+    private final MusicAuthClient musicAuthClient;
     private final CouponReposistory couponRepository;
     private final QuizRepository quizRepository;
     private final QuizHistoryRepository quizHistoryRepository;
@@ -68,17 +71,6 @@ public class QuizService {
         if (quiz.isEmpty()) {
             throw new BadRequestException(INVALID_QUIZ_ID);
         }
-
-        //        final String key =
-        //                "quiz_" +
-        // LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        //        final List<QuizResponse> todayQuiz = (List<QuizResponse>)
-        // redisUtil.getObject(key);
-
-        //        if (!todayQuiz.stream()
-        //                .anyMatch(q -> q.getQuizId() == quizHistoryCreationRequest.getQuizId())) {
-        //            throw new BadRequestException(NOT_TODAY_QUIZ_ID);
-        //        }
 
         final String answer =
                 quizRepository.findById(quizHistoryCreationRequest.getQuizId()).get().getAnswer();
@@ -177,5 +169,35 @@ public class QuizService {
                         quizExperienceCountRequest.getCreatedAt());
 
         return ContentExperienceCountResponse.of(quizHistoryResponses.size());
+    }
+
+    public void createGameHistory(
+            final long userId, final GameHistoryCreationRequest gameHistoryCreationRequest) {
+        final String key =
+                "user_"
+                        + userId
+                        + "_"
+                        + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                        + "_"
+                        + gameHistoryCreationRequest.getRoute();
+
+        if (redisUtil.getData(key) == null) {
+            userAuthClient.upgradeExperiencePoint(
+                    UpdateExperiencePointRequest.of(userId, CONTENT_TYPE));
+            redisUtil.setDataExpire(key, "attendance", 86400);
+        }
+    }
+
+    public List<RhythmResponse> getRhythmList() {
+        final String key =
+                "rhythm_" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        List<RhythmResponse> rhythmResponseList = (List<RhythmResponse>) redisUtil.getObject(key);
+
+        if (rhythmResponseList == null) {
+            musicAuthClient.createRhythmList();
+            rhythmResponseList = (List<RhythmResponse>) redisUtil.getObject(key);
+        }
+
+        return rhythmResponseList;
     }
 }

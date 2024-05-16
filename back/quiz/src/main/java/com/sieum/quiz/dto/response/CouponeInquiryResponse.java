@@ -46,7 +46,17 @@ public class CouponeInquiryResponse {
                 CouponType.valueOf(coupon.getCouponType()).getName(),
                 CouponType.valueOf(coupon.getCouponType()).getDescription(),
                 createEndDate(coupon.getCreatedAt()),
-                CouponStatus.valueOf(couponHistory.getCouponStatus()).getKr(),
+                couponHistory.getCouponStatus(),
                 coupon.getCouponType());
+    }
+
+    public static CouponeInquiryResponse of(CouponeInquiryResponse couponeInquiryResponse) {
+        return new CouponeInquiryResponse(
+                couponeInquiryResponse.getCouponId(),
+                couponeInquiryResponse.getCouponName(),
+                couponeInquiryResponse.getCouponDescription(),
+                couponeInquiryResponse.getCouponEndDate(),
+                CouponStatus.valueOf(couponeInquiryResponse.getCouponStatus()).getKr(),
+                couponeInquiryResponse.getCouponType());
     }
 }

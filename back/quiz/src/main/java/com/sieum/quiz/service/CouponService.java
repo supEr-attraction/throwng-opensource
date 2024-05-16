@@ -87,15 +87,21 @@ public class CouponService {
     public List<CouponeInquiryResponse> getCouponHistory(final long userId) {
         List<Coupon> coupons = couponRepository.findByUserId(userId);
 
-        return coupons.stream()
-                .filter(coupon -> !coupon.getCouponType().equals("BOOM"))
-                .map(
-                        coupon ->
-                                CouponeInquiryResponse.of(
-                                        coupon,
-                                        couponHistoryRepository
-                                                .findTopByCouponIdOrderByCreatedAtDesc(
-                                                        coupon.getId())))
+        List<CouponeInquiryResponse> couponeInquiryResponses =
+                coupons.stream()
+                        .filter(coupon -> !coupon.getCouponType().equals("BOOM"))
+                        .map(
+                                coupon ->
+                                        CouponeInquiryResponse.of(
+                                                coupon,
+                                                couponHistoryRepository
+                                                        .findTopByCouponIdOrderByCreatedAtDesc(
+                                                                coupon.getId())))
+                        .collect(Collectors.toList());
+
+        return couponeInquiryResponses.stream()
+                .filter(coupon -> !coupon.getCouponStatus().equals("COMPLETION"))
+                .map(coupon -> CouponeInquiryResponse.of(coupon))
                 .collect(Collectors.toList());
     }
 
