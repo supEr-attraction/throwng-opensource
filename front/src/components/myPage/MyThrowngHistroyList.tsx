@@ -12,6 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
+import SongItemModule from "@components/SongItemModule";
 
 interface Props {
   pageIdx: boolean;
@@ -89,47 +90,37 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   return (
     <div className="MyThrowngHistroyList">
       <div className="list-body">
-        {songHistoryList.length > 0 ? (
-          songHistoryList.map((song, index) => (
-            <div
-              key={index}
-              id={`${index}`}
-              className="result-item"
-              onClick={() => handleGoNavigation(song, index)}
-            >
-              <div className="item-header">
-                {!pageIdx ? (
-                  <div className="item-date">
-                    {dayjs(song.dropDate).format("YYYY-MM-DD")}
-                  </div>
-                ) : (
-                  <div className="item-date">
-                    {dayjs(song.pickDate).format("YYYY-MM-DD")}
-                  </div>
-                )}
-                <div className="item-location">
-                  <TiLocation />
-                  <div>{song.location}</div>
+      {songHistoryList.length > 0 ? (
+        songHistoryList.map((song, index) => (
+          <div className="result-item" key={index} onClick={() => handleGoNavigation(song, index)}> {/* key 추가 */}
+            <div className="item-header">
+              {!pageIdx ? (
+                <div className="item-date">
+                  {dayjs(song.dropDate).format("YYYY-MM-DD")}
                 </div>
-              </div>
-              <div className="item">
-                <div className="img-container">
-                  <img src={song.albumImage} alt="" />
+              ) : (
+                <div className="item-date">
+                  {dayjs(song.pickDate).format("YYYY-MM-DD")}
                 </div>
-                <div className="item-detail">
-                  <div className="item-title">{song.title}</div>
-                  <div className="item-artist">{song.artist}</div>
-                  <div className="item-comment">{song.comment}</div>
-                </div>
+              )}
+              <div className="item-location">
+                <TiLocation />
+                <div>{song.location}</div>
               </div>
             </div>
-          ))
-        ) : (
-          <div className="no-word-container">
-            <div className="title">앗!</div>
-            <div className="subtitle">기록이 없습니다.</div>
+            <SongItemModule
+              song={song}
+              index={index}
+              type="history"
+            />
           </div>
-        )}
+        ))
+      ) : (
+        <div className="no-word-container">
+          <div className="title">앗!</div>
+          <div className="subtitle">기록이 없습니다.</div>
+        </div>
+      )}
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { getSearchMusic } from "@services/musicSearchApi/MusicSearchApi.tsx";
 import { selectMusic } from "@store/music/drop/atoms.ts";
 import Loading from "@components/Loading.tsx";
+import SongItemModule from "@components/SongItemModule.tsx";
 
 const MusicList = () => {
   const navigate = useNavigate();
@@ -54,21 +55,12 @@ const MusicList = () => {
       ) : searchResults && searchResults.length > 0 ? (
         <div className="searchResults none-scroll">
           {searchResults.map((song, index: number) => (
-            <div
+            <SongItemModule
               key={index}
-              className="result-item"
+              type="search"
               onClick={() => handleGoNavigation(song)}
-            >
-              <div className="image-container">
-                <img src={song.albumImage} loading="lazy" />
-              </div>
-              <div className="item-wide">
-                <div className="item-detail">
-                  <div className="item-title">{song.title}</div>
-                  <div className="item-artist">{song.artist}</div>
-                </div>
-              </div>
-            </div>
+              song={song}            
+            />
           ))}
         </div>
       ) : (

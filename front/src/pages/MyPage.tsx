@@ -19,7 +19,6 @@ import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState 
 import "@styles/myPage/MyPage.scss";
 import { getMyDropHistory, getMyLevel, getMyPickHistory } from "@services/myPageHistoryApi/MyPageHistoryApi";
 import Loading from "@components/Loading";
-// import Navbar from "@components/Navbar";
 
 const MyPage = () => {
   const logoutModal = useRecoilValue(logoutModalState);
@@ -87,7 +86,6 @@ const MyPage = () => {
           </>
         )}
       </div>
-      {/* <Navbar /> */}
       {logoutModal && <LogoutModal />}
     </div>
   ); 
