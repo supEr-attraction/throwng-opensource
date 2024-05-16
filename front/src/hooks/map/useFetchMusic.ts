@@ -10,6 +10,7 @@ const useFetchMusic = () => {
   const fetchMusicc = async (isUserLocation: boolean, position: Location) => {
     try {
       const data = await postMusicRadius(isUserLocation, position);
+      console.log(data);
       setMarkers((prev) => {
         if (!arraysAreEqual(data, prev)) {
           return data;

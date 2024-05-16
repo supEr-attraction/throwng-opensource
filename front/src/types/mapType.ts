@@ -11,6 +11,7 @@ export interface Marker {
   songTitle: string;
   artistName: string;
   innerDistance: boolean;
+  secret: boolean;
 }
 
 export interface MusicInfo {

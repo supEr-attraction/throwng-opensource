@@ -22,7 +22,11 @@ const useHandleMarkerClick = () => {
       );
 
       if (distance <= 600) {
-        setRadiusActiveId(marker.itemId);
+        if (marker.secret) {
+          toastMsg("갤럭시 워치에서 확인해 보세요!");
+        } else {
+          setRadiusActiveId(marker.itemId);
+        }
       } else {
         const data = await getCheckRadiusCoupon();
         if (data) {

@@ -9,11 +9,9 @@ import {
 import { useSetRecoilState } from "recoil";
 import { centerState, zoomLevelState } from "@store/map/atoms";
 import { GoogleMap } from "@react-google-maps/api";
-import MapClusterer from "@components/map/MapClusterer";
-import MyLocation from "@components/map/MyLocation";
 import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
-import useLocationWatcher from "@hooks/map/useLocationWatcher";
 import useChangeCenter from "@hooks/map/useChangeCenter";
+import Markers from "./Markers";
 
 interface Props {
   map: google.maps.Map | null;
@@ -28,7 +26,6 @@ const MapContainer = ({ map, setMap, initialLoad, setInitialLoad }: Props) => {
   const [mapKey, setMapKey] = useState(0);
   const [loadAttempts, setLoadAttempts] = useState(0);
 
-  useLocationWatcher(map, initialLoad);
   const { changeCenter } = useChangeCenter();
 
   const onLoad = useCallback((map: google.maps.Map) => setMap(map), []);
@@ -88,12 +85,7 @@ const MapContainer = ({ map, setMap, initialLoad, setInitialLoad }: Props) => {
       onZoomChanged={onZoomChanged}
       onIdle={() => changeCenter(map, initialLoad)}
     >
-      {!initialLoad && (
-        <>
-          <MyLocation />
-          <MapClusterer />
-        </>
-      )}
+      {!initialLoad && <Markers />}
     </GoogleMap>
   );
 };
