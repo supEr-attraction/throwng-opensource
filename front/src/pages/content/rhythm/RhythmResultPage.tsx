@@ -22,7 +22,7 @@ const RhythmResultPage = () => {
 
   return (
     <div className="resultPage">
-      {score >= 1600 ? (
+      {score >= 2000 ? (
         <div className="successContainer">
           <h1>Success</h1>
           <p>Score: {score}</p>
