@@ -28,23 +28,19 @@ const MyCouponBody = () => {
   };
 
   const handleChangeApply = async (couponId: number) => {
-    const selectedCoupon = coupons.find(
-      (coupon) => coupon.couponId === couponId
-    );
+    const selectedCoupon = coupons.find(coupon => coupon.couponId === couponId);
     if (!selectedCoupon) return;
-
-    const isConfirmed = window.confirm(
-      `${selectedCoupon.couponName}을 적용하시겠어요?`
-    );
+  
+    const isConfirmed = window.confirm(`${selectedCoupon.couponName}을 적용하시겠어요?`);
     if (isConfirmed) {
       if (selectedCoupon.couponName === "닉네임 변경 쿠폰") {
         setChangeNickNameCouponId(selectedCoupon.couponId);
         navigate("/user/mypage/change-nickname");
         return;
       }
-
+  
       const isCouponInUse = coupons.some(
-        (coupon) =>
+        coupon =>
           coupon.couponName === selectedCoupon.couponName &&
           coupon.couponStatus === "사용 중"
       );
@@ -52,16 +48,11 @@ const MyCouponBody = () => {
         toastMsg("동일한 쿠폰을 사용중이에요");
         return;
       }
-
-      const throwngTypes = [
-        "THROWNG_INF",
-        "THROWNG_TWICE",
-        "THROWNG_LEVEL",
-        "THROWNG_FIVE",
-      ];
+  
+      const throwngTypes = ["THROWNG_INF", "THROWNG_TWICE", "THROWNG_LEVEL", "THROWNG_FIVE"];
       if (throwngTypes.includes(selectedCoupon.couponType)) {
         const isSameTypeCouponInUse = coupons.some(
-          (coupon) =>
+          coupon =>
             throwngTypes.includes(coupon.couponType) &&
             coupon.couponStatus === "사용 중"
         );
@@ -70,16 +61,22 @@ const MyCouponBody = () => {
           return;
         }
       }
-
+  
       const requestBody = {
         couponId: couponId,
         couponType: selectedCoupon.couponType,
       };
-
-      await postMyCoupon(requestBody);
-      fetchGetMyCoupon();
+  
+      try {
+        await postMyCoupon(requestBody);
+        fetchGetMyCoupon();
+        toastMsg("쿠폰이 정상적으로 적용되었습니다.");
+      } catch (error) {
+        toastMsg("에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
+      }
     }
   };
+  
 
   return (
     <div className="MyCouponBody">
@@ -97,21 +94,23 @@ const MyCouponBody = () => {
                 <div className="coupon-title">{coupon.couponName}</div>
                 <div className="coupon-desc">{coupon.couponDescription}</div>
               </div>
-              <div
-                className={`coupon-apply ${
-                  coupon.couponStatus === "사용 전" ? "" : "inactive"
-                }`}
-                onClick={() =>
-                  coupon.couponStatus === "사용 전" &&
-                  handleChangeApply(coupon.couponId)
-                }
-              >
+              <div className="btn-div">
                 <div
-                  className={`coupon-apply-btn ${
-                    coupon.couponStatus !== "사용 전" && "coupon-apply-active"
+                  className={`coupon-apply ${
+                    coupon.couponStatus === "사용 전" ? "" : "inactive"
                   }`}
+                  onClick={() =>
+                    coupon.couponStatus === "사용 전" &&
+                    handleChangeApply(coupon.couponId)
+                  }
                 >
-                  {coupon.couponStatus}
+                  <div
+                    className={`coupon-apply-btn ${
+                      coupon.couponStatus !== "사용 전" && "coupon-apply-active"
+                    }`}
+                  >
+                    {coupon.couponStatus}
+                  </div>
                 </div>
               </div>
               <hr />
