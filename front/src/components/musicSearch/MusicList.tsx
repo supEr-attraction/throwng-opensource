@@ -25,7 +25,7 @@ const MusicList = () => {
     if (searchKeyword) {
       onSearch(decodeURIComponent(searchKeyword));
     }
-  }, [searchKeyword]);
+  }, [searchKeyword])
 
   const onSearch = async (searchKeyWord: string) => {
     setIsLoading(true);
@@ -35,32 +35,27 @@ const MusicList = () => {
     if (res) {
       setSearchResults(res);
     }
-    setIsLoading(false);
+    setIsLoading(false)
   };
 
-  const handleGoNavigation = (song: Song) => {
-    setSelectMusic(song);
-    navigate(`/music/drop/${song.youtubeId}`);
-  };
+  const handleGoNavigation = (song : Song) => {
+    setSelectMusic(song)
+    navigate(`/music/drop/${song.youtubeId}`)
+  }
 
   return (
     <div className="MusicList">
       <div className="MusicList-header">
-        <Header />
-        <MusicSearchInput />
+        <Header/>
+        <MusicSearchInput/>
       </div>
-      {isLoading ? (
-        <Loading />
-      ) : searchResults && searchResults.length > 0 ? (
+      {isLoading ? ( <Loading /> ) 
+      : searchResults && searchResults.length > 0 ? (
         <div className="searchResults none-scroll">
-          {searchResults.map((song, index: number) => (
-            <div
-              key={index}
-              className="result-item"
-              onClick={() => handleGoNavigation(song)}
-            >
+          {searchResults.map((song, index:number) => (
+            <div key={index} className="result-item" onClick={() => handleGoNavigation(song)}>
               <div className="image-container">
-                <img src={song.albumImage} loading="lazy" />
+                <img src={song.albumImage} loading="lazy"/>
               </div>
               <div className="item-wide">
                 <div className="item-detail">
@@ -72,15 +67,15 @@ const MusicList = () => {
           ))}
         </div>
       ) : (
-        <div className="SearchedWords">
-          <div className="no-word-container">
-            <div className="title">앗!</div>
-            <div className="subtitle">검색결과가 없어요.</div>
-          </div>
+      <div className="SearchedWords">
+        <div className="no-word-container">
+          <div className="title">앗!</div>
+          <div className="subtitle">검색결과가 없어요.</div>
         </div>
+      </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MusicList;
+export default MusicList

@@ -31,3 +31,8 @@ export interface Address {
   code: string;
   regionName: string;
 }
+
+export interface Address {
+  code: string;
+  regionName: string;
+}
