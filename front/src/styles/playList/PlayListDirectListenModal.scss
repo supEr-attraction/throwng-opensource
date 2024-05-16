@@ -2,13 +2,13 @@
   .modal-body {
     font-size: 1.5dvh;
     padding: 1dvh;
-    margin-top: 1dvh;
     animation: slideDown 0.5s ease forwards;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 1dvh;
     cursor: pointer;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 
     .img-container {
       display: flex;

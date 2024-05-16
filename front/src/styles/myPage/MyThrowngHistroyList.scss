@@ -1,5 +1,6 @@
 .MyThrowngHistroyList {
   padding-top: 1dvh;
+
   .list-body {
     display: flex;
     flex-direction: column;
@@ -8,8 +9,6 @@
     .result-item {
       display: flex;
       flex-direction: column;
-      padding-bottom: 1dvh;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       gap: 0.5dvh;
       cursor: pointer;
 
@@ -37,48 +36,6 @@
         }
       }
 
-      .item {
-        display: flex;
-        align-items: center;
-        gap: 1dvh;
-
-        .img-container {
-          display: flex;
-          img {
-            width: 6dvh;
-            height: 6dvh;
-            border-radius: 1dvh;
-          }
-        }
-
-        .item-detail {
-          overflow: hidden;
-          flex: 1;
-
-          .item-title,
-          .item-artis,
-          .item-comment {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-          }
-
-          .item-title {
-            font-size: 1.7dvh;
-            font-weight: 300;
-          }
-
-          .item-artist {
-            font-size: 1.5dvh;
-            color: var(--subtitle-color);
-          }
-
-          .item-comment {
-            font-size: 1.2dvh;
-            color: var(--placeholder-color);
-          }
-        }
-      }
       &:active {
         background-color: var(--input-box-color);
         border-radius: 1dvh;
