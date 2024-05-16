@@ -4,33 +4,9 @@ import logo from "@/assets/images/backlogo.webp";
 import rhythm from "@/assets/images/rhythm.webp";
 import memory from "@/assets/images/memory.webp";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getQuizContent } from "@services/contentApi/ContentApi";
-import { QuizContent } from "@/types/quizType";
-import Loading from "@components/Loading";
 
 const ContentPage = () => {
   const navigate = useNavigate();
-  const [quizContents, setQuizContents] = useState<QuizContent[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchQuizContents = async () => {
-      try {
-        const data: QuizContent[] = await getQuizContent();
-        setQuizContents(
-          data.map((content) => ({
-            ...content,
-          }))
-        );
-        setLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch quiz contents:", error);
-      }
-    };
-
-    fetchQuizContents();
-  }, []);
 
   const handleGoQuiz = () => {
     navigate("/quiz/main");
@@ -44,38 +20,21 @@ const ContentPage = () => {
     navigate("/memory/main");
   };
 
-  if (loading) {
-    return (
-      <div>
-        <Loading />
-      </div>
-    );
-  }
-
   return (
     <div className="ContentPage">
       <Header centerText="컨텐츠" />
       <div className="content-item">
-        {quizContents.map(
-          (content) =>
-            content.name === "quiz" && (
-              <div
-                key={content.name}
-                className={`quiz-border`}
-                onClick={() => handleGoQuiz()}
-              >
-                <div className="quiz-title">
-                  <p>퀴즈-쓰롱</p>
-                  <div className={`participation`}>
-                    <p>ON</p>
-                  </div>
-                </div>
-                <div>
-                  <img src={logo} alt="quiz" />
-                </div>
-              </div>
-            )
-        )}
+        <div className="quiz-border" onClick={handleGoQuiz}>
+          <div className="quiz-title">
+            <p>퀴즈-쓰롱</p>
+            <div className="participation">
+              <p>ON</p>
+            </div>
+          </div>
+          <div>
+            <img src={logo} alt="quiz" />
+          </div>
+        </div>
         <div className="game1-border" onClick={handleGoMole}>
           <div className="game1-title">
             <p>리듬-쓰롱</p>

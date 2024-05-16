@@ -20,6 +20,7 @@ const RhythmGame = () => {
   const comboTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [audioUrls, setAudioUrls] = useState<string[]>([]);
   const audioRefs = useRef<(HTMLAudioElement | null)[]>([]);
+  const touchHandled = useRef<boolean>(false); 
 
   useEffect(() => {
     const loadAudioUrls = async () => {
@@ -106,6 +107,11 @@ const RhythmGame = () => {
   };
 
   const handleTouchOrClick = (lane: number) => {
+    if (touchHandled.current) {
+      touchHandled.current = false; 
+      return;
+    }
+
     setLaneEffect(lane);
     setTimeout(() => setLaneEffect(null), 300);
 
@@ -132,6 +138,11 @@ const RhythmGame = () => {
     } else {
       setCombo(0);
     }
+  };
+
+  const handleTouchStart = (lane: number) => {
+    touchHandled.current = true; 
+    handleTouchOrClick(lane);
   };
 
   const showCombo = () => {
@@ -194,7 +205,7 @@ const RhythmGame = () => {
             className={`lane lane${index} ${
               laneEffect === index ? "lightingEffect" : ""
             }`}
-            onTouchStart={() => handleTouchOrClick(index)}
+            onTouchStart={() => handleTouchStart(index)} 
             onMouseDown={() => handleTouchOrClick(index)}
           >
             <div className="hitArea secondary" />
