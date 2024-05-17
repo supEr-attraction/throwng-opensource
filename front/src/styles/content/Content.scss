@@ -15,6 +15,7 @@
   .game2-border {
     display: flex;
     justify-content: space-between;
+    // border: 1px solid #8877fc;
     background-color: rgb(123, 102, 255, 0.2);
     border-radius: 2dvh;
     padding: 3dvh;
@@ -28,7 +29,7 @@
       flex-direction: column;
       justify-content: space-around;
       width: 100%;
-      font-size: 2.1dvh;
+      font-size: 2dvh;
       font-weight: bold;
 
       .participation {
@@ -39,8 +40,6 @@
         background-color: #7b66ff;
         color: white;
       }
-
-      
 
       .participation.inactive {
         background-color: #808080;

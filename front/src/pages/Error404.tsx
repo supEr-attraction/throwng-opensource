@@ -3,7 +3,9 @@ import lottie, { AnimationItem } from "lottie-web";
 import Animation from "@assets/lottie/notFound.json";
 import "@styles/Error404.scss";
 import MusicDropBtn from "@components/musicDrop/MusicDropBtn";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useRouteError } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "@components/ErrorFallback";
 
 interface AnimationData {
   v: string;
@@ -20,9 +22,16 @@ const Error404 = () => {
   const animationContainer = useRef<HTMLDivElement>(null);
   const [animationData, setAnimationData] = useState<AnimationData>();
   const navigate = useNavigate();
+  const error: any = useRouteError();
+  console.log(error);
 
   useEffect(() => {
-    setAnimationData(Animation);
+    const a = error?.error.message.split(' "')[0];
+    if (a === "No route matches URL") {
+      setAnimationData(Animation);
+    } else {
+      window.location.reload();
+    }
   }, []);
 
   useEffect(() => {
@@ -47,10 +56,12 @@ const Error404 = () => {
   }, [animationData]);
 
   return (
-    <div className="Error404">
-      <div className="quiz-main-container" ref={animationContainer}></div>
-      <MusicDropBtn btnText="홈으로" onClick={() => navigate("/")} />
-    </div>
+    <ErrorBoundary FallbackComponent={ErrorFallback}>
+      <div className="Error404">
+        <div className="quiz-main-container" ref={animationContainer}></div>
+        <MusicDropBtn btnText="홈으로" onClick={() => navigate("/")} />
+      </div>
+    </ErrorBoundary>
   );
 };
 
