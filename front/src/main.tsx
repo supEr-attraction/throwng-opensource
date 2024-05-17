@@ -2,4 +2,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.scss";
 
-ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+const url = window.location.pathname;
+
+if (url !== "/grafana-server") {
+  ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+}

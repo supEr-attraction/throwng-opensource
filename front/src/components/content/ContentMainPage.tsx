@@ -3,6 +3,7 @@ import "@/styles/content/ContentMainPage.scss";
 import { useNavigate } from "react-router-dom";
 
 interface GameMainPageProps {
+  lottie?: React.ReactNode;
   imageSrc: string;
   altText: string;
   mainText: string;
@@ -10,6 +11,7 @@ interface GameMainPageProps {
 }
 
 const ContentMainPage = ({
+  lottie,
   imageSrc,
   altText,
   mainText,
@@ -25,7 +27,10 @@ const ContentMainPage = ({
       <Header />
       <div className="GameMainPage">
         <div className="game-lottie">
-          <img src={imageSrc} alt={altText} />
+          <div className="lottie">
+          {lottie ? lottie : ""}
+          </div>
+          <img src={imageSrc} alt={altText} className="img"/>
         </div>
         <div className="game-main-border">
           <p dangerouslySetInnerHTML={{ __html: mainText }} />

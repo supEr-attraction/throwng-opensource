@@ -23,15 +23,33 @@ const QuizCouponPage = lazy(() => import("@pages/content/quiz/QuizCouponPage"));
 const QuizFailPage = lazy(() => import("@pages/content/quiz/QuizFailPage"));
 const QuizInfoPage = lazy(() => import("@pages/content/quiz/QuizInfoPage"));
 const QuizSolvePage = lazy(() => import("@pages/content/quiz/QuizSolvePage"));
-const MemoryTestPage = lazy(() => import("@pages/content/memory/MemoryTestPage"));
-const MemoryInfoPage = lazy(() => import("@pages/content/memory/MemoryInfoPage"));
-const MemoryMainPage = lazy(() => import("@pages/content/memory/MemoryMainPage"));
-const MemoryCouponPage = lazy(() => import("@pages/content/memory/MemoryCouponPage"));
-const RhythmGamePage = lazy(() => import("@pages/content/rhythm/RhythmGamePage"));
-const RhythmMainPage = lazy(() => import("@pages/content/rhythm/RhythmMainPage"));
-const RhythmInfoPage = lazy(() => import("@pages/content/rhythm/RhythmInfoPage"));
-const RhythmResultPage = lazy(() => import("@pages/content/rhythm/RhythmResultPage"));
-const RhythmCouponPage = lazy(() => import("@pages/content/rhythm/RhythmCouponPage"));
+const MemoryTestPage = lazy(
+  () => import("@pages/content/memory/MemoryTestPage")
+);
+const MemoryInfoPage = lazy(
+  () => import("@pages/content/memory/MemoryInfoPage")
+);
+const MemoryMainPage = lazy(
+  () => import("@pages/content/memory/MemoryMainPage")
+);
+const MemoryCouponPage = lazy(
+  () => import("@pages/content/memory/MemoryCouponPage")
+);
+const RhythmGamePage = lazy(
+  () => import("@pages/content/rhythm/RhythmGamePage")
+);
+const RhythmMainPage = lazy(
+  () => import("@pages/content/rhythm/RhythmMainPage")
+);
+const RhythmInfoPage = lazy(
+  () => import("@pages/content/rhythm/RhythmInfoPage")
+);
+const RhythmResultPage = lazy(
+  () => import("@pages/content/rhythm/RhythmResultPage")
+);
+const RhythmCouponPage = lazy(
+  () => import("@pages/content/rhythm/RhythmCouponPage")
+);
 
 export default {
   path: "/",
@@ -112,7 +130,7 @@ export default {
     },
     {
       path: ":type/success",
-      element: <ContentSuccessPage />, 
+      element: <ContentSuccessPage />,
     },
     {
       path: "quiz",
