@@ -137,7 +137,7 @@ function MemoryTest() {
           return;
         }
 
-        if (round === 1) {
+        if (round === 20) {
           clear();
 
           return;

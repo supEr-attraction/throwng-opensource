@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import QuizMultipleChoice from "@components/content/quiz/QuizMultipleChoice";
 import QuizOX from "@components/content/quiz/QuizOX";
@@ -15,9 +15,9 @@ function QuizSolvePage() {
   const [userInput, setUserInput] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleUserInput = (input: string) => {
+  const handleUserInput = useCallback((input: string) => {
     setUserInput(input);
-  };
+  }, []); 
 
   useEffect(() => {
     const fetchQuiz = async () => {
@@ -37,12 +37,12 @@ function QuizSolvePage() {
     setCanSubmit(userInput !== null);
   }, [userInput]);
 
-  const handleTimeOut = () => {
+  const handleTimeOut = useCallback(() => {
     handleSubmission(null);
     navigate("/quiz/fail", { replace: true });
-  };
+  }, [navigate]); 
 
-  const handleSubmission = async (submission = userInput) => {
+  const handleSubmission = useCallback(async (submission = userInput) => {
     if (submission === null) {
       submission = null;
     }
@@ -71,19 +71,19 @@ function QuizSolvePage() {
       console.error("Failed to submit the quiz:", error);
       handleFailNavigation();
     }
-  };
+  }, [userInput, currentQuestionIndex, quizData, navigate]); 
 
-  const handleFailNavigation = () => {
+  const handleFailNavigation = useCallback(() => {
     navigate("/quiz/fail", { replace: true });
-  };
+  }, [navigate]); 
 
-  const goToNextQuestion = () => {
+  const goToNextQuestion = useCallback(() => {
     setUserInput(null);
     setCanSubmit(false);
     setCurrentQuestionIndex(currentQuestionIndex + 1);
-  };
+  }, [currentQuestionIndex]); 
 
-  const renderQuestionComponent = () => {
+  const renderQuestionComponent = useCallback(() => {
     if (!quizData.length || currentQuestionIndex >= quizData.length) {
       return <div></div>;
     }
@@ -101,7 +101,7 @@ function QuizSolvePage() {
 
     switch (currentQuiz.quizType) {
       case "객관식":
-        // @ts-ignore
+        //@ts-ignore
         return <QuizMultipleChoice {...props} />;
       case "주관식":
         return <QuizSubjective {...props} />;
@@ -110,7 +110,7 @@ function QuizSolvePage() {
       default:
         return null;
     }
-  };
+  }, [currentQuestionIndex, handleUserInput, quizData]); 
 
   return (
     <div className="QuizSolvePage">
