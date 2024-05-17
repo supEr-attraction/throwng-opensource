@@ -7,6 +7,7 @@ const api = axiosApi();
 const getContentCoupon = async (route: string): Promise<quizCoupon> => {
   try {
     const response = await api.get<quizCoupon>(`/quizzes/coupons/${route}`);
+    // console.log(route)
     return response.data;
   } catch (e) {
     if (axios.isAxiosError(e)) {
