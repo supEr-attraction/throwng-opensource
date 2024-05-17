@@ -8,7 +8,7 @@ const RhythmGame = () => {
   const [score, setScore] = useState<number>(0);
   const [combo, setCombo] = useState<number>(0);
   const [comboVisible, setComboVisible] = useState<boolean>(false);
-  const [timer, setTimer] = useState<number>(10);
+  const [timer, setTimer] = useState<number>(120);
   const [notes, setNotes] = useState<
     Array<{ id: number; top: number; lane: number; exploding?: boolean }>
   >([]);
@@ -81,7 +81,7 @@ const RhythmGame = () => {
   const resetGame = () => {
     setScore(0);
     setCombo(0);
-    setTimer(10);
+    setTimer(120);
     setNotes([]);
     setLoading(false);
     setClickedNotes([]);
