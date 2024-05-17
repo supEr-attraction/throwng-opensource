@@ -1,8 +1,17 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import "@/styles/content/rhythm/RhythmGame.scss";
 import { fetchSongPreviewUrls } from "@services/rhythmApi/RhythmApi";
 import Loading from "@components/Loading";
+
+const Note = memo(({ note, exploding }: { note: any; exploding: boolean }) => {
+  return (
+    <div
+      className={`note lane${note.lane} ${exploding ? "exploding" : ""}`}
+      style={{ top: `${note.top}%`, left: `${note.lane * 16.66}%` }}
+    />
+  );
+});
 
 const RhythmGame = () => {
   const [score, setScore] = useState<number>(0);
@@ -231,13 +240,7 @@ const RhythmGame = () => {
           </div>
         ))}
         {notes.map((note) => (
-          <div
-            key={note.id}
-            className={`note lane${note.lane} ${
-              note.exploding ? "exploding" : ""
-            }`}
-            style={{ top: `${note.top}%`, left: `${note.lane * 16.66}%` }}
-          />
+          <Note key={note.id} note={note} exploding={note.exploding || false} />
         ))}
       </div>
       {comboVisible && (
