@@ -9,7 +9,7 @@ export const postContentResult = async (route: "rhythm" | "memory") => {
     const response = await api.post("/quizzes/contents/result", {
       route,
     });
-    console.log(response)
+    // console.log(response)
     return response;
   } catch (e) {
     if (axios.isAxiosError(e)) {

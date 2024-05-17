@@ -12,14 +12,22 @@ import coupon6 from "@assets/images/coupon6.webp";
 import coupon7 from "@assets/images/coupon7.webp";
 import boom from "@assets/images/boom.webp";
 import { getIsCoupon } from "@services/couponApi/IsCouponApi";
-import useSessionValidation from "@hooks/content/useSessionValidation";
+// import useSessionValidation from "@hooks/content/useSessionValidation";
 
 const ContentSuccessPage = () => {
   const { type } = useParams<{ type?: string }>();
-  useSessionValidation(
-    type === "rhythm" ? "scoreAchieved" : "quizCompleted",
-    "/content"
-  );
+  // let sessionKey: string;
+  // if (type === "quiz") {
+  //   sessionKey = "quizCompleted";
+  // } else if (type === "rhythm") {
+  //   sessionKey = "scoreAchieved";
+  // } else if (type === "memory") {
+  //   sessionKey = "cleared";
+  // } else {
+  //   sessionKey = "";
+  // }
+
+  // useSessionValidation(sessionKey, "/content");
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const navigate = useNavigate();
@@ -28,6 +36,7 @@ const ContentSuccessPage = () => {
     const checkCouponValidity = async () => {
       try {
         if (type) {
+          // console.log(type)
           const couponData = await getIsCoupon(type);
           if (couponData.couponStatus) {
             navigate("/close", { replace: true });
