@@ -9,7 +9,8 @@ services:
         PROFILE: prod
     ports:
       - '8092:8092'
-
+    volumes:
+      - /home/ubuntu/pinpoint-agent-2.2.2:/pinpoint
 networks:
   default:
     external:
