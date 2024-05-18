@@ -413,4 +413,13 @@ public class MusicService {
         final Random random = new Random();
         return random.nextInt(size);
     }
+
+    public boolean getRadiusCouponUsage(final long userId) {
+        final String key = userId + "_QUESTION";
+
+        if (redisUtil.getData(key) != null) {
+            return true;
+        }
+        return false;
+    }
 }
