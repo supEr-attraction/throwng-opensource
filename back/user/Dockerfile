@@ -11,4 +11,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 COPY ${JAR_FILE} app.jar
 
 EXPOSE 8086
-ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=${PROFILE}", "/app.jar"]
+ENTRYPOINT ["java", "-javaagent:/pinpoint/pinpoint-bootstrap-2.2.2.jar", "-Dpinpoint.agentId=userAgent","-Dpinpoint.applicationName=throwng","-Dpinpoint.config=/pinpoint/pinpoint-root.config","-Dspring.profiles.active=${PROFILE}","-jar", "/app.jar"]
