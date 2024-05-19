@@ -14,9 +14,9 @@ const HomePage = () => {
       id="google-map-script"
       googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAP_API}
       language="ko"
+      region="KR"
       libraries={GOOGLE_MAPS_LIBRARIES}
       loadingElement={<></>}
-      onError={(e) => console.error("Error loading Google Maps", e)}
     >
       <Map />
     </LoadScriptNext>

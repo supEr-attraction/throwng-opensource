@@ -42,13 +42,18 @@ const PlayListBody = () => {
   }, []);
 
   const fetchData = useCallback(async (lastModifiedAt: string = "") => {
-    const data = await getMyPlayList(lastModifiedAt);
-    if (data.last) {
-      setIsLastPage(true);
+    try {
+      const data = await getMyPlayList(lastModifiedAt);
+      if (data.last) {
+        setIsLastPage(true);
+      }
+      setPlayList((prev) => [...prev, ...data.content]);
+    } catch (error) {
+      throw new Error('PlayListBody-getMyPlayList');
+    } finally {
+      setIsLoading(false);
     }
-    setPlayList((prev) => [...prev, ...data.content]);
-    setIsLoading(false);
-  }, []);
+  }, []);  
 
   const lastElementRef = useCallback(
     (node: HTMLDivElement) => {

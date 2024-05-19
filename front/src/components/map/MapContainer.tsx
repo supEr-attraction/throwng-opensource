@@ -11,8 +11,9 @@ import { centerState, zoomLevelState } from "@store/map/atoms";
 import { GoogleMap } from "@react-google-maps/api";
 import { CONTAINER_STYLE, MAP_OPTIONS } from "@constants/map";
 import useChangeCenter from "@hooks/map/useChangeCenter";
-import Markers from "./Markers";
 import { toastMsg } from "@/utils/toastMsg";
+import MyLocation from "./MyLocation";
+import MapClusterer from "./MapClusterer";
 
 interface Props {
   map: google.maps.Map | null;
@@ -65,13 +66,13 @@ const MapContainer = ({ map, setMap, initialLoad, setInitialLoad }: Props) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (loadAttempts !== -1) {
-        if (loadAttempts >= 4) {
+      if (loadAttempts !== -1 && loadAttempts < 4) {
+        if (loadAttempts === 3) {
           toastMsg("새로고침을 해주세요");
         } else {
           setMapKey((prevKey) => prevKey + 1);
-          setLoadAttempts((prev) => prev + 1);
         }
+        setLoadAttempts((prev) => prev + 1);
       }
     }, 1500);
 
@@ -81,7 +82,6 @@ const MapContainer = ({ map, setMap, initialLoad, setInitialLoad }: Props) => {
   return (
     <GoogleMap
       key={mapKey}
-      // onHeadingChanged={}
       mapContainerStyle={CONTAINER_STYLE}
       zoom={15}
       onTilesLoaded={onTilesLoaded}
@@ -92,7 +92,12 @@ const MapContainer = ({ map, setMap, initialLoad, setInitialLoad }: Props) => {
       onZoomChanged={onZoomChanged}
       onIdle={() => changeCenter(map, initialLoad)}
     >
-      {!initialLoad && <Markers />}
+      {!initialLoad && (
+        <>
+          <MyLocation />
+          <MapClusterer />
+        </>
+      )}
     </GoogleMap>
   );
 };

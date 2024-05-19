@@ -32,6 +32,7 @@ const ContentSuccessPage = () => {
         }
       } catch (e) {
         console.error("Error checking coupon validity:", e);
+        throw new Error('ContentSuccessPage');
       }
     };
 

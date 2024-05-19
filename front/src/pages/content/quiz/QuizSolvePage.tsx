@@ -70,6 +70,7 @@ function QuizSolvePage() {
     } catch (error) {
       console.error("Failed to submit the quiz:", error);
       handleFailNavigation();
+      throw new Error('QuizSolvePage');
     }
   }, [userInput, currentQuestionIndex, quizData, navigate]); 
 
@@ -114,7 +115,7 @@ function QuizSolvePage() {
 
   return (
     <div className="QuizSolvePage">
-      <QuizTimeBar key={currentQuestionIndex} initialTime={20} onTimeOut={handleTimeOut} />
+      <QuizTimeBar key={currentQuestionIndex} initialTime={60} onTimeOut={handleTimeOut} />
       {renderQuestionComponent()}
       {canSubmit && (
         <button onClick={() => handleSubmission()} className="submission-button">

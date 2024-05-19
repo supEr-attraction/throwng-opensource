@@ -21,6 +21,7 @@ const AuthPage = () => {
         }
       } catch (error) {
         console.error("Error while getting token:", error);
+        throw new Error('AuthPage');
       }
     };
 

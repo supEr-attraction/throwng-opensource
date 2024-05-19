@@ -12,22 +12,6 @@
     position: absolute;
     inset: 0;
 
-    .black-cover {
-      background-color: rgba(15, 17, 20, 0.2);
-      position: absolute;
-      inset: 0;
-    }
-
-    .black-gradient {
-      background: linear-gradient(
-        180deg,
-        rgba(15, 17, 20, 0.2) 0%,
-        #0f1114 100%
-      );
-      width: 100%;
-      height: 100%;
-    }
-
     .content {
       position: absolute;
       inset: 0;

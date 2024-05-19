@@ -1,8 +1,8 @@
-FROM node:latest
+FROM node:lts-slim
 WORKDIR /app
-COPY package.json .
+COPY package.json package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
-CMD ["npm", "run", "preview"]
+CMD ["npx", "serve", "-s", "dist"]

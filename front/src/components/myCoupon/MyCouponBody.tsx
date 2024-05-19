@@ -4,8 +4,6 @@ import dayjs from "dayjs";
 import { Coupon } from "../../types/couponType";
 import { getMyCoupon, postMyCoupon } from "@services/myCouponApi/MyCouponAPi";
 import { useNavigate } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
-import { changeNickNameCouponId } from "@store/myPage/atoms";
 import Loading from "@components/Loading";
 import ToasterMsg from "@components/ToasterMsg";
 import { toastMsg } from "@/utils/toastMsg";
@@ -13,7 +11,6 @@ import { toastMsg } from "@/utils/toastMsg";
 const MyCouponBody = () => {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const navigate = useNavigate();
-  const setChangeNickNameCouponId = useSetRecoilState(changeNickNameCouponId);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
@@ -30,15 +27,16 @@ const MyCouponBody = () => {
   const handleChangeApply = async (couponId: number) => {
     const selectedCoupon = coupons.find(coupon => coupon.couponId === couponId);
     if (!selectedCoupon) return;
+
+    if (selectedCoupon.couponName === "닉네임 변경 쿠폰") {
+      navigate("/user/mypage/change-nickname", {state: {
+        couponId:selectedCoupon.couponId
+      }});
+      return;
+    }
   
     const isConfirmed = window.confirm(`${selectedCoupon.couponName}을 적용하시겠어요?`);
     if (isConfirmed) {
-      if (selectedCoupon.couponName === "닉네임 변경 쿠폰") {
-        setChangeNickNameCouponId(selectedCoupon.couponId);
-        navigate("/user/mypage/change-nickname");
-        return;
-      }
-  
       const isCouponInUse = coupons.some(
         coupon =>
           coupon.couponName === selectedCoupon.couponName &&
@@ -73,6 +71,7 @@ const MyCouponBody = () => {
         toastMsg("쿠폰이 정상적으로 적용되었습니다.");
       } catch (error) {
         toastMsg("에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
+        throw new Error('MyCouponBody');
       }
     }
   };

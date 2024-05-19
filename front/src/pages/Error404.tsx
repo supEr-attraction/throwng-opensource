@@ -1,36 +1,27 @@
 import { useRef, useEffect, useState } from "react";
 import lottie, { AnimationItem } from "lottie-web";
 import Animation from "@assets/lottie/notFound.json";
-import "@styles/Error404.scss";
 import MusicDropBtn from "@components/musicDrop/MusicDropBtn";
 import { useNavigate, useRouteError } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallback from "@components/ErrorFallback";
-
-interface AnimationData {
-  v: string;
-  fr: number;
-  ip: number;
-  op: number;
-  w: number;
-  h: number;
-  nm: string;
-  layers: Array<any>;
-}
+import { AnimationData } from "../types/lottieType";
+import "@styles/Error404.scss";
 
 const Error404 = () => {
   const animationContainer = useRef<HTMLDivElement>(null);
   const [animationData, setAnimationData] = useState<AnimationData>();
-  const navigate = useNavigate();
+  const [isLoad, setIsLoad] = useState(false);
   const error: any = useRouteError();
-  console.log(error);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const a = error?.error.message.split(' "')[0];
-    if (a === "No route matches URL") {
-      setAnimationData(Animation);
-    } else {
+    if (
+      error instanceof TypeError &&
+      error.message.includes("Failed to fetch dynamically imported module")
+    ) {
       window.location.reload();
+    } else {
+      setIsLoad((prev) => !prev);
+      setAnimationData(Animation);
     }
   }, []);
 
@@ -56,12 +47,17 @@ const Error404 = () => {
   }, [animationData]);
 
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <div className="Error404">
-        <div className="quiz-main-container" ref={animationContainer}></div>
-        <MusicDropBtn btnText="홈으로" onClick={() => navigate("/")} />
-      </div>
-    </ErrorBoundary>
+    <div className="Error404">
+      {isLoad && (
+        <>
+          <div className="quiz-main-container" ref={animationContainer}></div>
+          <MusicDropBtn
+            btnText="홈으로"
+            onClick={() => navigate("/", { replace: true })}
+          />
+        </>
+      )}
+    </div>
   );
 };
 

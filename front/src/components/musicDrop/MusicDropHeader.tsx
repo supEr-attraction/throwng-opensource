@@ -13,6 +13,7 @@ import { ImVolumeMute2 } from "react-icons/im";
 import heic2any from "heic2any";
 import Loading from "@components/Loading";
 import { toastMsg } from "@/utils/toastMsg";
+import BlackGradient from "@components/music/common/BlackGradient";
 
 const MusicDropHeader = () => {
   const fileRef = useRef<HTMLInputElement>(null);
@@ -108,19 +109,24 @@ const MusicDropHeader = () => {
           return;
         }
         setImagePreview(URL.createObjectURL(file));
-        const data = await postImageUpload(file);
-        setUserImageUrl(data);
+        try {
+          const data = await postImageUpload(file);
+          setUserImageUrl(data);
+        } catch (error) {
+          setIsLoading(false);
+          throw new Error('MusicDropHeader-postImageUpload')
+          return;
+        }
       }
       setIsLoading(false);
     }
   };
-
+  
   return (
     <div className="MusicDropHeader">
       <img className="album-image" src={songInfo.albumImage} alt="" />
       <div className="cover">
-        <div className="black-cover" />
-        <div className="black-gradient" />
+        <BlackGradient />
         {isLoading ? (
           <Loading />
         ) : (

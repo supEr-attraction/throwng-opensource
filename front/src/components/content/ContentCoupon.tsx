@@ -20,7 +20,7 @@ const couponImages: { [key: string]: string } = {
   "레벨만큼 추가 쓰롱 쿠폰": coupon6,
   "쓰롱 5개 추가 쿠폰": coupon1,
   "닉네임 변경 쿠폰": coupon4,
-  "꽝": boom,
+  꽝: boom,
   "물음표 음악 조회 쿠폰": coupon7,
 };
 
@@ -30,7 +30,11 @@ interface CouponPageProps {
   redirectPath: string;
 }
 
-const CouponPage: React.FC<CouponPageProps> = ({ storageKey, couponType, redirectPath }) => {
+const CouponPage: React.FC<CouponPageProps> = ({
+  storageKey,
+  couponType,
+  redirectPath,
+}) => {
   const [coupon, setCoupon] = useState<quizCoupon | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
@@ -50,6 +54,7 @@ const CouponPage: React.FC<CouponPageProps> = ({ storageKey, couponType, redirec
         setCoupon(couponData);
       } catch (error) {
         console.error("Failed to fetch coupon:", error);
+        throw new Error("CouponPage");
       }
       setLoading(false);
     };
