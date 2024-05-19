@@ -15,6 +15,7 @@ import com.sieum.music.domain.dao.ThrowCurrentDao;
 import com.sieum.music.domain.dao.ThrowDao;
 import com.sieum.music.domain.enums.ThrowStatus;
 import com.sieum.music.dto.response.WatchFamousMusicResponse;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.locationtech.jts.geom.Point;
@@ -59,7 +60,12 @@ public class ThrowQueryDSLRepository {
                 .selectFrom(throwItem)
                 .leftJoin(throwHistory)
                 .on(throwItem.id.eq(throwHistory.throwItem.id))
-                .where(throwItem.status.eq(ThrowStatus.VISIBLE).and(throwHistory.id.isNull()))
+                .where(
+                        throwItem
+                                .createdAt
+                                .loe(LocalDateTime.now().minusDays(DEFAULT_DELETE_DAY))
+                                .and(throwItem.status.eq(ThrowStatus.VISIBLE))
+                                .and(throwHistory.id.isNull()))
                 .fetch();
     }
 
