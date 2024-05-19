@@ -22,11 +22,6 @@ const MyPageMenu = () => {
     navigate("/user/myotp");
   };
 
-  const goCouponPage = (e:React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault()
-    navigate('/user/mycoupons')
-  }
-
   return (
     <div className="MyPageMenu">
       <div className="menu-body">
