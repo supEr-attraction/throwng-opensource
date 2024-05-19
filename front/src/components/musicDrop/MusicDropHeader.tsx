@@ -114,7 +114,7 @@ const MusicDropHeader = () => {
           setUserImageUrl(data);
         } catch (error) {
           setIsLoading(false);
-          throw new Error('MusicDropHeader-postImageUpload')
+          // throw new Error('MusicDropHeader-postImageUpload')
           return;
         }
       }

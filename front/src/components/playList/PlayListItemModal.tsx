@@ -56,7 +56,7 @@ const PlayListItemModal = ({ song, deleteSongFromPlayList }: Props) => {
       await deleteMyPlayList(song.playlistId);
       deleteSongFromPlayList(song.playlistId);
     } catch (error) {
-      throw new Error ('PlayListItemModal-deleteSong')
+      // throw new Error ('PlayListItemModal-deleteSong')
     } finally {
       setModalSongIndex(null);
     }

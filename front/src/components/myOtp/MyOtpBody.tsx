@@ -28,7 +28,7 @@ const MyOtpBody = () => {
       if (axios.isAxiosError(e)) {
         if (e.response?.status === 429) {
           toastMsg('너무 많은 요청을 보냈습니다. 잠시 후에 다시 시도해주세요.');
-          throw new Error('MyOtpBody');
+          // throw new Error('MyOtpBody');
         }
       }
     }

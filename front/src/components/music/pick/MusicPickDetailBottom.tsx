@@ -33,7 +33,7 @@ const MusicPickDetailBottom = () => {
       navigate("/");
     } catch (err) {
       console.error(err);
-      throw new Error('MusicPickDetailBottom');
+      // // throw new Error('MusicPickDetailBottom');
     }
   };
 

@@ -27,7 +27,7 @@ const MusicPickDetailPage = () => {
       setMusicInfo(data);
     } catch (error) {
       console.log(error);
-      throw new Error('MusicPickDetailPage');
+      // throw new Error('MusicPickDetailPage');
     } finally {
       resetOptionModal();
       resetReportModal();

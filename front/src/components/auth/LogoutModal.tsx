@@ -22,7 +22,7 @@ const LogoutModal = () => {
       navigate("/login", { replace: true });
     } catch (error) {
       console.error(error);
-      throw new Error('LogoutModal');
+      // // throw new Error('LogoutModal');
     }
   };
 

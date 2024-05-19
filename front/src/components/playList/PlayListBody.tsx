@@ -49,7 +49,7 @@ const PlayListBody = () => {
       }
       setPlayList((prev) => [...prev, ...data.content]);
     } catch (error) {
-      throw new Error('PlayListBody-getMyPlayList');
+      // throw new Error('PlayListBody-getMyPlayList');
     } finally {
       setIsLoading(false);
     }

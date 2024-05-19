@@ -55,7 +55,7 @@ const useHandleMarkerClick = () => {
     } catch (error) {
       console.error("Error checking coupon availability:", error);
       toastMsg("잠시 후 다시 이용해 주세요");
-      throw new Error('useHandleMarkerClick');
+      // throw new Error('useHandleMarkerClick');
     }
   };
 

@@ -2,7 +2,7 @@ import { RouterProvider } from "react-router-dom";
 import router from "./routes/router";
 import { Suspense } from "react";
 import { RecoilRoot } from "recoil";
-import * as Sentry from "@sentry/react";
+// import * as Sentry from "@sentry/react";
 
 function App() {
   const url = window.location.pathname;
@@ -20,4 +20,5 @@ function App() {
   );
 }
 
-export default Sentry.withProfiler(App);
+// export default Sentry.withProfiler(App);
+export default App;

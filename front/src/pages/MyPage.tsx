@@ -55,7 +55,7 @@ const MyPage = () => {
         resetPageIdx();
       }
     } catch (error) {
-      throw new Error("MyPage-loadData");
+      // throw new Error("MyPage-loadData");
     }
     setIsLoading(false);
   };
@@ -65,7 +65,7 @@ const MyPage = () => {
       const data = await getMyLevel();
       setMyLevelValue(data);
     } catch (error) {
-      throw new Error("MyPage-apiGetMyLevel");
+      // throw new Error("MyPage-apiGetMyLevel");
     }
   };
 
@@ -74,7 +74,7 @@ const MyPage = () => {
       const pickData = await getMyPickHistory();
       setPickHistoryList(pickData);
     } catch (error) {
-      throw new Error("MyPage-apiGetMyPickHistory");
+      // throw new Error("MyPage-apiGetMyPickHistory");
     }
   };
 
@@ -83,7 +83,7 @@ const MyPage = () => {
       const thownData = await getMyDropHistory();
       setThrownHistoryList(thownData);
     } catch (error) {
-      throw new Error("MyPage-apiGetMyThrowngHistory");
+      // throw new Error("MyPage-apiGetMyThrowngHistory");
     }
   };
 

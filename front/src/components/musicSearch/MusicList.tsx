@@ -39,7 +39,7 @@ const MusicList = () => {
       }
     } catch (error) {
       setSearchResults([]);
-      throw new Error ('MusicList-onSearch')
+      // throw new Error ('MusicList-onSearch')
     } finally {
       setIsLoading(false);
     }

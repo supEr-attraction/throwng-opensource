@@ -54,7 +54,7 @@ const CouponPage: React.FC<CouponPageProps> = ({
         setCoupon(couponData);
       } catch (error) {
         console.error("Failed to fetch coupon:", error);
-        throw new Error("CouponPage");
+        // // throw new Error("CouponPage");
       }
       setLoading(false);
     };
