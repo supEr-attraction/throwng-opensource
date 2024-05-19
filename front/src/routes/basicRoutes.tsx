@@ -3,7 +3,7 @@ import PrivateRoute from "@components/PrivateRoute";
 import Error404 from "@pages/Error404";
 import ContentSuccessPage from "@pages/content/ContentSuccessPage";
 
-const HomePage = lazy(() => import("@pages/HomePage"));
+import HomePage from "@pages/HomePage";
 const MyPage = lazy(() => import("@pages/MyPage"));
 const PlayListPage = lazy(() => import("@pages/PlayListPage"));
 const MusicSearchPage = lazy(() => import("@pages/MusicSearchPage"));

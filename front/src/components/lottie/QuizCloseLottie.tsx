@@ -3,14 +3,14 @@ import lottie, { AnimationItem } from "lottie-web";
 import QuizAnimation from "@assets/lottie/quizClose.json";
 
 interface AnimationData {
-  v: string;  
-  fr: number; 
-  ip: number; 
-  op: number; 
-  w: number;  
-  h: number;  
-  nm: string; 
-  layers: Array<any>; 
+  v: string;
+  fr: number;
+  ip: number;
+  op: number;
+  w: number;
+  h: number;
+  nm: string;
+  layers: Array<any>;
 }
 
 const QuizCloseLottie = () => {
@@ -18,7 +18,6 @@ const QuizCloseLottie = () => {
   const [animationData, setAnimationData] = useState<AnimationData>();
 
   useEffect(() => {
-    
     setAnimationData(QuizAnimation);
   }, []);
 

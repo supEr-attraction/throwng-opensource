@@ -32,12 +32,19 @@ const MusicList = () => {
     setIsLoading(true);
     const decodedKeyword = decodeURIComponent(searchKeyWord);
     setTitle(decodedKeyword);
-    const res = await getSearchMusic(decodedKeyword);
-    if (res) {
-      setSearchResults(res);
+    try {
+      const res = await getSearchMusic(decodedKeyword);
+      if (res) {
+        setSearchResults(res);
+      }
+    } catch (error) {
+      setSearchResults([]);
+      throw new Error ('MusicList-onSearch')
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false)
   };
+  
 
   const handleGoNavigation = (song : Song) => {
     setSelectMusic(song)

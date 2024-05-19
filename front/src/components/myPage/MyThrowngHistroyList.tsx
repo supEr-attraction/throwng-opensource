@@ -112,38 +112,38 @@ const MyThrowngHistroyList = ({ pageIdx, setHistoryCnt }: Props) => {
   return (
     <div className="MyThrowngHistroyList">
       <div className="list-body">
-      {songHistoryList.length > 0 ? (
-        songHistoryList.map((song, index) => (
-          <div className="result-item" key={index} onClick={() => handleGoNavigation(song, index)}>
-            <div className="item-header">
-              {!pageIdx ? (
-                <div className="item-date">
-                  {dayjs(song.dropDate).format("YYYY-MM-DD")}
+        {songHistoryList.length > 0 ? (
+          songHistoryList.map((song, index) => (
+            <div
+              className="result-item"
+              key={index}
+              onClick={() => handleGoNavigation(song, index)}
+            >
+              <div className="item-header">
+                {!pageIdx ? (
+                  <div className="item-date">
+                    {dayjs(song.dropDate).format("YYYY-MM-DD")}
+                  </div>
+                ) : (
+                  <div className="item-date">
+                    {dayjs(song.pickDate).format("YYYY-MM-DD")}
+                  </div>
+                )}
+                <div className="item-location">
+                  <TiLocation />
+                  <div>{song.location}</div>
                 </div>
-              ) : (
-                <div className="item-date">
-                  {dayjs(song.pickDate).format("YYYY-MM-DD")}
-                </div>
-              )}
-              <div className="item-location">
-                <TiLocation />
-                <div>{song.location}</div>
               </div>
+              <SongItemModule song={song} index={index} type="history" />
+              {/* {songHistoryList.length ? <div ref={lastElementRef} /> : null} */}
             </div>
-            <SongItemModule
-              song={song}
-              index={index}
-              type="history"
-            />
-            {/* {songHistoryList.length ? <div ref={lastElementRef} /> : null} */}
+          ))
+        ) : (
+          <div className="no-word-container">
+            <div className="title">앗!</div>
+            <div className="subtitle">기록이 없습니다.</div>
           </div>
-        ))
-      ) : (
-        <div className="no-word-container">
-          <div className="title">앗!</div>
-          <div className="subtitle">기록이 없습니다.</div>
-        </div>
-      )}
+        )}
       </div>
     </div>
   );

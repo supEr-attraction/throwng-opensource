@@ -19,6 +19,7 @@ const useFetchMusic = () => {
     } catch (err) {
       console.error(err);
       setMarkers([]);
+      throw new Error('useFetchMusic');
     }
   };
 

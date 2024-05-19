@@ -3,14 +3,8 @@ import "@styles/myPage/MyThrowngHistoryMenu.scss";
 import MyThrowngHistroyList from "./MyThrowngHistroyList";
 import { LuListFilter } from "react-icons/lu";
 import MyThrowngHistoryFilterModal from "./MyThrowngHistoryFilterModal";
-import {
-  useRecoilState,
-  useResetRecoilState,
-} from "recoil";
-import {
-  pageIdx,
-  throwngFilterModal,
-} from "@store/myPage/atoms";
+import { useRecoilState, useResetRecoilState } from "recoil";
+import { pageIdx, throwngFilterModal } from "@store/myPage/atoms";
 
 const MyThrowngHistoryMenu = () => {
   const [page, setPageIdx] = useRecoilState(pageIdx);
@@ -54,6 +48,6 @@ const MyThrowngHistoryMenu = () => {
       <MyThrowngHistroyList pageIdx={page} setHistoryCnt={setHistoryCnt} />
       {filterModal && <MyThrowngHistoryFilterModal />}
     </div>
-  )
+  );
 };
 export default MyThrowngHistoryMenu;

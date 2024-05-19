@@ -22,8 +22,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   width: 80%;
-  height: 80dvh;
   background-color: rgb(123, 102, 255, 0.2);
   padding: 20px;
   border-radius: 10px;
@@ -35,9 +35,9 @@
   }
 
   p {
-    font-size: 24px;
+    font-size: 2.5dvh;
     margin-bottom: 20px;
-    // font-family: "DNFBitBitv2";
+    font-family: "DNFBitBitv2";
   }
 
   img {
@@ -47,9 +47,8 @@
 
 .successButton,
 .failureButton {
-  font-size: 24px;
-  padding: 10px 20px;
-  margin-top: 20px;
+  font-size: 3dvh;
+  padding: 1dvh;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -57,7 +56,7 @@
 }
 
 .successButton {
-  margin-top: 10dvh;
+  margin-top: 5dvh;
   width: 90%;
   background-color: #7b66ff;
   color: white;
@@ -65,7 +64,7 @@
 }
 
 .failureButton {
-  margin-top: 10dvh;
+  margin-top: 5dvh;
   width: 90%;
   background-color: #f44336;
   color: white;
