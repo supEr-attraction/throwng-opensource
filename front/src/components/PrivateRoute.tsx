@@ -31,7 +31,7 @@ function PrivateRoutes() {
         }
       } catch (error) {
         console.error(error);
-        throw new Error('PrivateRoutes');
+        // // throw new Error('PrivateRoutes');
       } finally {
         setIsCheck(true);
       }

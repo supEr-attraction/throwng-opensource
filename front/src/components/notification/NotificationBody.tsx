@@ -32,7 +32,7 @@ const NotificationBody = () => {
       });
       setNoticeList(updatedNotices);
     } catch (error) {
-      throw new Error('NotificationBody')
+      // throw new Error('NotificationBody')
     }
   };  
 

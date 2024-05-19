@@ -69,7 +69,7 @@ const MusicDropBody = ({ setIsLoading }: Props) => {
       }
     } catch (error) {
       toastMsg("노래 쓰롱에 실패하였습니다. 다시 시도해 주세요.");
-      throw new Error('MusicDropBody-postThrowngMusic')
+      // throw new Error('MusicDropBody-postThrowngMusic')
     } finally {
       resetUserImage();
       resetImagePreview();

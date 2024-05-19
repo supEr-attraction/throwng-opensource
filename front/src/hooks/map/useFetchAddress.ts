@@ -30,7 +30,7 @@ const useFetchAddress = () => {
       }
     } catch (err) {
       console.error(err);
-      throw new Error('useFetchAddress');
+      // throw new Error('useFetchAddress');
     }
   };
 

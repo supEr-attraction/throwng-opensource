@@ -71,7 +71,7 @@ const MyCouponBody = () => {
         toastMsg("쿠폰이 정상적으로 적용되었습니다.");
       } catch (error) {
         toastMsg("에러가 발생했습니다. 잠시 후 다시 시도해주세요.");
-        throw new Error('MyCouponBody');
+        // throw new Error('MyCouponBody');
       }
     }
   };

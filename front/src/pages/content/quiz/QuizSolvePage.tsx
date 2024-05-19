@@ -70,7 +70,7 @@ function QuizSolvePage() {
     } catch (error) {
       console.error("Failed to submit the quiz:", error);
       handleFailNavigation();
-      throw new Error('QuizSolvePage');
+      // throw new Error('QuizSolvePage');
     }
   }, [userInput, currentQuestionIndex, quizData, navigate]); 
 

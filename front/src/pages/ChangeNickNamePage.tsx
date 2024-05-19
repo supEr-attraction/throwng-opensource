@@ -37,7 +37,7 @@ const ChangeNickNamePage = () => {
             await putNickName(requestBody)
             navigate('/user/mypage', {replace:true})
           } catch (e) {
-            throw new Error('ChangeNickNamePage');
+            // throw new Error('ChangeNickNamePage');
           }
         }
     } else {
