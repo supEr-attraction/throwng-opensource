@@ -35,7 +35,9 @@
       margin-bottom: 1dvh;
     }
     img {
-      width: 20dvh;
+      height: 20dvh;
+      flex: 1;
+      // width: auto;
     }
   }
 
