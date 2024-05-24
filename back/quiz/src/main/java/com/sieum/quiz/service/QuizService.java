@@ -135,11 +135,7 @@ public class QuizService {
                                                 .build())
                         .collect(Collectors.toList());
 
-        //        final List<Integer> indexes = createRandomQuiz(quizlist.size());
-        final List<Integer> indexes = new ArrayList<>();
-        indexes.add(11);
-        indexes.add(20);
-        indexes.add(7);
+        final List<Integer> indexes = createRandomQuiz(quizlist.size());
 
         final List<QuizResponse> todayQuizList = new ArrayList<>();
 
