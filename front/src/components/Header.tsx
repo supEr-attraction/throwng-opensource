@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { logoutModalState } from "@store/auth/atom";
 import { IoIosArrowBack } from "react-icons/io";
@@ -15,9 +15,18 @@ interface Props {
 const Header = ({ centerText = "", type }: Props) => {
   const navigate = useNavigate();
   const setLogoutModal = useSetRecoilState(logoutModalState);
+  const { pathname } = useLocation();
 
   const handleBackNavigation = () => {
-    navigate(-1);
+    if (
+      ["/user/mypage", "/user/playlist", "/content", "/music/search"].includes(
+        pathname
+      )
+    ) {
+      navigate("/");
+    } else {
+      navigate(-1);
+    }
   };
 
   const handleOpenModal = () => {

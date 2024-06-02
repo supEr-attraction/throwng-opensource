@@ -142,15 +142,14 @@ const RhythmGame = () => {
         ...prevClickedNotes,
         closestNote.id,
       ]);
-      setTimeout(() => {
-        setClickedNotes((prevClickedNotes) =>
-          prevClickedNotes.filter((id) => id !== closestNote.id)
-        );
-      }, 300);
 
       setTimeout(() => {
         setNotes((prevNotes) =>
           prevNotes.filter((note) => note.id !== closestNote.id)
+        );
+
+        setClickedNotes((prevClickedNotes) =>
+          prevClickedNotes.filter((id) => id !== closestNote.id)
         );
       }, 200);
     } else {
@@ -195,7 +194,7 @@ const RhythmGame = () => {
         <div className="loadingSpinner">
           <Loading />
         </div>
-      )}{" "}
+      )}
       {audioUrls.map((url, index) => (
         <audio
           key={index}

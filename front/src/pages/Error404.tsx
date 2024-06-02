@@ -1,28 +1,28 @@
 import { useRef, useEffect, useState } from "react";
 import lottie, { AnimationItem } from "lottie-web";
 import Animation from "@assets/lottie/notFound.json";
-import "@styles/Error404.scss";
 import MusicDropBtn from "@components/musicDrop/MusicDropBtn";
-import { useNavigate } from "react-router-dom";
-
-interface AnimationData {
-  v: string;
-  fr: number;
-  ip: number;
-  op: number;
-  w: number;
-  h: number;
-  nm: string;
-  layers: Array<any>;
-}
+import { useNavigate, useRouteError } from "react-router-dom";
+import { AnimationData } from "../types/lottieType";
+import "@styles/Error404.scss";
 
 const Error404 = () => {
   const animationContainer = useRef<HTMLDivElement>(null);
   const [animationData, setAnimationData] = useState<AnimationData>();
+  const [isLoad, setIsLoad] = useState(false);
+  const error: any = useRouteError();
   const navigate = useNavigate();
 
   useEffect(() => {
-    setAnimationData(Animation);
+    if (
+      error instanceof TypeError &&
+      error.message.includes("Failed to fetch dynamically imported module")
+    ) {
+      window.location.reload();
+    } else {
+      setIsLoad((prev) => !prev);
+      setAnimationData(Animation);
+    }
   }, []);
 
   useEffect(() => {
@@ -48,8 +48,15 @@ const Error404 = () => {
 
   return (
     <div className="Error404">
-      <div className="quiz-main-container" ref={animationContainer}></div>
-      <MusicDropBtn btnText="홈으로" onClick={() => navigate("/")} />
+      {isLoad && (
+        <>
+          <div className="quiz-main-container" ref={animationContainer}></div>
+          <MusicDropBtn
+            btnText="홈으로"
+            onClick={() => navigate("/", { replace: true })}
+          />
+        </>
+      )}
     </div>
   );
 };

@@ -1,7 +1,7 @@
 version: '3.1'
 
 services:
-  back-music:
+  back-notification:
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,7 +9,8 @@ services:
         PROFILE: prod
     ports:
       - '8082:8082'
-
+    volumes:
+      - /home/ubuntu/pinpoint-agent-2.2.2:/pinpoint
 networks:
   default:
     external:

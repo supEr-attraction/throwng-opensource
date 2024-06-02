@@ -20,17 +20,21 @@ const NotificationBody = () => {
   }, []);
 
   const fetchGetMyNotice = async () => {
-    const res = await getMyNotice();
-    const updatedNotices = res.map(notice => {
-      const url = new URL(notice.link);
-      const path = url.pathname;
-      return {
-        ...notice,
-        link: path,
-      };
-    });
-    setNoticeList(updatedNotices);
-  };
+    try {
+      const res = await getMyNotice();
+      const updatedNotices = res.map(notice => {
+        const url = new URL(notice.link);
+        const path = url.pathname;
+        return {
+          ...notice,
+          link: path,
+        };
+      });
+      setNoticeList(updatedNotices);
+    } catch (error) {
+      // throw new Error('NotificationBody')
+    }
+  };  
 
   const formatDistanceToNow = (dateString: string) => {
     return dayjs(dateString).fromNow();

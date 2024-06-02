@@ -3,8 +3,9 @@ import { useRecoilValue } from "recoil";
 import { musicPickHeaderState } from "@store/music/pick/selectors";
 import Header from "@components/Header";
 import MusicInfoContent from "@components/music/pick/MusicInfoContent";
-import AudioPlayer from "@components/music/pick/AudioPlayer";
+import AudioPlayer from "@components/music/common/AudioPlayer";
 import "@styles/music/pick/MusicPickDetailTop.scss";
+import BlackGradient from "../common/BlackGradient";
 
 const MusicPickDetailTop = () => {
   const { address, albumImage, previewUrl } =
@@ -14,8 +15,7 @@ const MusicPickDetailTop = () => {
     <div className="MusicPickDetailTop">
       <img className="album-image" src={albumImage} alt="" />
       <div className="cover">
-        <div className="black-cover" />
-        <div className="black-gradient" />
+        <BlackGradient />
         <div className="content">
           <Header centerText={address} type="address" />
           {previewUrl && <AudioPlayer previewUrl={previewUrl} />}

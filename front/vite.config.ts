@@ -1,3 +1,4 @@
+// import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -6,6 +7,11 @@ import { VitePWA } from "vite-plugin-pwa";
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
+    // sentryVitePlugin({
+    //   org: "throwng",
+    //   project: "javascript-react",
+    //   authToken: process.env.SENTRY_AUTH_TOKEN,
+    // }),
     react(),
     tsconfigPaths(),
     VitePWA({
@@ -62,8 +68,13 @@ export default defineConfig({
       },
     }),
   ],
+
   server: {
     port: 5173,
     host: "0.0.0.0",
+  },
+
+  build: {
+    sourcemap: true,
   },
 });

@@ -17,10 +17,11 @@ const AuthPage = () => {
           localStorage.setItem("jwt", data.accessToken);
           navigate("/", { replace: true });
         } else {
-          throw new Error("Provider or code missing");
+          // throw new Error("Provider or code missing");
         }
       } catch (error) {
         console.error("Error while getting token:", error);
+        // throw new Error('AuthPage');
       }
     };
 

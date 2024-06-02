@@ -22,11 +22,6 @@ export const loadingState = atom({
   default: false,
 });
 
-export const changeNickNameCouponId = atom<number>({
-  key:'changeNickNameCouponId',
-  default: 0,
-})
-
 export const levelInfoModal = atom<boolean>({
   key:'levelInfoModal',
   default: false,

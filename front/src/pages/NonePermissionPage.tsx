@@ -2,17 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import lottie, { AnimationItem } from "lottie-web";
 import Animation from "@assets/lottie/locationPermission.json";
 import "@styles/NonePermissionPage.scss";
-
-interface AnimationData {
-  v: string;
-  fr: number;
-  ip: number;
-  op: number;
-  w: number;
-  h: number;
-  nm: string;
-  layers: Array<any>;
-}
+import { AnimationData } from "../types/lottieType";
 
 const NonePermissionPage = () => {
   const animationContainer = useRef<HTMLDivElement>(null);
