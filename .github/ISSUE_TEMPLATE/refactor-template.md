@@ -1,18 +1,11 @@
 ---
-name: Feature Template
-about: Add Feature Issue Template.
-title: "[Feature]"
+name: Refactor template
+about: 리팩토링 이슈 템플릿.
+title: "[Refactor]"
 labels: ''
 assignees: ''
 ---
 
-## 💡 Issue
-- write function
-
-## ✅ To Do
-- [ ] write function 1
-- [ ] write function 2
-
-## 📌 Reference
-- []()
-- []()
+### ⚙️ Refactoring
+- [ ] content 1
+- [ ] content 2
