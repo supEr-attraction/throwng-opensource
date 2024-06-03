@@ -6,8 +6,9 @@ labels: ''
 assignees: ''
 ---
 
-## 🐛 버그 내용
-- [ ] 문제 상황
+### 🐛 Bug
+- [ ] Describe problem
 
-## 서버 로그 or 스크린샷
-- 서버 로그 또는 사진을 첨부해주세요.
+
+### Server log or Screenshot
+- Upload Server log or Screenshot 
