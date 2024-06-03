@@ -115,7 +115,7 @@ function QuizSolvePage() {
 
   return (
     <div className="QuizSolvePage">
-      <QuizTimeBar key={currentQuestionIndex} initialTime={60} onTimeOut={handleTimeOut} />
+      <QuizTimeBar key={currentQuestionIndex} initialTime={20} onTimeOut={handleTimeOut} />
       {renderQuestionComponent()}
       {canSubmit && (
         <button onClick={() => handleSubmission()} className="submission-button">
