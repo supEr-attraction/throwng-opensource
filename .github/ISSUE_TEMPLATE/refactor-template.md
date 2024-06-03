@@ -1,17 +1,17 @@
 ---
 name: Feature Template
-about: 기능 추가 이슈 템플릿.
+about: Add Feature Issue Template.
 title: "[Feature]"
 labels: ''
 assignees: ''
 ---
 
-## 💡 이슈 내용
-- 기능
+## 💡 Issue
+- write function
 
-## ✅ 상세 작업 내용
-- [ ] 기능 1
-- [ ] 기능 2
+## ✅ To Do
+- [ ] write function 1
+- [ ] write function 2
 
 ## 📌 Reference
 - []()
