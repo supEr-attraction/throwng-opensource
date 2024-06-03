@@ -7,4 +7,5 @@ assignees: ''
 
 ---
 
-## 💬 논의 내용
+## 💬 Discussion
+- write content
