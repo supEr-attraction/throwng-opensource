@@ -9,9 +9,9 @@ name: Quiz CI with Gradle
 
 on:
   push:
-    branches: ["develop-quiz"]
+    branches: ["master"]
   pull_request:
-    branches: ["master", "develop-quiz"]
+    branches: ["develop-quiz"]
 
 jobs:
   build:
