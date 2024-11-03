@@ -3,6 +3,8 @@ name: Deploy to Batch component
 on:
   push:
     branches: ["master", "setting/#27"]
+  pull_request:
+    branches: ["master", "setting/#27"]
 
 jobs:
   build:
