@@ -33,7 +33,7 @@ jobs:
         build-root-directory: ./back/batch
         
     - name: Run chmod to make gradlew executable
-      run: chmod +x ./back/batch/gradlew
+      run: chmod +x ./gradlew
 
     - name: Build with Gradle
       uses: gradle/gradle-build-action@v2
