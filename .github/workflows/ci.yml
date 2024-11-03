@@ -9,9 +9,9 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches: [ "master", "develop-batch", "develop-music", "develop-notification", "develop-quiz", "develop-user"]
+    branches: ["develop-batch"]
   pull_request:
-    branches: [ "master", "develop-batch", "develop-music", "develop-notification", "develop-quiz", "develop-user"]
+    branches: ["develop-batch"]
 
 jobs:
   build:
@@ -27,6 +27,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        build-root-directory: ./back/batch
 
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
@@ -60,6 +61,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
+        build-root-directory: ./back/batch
 
     # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
     # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
