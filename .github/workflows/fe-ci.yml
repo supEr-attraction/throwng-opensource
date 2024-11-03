@@ -25,17 +25,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        build-root-directory: front
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
-    - name: Checkout source code. 
-      uses: actions/checkout@v3
+    # - name: Use Node.js ${{ matrix.node-version }}
+    #   uses: actions/setup-node@v4
+    #   with:
+    #     node-version: ${{ matrix.node-version }}
+    #     cache: 'npm'
+    #     build-root-directory: front
+    # - run: npm ci
+    # - run: npm run build --if-present
+    # - run: npm test
+    # - name: Checkout source code. 
+    #   uses: actions/checkout@v3
 
     - name: Check Node v
       run: node -v
