@@ -2,7 +2,7 @@ name: Deploy to Music component
 
 on:
   push:
-    branches: ["master"]
+    branches: ["master", "setting/#40"]
   pull_request:
     branches: ["setting/#40", "master"]
 
