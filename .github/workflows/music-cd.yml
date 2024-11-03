@@ -4,7 +4,7 @@ on:
   push:
     branches: ["master"]
   pull_request:
-    branches: ["setting/#40"]
+    branches: ["setting/#40", "master"]
 
 jobs:
   build:
