@@ -5,13 +5,13 @@
 # This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
 
-name: Music CI with Gradle
+name: Music CI/CD with Gradle
 
 on:
   push:
-    branches: ["develop-music"]
+    branches: ["master"]
   pull_request:
-    branches: ["master", "develop-music"]
+    branches: ["develop-music"]
 
 jobs:
   build:
